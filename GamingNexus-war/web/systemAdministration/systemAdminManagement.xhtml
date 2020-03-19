@@ -1,0 +1,138 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                template="/template/defaultTemplate.xhtml"
+                xmlns:ez="http://xmlns.jcp.org/jsf/composite/ezcomp"
+                xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="content">
+        
+        <ez:Breadcrumb pageName="systemAdminManagement" />
+        
+        <div>
+            <h3>System Admin Management</h3>
+            
+            <h:form>
+                <p:menubar>
+                    <p:submenu label="Create New System Admin" icon="ui-icon-document">
+                        <p:menuitem value="Create" onclick="PF('dialogCreateNewSystemAdmin').show()" icon="fa fa-plus" />
+                    </p:submenu>                                        
+                </p:menubar>
+                <br/>
+            </h:form>
+            
+            
+            <h:form id="formAllSystemAdmins">
+            
+                <p:messages id="messages" redisplay="false" closable="true" />
+                
+                <p:dataTable id="dataTableAllSystemAdmins" widgetVar="dataTableAllSystemAdmins" value="#{systemAdminManagementManagedBean.systemAdmins}" var="systemAdmin" rowKey="#{systemAdmin.systemAdminId}" rowIndexVar="row"
+                             filteredValue="#{systemAdminManagementManagedBean.filteredSystemAdmins}"
+                             rows="10" paginator="true" paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowsPerPageTemplate="10,20,50">             
+                             
+                    <p:column headerText="System Admin ID" sortBy="#{systemAdmin.systemAdminId}" filterBy="#{systemAdmin.systemAdminId}" filterMatchMode="contains">
+                        <h:outputText value="#{systemAdmin.systemAdminId}" />
+                    </p:column>
+                             
+                    <p:column headerText="System Admin Frist Name" sortBy="#{systemAdmin.firstName}" filterBy="#{systemAdmin.firstName}" filterMatchMode="contains">
+                        <h:outputText value="#{systemAdmin.firstName}" />
+                    </p:column>
+                             
+                    <p:column headerText="System Admin Last Name" sortBy="#{systemAdmin.lastName}" filterBy="#{systemAdmin.lastName}" filterMatchMode="contains">
+                        <h:outputText value="#{systemAdmin.lastName}" />
+                    </p:column>
+                             
+                    <p:column headerText="System Admin Username" sortBy="#{systemAdmin.username}" filterBy="#{systemAdmin.username}" filterMatchMode="contains">
+                        <h:outputText value="#{systemAdmin.username}" />
+                    </p:column>
+                    
+                    <p:column headerText="Action" >
+                        <p:commandButton icon="ui-icon-trash" actionListener="#{systemAdminManagementManagedBean.deleteSystemAdmin}" update="formAllSystemAdmins:dataTableAllSystemAdmins ">
+                            <f:attribute name="systemAdminToDelete" value="#{systemAdmin}" />
+                            <p:confirm header="Confirmation" message="Are you sure you want to delete #{systemAdmin.username}?" icon="ui-icon-alert" />
+                        </p:commandButton>
+                    </p:column>
+                  
+               </p:dataTable>
+                
+                <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                    <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                    <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                </p:confirmDialog>
+                             
+            </h:form>
+            
+            <h:form id="formCreateNewSystemAdmin">
+                    
+                <p:dialog id="dialogCreateNewSystemAdmin" widgetVar="dialogCreateNewSystemAdmin" header="Create New System Admin" closable="true">
+                    
+                    <p:messages id="messagesCreateNewSystemAdmin" redisplay="false" />
+                    
+                    <p:panelGrid>
+                        
+                        <p:row>
+                            <p:column>
+                                <p:outputLabel for="firstName" value="FirstName" style="font-weight: bold;"/>               
+                            </p:column>
+                            <p:column>
+                                <p:inputText id="firstName" value="#{systemAdminManagementManagedBean.newSystemAdmin.firstName}" placeholder="FirstName" required="true" requiredMessage="FirstName is required" />
+                            </p:column>
+                            <p:column>
+                                <p:messages for ="firstName" />
+                            </p:column>     
+                        </p:row>
+                        
+                        <p:row>
+                            <p:column>
+                                <p:outputLabel for="lastName" value="LastName" style="font-weight: bold;"/>               
+                            </p:column>
+                            <p:column>
+                                <p:inputText id="lastName" value="#{systemAdminManagementManagedBean.newSystemAdmin.lastName}" placeholder="LastName" required="true" requiredMessage="LastName is required" />
+                            </p:column>
+                            <p:column>
+                                <p:messages for ="lastName" />
+                            </p:column>     
+                        </p:row>
+                        
+                        <p:row>
+                            <p:column>
+                                <p:outputLabel for="username" value="Username" style="font-weight: bold;"/>               
+                            </p:column>
+                            <p:column>
+                                <p:inputText id="username" value="#{systemAdminManagementManagedBean.newSystemAdmin.username}" placeholder="Username" required="true" requiredMessage="Username is required" />
+                            </p:column>
+                            <p:column>
+                                <p:messages for ="username" />
+                            </p:column>     
+                        </p:row>
+                        
+                        <p:row>
+                            <p:column>
+                                <p:outputLabel for="password" value="Password" style="font-weight: bold;"/>               
+                            </p:column>
+                            <p:column>
+                                <p:inputText id="password" value="#{systemAdminManagementManagedBean.newSystemAdmin.password}" placeholder="Password" required="true" requiredMessage="Password is required" />
+                            </p:column>
+                            <p:column>
+                                <p:messages for ="password" />
+                            </p:column>     
+                        </p:row>
+                        
+                        <p:row>
+                            <p:column colspan="3">
+                                <p:commandButton type="reset" value="Clear" />&nbsp;
+                                <p:commandButton  value="Create New System Admin" update="@form formAllSystemAdmins:dataTableAllSystemAdmins" actionListener="#{systemAdminManagementManagedBean.createNewSystemAdmin}" oncomplete="PF('dialogCreateNewSystemAdmin').show();" />
+                            </p:column>
+                        </p:row>
+                        
+                    </p:panelGrid>
+                </p:dialog>
+            </h:form>
+            
+        </div>
+        
+    </ui:define>
+
+</ui:composition>
