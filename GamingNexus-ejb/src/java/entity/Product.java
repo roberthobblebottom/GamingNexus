@@ -13,13 +13,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-import javax.validation.constraints.Digits;
-    /**
-     * @return the ownedItems
-     */
-   
+import javax.validation.constraints.Digits;  
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
@@ -42,7 +39,7 @@ public abstract class Product implements Serializable {
     @NotNull
     @Size(min = 0, max = 5000)
     private String description;
-    @NotNull
+    //@NotNull
     @Size(min = 10, max = 5000)
     private String computerRequirements;
     @NotNull
@@ -57,8 +54,10 @@ public abstract class Product implements Serializable {
     @OneToOne(optional = false)
     @JoinColumn(nullable = false)
     private Company company;
-    @NotNull
-    @ManyToMany
+    @ManyToOne(optional = false)
+    @JoinColumn(nullable = false)
+    private Category category;
+    @ManyToMany(mappedBy = "products")
     private List<Tag> tags;
     @ManyToMany()
     private List<Promotion> promotions;
@@ -86,6 +85,40 @@ public abstract class Product implements Serializable {
         this.promotions = promotions;
         this.cartItems = cartItems;
         this.ownedItems = ownedItems;
+    }
+    
+    public void addTag(Tag tagEntity)
+    {
+        if(tagEntity != null)
+        {
+            if(!this.tags.contains(tagEntity))
+            {
+                this.tags.add(tagEntity);
+                
+                if(!tagEntity.getProducts().contains(this))
+                {                    
+                    tagEntity.getProducts().add(this);
+                }
+            }
+        }
+    }
+    
+    
+    
+    public void removeTag(Tag tagEntity)
+    {
+        if(tagEntity != null)
+        {
+            if(this.tags.contains(tagEntity))
+            {
+                this.tags.remove(tagEntity);
+                
+                if(tagEntity.getProducts().contains(this))
+                {
+                    tagEntity.getProducts().remove(this);
+                }
+            }
+        }
     }
 
     public Long getProductID() {
@@ -276,6 +309,36 @@ public abstract class Product implements Serializable {
      */
     public void setOwnedItems(List<OwnedItem> ownedItems) {
         this.ownedItems = ownedItems;
+    }
+
+    /**
+     * @return the category
+     */
+    public Category getCategory() {
+        return category;
+    }
+
+    /**
+     * @param category the category to set
+     */
+    public void setCategory(Category category) {
+        if(this.category != null)
+        {
+            if(this.category.getProducts().contains(this))
+            {
+                this.category.getProducts().remove(this);
+            }
+        }
+        
+        this.category = category;
+        
+        if(this.category != null)
+        {
+            if(!this.category.getProducts().contains(this))
+            {
+                this.category.getProducts().add(this);
+            }
+        }
     }
 
 }

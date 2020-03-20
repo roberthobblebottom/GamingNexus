@@ -42,7 +42,7 @@ public class Game extends Product implements Serializable {
         this.gameAccounts = gameAccounts;
         this.forums = forums;
     }
-
+    
     
 
     /**

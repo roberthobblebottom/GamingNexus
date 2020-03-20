@@ -142,6 +142,7 @@ public class SystemAdminSessionBean implements SystemAdminSessionBeanLocal {
         }
     }
     
+    @Override
     public void deleteSystemAdmin(Long systemAdminId) throws SystemAdminNotFoundException
     {
         SystemAdmin systemAdminToRemove = retrieveSystemAdminById(systemAdminId);
