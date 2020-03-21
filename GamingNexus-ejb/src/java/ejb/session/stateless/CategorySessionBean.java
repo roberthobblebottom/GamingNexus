@@ -128,12 +128,12 @@ public class CategorySessionBean implements CategorySessionBeanLocal {
     @Override
     public void updateCategory(Category categoryEntity, Long parentCategoryId) throws InputDataValidationException, CategoryNotFoundException, UpdateCategoryException {
 
-        if (categoryEntity.getCategoryID() != null) {
-            Category categoryEntityToUpdate = retrieveCategoryByCategoryId(categoryEntity.getCategoryID());
+        if (categoryEntity.getCategoryId() != null) {
+            Category categoryEntityToUpdate = retrieveCategoryByCategoryId(categoryEntity.getCategoryId());
 
             Query query = em.createQuery("SELECT c FROM Category c WHERE c.name = :inName AND c.categoryID <> :inCategoryID");
             query.setParameter("inName", categoryEntity.getName());
-            query.setParameter("inCategoryID", categoryEntity.getCategoryID());
+            query.setParameter("inCategoryID", categoryEntity.getCategoryId());
 
             if (!query.getResultList().isEmpty()) {
                 throw new UpdateCategoryException("The name of the category to be updated is duplicated");
@@ -143,9 +143,9 @@ public class CategorySessionBean implements CategorySessionBeanLocal {
             categoryEntityToUpdate.setDescription(categoryEntity.getDescription());
 
             if (parentCategoryId != null) {
-                if (categoryEntityToUpdate.getCategoryID().equals(parentCategoryId)) {
+                if (categoryEntityToUpdate.getCategoryId().equals(parentCategoryId)) {
                     throw new UpdateCategoryException("Category cannot be its own parent");
-                } else if (categoryEntityToUpdate.getParentCategory() == null || (!categoryEntityToUpdate.getParentCategory().getCategoryID().equals(parentCategoryId))) {
+                } else if (categoryEntityToUpdate.getParentCategory() == null || (!categoryEntityToUpdate.getParentCategory().getCategoryId().equals(parentCategoryId))) {
                     Category parentCategoryEntityToUpdate = retrieveCategoryByCategoryId(parentCategoryId);
 
                     if (!parentCategoryEntityToUpdate.getProducts().isEmpty()) {

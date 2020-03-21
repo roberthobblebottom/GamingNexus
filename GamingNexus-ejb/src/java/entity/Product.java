@@ -6,11 +6,14 @@
 package entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
@@ -27,65 +30,68 @@ import javax.validation.constraints.Size;
  * @author root
  */
 @Entity
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public abstract class Product implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long productID;
+    protected Long productId;
     @NotNull
     @Size(min = 1, max = 100)
-    private String name;
+    protected String name;
     @NotNull
     @Size(min = 0, max = 5000)
-    private String description;
+    protected String description;
     //@NotNull
-    @Size(min = 10, max = 5000)
-    private String computerRequirements;
+    @Size(min = 0, max = 5000)
+    protected String computerRequirements;
     @NotNull
     @Digits(integer = 1000000000, fraction = 2)
-    private double price;
+    protected double price;
     @Digits(integer = 1, fraction = 2)
     @Min(0)
     @Max(5)
     @NotNull
-    private double averageRating;
+    protected double averageRating;
+    
     @NotNull
     @OneToOne(optional = false)
     @JoinColumn(nullable = false)
-    private Company company;
+    protected Company company;
     @ManyToOne(optional = false)
     @JoinColumn(nullable = false)
-    private Category category;
+    protected Category category;
     @ManyToMany(mappedBy = "products")
-    private List<Tag> tags;
+    protected List<Tag> tags;
     @ManyToMany()
-    private List<Promotion> promotions;
+    protected List<Promotion> promotions;
     @OneToMany(mappedBy = "Product")
-    private List<Rating> ratings;
+    protected List<Rating> ratings;
     @OneToMany(mappedBy = "Product")
-    private List<CartItem> cartItems;
+    protected List<CartItem> cartItems;
     @OneToMany(mappedBy = "Product")
-    private List<OwnedItem> ownedItems;
+    protected List<OwnedItem> ownedItems;
 
     public Product() {
+        tags = new ArrayList<>();
+        ratings = new ArrayList<>();
+        cartItems = new ArrayList<>();
+        ownedItems = new ArrayList<>();
     }
 
-    public Product(String name, String description, String computerRequirements,
-            double price, double averageRating, Company company, List<Tag> tags, List<Promotion> promotions,
-            List<CartItem> cartItems, List<OwnedItem> ownedItems) {
+    public Product(String name, String description, String computerRequirements, double price, double averageRating) {
         this();
         this.name = name;
         this.description = description;
         this.computerRequirements = computerRequirements;
         this.price = price;
         this.averageRating = averageRating;
-        this.company = company;
-        this.tags = tags;
-        this.promotions = promotions;
-        this.cartItems = cartItems;
-        this.ownedItems = ownedItems;
     }
+    
+    
+
+    
     
     public void addTag(Tag tagEntity)
     {
@@ -121,29 +127,29 @@ public abstract class Product implements Serializable {
         }
     }
 
-    public Long getProductID() {
-        return productID;
+    public Long getProductId() {
+        return productId;
     }
 
-    public void setProductID(Long productID) {
-        this.productID = productID;
+    public void setProductId(Long productId) {
+        this.productId = productId;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (productID != null ? productID.hashCode() : 0);
+        hash += (productId != null ? productId.hashCode() : 0);
         return hash;
     }
 
     @Override
     public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the productID fields are not set
+        // TODO: Warning - this method won't work in the case the productId fields are not set
         if (!(object instanceof Product)) {
             return false;
         }
         Product other = (Product) object;
-        if ((this.productID == null && other.productID != null) || (this.productID != null && !this.productID.equals(other.productID))) {
+        if ((this.productId == null && other.productId != null) || (this.productId != null && !this.productId.equals(other.productId))) {
             return false;
         }
         return true;
@@ -151,7 +157,7 @@ public abstract class Product implements Serializable {
 
     @Override
     public String toString() {
-        return "ejb.entity.Product[ id=" + productID + " ]";
+        return "ejb.entity.Product[ id=" + productId + " ]";
     }
 
     /**

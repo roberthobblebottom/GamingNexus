@@ -6,59 +6,69 @@
 package entity;
 
 import java.io.Serializable;
-import java.sql.Date;
+import java.util.Date;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.validation.constraints.Digits;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+import util.security.CryptographicHelper;
 
 /**
  *
  * @author root
  */
+
 @Entity
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public abstract class User implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long userID;
+    protected Long userId;
     @NotNull
-    @Digits(integer = 15, fraction = 0)
-    private int phoneNumber;
+    protected String phoneNumber;
     @Size(min = 5, max = 200)
     @NotNull
-    private String address;
+    protected String address;
     @NotNull
     @Size(min = 6, max = 100)
     @Pattern(regexp = "@\"^([0-9a-zA-Z](?>[-.\\w]*[0-9a-zA-Z])*@(?>[0-9a-zA-Z][-\\w]*[0-9a-zA-Z]\\.)+[a-zA-Z]{2,9})$\",")
     //https://stackoverflow.com/questions/13087755/can-anyone-tell-me-why-this-c-sharp-email-validation-regular-expression-regex
-    private String email;
+    protected String email;
     @NotNull
     @Size(min = 1, max = 50)
-    private String country;
+    protected String country;
     @Size(min = 1, max = 100)
     @NotNull
-    private String username;
-    @Size(min = 8, max = 100)
+    protected String username;    
+    @Column(columnDefinition = "CHAR(32) NOT NULL")
     @NotNull
+    @Min(8)
     private String password;
+    @Column(columnDefinition = "CHAR(32) NOT NULL")
+    private String salt;
+
     
-    private String profilePictureURL;//https://stackoverflow.com/questions/29208007/what-is-the-data-type-for-images-in-java
+    protected String profilePictureURL;//https://stackoverflow.com/questions/29208007/what-is-the-data-type-for-images-in-java
     @Past
     @NotNull
-    private Date lastOnline;
+    protected Date lastOnline;
     
 
     public User() {
+        this.salt = CryptographicHelper.getInstance().generateRandomString(32);
     }
 
-    public User(int phoneNumber, String address, String email, String country, String username, String password, String profilePictureURL, Date lastOnline) {
+    public User(String phoneNumber, String address, String email, String country, String username, String password, String profilePictureURL, Date lastOnline) {
         this();
         this.phoneNumber = phoneNumber;
         this.address = address;
@@ -70,29 +80,29 @@ public abstract class User implements Serializable {
         this.lastOnline = lastOnline;
     }
 
-    public Long getUserID() {
-        return userID;
+    public Long getUserId() {
+        return userId;
     }
 
-    public void setUserID(Long userID) {
-        this.userID = userID;
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (userID != null ? userID.hashCode() : 0);
+        hash += (userId != null ? userId.hashCode() : 0);
         return hash;
     }
 
     @Override
     public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the userID fields are not set
+        // TODO: Warning - this method won't work in the case the userId fields are not set
         if (!(object instanceof User)) {
             return false;
         }
         User other = (User) object;
-        if ((this.userID == null && other.userID != null) || (this.userID != null && !this.userID.equals(other.userID))) {
+        if ((this.userId == null && other.userId != null) || (this.userId != null && !this.userId.equals(other.userId))) {
             return false;
         }
         return true;
@@ -100,20 +110,20 @@ public abstract class User implements Serializable {
 
     @Override
     public String toString() {
-        return "ejb.entity.User[ id=" + userID + " ]";
+        return "ejb.entity.User[ id=" + userId + " ]";
     }
 
     /**
      * @return the phoneNumber
      */
-    public int getPhoneNumber() {
+    public String getPhoneNumber() {
         return phoneNumber;
     }
 
     /**
      * @param phoneNumber the phoneNumber to set
      */
-    public void setPhoneNumber(int phoneNumber) {
+    public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
 
@@ -214,6 +224,14 @@ public abstract class User implements Serializable {
      */
     public void setProfilePictureURL(String profilePictureURL) {
         this.profilePictureURL = profilePictureURL;
+    }
+
+    public String getSalt() {
+        return salt;
+    }
+
+    public void setSalt(String salt) {
+        this.salt = salt;
     }
 
     /**

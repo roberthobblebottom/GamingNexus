@@ -23,7 +23,7 @@ public class Category implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long categoryID;
+    private Long categoryId;
     @Column(nullable = false, unique = true, length = 32)
     @NotNull
     @Size(max = 32)
@@ -37,6 +37,7 @@ public class Category implements Serializable {
     private List<Category> subCategories;
     @ManyToOne
     private Category parentCategory;
+    
     @OneToMany(mappedBy = "category")
     private List<Product> products;
     
@@ -54,29 +55,29 @@ public class Category implements Serializable {
         this.description = description;
     }
 
-    public Long getCategoryID() {
-        return categoryID;
+    public Long getCategoryId() {
+        return categoryId;
     }
 
-    public void setCategoryID(Long categoryID) {
-        this.categoryID = categoryID;
+    public void setCategoryId(Long categoryId) {
+        this.categoryId = categoryId;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (categoryID != null ? categoryID.hashCode() : 0);
+        hash += (categoryId != null ? categoryId.hashCode() : 0);
         return hash;
     }
 
     @Override
     public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the categoryID fields are not set
+        // TODO: Warning - this method won't work in the case the categoryId fields are not set
         if (!(object instanceof Category)) {
             return false;
         }
         Category other = (Category) object;
-        if ((this.categoryID == null && other.categoryID != null) || (this.categoryID != null && !this.categoryID.equals(other.categoryID))) {
+        if ((this.categoryId == null && other.categoryId != null) || (this.categoryId != null && !this.categoryId.equals(other.categoryId))) {
             return false;
         }
         return true;
@@ -84,7 +85,7 @@ public class Category implements Serializable {
 
     @Override
     public String toString() {
-        return "entity.Category[ id=" + categoryID + " ]";
+        return "entity.Category[ id=" + categoryId + " ]";
     }
 
     /**

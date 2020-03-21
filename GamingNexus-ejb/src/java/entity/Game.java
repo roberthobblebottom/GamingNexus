@@ -6,6 +6,7 @@
 package entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
@@ -32,18 +33,22 @@ public class Game extends Product implements Serializable {
 
     public Game() {
         super();
+        gameAccounts = new ArrayList<>();
+        forums = new ArrayList<>();
     }
 
-    public Game(String parentAdvisory, List<String> gamePicturesURLs, List<String> gameTrailersURLS, List<GameAccount> gameAccounts, List<Forum> forums, String name, String description, String computerRequirements, double price, double averageRating, Company company, List<Tag> tags, List<Promotion> promotions, List<CartItem> cartItems, List<OwnedItem> ownedItems) {
-        super(name, description, computerRequirements, price, averageRating, company, tags, promotions, cartItems, ownedItems);
+    public Game(String name, String description, String computerRequirements, double price, double averageRating) {
+        super(name, description, computerRequirements, price, averageRating);
+        gameAccounts = new ArrayList<>();
+        forums = new ArrayList<>();
+    }
+
+    public Game(String parentAdvisory, List<String> gamePicturesURLs, List<String> gameTrailersURLS, String name, String description, String computerRequirements, double price, double averageRating) {
+        super(name, description, computerRequirements, price, averageRating);
         this.parentAdvisory = parentAdvisory;
         this.gamePicturesURLs = gamePicturesURLs;
         this.gameTrailersURLS = gameTrailersURLS;
-        this.gameAccounts = gameAccounts;
-        this.forums = forums;
     }
-    
-    
 
     /**
      * @return the parentAdvisory

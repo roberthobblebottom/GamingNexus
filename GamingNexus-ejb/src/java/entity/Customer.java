@@ -7,6 +7,7 @@ package entity;
 
 import java.io.Serializable;
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -34,6 +35,7 @@ public class Customer extends User implements Serializable {
     @NotNull
     @Size(min = 5, max = 100)
     private String securityAnswer;
+    
     @OneToMany(mappedBy = "Customer")
     private List<OwnedItem> ownedItems;
     @OneToOne(optional = false, mappedBy = "Customer")
@@ -52,22 +54,35 @@ public class Customer extends User implements Serializable {
 
     public Customer() {
         super();
+        ownedItems = new ArrayList<>();
+        ratings = new ArrayList<>();
+        customers = new ArrayList<>();
+        gameAccounts = new ArrayList<>();
+        chats = new ArrayList<>();
+        listOfDeliverables = new ArrayList<>();   
     }
 
-    public Customer(String currentGamePlaying, Date unbanDate, String securityQuestion, String securityAnswer, List<OwnedItem> ownedItems, ShoppingCart shoppingCart, List<Rating> ratings, List<Customer> customers, List<GameAccount> gameAccounts, List<Chat> chats, List<Deliverables> listOfDeliverables, int phoneNumber, String address, String email, String country, String username, String password, String profilePictureURL, Date lastOnline) {
+    public Customer(String phoneNumber, String address, String email, String country, String username, String password, String profilePictureURL, java.util.Date lastOnline) {
+        super(phoneNumber, address, email, country, username, password, profilePictureURL, lastOnline);
+        ownedItems = new ArrayList<>();
+        ratings = new ArrayList<>();
+        customers = new ArrayList<>();
+        gameAccounts = new ArrayList<>();
+        chats = new ArrayList<>();
+        listOfDeliverables = new ArrayList<>(); 
+    }
+
+    
+    public Customer(String currentGamePlaying, Date unbanDate, String securityQuestion, String securityAnswer, String phoneNumber, String address, String email, String country, String username, String password, String profilePictureURL, java.util.Date lastOnline) {
         super(phoneNumber, address, email, country, username, password, profilePictureURL, lastOnline);
         this.currentGamePlaying = currentGamePlaying;
         this.unbanDate = unbanDate;
         this.securityQuestion = securityQuestion;
         this.securityAnswer = securityAnswer;
-        this.ownedItems = ownedItems;
-        this.shoppingCart = shoppingCart;
-        this.ratings = ratings;
-        this.customers = customers;
-        this.gameAccounts = gameAccounts;
-        this.chats = chats;
-        this.listOfDeliverables = listOfDeliverables;
     }
+
+    
+ 
 
  
     /**

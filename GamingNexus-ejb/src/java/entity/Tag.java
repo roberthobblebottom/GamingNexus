@@ -6,6 +6,7 @@
 package entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -25,45 +26,46 @@ public class Tag implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long tagID;
+    private Long tagId;
     @NotNull
     @Size(min = 1, max = 50)
     private String tagName;
+    
     @ManyToMany
     private List<Product> products;
 
     public Tag() {
+        products = new ArrayList<>();
     }
 
-    public Tag(String tagName,List<Product> products) {
+    public Tag(String tagName) {
         this();
         this.tagName = tagName;
-        this.products = products;
     }
 
-    public Long getTagID() {
-        return tagID;
+    public Long getTagId() {
+        return tagId;
     }
 
-    public void setTagID(Long tagID) {
-        this.tagID = tagID;
+    public void setTagId(Long tagId) {
+        this.tagId = tagId;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (tagID != null ? tagID.hashCode() : 0);
+        hash += (tagId != null ? tagId.hashCode() : 0);
         return hash;
     }
 
     @Override
     public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the tagID fields are not set
+        // TODO: Warning - this method won't work in the case the tagId fields are not set
         if (!(object instanceof Tag)) {
             return false;
         }
         Tag other = (Tag) object;
-        if ((this.tagID == null && other.tagID != null) || (this.tagID != null && !this.tagID.equals(other.tagID))) {
+        if ((this.tagId == null && other.tagId != null) || (this.tagId != null && !this.tagId.equals(other.tagId))) {
             return false;
         }
         return true;
@@ -71,7 +73,7 @@ public class Tag implements Serializable {
 
     @Override
     public String toString() {
-        return "ejb.entity.Tag[ id=" + tagID + " ]";
+        return "ejb.entity.Tag[ id=" + tagId + " ]";
     }
 
     /**

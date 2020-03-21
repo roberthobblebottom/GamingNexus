@@ -6,6 +6,7 @@
 package entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
@@ -31,21 +32,32 @@ public class Hardware extends Product implements Serializable {
     @Size(min = 0, max = 100)
     @NotNull
     private String deliveryFirm;
+    
     @OneToMany(mappedBy = "Hardware")
     private List<Deliverables> deliverables;
 
     public Hardware() {
         super();
+        deliverables = new ArrayList<>();
     }
 
-    public Hardware(String warrentyDescription, String technicalspecification, String manufactoringCountry, String deliveryFirm, List<Deliverables> deliverables, String name, String description, String computerRequirements, double price, double averageRating, Company company, List<Tag> tags, List<Promotion> promotions, List<CartItem> cartItems, List<OwnedItem> ownedItems) {
-        super(name, description, computerRequirements, price, averageRating, company, tags, promotions, cartItems, ownedItems);
+    
+    public Hardware(String name, String description, String computerRequirements, double price, double averageRating) {
+        super(name, description, computerRequirements, price, averageRating);
+        deliverables = new ArrayList<>();
+    }
+
+    
+    public Hardware(String warrentyDescription, String technicalspecification, String manufactoringCountry, String deliveryFirm, String name, String description, String computerRequirements, double price, double averageRating) {
+        super(name, description, computerRequirements, price, averageRating);
         this.warrentyDescription = warrentyDescription;
         this.technicalspecification = technicalspecification;
         this.manufactoringCountry = manufactoringCountry;
         this.deliveryFirm = deliveryFirm;
-        this.deliverables = deliverables;
     }
+
+    
+    
 
 
     /**

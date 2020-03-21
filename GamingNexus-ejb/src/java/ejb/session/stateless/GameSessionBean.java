@@ -1,6 +1,7 @@
 package ejb.session.stateless;
 
 import entity.Category;
+import entity.Company;
 import entity.Game;
 import entity.Product;
 import entity.Tag;
@@ -15,6 +16,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceException;
 import javax.persistence.Query;
 import util.exception.CategoryNotFoundException;
+import util.exception.CompanyNotFoundException;
 import util.exception.CreateNewProductException;
 import util.exception.InputDataValidationException;
 import util.exception.ProductNotFoundException;
@@ -30,6 +32,9 @@ import util.exception.UpdateProductException;
 @Stateless
 public class GameSessionBean implements GameSessionBeanLocal {
 
+    @EJB
+    private CompanySessionBeanLocal companySessionBeanLocal;
+
     @EJB(name = "TagSessionBeanLocal")
     private TagSessionBeanLocal tagSessionBeanLocal;
 
@@ -43,9 +48,10 @@ public class GameSessionBean implements GameSessionBeanLocal {
     private EntityManager em;
 
     public GameSessionBean() {
+
     }
 
-    public Game createNewGame(Game newGame, Long categoryId, List<Long> tagIds) throws ProductSkuCodeExistException, UnknownPersistenceException, InputDataValidationException, CreateNewProductException {
+    public Game createNewGame(Game newGame, Long categoryId, List<Long> tagIds, Long CompanyId) throws ProductSkuCodeExistException, UnknownPersistenceException, InputDataValidationException, CreateNewProductException, CompanyNotFoundException {
         try {
             if (categoryId == null) {
                 throw new CreateNewProductException("The new product must be associated a leaf category");
@@ -55,9 +61,15 @@ public class GameSessionBean implements GameSessionBeanLocal {
             if (!category.getSubCategories().isEmpty()) {
                 throw new CreateNewProductException("Selected category for the new product is not a leaf category");
             }
+            
+            if (CompanyId == null) {
+                throw new CreateNewProductException("The new product must be associated a company");
+            }
+            Company company = companySessionBeanLocal.retrieveCompanyById(categoryId);
 
             em.persist(newGame);
             newGame.setCategory(category);
+            newGame.setCompany(company);
 
             if (tagIds != null && (!tagIds.isEmpty())) {
                 for (Long tagId : tagIds) {
@@ -126,7 +138,7 @@ public class GameSessionBean implements GameSessionBeanLocal {
 
         Collections.sort(productEntities, new Comparator<Product>() {
             public int compare(Product pe1, Product pe2) {
-                return pe1.getProductID().compareTo(pe2.getProductID());
+                return pe1.getProductId().compareTo(pe2.getProductId());
             }
         });
 
@@ -175,7 +187,7 @@ public class GameSessionBean implements GameSessionBeanLocal {
 
             Collections.sort(productEntities, new Comparator<Product>() {
                 public int compare(Product pe1, Product pe2) {
-                    return pe1.getProductID().compareTo(pe2.getProductID());
+                    return pe1.getProductId().compareTo(pe2.getProductId());
                 }
             });
 
@@ -197,10 +209,10 @@ public class GameSessionBean implements GameSessionBeanLocal {
     }
 
     public void updateProduct(Product productEntity, Long categoryId, List<Long> tagIds) throws ProductNotFoundException, CategoryNotFoundException, TagNotFoundException, UpdateProductException, InputDataValidationException {
-        if (productEntity != null && productEntity.getProductID() != null) {
-            Product productEntityToUpdate = retrieveProductByProductId(productEntity.getProductID());
+        if (productEntity != null && productEntity.getProductId() != null) {
+            Product productEntityToUpdate = retrieveProductByProductId(productEntity.getProductId());
 
-            if (categoryId != null && (!productEntityToUpdate.getCategory().getCategoryID().equals(categoryId))) {
+            if (categoryId != null && (!productEntityToUpdate.getCategory().getCategoryId().equals(categoryId))) {
                 Category categoryEntityToUpdate = categorySessionBeanLocal.retrieveCategoryByCategoryId(categoryId);
 
                 if (!categoryEntityToUpdate.getSubCategories().isEmpty()) {
@@ -243,7 +255,6 @@ public class GameSessionBean implements GameSessionBeanLocal {
         }
     }
      */
-
     private List<Product> addSubCategoryProducts(Category categoryEntity) {
         List<Product> productEntities = new ArrayList<>();
 

@@ -20,6 +20,10 @@
                     <p:submenu label="System Administration" rendered="#{sessionScope.isLogin == true}">
                         <p:menuitem value="System Admin Management" outcome="/systemAdministration/systemAdminManagement.xhtml" icon="fa fa-users" />
                         
+                        <p:submenu label="Product Management" rendered="#{sessionScope.isLogin == true}">
+                            <p:menuitem value="Game Management" outcome="/productManagement/gameManagement.xhtml"  icon="fas fa-gamepad"/>
+                        </p:submenu>
+                        
                     </p:submenu>                        
 
                 </p:menu>

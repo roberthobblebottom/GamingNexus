@@ -18,7 +18,9 @@
                 <p:menuitem icon="fa fa-home" url="#{application.contextPath}/index.xhtml" style="text-decoration-line: none;" />
               
                 <p:menuitem value="System Administration" rendered="#{cc.attrs.pageName == 'productManagement' ||
-                                                                        cc.attrs.pageName == 'staffManagement' ||                                                                        
+                                                                        cc.attrs.pageName == 'systemAdminManagement' || 
+                                                                        cc.attrs.pageName == 'gameManagememt' ||
+                                                                        cc.attrs.pageName == 'viewAllProduct' ||
                                                                         cc.attrs.pageName == 'searchProductsByName' ||
                                                                         cc.attrs.pageName == 'filterProductsByCategory' ||
                                                                         cc.attrs.pageName == 'filterProductsByTags'}" />
