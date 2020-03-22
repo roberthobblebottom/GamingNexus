@@ -12,7 +12,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.Min;
@@ -41,23 +41,15 @@ public class ShoppingCart implements Serializable {
     @Min(0)
     @Digits(integer = 1000000000, fraction = 2)
     private double netTotalPayable;
-    @OneToMany(mappedBy = "ShoppingCart")
-    private List<CartItem> cartItems;
-    @OneToOne(optional = false)
-    @JoinColumn(nullable = false)
-    @NotNull
-    private Customer customer;
 
     public ShoppingCart() {
     }
 
-    public ShoppingCart(double subTotalPayable, double discount, double netTotalPayable, List<CartItem> cartItems, Customer customer) {
+    public ShoppingCart(double subTotalPayable, double discount, double netTotalPayable) {
         this();
         this.subTotalPayable = subTotalPayable;
         this.discount = discount;
         this.netTotalPayable = netTotalPayable;
-        this.cartItems = cartItems;
-        this.customer = customer;
     }
 
     public Long getShoppingCartID() {
@@ -133,34 +125,6 @@ public class ShoppingCart implements Serializable {
      */
     public void setNetTotalPayable(double netTotalPayable) {
         this.netTotalPayable = netTotalPayable;
-    }
-
-    /**
-     * @return the customer
-     */
-    public Customer getCustomer() {
-        return customer;
-    }
-
-    /**
-     * @param customer the customer to set
-     */
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
-    }
-
-    /**
-     * @return the cartItems
-     */
-    public List<CartItem> getCartItems() {
-        return cartItems;
-    }
-
-    /**
-     * @param cartItems the cartItems to set
-     */
-    public void setCartItems(List<CartItem> cartItems) {
-        this.cartItems = cartItems;
     }
 
 }

@@ -6,7 +6,7 @@
 package entity;
 
 import java.io.Serializable;
-import java.sql.Date;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Entity;
@@ -19,34 +19,36 @@ import javax.persistence.OneToMany;
 @Entity
 public class Company extends User implements Serializable {
 
-    @OneToMany(mappedBy = "Company")
-    private List<Product> products;
-    @OneToMany(mappedBy = "Company")
+    @OneToMany(mappedBy = "company")
+    private List<Game> games;
+    @OneToMany(mappedBy = "company")
     private List<Chat> chats;
 
     public Company() {
         super();
+        games = new ArrayList<>();
+        chats = new ArrayList<>();
     }
 
     
-    public Company(String phoneNumber, String address, String email, String country, String username, String password, String profilePictureURL, java.util.Date lastOnline) {
+    public Company(String phoneNumber, String address, String email, String country, String username, String password, String profilePictureURL, LocalDateTime lastOnline) {
         super(phoneNumber, address, email, country, username, password, profilePictureURL, lastOnline);
-        products = new ArrayList<>();
+        games = new ArrayList<>();
         chats = new ArrayList<>();
     }
 
     /**
-     * @return the products
+     * @return the games
      */
-    public List<Product> getProducts() {
-        return products;
+    public List<Game> getGames() {
+        return games;
     }
 
     /**
-     * @param products the products to set
+     * @param games the games to set
      */
-    public void setProducts(List<Product> products) {
-        this.products = products;
+    public void setGames(List<Game> games) {
+        this.games = games;
     }
 
     /**

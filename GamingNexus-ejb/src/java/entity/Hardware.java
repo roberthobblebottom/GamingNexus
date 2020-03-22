@@ -33,7 +33,7 @@ public class Hardware extends Product implements Serializable {
     @NotNull
     private String deliveryFirm;
     
-    @OneToMany(mappedBy = "Hardware")
+    @OneToMany(mappedBy = "hardware")
     private List<Deliverables> deliverables;
 
     public Hardware() {

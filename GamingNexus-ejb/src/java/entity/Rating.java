@@ -12,6 +12,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.Max;
@@ -42,12 +43,10 @@ public class Rating implements Serializable {
     @NotNull
     @Past
     private Date dateOfReview;
-    @NotNull
-    @OneToOne(optional=false)
-    @JoinColumn(nullable=false)
+    
+    @ManyToOne
     private Product product;
-    @OneToOne(optional=false)
-    @JoinColumn(nullable=false)
+    @ManyToOne
     @NotNull
     private Customer customer;
 

@@ -19,7 +19,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-import javax.validation.constraints.Digits;  
+import javax.validation.constraints.Digits;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
@@ -54,7 +54,7 @@ public abstract class Product implements Serializable {
     @Max(5)
     @NotNull
     protected double averageRating;
-    
+
     @NotNull
     @OneToOne(optional = false)
     @JoinColumn(nullable = false)
@@ -64,13 +64,13 @@ public abstract class Product implements Serializable {
     protected Category category;
     @ManyToMany(mappedBy = "products")
     protected List<Tag> tags;
-    @ManyToMany()
+    @ManyToMany(mappedBy = "products")
     protected List<Promotion> promotions;
-    @OneToMany(mappedBy = "Product")
+    @OneToMany(mappedBy = "product")
     protected List<Rating> ratings;
-    @OneToMany(mappedBy = "Product")
-    protected List<CartItem> cartItems;
-    @OneToMany(mappedBy = "Product")
+    @OneToMany(mappedBy = "product")
+    private List<CartItem> cartItems;
+    @OneToMany(mappedBy = "product")
     protected List<OwnedItem> ownedItems;
 
     public Product() {
@@ -88,39 +88,25 @@ public abstract class Product implements Serializable {
         this.price = price;
         this.averageRating = averageRating;
     }
-    
-    
 
-    
-    
-    public void addTag(Tag tagEntity)
-    {
-        if(tagEntity != null)
-        {
-            if(!this.tags.contains(tagEntity))
-            {
+    public void addTag(Tag tagEntity) {
+        if (tagEntity != null) {
+            if (!this.tags.contains(tagEntity)) {
                 this.tags.add(tagEntity);
-                
-                if(!tagEntity.getProducts().contains(this))
-                {                    
+
+                if (!tagEntity.getProducts().contains(this)) {
                     tagEntity.getProducts().add(this);
                 }
             }
         }
     }
-    
-    
-    
-    public void removeTag(Tag tagEntity)
-    {
-        if(tagEntity != null)
-        {
-            if(this.tags.contains(tagEntity))
-            {
+
+    public void removeTag(Tag tagEntity) {
+        if (tagEntity != null) {
+            if (this.tags.contains(tagEntity)) {
                 this.tags.remove(tagEntity);
-                
-                if(tagEntity.getProducts().contains(this))
-                {
+
+                if (tagEntity.getProducts().contains(this)) {
                     tagEntity.getProducts().remove(this);
                 }
             }
@@ -290,19 +276,8 @@ public abstract class Product implements Serializable {
     }
 
     /**
-     * @return the cartItems
+     * @return the shoppingCart
      */
-    public List<CartItem> getCartItem() {
-        return cartItems;
-    }
-
-    /**
-     * @param cartItems the cartItems to set
-     */
-    public void setCartItem(List<CartItem> cartItems) {
-        this.cartItems = cartItems;
-    }
-
     /**
      * @return the ownedItems
      */
@@ -328,23 +303,29 @@ public abstract class Product implements Serializable {
      * @param category the category to set
      */
     public void setCategory(Category category) {
-        if(this.category != null)
-        {
-            if(this.category.getProducts().contains(this))
-            {
+        if (this.category != null) {
+            if (this.category.getProducts().contains(this)) {
                 this.category.getProducts().remove(this);
             }
         }
-        
+
         this.category = category;
-        
-        if(this.category != null)
-        {
-            if(!this.category.getProducts().contains(this))
-            {
+
+        if (this.category != null) {
+            if (!this.category.getProducts().contains(this)) {
                 this.category.getProducts().add(this);
             }
         }
     }
+
+    public List<CartItem> getCartItems() {
+        return cartItems;
+    }
+
+    public void setCartItems(List<CartItem> cartItems) {
+        this.cartItems = cartItems;
+    }
+
+
 
 }

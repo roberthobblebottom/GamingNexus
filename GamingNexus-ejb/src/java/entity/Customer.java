@@ -7,6 +7,7 @@ package entity;
 
 import java.io.Serializable;
 import java.sql.Date;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Entity;
@@ -19,7 +20,7 @@ import javax.validation.constraints.Size;
 
 /**
  *
- * @author root
+ * @author jinyichen
  */
 @Entity
 public class Customer extends User implements Serializable {
@@ -36,44 +37,41 @@ public class Customer extends User implements Serializable {
     @Size(min = 5, max = 100)
     private String securityAnswer;
     
-    @OneToMany(mappedBy = "Customer")
+    @OneToMany(mappedBy = "customer")
     private List<OwnedItem> ownedItems;
-    @OneToOne(optional = false, mappedBy = "Customer")
-    @JoinColumn(nullable = false)
-    private ShoppingCart shoppingCart;
-    @OneToMany
+    @OneToMany(mappedBy = "customer")
     private List<Rating> ratings;
     @OneToMany
-    private List<Customer> customers;
-    @OneToMany(mappedBy = "Customer")
+    private List<Customer> otherCustomers;
+    @OneToMany(mappedBy = "customer")
     private List<GameAccount> gameAccounts;
-    @OneToMany(mappedBy = "Customer")
+    @OneToMany(mappedBy = "customer")
     private List<Chat> chats;
-    @OneToMany(mappedBy = "Customer")
+    @OneToMany(mappedBy = "customer")
     private List<Deliverables> listOfDeliverables;
 
     public Customer() {
         super();
         ownedItems = new ArrayList<>();
         ratings = new ArrayList<>();
-        customers = new ArrayList<>();
+        otherCustomers = new ArrayList<>();
         gameAccounts = new ArrayList<>();
         chats = new ArrayList<>();
         listOfDeliverables = new ArrayList<>();   
     }
 
-    public Customer(String phoneNumber, String address, String email, String country, String username, String password, String profilePictureURL, java.util.Date lastOnline) {
+    public Customer(String phoneNumber, String address, String email, String country, String username, String password, String profilePictureURL, LocalDateTime lastOnline) {
         super(phoneNumber, address, email, country, username, password, profilePictureURL, lastOnline);
         ownedItems = new ArrayList<>();
         ratings = new ArrayList<>();
-        customers = new ArrayList<>();
+        otherCustomers = new ArrayList<>();
         gameAccounts = new ArrayList<>();
         chats = new ArrayList<>();
         listOfDeliverables = new ArrayList<>(); 
     }
 
     
-    public Customer(String currentGamePlaying, Date unbanDate, String securityQuestion, String securityAnswer, String phoneNumber, String address, String email, String country, String username, String password, String profilePictureURL, java.util.Date lastOnline) {
+    public Customer(String currentGamePlaying, Date unbanDate, String securityQuestion, String securityAnswer, String phoneNumber, String address, String email, String country, String username, String password, String profilePictureURL, LocalDateTime lastOnline) {
         super(phoneNumber, address, email, country, username, password, profilePictureURL, lastOnline);
         this.currentGamePlaying = currentGamePlaying;
         this.unbanDate = unbanDate;
@@ -156,20 +154,6 @@ public class Customer extends User implements Serializable {
     }
 
     /**
-     * @return the shoppingCart
-     */
-    public ShoppingCart getShoppingCart() {
-        return shoppingCart;
-    }
-
-    /**
-     * @param shoppingCart the shoppingCart to set
-     */
-    public void setShoppingCart(ShoppingCart shoppingCart) {
-        this.shoppingCart = shoppingCart;
-    }
-
-    /**
      * @return the ratings
      */
     public List<Rating> getRatings() {
@@ -198,17 +182,17 @@ public class Customer extends User implements Serializable {
     }
 
     /**
-     * @return the customers
+     * @return the otherCustomers
      */
-    public List<Customer> getCustomers() {
-        return customers;
+    public List<Customer> getOtherCustomers() {
+        return otherCustomers;
     }
 
     /**
-     * @param customers the customers to set
+     * @param otherCustomers the otherCustomers to set
      */
-    public void setCustomers(List<Customer> customers) {
-        this.customers = customers;
+    public void setOtherCustomers(List<Customer> otherCustomers) {
+        this.otherCustomers = otherCustomers;
     }
 
     /**

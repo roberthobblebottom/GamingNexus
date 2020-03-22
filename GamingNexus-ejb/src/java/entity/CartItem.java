@@ -6,12 +6,13 @@
 package entity;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
 /**
@@ -25,21 +26,28 @@ public class CartItem implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long cartItemID;
-    @OneToOne(optional = false)
-    @JoinColumn(nullable = false)
-    @NotNull
-    private Product product;
-    @OneToOne
-    @JoinColumn(nullable = false)
-    private ShoppingCart shoppingCart;
 
+    @NotNull
+    private int serialNumber;
+    @NotNull
+    @Min(0)
+    private int quantity;
+    @NotNull
+    @Min(0)
+    private BigDecimal unitPrice;
+    @NotNull
+    @Min(0)
+    private BigDecimal subTotal;
+    
+    
+    @ManyToOne
+    private Product product;
+            
     public CartItem() {
     }
 
     public CartItem(Product product, ShoppingCart shoppingCart) {
         this();
-        this.product = product;
-        this.shoppingCart = shoppingCart;
     }
 
     public Long getCartItemID() {
@@ -73,34 +81,6 @@ public class CartItem implements Serializable {
     @Override
     public String toString() {
         return "ejb.entity.CartItem[ id=" + cartItemID + " ]";
-    }
-
-    /**
-     * @return the product
-     */
-    public Product getProduct() {
-        return product;
-    }
-
-    /**
-     * @param product the product to set
-     */
-    public void setProduct(Product product) {
-        this.product = product;
-    }
-
-    /**
-     * @return the shoppingCart
-     */
-    public ShoppingCart getShoppingCart() {
-        return shoppingCart;
-    }
-
-    /**
-     * @param shoppingCart the shoppingCart to set
-     */
-    public void setShoppingCart(ShoppingCart shoppingCart) {
-        this.shoppingCart = shoppingCart;
     }
 
 }

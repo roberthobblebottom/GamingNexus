@@ -35,7 +35,7 @@ public class Forum implements Serializable {
 
     @OneToOne
     private Forum forum;
-    @OneToMany(mappedBy = "Forum")
+    @OneToMany(mappedBy = "forum")
     private List<Message> messages;
 
     public Forum() {

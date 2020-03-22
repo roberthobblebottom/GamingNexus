@@ -6,7 +6,8 @@
 package entity;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDateTime;
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -14,12 +15,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Past;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import util.security.CryptographicHelper;
+import java.util.ArrayList;
 
 /**
  *
@@ -52,23 +54,23 @@ public abstract class User implements Serializable {
     protected String username;    
     @Column(columnDefinition = "CHAR(32) NOT NULL")
     @NotNull
-    @Min(8)
+    @Min(6)
     private String password;
     @Column(columnDefinition = "CHAR(32) NOT NULL")
     private String salt;
-
-    
     protected String profilePictureURL;//https://stackoverflow.com/questions/29208007/what-is-the-data-type-for-images-in-java
-    @Past
     @NotNull
-    protected Date lastOnline;
+    protected LocalDateTime lastOnline;
     
+    @OneToMany(mappedBy = "user")
+    private List<SaleTransaction> saleTransactions;
 
     public User() {
         this.salt = CryptographicHelper.getInstance().generateRandomString(32);
+        saleTransactions = new ArrayList<>();
     }
 
-    public User(String phoneNumber, String address, String email, String country, String username, String password, String profilePictureURL, Date lastOnline) {
+    public User(String phoneNumber, String address, String email, String country, String username, String password, String profilePictureURL, LocalDateTime lastOnline) {
         this();
         this.phoneNumber = phoneNumber;
         this.address = address;
@@ -187,14 +189,14 @@ public abstract class User implements Serializable {
     /**
      * @return the lastOnline
      */
-    public Date getLastOnline() {
+    public LocalDateTime getLastOnline() {
         return lastOnline;
     }
 
     /**
      * @param lastOnline the lastOnline to set
      */
-    public void setLastOnline(Date lastOnline) {
+    public void setLastOnline(LocalDateTime lastOnline) {
         this.lastOnline = lastOnline;
     }
 
@@ -232,6 +234,14 @@ public abstract class User implements Serializable {
 
     public void setSalt(String salt) {
         this.salt = salt;
+    }
+
+    public List<SaleTransaction> getSaleTransactions() {
+        return saleTransactions;
+    }
+
+    public void setSaleTransactions(List<SaleTransaction> saleTransactions) {
+        this.saleTransactions = saleTransactions;
     }
 
     /**

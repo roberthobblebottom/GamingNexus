@@ -33,9 +33,10 @@ public class Chat implements Serializable {
     private String chatName;
     @NotNull
     private boolean isGroupChat;
+    
     @ManyToOne
     private Customer customer;
-    @OneToMany(mappedBy = "Chat")
+    @OneToMany(mappedBy = "chat")
     private List<Message> messages;
     @ManyToOne
     private Company company;

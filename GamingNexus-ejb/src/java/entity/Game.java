@@ -9,6 +9,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -26,9 +27,11 @@ public class Game extends Product implements Serializable {
     private List<String> gamePicturesURLs;
     private List<String> gameTrailersURLS;
 
-    @OneToMany(mappedBy = "Game")
+    @ManyToOne
+    private Company company;
+    @OneToMany(mappedBy = "game")
     private List<GameAccount> gameAccounts;
-    @OneToMany(mappedBy = "Game")
+    @OneToMany(mappedBy = "game")
     private List<Forum> forums;
 
     public Game() {

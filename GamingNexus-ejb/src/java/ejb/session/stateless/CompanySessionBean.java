@@ -57,7 +57,7 @@ public class CompanySessionBean implements CompanySessionBeanLocal {
 
     @Override
     public List<Company> retrieveAllCompanies() {
-        Query query = em.createQuery("SELECT c FROM Company s");
+        Query query = em.createQuery("SELECT c FROM Company c");
 
         return query.getResultList();
     }

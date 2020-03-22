@@ -6,17 +6,18 @@
 package ejb.session.singleton;
 
 import ejb.session.stateless.CategorySessionBeanLocal;
+import ejb.session.stateless.CompanySessionBeanLocal;
 import ejb.session.stateless.GameSessionBeanLocal;
 import ejb.session.stateless.SystemAdminSessionBeanLocal;
 import ejb.session.stateless.TagSessionBeanLocal;
 import entity.Category;
 import entity.Company;
 import entity.Game;
+import entity.Product;
 import entity.SystemAdmin;
 import entity.Tag;
-import entity.User;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -26,6 +27,7 @@ import javax.ejb.Startup;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import util.exception.CompanyNotFoundException;
+import util.exception.CompanyUsernameExistException;
 import util.exception.CreateNewCategoryException;
 import util.exception.CreateNewProductException;
 import util.exception.CreateNewTagException;
@@ -43,6 +45,9 @@ import util.exception.UnknownPersistenceException;
 @Startup
 public class DataInitSessionBean {
 
+    @EJB
+    private CompanySessionBeanLocal companySessionBeanLocal;
+
     @EJB(name = "GameSessionBeanLocal")
     private GameSessionBeanLocal gameSessionBeanLocal;
 
@@ -54,9 +59,12 @@ public class DataInitSessionBean {
 
     @EJB(name = "SystemAdminSessionBeanLocal")
     private SystemAdminSessionBeanLocal systemAdminSessionBeanLocal;
+    
+    
 
     @PersistenceContext(unitName = "GamingNexus-ejbPU")
     private EntityManager em;
+    
 
     public DataInitSessionBean() {
     }
@@ -110,11 +118,12 @@ public class DataInitSessionBean {
 
             List<Long> tagIdsEmpty = new ArrayList<>();
             
-            User company1 = new Company("1231", "Singapore", "company@gmail.com", "Singapore", "company1", "password", "picture", new Date());
+            Company Valve = companySessionBeanLocal.createNewCompany(new Company("12314567", "Singapore", "company@gmail.com", "Singapore", "valve", "password", "picture", LocalDateTime.now()));
+            
 
-            gameSessionBeanLocal.createNewGame(new Game("Cs_Go", "WOrse Than CF", "No Mac Pls", 22.5, 1.5), categoryEntitySoftware.getCategoryId(), tagIdsDiscount, company1.getUserId());
+            Game cs_go = gameSessionBeanLocal.createNewGame(new Game("Cs_Go", "WOrse Than CF", "No Mac Pls", 22.5, 1.5), categoryEntitySoftware.getCategoryId(), tagIdsDiscount, Valve.getUserId());
 
-        } catch (SystemAdminUsernameExistException | UnknownPersistenceException | InputDataValidationException | CreateNewCategoryException | CreateNewTagException | CreateNewProductException | ProductSkuCodeExistException | CompanyNotFoundException ex) {
+        } catch (SystemAdminUsernameExistException | UnknownPersistenceException | InputDataValidationException | CreateNewCategoryException | CreateNewTagException | CreateNewProductException | ProductSkuCodeExistException | CompanyNotFoundException | CompanyUsernameExistException ex) {
             ex.printStackTrace();
         }
     }
