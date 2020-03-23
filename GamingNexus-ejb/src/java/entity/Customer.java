@@ -28,12 +28,10 @@ public class Customer extends User implements Serializable {
     @Size(min = 1, max = 100)
     private String currentGamePlaying;
     private boolean isBanned = false;
-    @Future
+   // @Future
     private Date unbanDate;
-    @NotNull
     @Size(min = 5, max = 100)
     private String securityQuestion;
-    @NotNull
     @Size(min = 5, max = 100)
     private String securityAnswer;
     

@@ -21,18 +21,15 @@ import javax.validation.constraints.Size;
 @Entity
 public class Game extends Product implements Serializable {
 
-    @NotNull
+    
     @Size(min = 1, max = 5)
     private String parentAdvisory;
     private List<String> gamePicturesURLs;
     private List<String> gameTrailersURLS;
 
-    @ManyToOne
-    private Company company;
+
     @OneToMany(mappedBy = "game")
     private List<GameAccount> gameAccounts;
-    @OneToMany(mappedBy = "game")
-    private List<Forum> forums;
 
     public Game() {
         super();

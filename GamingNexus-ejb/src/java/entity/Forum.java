@@ -6,11 +6,13 @@
 package entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
@@ -30,24 +32,25 @@ public class Forum implements Serializable {
     @NotNull
     @Size(min = 1, max = 50)
     private String forumName;
-    @OneToOne
-    private Game game;
-
+    
+    
+    @ManyToOne
+    private Product product;
     @OneToOne
     private Forum forum;
     @OneToMany(mappedBy = "forum")
     private List<Message> messages;
 
     public Forum() {
+        messages = new ArrayList<>();
     }
 
-    public Forum(String forumName, Game game, Forum forum, List<Message> messages) {
+    public Forum(String forumName) {
         this();
         this.forumName = forumName;
-        this.game = game;
-        this.forum = forum;
-        this.messages = messages;
     }
+
+    
 
 
     public Long getForumId() {
@@ -97,19 +100,6 @@ public class Forum implements Serializable {
         this.forumName = forumName;
     }
 
-    /**
-     * @return the game
-     */
-    public Game getGame() {
-        return game;
-    }
-
-    /**
-     * @param game the game to set
-     */
-    public void setGame(Game game) {
-        this.game = game;
-    }
 
     /**
      * @return the forum
@@ -137,6 +127,14 @@ public class Forum implements Serializable {
      */
     public void setMessages(List<Message> messages) {
         this.messages = messages;
+    }
+
+    public Product getProduct() {
+        return product;
+    }
+
+    public void setProduct(Product products) {
+        this.product = product;
     }
 
 }

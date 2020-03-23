@@ -20,36 +20,24 @@ import javax.persistence.OneToMany;
 public class Company extends User implements Serializable {
 
     @OneToMany(mappedBy = "company")
-    private List<Game> games;
+    private List<Product> products;
     @OneToMany(mappedBy = "company")
     private List<Chat> chats;
 
     public Company() {
         super();
-        games = new ArrayList<>();
+        products = new ArrayList<>();
         chats = new ArrayList<>();
     }
 
     
     public Company(String phoneNumber, String address, String email, String country, String username, String password, String profilePictureURL, LocalDateTime lastOnline) {
         super(phoneNumber, address, email, country, username, password, profilePictureURL, lastOnline);
-        games = new ArrayList<>();
+        products = new ArrayList<>();
         chats = new ArrayList<>();
     }
 
-    /**
-     * @return the games
-     */
-    public List<Game> getGames() {
-        return games;
-    }
 
-    /**
-     * @param games the games to set
-     */
-    public void setGames(List<Game> games) {
-        this.games = games;
-    }
 
     /**
      * @return the chats
@@ -63,6 +51,14 @@ public class Company extends User implements Serializable {
      */
     public void setChats(List<Chat> chats) {
         this.chats = chats;
+    }
+
+    public List<Product> getProducts() {
+        return products;
+    }
+
+    public void setProducts(List<Product> products) {
+        this.products = products;
     }
 
 }

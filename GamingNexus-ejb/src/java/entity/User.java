@@ -43,8 +43,6 @@ public abstract class User implements Serializable {
     protected String address;
     @NotNull
     @Size(min = 6, max = 100)
-    @Pattern(regexp = "@\"^([0-9a-zA-Z](?>[-.\\w]*[0-9a-zA-Z])*@(?>[0-9a-zA-Z][-\\w]*[0-9a-zA-Z]\\.)+[a-zA-Z]{2,9})$\",")
-    //https://stackoverflow.com/questions/13087755/can-anyone-tell-me-why-this-c-sharp-email-validation-regular-expression-regex
     protected String email;
     @NotNull
     @Size(min = 1, max = 50)
@@ -54,7 +52,7 @@ public abstract class User implements Serializable {
     protected String username;    
     @Column(columnDefinition = "CHAR(32) NOT NULL")
     @NotNull
-    @Min(6)
+    @Size(min = 6)
     private String password;
     @Column(columnDefinition = "CHAR(32) NOT NULL")
     private String salt;

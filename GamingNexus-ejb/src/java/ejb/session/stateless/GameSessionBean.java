@@ -33,13 +33,13 @@ import util.exception.UpdateProductException;
 public class GameSessionBean implements GameSessionBeanLocal {
 
     @EJB
+    private SaleTransactionSessionBeanLocal saleTransactionSessionBeanLocal;
+
+    @EJB
     private CompanySessionBeanLocal companySessionBeanLocal;
 
     @EJB(name = "TagSessionBeanLocal")
     private TagSessionBeanLocal tagSessionBeanLocal;
-
-    @EJB(name = "SaleTranscationSessionBeanLocal")
-    private SaleTranscationSessionBeanLocal saleTranscationSessionBeanLocal;
 
     @EJB(name = "CategorySessionBeanLocal")
     private CategorySessionBeanLocal categorySessionBeanLocal;

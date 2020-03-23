@@ -55,12 +55,9 @@ public abstract class Product implements Serializable {
     @NotNull
     protected double averageRating;
 
-    @NotNull
-    @OneToOne(optional = false)
-    @JoinColumn(nullable = false)
+    @ManyToOne(optional = false)
     protected Company company;
     @ManyToOne(optional = false)
-    @JoinColumn(nullable = false)
     protected Category category;
     @ManyToMany(mappedBy = "products")
     protected List<Tag> tags;
@@ -72,6 +69,8 @@ public abstract class Product implements Serializable {
     private List<CartItem> cartItems;
     @OneToMany(mappedBy = "product")
     protected List<OwnedItem> ownedItems;
+    @OneToMany(mappedBy = "product")
+    protected List<Forum> forums;
 
     public Product() {
         tags = new ArrayList<>();

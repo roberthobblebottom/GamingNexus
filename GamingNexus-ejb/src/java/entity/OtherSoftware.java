@@ -5,18 +5,10 @@
  */
 package entity;
 
-import java.io.Serializable;
-import javax.persistence.Entity;
-
 /**
  *
- * @author root
+ * @author jinyichen
  */
-@Entity
-public class Software extends Product implements Serializable {
-
-    public Software() {
-    }
-
+public class OtherSoftware {
     
 }
