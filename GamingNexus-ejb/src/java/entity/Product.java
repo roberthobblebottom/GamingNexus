@@ -77,6 +77,7 @@ public abstract class Product implements Serializable {
         ratings = new ArrayList<>();
         cartItems = new ArrayList<>();
         ownedItems = new ArrayList<>();
+        forums = new ArrayList<>();
     }
 
     public Product(String name, String description, String computerRequirements, double price, double averageRating) {

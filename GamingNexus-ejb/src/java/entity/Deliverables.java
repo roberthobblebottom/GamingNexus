@@ -7,17 +7,17 @@ package entity;
 
 import java.io.Serializable;
 import java.sql.Date;
-import java.util.List;
+import java.time.LocalDateTime;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.Future;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 /**
  *
@@ -29,17 +29,19 @@ public class Deliverables implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long deliverablesID;
+    private Long deliverablesId;
     @Future
     @NotNull
-    private Date expectedDateOfArrival;
+    private LocalDateTime expectedDateOfArrival;
+    @Size(min = 0, max = 100)
     @NotNull
-    @Digits(integer = 15, fraction = 0)
-    private int DeliveryManPhoneNumber;
+    private String deliveryFirm;
+    @NotNull
+   // @Digits(integer = 15, fraction = 0)
+    private String DeliveryManPhoneNumber;
     @NotNull
     private boolean hasArrived = false;
     @ManyToOne
-    @JoinColumn(nullable = false)
     private Hardware hardware;
     @ManyToOne
     private Customer customer;
@@ -47,7 +49,7 @@ public class Deliverables implements Serializable {
     public Deliverables() {
     }
 
-    public Deliverables(Date expectedDateOfArrival, int DeliveryManPhoneNumber, Hardware hardware, Customer customer) {
+    public Deliverables(LocalDateTime expectedDateOfArrival, String DeliveryManPhoneNumber, Hardware hardware, Customer customer) {
         this.expectedDateOfArrival = expectedDateOfArrival;
         this.DeliveryManPhoneNumber = DeliveryManPhoneNumber;
         this.hardware = hardware;
@@ -56,29 +58,29 @@ public class Deliverables implements Serializable {
 
     
 
-    public Long getDeliverablesID() {
-        return deliverablesID;
+    public Long getDeliverablesId() {
+        return deliverablesId;
     }
 
-    public void setDeliverablesID(Long deliverablesID) {
-        this.deliverablesID = deliverablesID;
+    public void setDeliverablesId(Long deliverablesId) {
+        this.deliverablesId = deliverablesId;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (deliverablesID != null ? deliverablesID.hashCode() : 0);
+        hash += (deliverablesId != null ? deliverablesId.hashCode() : 0);
         return hash;
     }
 
     @Override
     public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the deliverablesID fields are not set
+        // TODO: Warning - this method won't work in the case the deliverablesId fields are not set
         if (!(object instanceof Deliverables)) {
             return false;
         }
         Deliverables other = (Deliverables) object;
-        if ((this.deliverablesID == null && other.deliverablesID != null) || (this.deliverablesID != null && !this.deliverablesID.equals(other.deliverablesID))) {
+        if ((this.deliverablesId == null && other.deliverablesId != null) || (this.deliverablesId != null && !this.deliverablesId.equals(other.deliverablesId))) {
             return false;
         }
         return true;
@@ -86,34 +88,34 @@ public class Deliverables implements Serializable {
 
     @Override
     public String toString() {
-        return "ejb.entity.Deliverables[ id=" + deliverablesID + " ]";
+        return "ejb.entity.Deliverables[ id=" + deliverablesId + " ]";
     }
 
     /**
      * @return the expectedDateOfArrival
      */
-    public Date getExpectedDateOfArrival() {
+    public LocalDateTime getExpectedDateOfArrival() {
         return expectedDateOfArrival;
     }
 
     /**
      * @param expectedDateOfArrival the expectedDateOfArrival to set
      */
-    public void setExpectedDateOfArrival(Date expectedDateOfArrival) {
+    public void setExpectedDateOfArrival(LocalDateTime expectedDateOfArrival) {
         this.expectedDateOfArrival = expectedDateOfArrival;
     }
 
     /**
      * @return the DeliveryManPhoneNumber
      */
-    public int getDeliveryManPhoneNumber() {
+    public String getDeliveryManPhoneNumber() {
         return DeliveryManPhoneNumber;
     }
 
     /**
      * @param DeliveryManPhoneNumber the DeliveryManPhoneNumber to set
      */
-    public void setDeliveryManPhoneNumber(int DeliveryManPhoneNumber) {
+    public void setDeliveryManPhoneNumber(String DeliveryManPhoneNumber) {
         this.DeliveryManPhoneNumber = DeliveryManPhoneNumber;
     }
 
@@ -157,6 +159,14 @@ public class Deliverables implements Serializable {
      */
     public void setCustomer(Customer customer) {
         this.customer = customer;
+    }
+
+    public String getDeliveryFirm() {
+        return deliveryFirm;
+    }
+
+    public void setDeliveryFirm(String deliveryFirm) {
+        this.deliveryFirm = deliveryFirm;
     }
 
 }
