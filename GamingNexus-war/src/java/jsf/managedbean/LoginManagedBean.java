@@ -39,19 +39,16 @@ public class LoginManagedBean {
         SystemAdmin currentSystemAdmin = null;
         Company currentCompany = null;
         User user;
-        //      try {
         user = userSessionBean.retrieveUserByUsernameAndPassword(username, password);
-        //    } catch (NoResultException ex) {
         if (user == null) {
             System.out.println("**********************************did you catch error???");
             FacesContext.getCurrentInstance().addMessage(null,
                     new FacesMessage(FacesMessage.SEVERITY_ERROR,
                             "Sorry you have entered the wrong username or password", null));
+            
             return;
         }
-        //  }
-        // currentSystemAdmin = systemAdminSessionBeanLocal.systemAdminLogin(username, password);
-        //currentCompany = companySessionBeanLocal.companyLogin(username, password);
+    
 
         FacesContext.getCurrentInstance().getExternalContext().getSession(true);
         FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("isLogin", true);
