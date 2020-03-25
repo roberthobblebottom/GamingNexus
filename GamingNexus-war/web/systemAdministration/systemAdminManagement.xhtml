@@ -28,25 +28,40 @@
             
                 <p:messages id="messages" redisplay="false" closable="true" />
                 
-                <p:dataTable id="dataTableAllSystemAdmins" widgetVar="dataTableAllSystemAdmins" value="#{systemAdminManagementManagedBean.systemAdmins}" var="systemAdmin" rowKey="#{systemAdmin.systemAdminId}" rowIndexVar="row"
+                <p:dataTable id="dataTableAllSystemAdmins" widgetVar="dataTableAllSystemAdmins" value="#{systemAdminManagementManagedBean.systemAdmins}" var="systemAdmin" rowKey="#{systemAdmin.userId}" rowIndexVar="row"
                              filteredValue="#{systemAdminManagementManagedBean.filteredSystemAdmins}"
                              rows="10" paginator="true" paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowsPerPageTemplate="10,20,50">             
                              
-                    <p:column headerText="System Admin ID" sortBy="#{systemAdmin.systemAdminId}" filterBy="#{systemAdmin.systemAdminId}" filterMatchMode="contains">
-                        <h:outputText value="#{systemAdmin.systemAdminId}" />
+                    <p:column headerText="userID" sortBy="#{systemAdmin.userId}" filterBy="#{systemAdmin.userId}" filterMatchMode="contains">
+                        <h:outputText value="#{systemAdmin.userId}" />
                     </p:column>
                              
-                    <p:column headerText="System Admin Frist Name" sortBy="#{systemAdmin.firstName}" filterBy="#{systemAdmin.firstName}" filterMatchMode="contains">
-                        <h:outputText value="#{systemAdmin.firstName}" />
-                    </p:column>
+                    
                              
-                    <p:column headerText="System Admin Last Name" sortBy="#{systemAdmin.lastName}" filterBy="#{systemAdmin.lastName}" filterMatchMode="contains">
-                        <h:outputText value="#{systemAdmin.lastName}" />
-                    </p:column>
-                             
-                    <p:column headerText="System Admin Username" sortBy="#{systemAdmin.username}" filterBy="#{systemAdmin.username}" filterMatchMode="contains">
+                    <p:column headerText="Username" sortBy="#{systemAdmin.username}" filterBy="#{systemAdmin.username}" filterMatchMode="contains">
                         <h:outputText value="#{systemAdmin.username}" />
                     </p:column>
+                    
+                             
+                    <p:column headerText="Address" sortBy="#{systemAdmin.address}" filterBy="#{systemAdmin.address}" filterMatchMode="contains">
+                        <h:outputText value="#{systemAdmin.address}" />
+                    </p:column>
+                           
+                    <p:column headerText="Email" sortBy="#{systemAdmin.email}" filterBy="#{systemAdmin.email}" filterMatchMode="contains">
+                        <h:outputText value="#{systemAdmin.email}" />
+                    </p:column>
+                    
+                           
+                    <p:column headerText="Country" sortBy="#{systemAdmin.country}" filterBy="#{systemAdmin.country}" filterMatchMode="contains">
+                        <h:outputText value="#{systemAdmin.country}" />
+                    </p:column>
+                        
+                        
+                    <p:column headerText="Last Online" sortBy="#{systemAdmin.lastOnline}" filterBy="#{systemAdmin.lastOnline}" filterMatchMode="contains">
+                        <h:outputText value="#{systemAdmin.lastOnline}" />
+                    </p:column>
+                    
+                    
                     
                     <p:column headerText="Action" >
                         <p:commandButton icon="ui-icon-trash" actionListener="#{systemAdminManagementManagedBean.deleteSystemAdmin}" update="formAllSystemAdmins:dataTableAllSystemAdmins ">
@@ -54,6 +69,8 @@
                             <p:confirm header="Confirmation" message="Are you sure you want to delete #{systemAdmin.username}?" icon="ui-icon-alert" />
                         </p:commandButton>
                     </p:column>
+                    
+                   
                   
                </p:dataTable>
                 
@@ -71,30 +88,7 @@
                     <p:messages id="messagesCreateNewSystemAdmin" redisplay="false" />
                     
                     <p:panelGrid>
-                        
-                        <p:row>
-                            <p:column>
-                                <p:outputLabel for="firstName" value="FirstName" style="font-weight: bold;"/>               
-                            </p:column>
-                            <p:column>
-                                <p:inputText id="firstName" value="#{systemAdminManagementManagedBean.newSystemAdmin.firstName}" placeholder="FirstName" required="true" requiredMessage="FirstName is required" />
-                            </p:column>
-                            <p:column>
-                                <p:messages for ="firstName" />
-                            </p:column>     
-                        </p:row>
-                        
-                        <p:row>
-                            <p:column>
-                                <p:outputLabel for="lastName" value="LastName" style="font-weight: bold;"/>               
-                            </p:column>
-                            <p:column>
-                                <p:inputText id="lastName" value="#{systemAdminManagementManagedBean.newSystemAdmin.lastName}" placeholder="LastName" required="true" requiredMessage="LastName is required" />
-                            </p:column>
-                            <p:column>
-                                <p:messages for ="lastName" />
-                            </p:column>     
-                        </p:row>
+                       
                         
                         <p:row>
                             <p:column>
@@ -120,6 +114,54 @@
                             </p:column>     
                         </p:row>
                         
+                         <p:row>
+                            <p:column>
+                                <p:outputLabel for="phoneNumber" value="phoneNumber" style="font-weight: bold;"/>               
+                            </p:column>
+                            <p:column>
+                                <p:inputText id="phoneNumber" value="#{systemAdminManagementManagedBean.newSystemAdmin.phoneNumber}" placeholder="phoneNumber" />
+                            </p:column>
+                            <p:column>
+                                <p:messages for ="phoneNumber" />
+                            </p:column>     
+                        </p:row>
+                        
+                         <p:row>
+                            <p:column>
+                                <p:outputLabel for="address" value="address" style="font-weight: bold;"/>               
+                            </p:column>
+                            <p:column>
+                                <p:inputText id="address" value="#{systemAdminManagementManagedBean.newSystemAdmin.address}" placeholder="address" />
+                            </p:column>
+                            <p:column>
+                                <p:messages for ="address" />
+                            </p:column>     
+                        </p:row>
+                        
+                        <p:row>
+                            <p:column>
+                                <p:outputLabel for="email" value="email" style="font-weight: bold;"/>               
+                            </p:column>
+                            <p:column>
+                                <p:inputText id="email" value="#{systemAdminManagementManagedBean.newSystemAdmin.email}" placeholder="email" />
+                            </p:column>
+                            <p:column>
+                                <p:messages for ="email" />
+                            </p:column>     
+                        </p:row>
+                        
+                        <p:row>
+                            <p:column>
+                                <p:outputLabel for="country" value="country" style="font-weight: bold;"/>               
+                            </p:column>
+                            <p:column>
+                                <p:inputText id="country" value="#{systemAdminManagementManagedBean.newSystemAdmin.country}" placeholder="country" />
+                            </p:column>
+                            <p:column>
+                                <p:messages for ="country" />
+                            </p:column>     
+                        </p:row>
+                        
                         <p:row>
                             <p:column colspan="3">
                                 <p:commandButton type="reset" value="Clear" />&nbsp;
@@ -131,6 +173,7 @@
                 </p:dialog>
             </h:form>
             
+         
         </div>
         
     </ui:define>

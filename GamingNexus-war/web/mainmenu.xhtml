@@ -10,7 +10,28 @@
         <nav>
             <h:form>
                     
-                
+                <p:menu style="width:200px;">
+
+                    <p:submenu label="System">
+                        <p:menuitem value="Home" outcome="/index" icon="fa fa-home" />
+                        <p:menuitem value="Logout" actionListener="#{loginManagedBean.logout}" icon="fa fa-sign-out" rendered="#{sessionScope.isLogin == true}" />
+                    </p:submenu>
+                  
+                    <p:submenu label="System Administration" rendered="#{sessionScope.systemAdmin != null}">
+                        <p:menuitem value="System Admin Management" outcome="/systemAdministration/systemAdminManagement.xhtml" icon="fa fa-users" />
+                        
+                        <p:submenu label="Product Management" rendered="#{sessionScope.systemAdmin != null}">
+                            <p:menuitem value="Game Management" outcome="/productManagement/gameManagement.xhtml"  icon="fas fa-gamepad"/>
+                        </p:submenu>
+                        
+                    </p:submenu>                        
+
+                    <p:submenu label="Company management" rendered="#{sessionScope.company != null}">
+                        <p:menuitem value="Product Management" outcome="/companyManagement/companyProductManagement.xhtml" icon="fa fa-users" />
+                        
+                    </p:submenu>
+                    
+                </p:menu>
 
             </h:form>
         </nav>

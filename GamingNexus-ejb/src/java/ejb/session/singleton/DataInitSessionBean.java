@@ -53,6 +53,9 @@ import util.exception.UnknownPersistenceException;
 @Startup
 public class DataInitSessionBean {
 
+    @EJB
+    private SystemAdminSessionBeanLocal systemAdminSessionBean;
+
     @EJB(name = "OtherSoftwareSessionBeanLocal")
     private OtherSoftwareSessionBeanLocal otherSoftwareSessionBeanLocal;
 
@@ -85,22 +88,17 @@ public class DataInitSessionBean {
 
     @PostConstruct
     public void postConstruct() {
-
-       // initializeData();
         try {
-            
-            //initializeData();
-            systemAdminSessionBeanLocal.retrieveSystemAdminByUsername("manager");
-            
+            systemAdminSessionBean.retrieveSystemAdminByUsername("admin1");
+            System.out.println("Data init already completed");
         } catch (SystemAdminNotFoundException ex) {
-            initializeData();
-            System.out.print("dataInit");
+            this.initializeData();
         }
     }
 
     private void initializeData() {
         try {
-            
+
             SystemAdmin systemAdmin = new SystemAdmin("123456", "addr 1", "email@hotmail.com", "Singapore", "admin1", "password", LocalDateTime.now(ZoneId.of("UTC+08:00")));
 
             systemAdminSessionBeanLocal.createNewSystemAdmin(systemAdmin);
@@ -154,20 +152,19 @@ public class DataInitSessionBean {
             Game game4 = gameSessionBeanLocal.createNewGame(new Game("Game4", "Worse Than CF", "No Mac Pls", 25.5, 4.5), categoryEntityFPS.getCategoryId(), tagIdsDiscount, company4.getUserId());
             Game game5 = gameSessionBeanLocal.createNewGame(new Game("Game5", "Worse Than CF", "No Mac Pls", 26.5, 5.5), categoryEntityFPS.getCategoryId(), tagIdsDiscount, company5.getUserId());
 
-            Hardware hardware1 = hardwareSessionBeanLocal.createNewHardware(new Hardware("1 year", "2x2x2", "America", "hardware1", "mouse", "NA", 100, 1), categoryEntityHardWare.getCategoryId(), tagIdsPopular,company1.getUserId() );
-            Hardware hardware2 = hardwareSessionBeanLocal.createNewHardware(new Hardware("2 year", "2x2x2", "America", "hardware2", "key board", "NA", 110, 1.5), categoryEntityHardWare.getCategoryId(), tagIdsPopular,company2.getUserId() );
-            Hardware hardware3 = hardwareSessionBeanLocal.createNewHardware(new Hardware("3 year", "2x2x2", "America", "hardware3", "monitor", "NA", 120, 2.5), categoryEntityHardWare.getCategoryId(), tagIdsPopular,company3.getUserId() );
-            Hardware hardware4 = hardwareSessionBeanLocal.createNewHardware(new Hardware("1 year", "2x2x2", "America", "hardware4", "controller", "NA", 130, 3.5), categoryEntityHardWare.getCategoryId(), tagIdsPopular,company4.getUserId() );
-            Hardware hardware5 = hardwareSessionBeanLocal.createNewHardware(new Hardware("2 year", "2x2x2", "America", "hardware5", "hard disk", "NA", 140, 4.5), categoryEntityHardWare.getCategoryId(), tagIdsPopular,company5.getUserId() );
-            
+            Hardware hardware1 = hardwareSessionBeanLocal.createNewHardware(new Hardware("1 year", "2x2x2", "America", "hardware1", "mouse", "NA", 100, 1), categoryEntityHardWare.getCategoryId(), tagIdsPopular, company1.getUserId());
+            Hardware hardware2 = hardwareSessionBeanLocal.createNewHardware(new Hardware("2 year", "2x2x2", "America", "hardware2", "key board", "NA", 110, 1.5), categoryEntityHardWare.getCategoryId(), tagIdsPopular, company2.getUserId());
+            Hardware hardware3 = hardwareSessionBeanLocal.createNewHardware(new Hardware("3 year", "2x2x2", "America", "hardware3", "monitor", "NA", 120, 2.5), categoryEntityHardWare.getCategoryId(), tagIdsPopular, company3.getUserId());
+            Hardware hardware4 = hardwareSessionBeanLocal.createNewHardware(new Hardware("1 year", "2x2x2", "America", "hardware4", "controller", "NA", 130, 3.5), categoryEntityHardWare.getCategoryId(), tagIdsPopular, company4.getUserId());
+            Hardware hardware5 = hardwareSessionBeanLocal.createNewHardware(new Hardware("2 year", "2x2x2", "America", "hardware5", "hard disk", "NA", 140, 4.5), categoryEntityHardWare.getCategoryId(), tagIdsPopular, company5.getUserId());
+
             OtherSoftware softwaretool1 = otherSoftwareSessionBeanLocal.createNewOtherSoftware(new OtherSoftware("software1", "IDE", "No requirements", 20, 5), categoryEntitySoftwareTool.getCategoryId(), tagIdsEmpty, company1.getUserId());
             OtherSoftware softwaretool2 = otherSoftwareSessionBeanLocal.createNewOtherSoftware(new OtherSoftware("software2", "IDE", "No requirements", 30, 5), categoryEntitySoftwareTool.getCategoryId(), tagIdsEmpty, company2.getUserId());
             OtherSoftware softwaretool3 = otherSoftwareSessionBeanLocal.createNewOtherSoftware(new OtherSoftware("software3", "IDE", "No requirements", 40, 5), categoryEntitySoftwareTool.getCategoryId(), tagIdsEmpty, company3.getUserId());
             OtherSoftware softwaretool4 = otherSoftwareSessionBeanLocal.createNewOtherSoftware(new OtherSoftware("software4", "IDE", "No requirements", 50, 5), categoryEntitySoftwareTool.getCategoryId(), tagIdsEmpty, company4.getUserId());
             OtherSoftware softwaretool5 = otherSoftwareSessionBeanLocal.createNewOtherSoftware(new OtherSoftware("software5", "IDE", "No requirements", 60, 5), categoryEntitySoftwareTool.getCategoryId(), tagIdsEmpty, company5.getUserId());
-            
-          
-        } catch ( SystemAdminUsernameExistException | UnknownPersistenceException | InputDataValidationException | CreateNewCategoryException | CreateNewTagException | CreateNewProductException | ProductSkuCodeExistException | CompanyNotFoundException | CompanyUsernameExistException | CustomerUsernameExistException ex) {
+
+        } catch (SystemAdminUsernameExistException | UnknownPersistenceException | InputDataValidationException | CreateNewCategoryException | CreateNewTagException | CreateNewProductException | ProductSkuCodeExistException | CompanyNotFoundException | CompanyUsernameExistException | CustomerUsernameExistException ex) {
             ex.printStackTrace();
         }
     }

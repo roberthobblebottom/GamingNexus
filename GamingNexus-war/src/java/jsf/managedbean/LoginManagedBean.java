@@ -47,14 +47,16 @@ public class LoginManagedBean {
         } else {
             FacesContext.getCurrentInstance().getExternalContext().getSession(true);
             FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("isLogin", true);
+            FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("user", user);
+
             if (user instanceof SystemAdmin) {
-                FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("currentSystemAdmin", currentSystemAdmin);
-                FacesContext.getCurrentInstance().getExternalContext().redirect(FacesContext.getCurrentInstance().getExternalContext().getRequestContextPath() + "/index.xhtml");
+                FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("systemAdmin", user);
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("successfully logged in as system admin"));
-            } else if (user instanceof Company) {
-                FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("currentCompany", currentCompany);
                 FacesContext.getCurrentInstance().getExternalContext().redirect(FacesContext.getCurrentInstance().getExternalContext().getRequestContextPath() + "/index.xhtml");
+            } else if (user instanceof Company) {
+                FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("company", user);
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("successfully logged in as company: " + currentCompany.getUsername()));
+                FacesContext.getCurrentInstance().getExternalContext().redirect(FacesContext.getCurrentInstance().getExternalContext().getRequestContextPath() + "/index.xhtml");
             }
         }
     }
