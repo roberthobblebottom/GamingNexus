@@ -13,6 +13,7 @@ import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
+import javax.persistence.NoResultException;
 import javax.servlet.http.HttpSession;
 
 @Named(value = "loginManagedBean")
@@ -37,28 +38,35 @@ public class LoginManagedBean {
     public void login(ActionEvent event) throws IOException {
         SystemAdmin currentSystemAdmin = null;
         Company currentCompany = null;
-
-        User user = userSessionBean.retrieveUserByUsernameAndPassword(username, password);
-
+        User user;
+        //      try {
+        user = userSessionBean.retrieveUserByUsernameAndPassword(username, password);
+        //    } catch (NoResultException ex) {
+        if (user == null) {
+            System.out.println("**********************************did you catch error???");
+            FacesContext.getCurrentInstance().addMessage(null,
+                    new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                            "Sorry you have entered the wrong username or password", null));
+            return;
+        }
+        //  }
         // currentSystemAdmin = systemAdminSessionBeanLocal.systemAdminLogin(username, password);
         //currentCompany = companySessionBeanLocal.companyLogin(username, password);
-        if (user == null) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Sorry you have entered the wrong username or password", null));
-        } else {
-            FacesContext.getCurrentInstance().getExternalContext().getSession(true);
-            FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("isLogin", true);
-            FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("user", user);
 
-            if (user instanceof SystemAdmin) {
-                FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("systemAdmin", user);
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("successfully logged in as system admin"));
-                FacesContext.getCurrentInstance().getExternalContext().redirect(FacesContext.getCurrentInstance().getExternalContext().getRequestContextPath() + "/index.xhtml");
-            } else if (user instanceof Company) {
-                FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("company", user);
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("successfully logged in as company: " + currentCompany.getUsername()));
-                FacesContext.getCurrentInstance().getExternalContext().redirect(FacesContext.getCurrentInstance().getExternalContext().getRequestContextPath() + "/index.xhtml");
-            }
+        FacesContext.getCurrentInstance().getExternalContext().getSession(true);
+        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("isLogin", true);
+        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("user", user);
+
+        if (user instanceof SystemAdmin) {
+            FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("systemAdmin", user);
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("successfully logged in as system admin"));
+            FacesContext.getCurrentInstance().getExternalContext().redirect(FacesContext.getCurrentInstance().getExternalContext().getRequestContextPath() + "/index.xhtml");
+        } else if (user instanceof Company) {
+            FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("company", user);
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("successfully logged in as company: " + currentCompany.getUsername()));
+            FacesContext.getCurrentInstance().getExternalContext().redirect(FacesContext.getCurrentInstance().getExternalContext().getRequestContextPath() + "/index.xhtml");
         }
+
     }
 
     public void logout(ActionEvent event) throws IOException {

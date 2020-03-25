@@ -8,6 +8,7 @@ package ejb.session.stateless;
 import entity.User;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
@@ -22,11 +23,15 @@ public class UserSessionBean implements UserSessionBeanLocal {
     private EntityManager em;
 
     @Override
-    public User retrieveUserByUsernameAndPassword(String username, String password) {
+    public User retrieveUserByUsernameAndPassword(String username, String password) throws NoResultException{
         Query query = em.createQuery("SELECT u FROM User u WHERE u.username = :inputUsername AND u.password = :inputPassword");
         query.setParameter("inputUsername", username);
         query.setParameter("inputPassword", password);
-        return (User) query.getSingleResult();
+        try {
+            return (User) query.getSingleResult();
+        } catch (NoResultException ex) {
+            return null;
+        }
     }
 
 }

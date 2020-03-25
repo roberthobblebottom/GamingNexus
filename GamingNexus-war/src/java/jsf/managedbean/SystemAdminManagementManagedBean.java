@@ -1,5 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
+ /* To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
@@ -56,6 +55,7 @@ public class SystemAdminManagementManagedBean implements Serializable{
     }
     
     public void createNewSystemAdmin(ActionEvent event) throws SystemAdminUsernameExistException {
+System.out.println("************Entered createNewSystemAdmin Method");
         try{
             SystemAdmin admin = systemAdminSessionBeanLocal.createNewSystemAdmin(newSystemAdmin);
             systemAdmins.add(admin);

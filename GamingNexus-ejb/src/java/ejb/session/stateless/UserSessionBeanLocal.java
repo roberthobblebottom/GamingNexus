@@ -7,6 +7,7 @@ package ejb.session.stateless;
 
 import entity.User;
 import javax.ejb.Local;
+import javax.persistence.NoResultException;
 
 /**
  *
@@ -15,6 +16,6 @@ import javax.ejb.Local;
 @Local
 public interface UserSessionBeanLocal {
 
-    User retrieveUserByUsernameAndPassword(String username, String password);
+    User retrieveUserByUsernameAndPassword(String username, String password) throws NoResultException;
     
 }

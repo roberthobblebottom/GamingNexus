@@ -88,10 +88,7 @@ public class DataInitSessionBean {
 
     @PostConstruct
     public void postConstruct() {
-        try {
-            systemAdminSessionBean.retrieveSystemAdminByUsername("admin1");
-            System.out.println("Data init already completed");
-        } catch (SystemAdminNotFoundException ex) {
+        if (em.find(SystemAdmin.class, 1l) == null) {
             this.initializeData();
         }
     }
@@ -99,8 +96,8 @@ public class DataInitSessionBean {
     private void initializeData() {
         try {
 
-            SystemAdmin systemAdmin = new SystemAdmin("123456", "addr 1", "email@hotmail.com", "Singapore", "admin1", "password", LocalDateTime.now(ZoneId.of("UTC+08:00")));
-
+            SystemAdmin systemAdmin = new SystemAdmin("123456", "addr 1", "email@hotmail.com",
+                    "Singapore", "admin1", "password", LocalDateTime.now(ZoneId.of("UTC+08:00")));
             systemAdminSessionBeanLocal.createNewSystemAdmin(systemAdmin);
 //            systemAdminSessionBeanLocal.createNewSystemAdmin(new SystemAdmin("Default", "System Admin2", "admin2", "password"));
 
