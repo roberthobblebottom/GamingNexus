@@ -5,13 +5,16 @@
  */
 package ejb.session.stateless;
 
+import entity.User;
 import javax.ejb.Local;
 
 /**
  *
- * @author chenli
+ * @author root
  */
 @Local
-public interface SaleTransactionSessionBeanLocal {
+public interface UserSessionBeanLocal {
+
+    User retrieveUserByUsernameAndPassword(String username, String password);
     
 }

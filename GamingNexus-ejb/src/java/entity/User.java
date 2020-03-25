@@ -62,7 +62,6 @@ public abstract class User implements Serializable {
     
     @OneToMany(mappedBy = "user")
     private List<SaleTransaction> saleTransactions;
-
     public User() {
         this.salt = CryptographicHelper.getInstance().generateRandomString(32);
         saleTransactions = new ArrayList<>();

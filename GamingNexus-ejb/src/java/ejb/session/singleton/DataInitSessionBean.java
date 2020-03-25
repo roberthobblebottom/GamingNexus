@@ -22,6 +22,7 @@ import entity.OtherSoftware;
 import entity.SystemAdmin;
 import entity.Tag;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -39,6 +40,7 @@ import util.exception.CreateNewTagException;
 import util.exception.CustomerUsernameExistException;
 import util.exception.InputDataValidationException;
 import util.exception.ProductSkuCodeExistException;
+import util.exception.SystemAdminNotFoundException;
 import util.exception.SystemAdminUsernameExistException;
 import util.exception.UnknownPersistenceException;
 
@@ -84,22 +86,25 @@ public class DataInitSessionBean {
     @PostConstruct
     public void postConstruct() {
 
-        initializeData();
-//        try {
-//            
-//            initializeData();
-//            systemAdminSessionBeanLocal.retrieveSystemAdminByUsername("manager");
-//            
-//        } catch (SystemAdminNotFoundException ex) {
-//            initializeData();
-//            System.out.print("dataInit");
-//        }
+       // initializeData();
+        try {
+            
+            //initializeData();
+            systemAdminSessionBeanLocal.retrieveSystemAdminByUsername("manager");
+            
+        } catch (SystemAdminNotFoundException ex) {
+            initializeData();
+            System.out.print("dataInit");
+        }
     }
 
     private void initializeData() {
         try {
-            systemAdminSessionBeanLocal.createNewSystemAdmin(new SystemAdmin("Default", "System Admin1", "admin1", "password"));
-            systemAdminSessionBeanLocal.createNewSystemAdmin(new SystemAdmin("Default", "System Admin2", "admin2", "password"));
+            
+            SystemAdmin systemAdmin = new SystemAdmin("123456", "addr 1", "email@hotmail.com", "Singapore", "admin1", "password", LocalDateTime.now(ZoneId.of("UTC+08:00")));
+
+            systemAdminSessionBeanLocal.createNewSystemAdmin(systemAdmin);
+//            systemAdminSessionBeanLocal.createNewSystemAdmin(new SystemAdmin("Default", "System Admin2", "admin2", "password"));
 
             Category categoryEntitySoftwareGame = categorySessionBeanLocal.createNewCategoryEntity(new Category("SoftwareGame", "Game"), null);
             Category categoryEntitySoftwareTool = categorySessionBeanLocal.createNewCategoryEntity(new Category("SoftwareTool", "SoftwareTool"), null);
@@ -162,7 +167,7 @@ public class DataInitSessionBean {
             OtherSoftware softwaretool5 = otherSoftwareSessionBeanLocal.createNewOtherSoftware(new OtherSoftware("software5", "IDE", "No requirements", 60, 5), categoryEntitySoftwareTool.getCategoryId(), tagIdsEmpty, company5.getUserId());
             
           
-        } catch (SystemAdminUsernameExistException | UnknownPersistenceException | InputDataValidationException | CreateNewCategoryException | CreateNewTagException | CreateNewProductException | ProductSkuCodeExistException | CompanyNotFoundException | CompanyUsernameExistException | CustomerUsernameExistException ex) {
+        } catch ( SystemAdminUsernameExistException | UnknownPersistenceException | InputDataValidationException | CreateNewCategoryException | CreateNewTagException | CreateNewProductException | ProductSkuCodeExistException | CompanyNotFoundException | CompanyUsernameExistException | CustomerUsernameExistException ex) {
             ex.printStackTrace();
         }
     }

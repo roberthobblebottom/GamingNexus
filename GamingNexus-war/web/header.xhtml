@@ -6,8 +6,13 @@
                 xmlns:p="http://primefaces.org/ui">
 
     <header style="text-align: right;">
+        <p:growl id="loginGrowl" >
+
+            <p:autoUpdate />
+        </p:growl>
         <h:panelGroup rendered="#{sessionScope.isLogin == false}">
-            <h:form id="loginForm">
+            <h:form id="loginForm">                
+
 
                 <p:outputLabel for="username" value="Username" />&nbsp;
                 <p:inputText id="username" value="#{loginManagedBean.username}" size="16" required="true" requiredMessage="Username is required" maxlength="32">
@@ -19,12 +24,12 @@
                     <f:validateLength minimum="4" />
                 </p:password>
                 &nbsp;
-                <p:commandButton type="reset" value="Clear" icon="fa fa-undo" />&nbsp;
-                <p:commandButton type="submit" value="Login" actionListener="#{loginManagedBean.login}" icon="fa fa-sign-in" />
 
-                <p:growl>
-                    <p:autoUpdate />
-                </p:growl>
+
+                <p:commandButton type="reset" value="Clear" icon="fa fa-undo" />&nbsp;
+                <p:commandButton type="submit" value="Login" actionListener="#{loginManagedBean.login}" update="@form" icon="fa fa-sign-in" />
+
+
 
             </h:form>
         </h:panelGroup>
@@ -35,7 +40,7 @@
                 <p:commandButton value="Logout" actionListener="#{loginManagedBean.logout}" icon="fa fa-sign-out" />
             </h:form>
         </h:panelGroup>
-        
+
     </header>
 
 </ui:composition>

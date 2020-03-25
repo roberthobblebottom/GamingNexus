@@ -65,7 +65,7 @@ public class SystemAdminManagementManagedBean implements Serializable{
             }
             
             newSystemAdmin = new SystemAdmin();
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "New System Admin created successfully (Admin ID: " + admin.getSystemAdminId() + ")", null));           
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "New System Admin created successfully (Admin ID: " + admin.getUserId()+ ")", null));           
         }
         catch(UnknownPersistenceException ex) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "An error has occurred while creating a new system admin" + ex.getMessage(), null));
@@ -77,7 +77,7 @@ public class SystemAdminManagementManagedBean implements Serializable{
         try
         {
             SystemAdmin systemAdminToDelete = (SystemAdmin)event.getComponent().getAttributes().get("systemAdminToDelete");
-            systemAdminSessionBeanLocal.deleteSystemAdmin(systemAdminToDelete.getSystemAdminId());
+            systemAdminSessionBeanLocal.deleteSystemAdmin(systemAdminToDelete.getUserId());
             systemAdmins.remove(systemAdminToDelete);
             
             if(filteredSystemAdmins != null)

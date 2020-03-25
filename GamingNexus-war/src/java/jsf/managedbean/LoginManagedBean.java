@@ -1,7 +1,11 @@
 package jsf.managedbean;
 
+import ejb.session.stateless.CompanySessionBeanLocal;
 import ejb.session.stateless.SystemAdminSessionBeanLocal;
+import ejb.session.stateless.UserSessionBeanLocal;
+import entity.Company;
 import entity.SystemAdmin;
+import entity.User;
 import java.io.IOException;
 import javax.ejb.EJB;
 import javax.inject.Named;
@@ -10,54 +14,56 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.servlet.http.HttpSession;
-import util.exception.InvalidLoginCredentialException;
-
-
 
 @Named(value = "loginManagedBean")
 @RequestScoped
 
-public class LoginManagedBean 
-{
+public class LoginManagedBean {
+
+    @EJB
+    private UserSessionBeanLocal userSessionBean;
+
+    @EJB
+    private CompanySessionBeanLocal companySessionBeanLocal;
     @EJB
     private SystemAdminSessionBeanLocal systemAdminSessionBeanLocal;
-    
+
     private String username;
     private String password;
-    
-    
-    
-    public LoginManagedBean() 
-    {
+
+    public LoginManagedBean() {
     }
-    
-    
-    
-    public void login(ActionEvent event) throws IOException
-    {
-        try
-        {
-            SystemAdmin currentSystemAdmin = systemAdminSessionBeanLocal.systemAdminLogin(username, password);FacesContext.getCurrentInstance().getExternalContext().getSession(true);
+
+    public void login(ActionEvent event) throws IOException {
+        SystemAdmin currentSystemAdmin = null;
+        Company currentCompany = null;
+
+        User user = userSessionBean.retrieveUserByUsernameAndPassword(username, password);
+
+        // currentSystemAdmin = systemAdminSessionBeanLocal.systemAdminLogin(username, password);
+        //currentCompany = companySessionBeanLocal.companyLogin(username, password);
+        if (user == null) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Sorry you have entered the wrong username or password", null));
+        } else {
+            FacesContext.getCurrentInstance().getExternalContext().getSession(true);
             FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("isLogin", true);
-            FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("currentSystemAdmin", currentSystemAdmin);
-            FacesContext.getCurrentInstance().getExternalContext().redirect(FacesContext.getCurrentInstance().getExternalContext().getRequestContextPath() + "/index.xhtml");
-        }
-        catch(InvalidLoginCredentialException ex)
-        {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Invalid login credential: " + ex.getMessage(), null));
+            if (user instanceof SystemAdmin) {
+                FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("currentSystemAdmin", currentSystemAdmin);
+                FacesContext.getCurrentInstance().getExternalContext().redirect(FacesContext.getCurrentInstance().getExternalContext().getRequestContextPath() + "/index.xhtml");
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("successfully logged in as system admin"));
+            } else if (user instanceof Company) {
+                FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("currentCompany", currentCompany);
+                FacesContext.getCurrentInstance().getExternalContext().redirect(FacesContext.getCurrentInstance().getExternalContext().getRequestContextPath() + "/index.xhtml");
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("successfully logged in as company: " + currentCompany.getUsername()));
+            }
         }
     }
-    
-    
-    
-    public void logout(ActionEvent event) throws IOException
-    {
-        ((HttpSession)FacesContext.getCurrentInstance().getExternalContext().getSession(true)).invalidate();
+
+    public void logout(ActionEvent event) throws IOException {
+        ((HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true)).invalidate();
         FacesContext.getCurrentInstance().getExternalContext().redirect(FacesContext.getCurrentInstance().getExternalContext().getRequestContextPath() + "/index.xhtml");
     }
 
-    
-    
     public String getUsername() {
         return username;
     }
