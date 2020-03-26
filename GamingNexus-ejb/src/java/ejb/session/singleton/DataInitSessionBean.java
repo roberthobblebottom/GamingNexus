@@ -104,7 +104,8 @@ public class DataInitSessionBean {
             Category categoryEntitySoftwareGame = categorySessionBeanLocal.createNewCategoryEntity(new Category("SoftwareGame", "Game"), null);
             Category categoryEntitySoftwareTool = categorySessionBeanLocal.createNewCategoryEntity(new Category("SoftwareTool", "SoftwareTool"), null);
             Category categoryEntityHardWare = categorySessionBeanLocal.createNewCategoryEntity(new Category("Hardware", "Hardware"), null);
-            Category categoryEntityFPS = categorySessionBeanLocal.createNewCategoryEntity(new Category("FPS", "Like CS"), categoryEntitySoftwareGame.getCategoryId());
+            Category categoryEntityFPS = categorySessionBeanLocal.createNewCategoryEntity(new Category("FPS", "Like CS"), 
+                    categoryEntitySoftwareGame.getCategoryId());
 
             Tag tagEntityPopular = tagSessionBeanLocal.createNewTagEntity(new Tag("popular"));
             Tag tagEntityDiscount = tagSessionBeanLocal.createNewTagEntity(new Tag("discount"));

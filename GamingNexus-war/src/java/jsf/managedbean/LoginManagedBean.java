@@ -60,7 +60,7 @@ public class LoginManagedBean {
             FacesContext.getCurrentInstance().getExternalContext().redirect(FacesContext.getCurrentInstance().getExternalContext().getRequestContextPath() + "/index.xhtml");
         } else if (user instanceof Company) {
             FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("company", user);
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("successfully logged in as company: " + currentCompany.getUsername()));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("successfully logged in as company: " + user.getUsername()));
             FacesContext.getCurrentInstance().getExternalContext().redirect(FacesContext.getCurrentInstance().getExternalContext().getRequestContextPath() + "/index.xhtml");
         }
 

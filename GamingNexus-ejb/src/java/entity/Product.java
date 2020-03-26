@@ -60,7 +60,7 @@ public abstract class Product implements Serializable {
     @ManyToOne(optional = false)
     protected Category category;
     @ManyToMany(mappedBy = "products")
-    protected List<Tag> tags;
+    protected List<Tag> tags;   
     @ManyToMany(mappedBy = "products")
     protected List<Promotion> promotions;
     @OneToMany(mappedBy = "product")
