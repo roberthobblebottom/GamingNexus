@@ -19,6 +19,7 @@ import entity.Customer;
 import entity.Game;
 import entity.Hardware;
 import entity.OtherSoftware;
+import entity.Product;
 import entity.SystemAdmin;
 import entity.Tag;
 import java.time.LocalDateTime;
@@ -40,7 +41,6 @@ import util.exception.CreateNewTagException;
 import util.exception.CustomerUsernameExistException;
 import util.exception.InputDataValidationException;
 import util.exception.ProductSkuCodeExistException;
-import util.exception.SystemAdminNotFoundException;
 import util.exception.SystemAdminUsernameExistException;
 import util.exception.UnknownPersistenceException;
 
@@ -104,7 +104,7 @@ public class DataInitSessionBean {
             Category categoryEntitySoftwareGame = categorySessionBeanLocal.createNewCategoryEntity(new Category("SoftwareGame", "Game"), null);
             Category categoryEntitySoftwareTool = categorySessionBeanLocal.createNewCategoryEntity(new Category("SoftwareTool", "SoftwareTool"), null);
             Category categoryEntityHardWare = categorySessionBeanLocal.createNewCategoryEntity(new Category("Hardware", "Hardware"), null);
-            Category categoryEntityFPS = categorySessionBeanLocal.createNewCategoryEntity(new Category("FPS", "Like CS"), 
+            Category categoryEntityFPS = categorySessionBeanLocal.createNewCategoryEntity(new Category("FPS", "Like CS"),
                     categoryEntitySoftwareGame.getCategoryId());
 
             Tag tagEntityPopular = tagSessionBeanLocal.createNewTagEntity(new Tag("popular"));
@@ -162,6 +162,14 @@ public class DataInitSessionBean {
             OtherSoftware softwaretool4 = otherSoftwareSessionBeanLocal.createNewOtherSoftware(new OtherSoftware("software4", "IDE", "No requirements", 50, 5), categoryEntitySoftwareTool.getCategoryId(), tagIdsEmpty, company4.getUserId());
             OtherSoftware softwaretool5 = otherSoftwareSessionBeanLocal.createNewOtherSoftware(new OtherSoftware("software5", "IDE", "No requirements", 60, 5), categoryEntitySoftwareTool.getCategoryId(), tagIdsEmpty, company5.getUserId());
 
+            List<Product> company1Products = company1.getProducts();
+            company1Products.add(game1);
+            company1Products.add(hardware1);
+            company1Products.add(softwaretool1);
+            company1.setProducts(company1Products);
+            companySessionBeanLocal.updateCompany(company1);
+            
+            
         } catch (SystemAdminUsernameExistException | UnknownPersistenceException | InputDataValidationException | CreateNewCategoryException | CreateNewTagException | CreateNewProductException | ProductSkuCodeExistException | CompanyNotFoundException | CompanyUsernameExistException | CustomerUsernameExistException ex) {
             ex.printStackTrace();
         }

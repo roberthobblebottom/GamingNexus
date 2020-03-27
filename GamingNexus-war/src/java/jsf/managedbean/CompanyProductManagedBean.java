@@ -68,15 +68,17 @@ public class CompanyProductManagedBean implements Serializable {
     public void postConstruct() {
         Map<String, Object> sessionMap = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
         company = (Company) sessionMap.get("company");
-        Company retrievedCompany = null;
-        try {
-            retrievedCompany = companySessionBeanLocal.retrieveCompanyById(company.getUserId());
-        } catch (CompanyNotFoundException ex) {
-              FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
-                            "An error has occurred while retrieving company products" + ex.getMessage(), null));
-              
-        }
-        this.setProducts(retrievedCompany.getProducts());
+        System.out.println("company name: " + company.getUsername());
+        products = company.getProducts();
+        System.out.println(products.get(0).getName());
+//        Company retrievedCompany = null;
+//        try {
+//            retrievedCompany = companySessionBeanLocal.retrieveCompanyById(company.getUserId());
+//        } catch (CompanyNotFoundException ex) {
+//              FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
+//                            "An error has occurred while retrieving company products" + ex.getMessage(), null));
+//        }
+//        this.setProducts(retrievedCompany.getProducts());
 
         categories = categorySessionBean.retrieveAllCategories();
         tags = tagSessionBean.retrieveAllTags();
