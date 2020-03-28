@@ -82,9 +82,9 @@ public class CompanyProductManagedBean implements Serializable {
 
     public void viewSystemAdminDetails(ActionEvent event) throws IOException {
          productToViewInDetail = (Product) event.getComponent().getAttributes().get("companyProductToViewInDetail");
-
         FacesContext.getCurrentInstance().getExternalContext().getFlash().put("productToViewInDetail", productToViewInDetail);
-        //FacesContext.getCurrentInstance().getExternalContext().redirect("viewProductDetail.xhtml");
+        FacesContext.getCurrentInstance().getExternalContext().redirect(
+                "ViewProductDetails.xhtml");
     }
 
     public void createNewSystemAdmin(ActionEvent event) throws SystemAdminUsernameExistException {
