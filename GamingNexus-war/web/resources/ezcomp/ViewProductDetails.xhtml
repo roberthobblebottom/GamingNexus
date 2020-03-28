@@ -1,0 +1,93 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:cc="http://xmlns.jcp.org/jsf/composite"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <cc:interface>
+    </cc:interface>
+
+    <cc:implementation>
+        <h:form id="formViewProductDetails">
+            <p:dialog id="dialogViewProductDetails"  widgetVar="dialogViewProductDetails" header="View Product Detail" closable="true" >
+                <p:panelGrid>
+                    <p:row>
+                        <p:column>
+                            <h:outputText value="Product ID" />
+                        </p:column>
+                        <p:column>
+                            <h:outputText value="#{companyProductManagedBean.productToViewInDetail.productId}" />
+                        </p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column>
+                            <h:outputText value="Name" />
+                        </p:column>
+                        <p:column>
+                            <h:outputText value="#{companyProductManagedBean.productToViewInDetail.name}" />
+                        </p:column>
+                    </p:row>
+
+                    <p:row>
+                        <p:column>
+                            <h:outputText value="Description" />
+                        </p:column>
+                        <p:column>
+                            <p value="#{companyProductManagedBean.productToViewInDetail.description}"/>
+                        </p:column>
+                    </p:row>
+
+                    <p:row>
+                        <p:column>
+                            <h:outputText value="Price" />
+                        </p:column>
+                        <p:column>
+                            <h:outputText value="#{companyProductManagedBean.productToViewInDetail.price}" />
+                        </p:column>
+                    </p:row>
+
+                    <p:row>
+                        <p:column>
+                            <h:outputText value="Average Ratings" />
+                        </p:column>
+                        <p:column>
+                            <h:outputText value="#{companyProductManagedBean.productToViewInDetail.averageRating}" />
+                        </p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column>
+                            <h:outputText value="Category" />
+                        </p:column>
+                        <p:column>
+                            <h:outputText value="#{companyProductManagedBean.productToViewInDetail.category}" />
+                        </p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column>
+                            <h:outputText value="Tags" />
+                        </p:column>
+                        <p:column>
+                            <p:dataList value="#{companyProductManagedBean.productToViewInDetail.tags}" var="tag" type="ordered" >
+                                #{tag.tagName}  
+                            </p:dataList>
+                        </p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column>
+                            <h:outputText value="Forum" />
+                        </p:column>
+                        <p:column headerText="Forum link">
+                            <h:outputText value="not implemented" />
+                        </p:column>
+                    </p:row>
+
+                </p:panelGrid>
+            </p:dialog>
+
+        </h:form>
+
+    </cc:implementation>
+</html>
+

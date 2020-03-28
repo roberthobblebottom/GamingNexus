@@ -58,6 +58,7 @@ public class CompanyProductManagedBean implements Serializable {
     private CompanySessionBeanLocal companySessionBeanLocal;
 
     private Game newGame, gameToBeUpdated;
+    private Product productToViewInDetail;
     private List<Product> products, filteredProducts;
     private List<Category> categories;
     private List<Tag> tags;
@@ -80,9 +81,10 @@ public class CompanyProductManagedBean implements Serializable {
     }
 
     public void viewSystemAdminDetails(ActionEvent event) throws IOException {
-        Long systemAdminIdToView = (Long) event.getComponent().getAttributes().get("systemAdminId");
-        FacesContext.getCurrentInstance().getExternalContext().getFlash().put("systemAdminIdToView", systemAdminIdToView);
-        FacesContext.getCurrentInstance().getExternalContext().redirect("viewSystemAdminDetails.xhtml");
+         productToViewInDetail = (Product) event.getComponent().getAttributes().get("companyProductToViewInDetail");
+
+        FacesContext.getCurrentInstance().getExternalContext().getFlash().put("productToViewInDetail", productToViewInDetail);
+        //FacesContext.getCurrentInstance().getExternalContext().redirect("viewProductDetail.xhtml");
     }
 
     public void createNewSystemAdmin(ActionEvent event) throws SystemAdminUsernameExistException {
@@ -128,10 +130,10 @@ public class CompanyProductManagedBean implements Serializable {
             products.remove(productToBeDeleted);
 
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
-                    "Product deleted successfully ID: "+productToBeDeleted.getProductId(), null));
+                    "Product deleted successfully ID: " + productToBeDeleted.getProductId(), null));
         } catch (Exception ex) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, 
-                     "An unexpected error has occurred: " + ex.getMessage(), null));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                    "An unexpected error has occurred: " + ex.getMessage(), null));
         }
     }
 
@@ -217,6 +219,20 @@ public class CompanyProductManagedBean implements Serializable {
      */
     public void setFilteredProducts(List<Product> filteredProducts) {
         this.filteredProducts = filteredProducts;
+    }
+
+    /**
+     * @return the productToViewInDetail
+     */
+    public Product getProductToViewInDetail() {
+        return productToViewInDetail;
+    }
+
+    /**
+     * @param productToViewInDetail the productToViewInDetail to set
+     */
+    public void setProductToViewInDetail(Product productToViewInDetail) {
+        this.productToViewInDetail = productToViewInDetail;
     }
 
 }
