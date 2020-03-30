@@ -103,12 +103,37 @@
 
                     <p:row rendered="#{companyProductManagedBean.viewProductManagedBean.gameToViewInDetails != null}">
                         <p:column>
-                            <h:outputText value="Parent Advisory" 
-                                          rendered="#{companyProductManagedBean.viewProductManagedBean.gameToViewInDetails != null}"/>
+                            <h:outputText value="Parent Advisory" />
                         </p:column>
                         <p:column >
-                            <h:outputText value="#{companyProductManagedBean.viewProductManagedBean.gameToViewInDetails.parentAdvisory}" 
-                                          rendered="#{companyProductManagedBean.viewProductManagedBean.gameToViewInDetails != null}"/>
+                            <h:outputText value="#{companyProductManagedBean.viewProductManagedBean.gameToViewInDetails.parentAdvisory}" />
+                        </p:column>
+                    </p:row> 
+                    
+                    <p:row rendered="#{companyProductManagedBean.viewProductManagedBean.hardwareToViewInDetails != null}">
+                        <p:column>
+                            <h:outputText value="Manufactoring country" />
+                        </p:column>
+                        <p:column >
+                            <h:outputText value="#{companyProductManagedBean.viewProductManagedBean.hardwareToViewInDetails.manufactoringCountry}" />
+                        </p:column>
+                    </p:row> 
+                    
+                    <p:row rendered="#{companyProductManagedBean.viewProductManagedBean.hardwareToViewInDetails != null}">
+                        <p:column>
+                            <h:outputText value="Game Videos" />
+                        </p:column>
+                        <p:column >
+                            <h:outputText value="#{companyProductManagedBean.viewProductManagedBean.hardwareToViewInDetails.technicalspecification}" />
+                        </p:column>
+                    </p:row> 
+                    
+                    <p:row rendered="#{companyProductManagedBean.viewProductManagedBean.hardwareToViewInDetails != null}">
+                        <p:column>
+                            <h:outputText value="Game Videos" />
+                        </p:column>
+                        <p:column >
+                            <h:outputText value="#{companyProductManagedBean.viewProductManagedBean.hardwareToViewInDetails.warrentyDescription}" />
                         </p:column>
                     </p:row> 
                 </p:panelGrid>
