@@ -71,9 +71,12 @@
                             <f:attribute name="companyProductToUpdate" value="#{product}" />
                         </p:commandButton>
                         <p:commandButton icon="ui-icon-document"   update="ccViewProductDetail:formViewProductDetails"
-                                         actionListener="#{companyProductManagedBean.viewSystemAdminDetails}"
+                                         actionListener="#{companyProductManagedBean.viewProductDetailsMethod}"
                                          oncomplete="PF('dialogViewProductDetails').show()">
-                            <f:setPropertyActionListener value="#{product}" target="#{companyProductManagedBean.productToViewInDetail}" />
+                            
+                            <f:setPropertyActionListener value="#{product}" 
+                                                         target="#{companyProductManagedBean.viewProductManagedBean.productToViewInDetails}" />
+
                         </p:commandButton>
                     </p:column>
 

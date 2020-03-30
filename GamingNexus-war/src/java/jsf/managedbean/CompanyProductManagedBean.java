@@ -13,11 +13,12 @@ import ejb.session.stateless.TagSessionBeanLocal;
 import entity.Category;
 import entity.Company;
 import entity.Game;
+import entity.Hardware;
+import entity.OtherSoftware;
 import entity.Product;
 import entity.Tag;
 import java.io.IOException;
 import javax.inject.Named;
-import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +28,8 @@ import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
+import javax.faces.view.ViewScoped;
+import javax.inject.Inject;
 import util.exception.CompanyNotFoundException;
 import util.exception.CreateNewProductException;
 import util.exception.InputDataValidationException;
@@ -39,7 +42,7 @@ import util.exception.UnknownPersistenceException;
  * @author root
  */
 @Named(value = "companyProductManagedBean")
-@SessionScoped
+@ViewScoped
 public class CompanyProductManagedBean implements Serializable {
 
     @EJB
@@ -56,9 +59,12 @@ public class CompanyProductManagedBean implements Serializable {
 
     @EJB
     private CompanySessionBeanLocal companySessionBeanLocal;
-
-    private Game newGame, gameToBeUpdated;
-    private Product productToViewInDetail;
+    @Inject
+    private ViewProductManagedBean viewProductManagedBean;
+    private Game newGame, gameToBeUpdated, gameToViewInDetails = null;
+    private Product productToViewInDetails;
+    private Hardware hardwareToViewInDetails = null;
+    private OtherSoftware otherSoftwareToViewInDetails = null;
     private List<Product> products, filteredProducts;
     private List<Category> categories;
     private List<Tag> tags;
@@ -72,19 +78,18 @@ public class CompanyProductManagedBean implements Serializable {
     @PostConstruct
     public void postConstruct() {
         Map<String, Object> sessionMap = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
-        company = (Company) sessionMap.get("company");
-        System.out.println("company name: " + company.getUsername());
-        products = company.getProducts();
+        setCompany((Company) sessionMap.get("company"));
+        System.out.println("company name: " + getCompany().getUsername());
+        products = getCompany().getProducts();
 
         categories = categorySessionBean.retrieveAllCategories();
         tags = tagSessionBean.retrieveAllTags();
     }
 
-    public void viewSystemAdminDetails(ActionEvent event) throws IOException {
-         productToViewInDetail = (Product) event.getComponent().getAttributes().get("companyProductToViewInDetail");
-        FacesContext.getCurrentInstance().getExternalContext().getFlash().put("productToViewInDetail", productToViewInDetail);
-        FacesContext.getCurrentInstance().getExternalContext().redirect(
-                "ViewProductDetails.xhtml");
+    public void viewProductDetailsMethod(ActionEvent event) throws IOException {
+          Long productIdToView = (Long)event.getComponent().getAttributes().get("productId");
+        FacesContext.getCurrentInstance().getExternalContext().getFlash().put("productIdToView", productIdToView);
+     //   FacesContext.getCurrentInstance().getExternalContext().redirect("viewProductDetails.xhtml");
     }
 
     public void createNewSystemAdmin(ActionEvent event) throws SystemAdminUsernameExistException {
@@ -98,7 +103,7 @@ public class CompanyProductManagedBean implements Serializable {
                     newGame.getTags().forEach(tag -> {
                         tagIds.add(tag.getTagId());
                     });
-                    Game game = gameSessionBean.createNewGame(newGame, newGame.getCategory().getCategoryId(), tagIds, company.getUserId());
+                    Game game = gameSessionBean.createNewGame(newGame, newGame.getCategory().getCategoryId(), tagIds, getCompany().getUserId());
                     products.add((Product) game);
 
                     FacesContext.getCurrentInstance().addMessage(null,
@@ -222,17 +227,88 @@ public class CompanyProductManagedBean implements Serializable {
     }
 
     /**
-     * @return the productToViewInDetail
+     * @return the productToViewInDetails
      */
-    public Product getProductToViewInDetail() {
-        return productToViewInDetail;
+    public Product getProductToViewInDetails() {
+        return productToViewInDetails;
     }
 
     /**
-     * @param productToViewInDetail the productToViewInDetail to set
+     * @param productToViewInDetails the productToViewInDetails to set
      */
-    public void setProductToViewInDetail(Product productToViewInDetail) {
-        this.productToViewInDetail = productToViewInDetail;
+    public void setProductToViewInDetails(Product productToViewInDetails) {
+        this.productToViewInDetails = productToViewInDetails;
+    }
+
+    /**
+     * @return the gameToViewInDetails
+     */
+    public Game getGameToViewInDetails() {
+        return gameToViewInDetails;
+    }
+
+    /**
+     * @param gameToViewInDetails the gameToViewInDetails to set
+     */
+    public void setGameToViewInDetails(Game gameToViewInDetails) {
+        this.gameToViewInDetails = gameToViewInDetails;
+    }
+
+    /**
+     * @return the hardwareToViewInDetails
+     */
+    public Hardware getHardwareToViewInDetails() {
+        return hardwareToViewInDetails;
+    }
+
+    /**
+     * @param hardwareToViewInDetails the hardwareToViewInDetails to set
+     */
+    public void setHardwareToViewInDetails(Hardware hardwareToViewInDetails) {
+        this.hardwareToViewInDetails = hardwareToViewInDetails;
+    }
+
+    /**
+     * @return the otherSoftwareToViewInDetails
+     */
+    public OtherSoftware getOtherSoftwareToViewInDetails() {
+        return otherSoftwareToViewInDetails;
+    }
+
+    /**
+     * @param otherSoftwareToViewInDetails the otherSoftwareToViewInDetails to
+     * set
+     */
+    public void setOtherSoftwareToViewInDetails(OtherSoftware otherSoftwareToViewInDetails) {
+        this.otherSoftwareToViewInDetails = otherSoftwareToViewInDetails;
+    }
+
+    /**
+     * @return the company
+     */
+    public Company getCompany() {
+        return company;
+    }
+
+    /**
+     * @param company the company to set
+     */
+    public void setCompany(Company company) {
+        this.company = company;
+    }
+
+    /**
+     * @return the viewProductManagedBean
+     */
+    public ViewProductManagedBean getViewProductManagedBean() {
+        return viewProductManagedBean;
+    }
+
+    /**
+     * @param viewProductManagedBean the viewProductManagedBean to set
+     */
+    public void setViewProductManagedBean(ViewProductManagedBean viewProductManagedBean) {
+        this.viewProductManagedBean = viewProductManagedBean;
     }
 
 }
