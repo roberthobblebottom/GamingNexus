@@ -8,6 +8,7 @@ package jsf.managedbean;
 import ejb.session.stateless.CategorySessionBeanLocal;
 import ejb.session.stateless.CompanySessionBeanLocal;
 import ejb.session.stateless.GameSessionBeanLocal;
+import ejb.session.stateless.OtherSoftwareSessionBeanLocal;
 import ejb.session.stateless.ProductSessionBeanLocal;
 import ejb.session.stateless.TagSessionBeanLocal;
 import entity.Category;
@@ -44,19 +45,22 @@ import util.exception.UnknownPersistenceException;
 @Named(value = "companyProductManagedBean")
 @ViewScoped
 public class CompanyProductManagedBean implements Serializable {
-
+    
+    @EJB
+    private OtherSoftwareSessionBeanLocal otherSoftwareSessionBean;
+    
     @EJB
     private ProductSessionBeanLocal productSessionBean;
-
+    
     @EJB
     private GameSessionBeanLocal gameSessionBean;
-
+    
     @EJB
     private CategorySessionBeanLocal categorySessionBean;
-
+    
     @EJB
     private TagSessionBeanLocal tagSessionBean;
-
+    
     @EJB
     private CompanySessionBeanLocal companySessionBeanLocal;
     @Inject
@@ -64,38 +68,39 @@ public class CompanyProductManagedBean implements Serializable {
     private Game newGame, gameToBeUpdated, gameToViewInDetails = null;
     private Product productToViewInDetails;
     private Hardware hardwareToViewInDetails = null;
-    private OtherSoftware otherSoftwareToViewInDetails = null;
+    private OtherSoftware newOtherSoftware, otherSoftwareToViewInDetails = null;
     private List<Product> products, filteredProducts;
     private List<Category> categories;
     private List<Tag> tags;
     private Company company;
-
+    
     public CompanyProductManagedBean() {
         newGame = new Game();
         gameToBeUpdated = new Game();
     }
-
+    
     @PostConstruct
     public void postConstruct() {
         Map<String, Object> sessionMap = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
         setCompany((Company) sessionMap.get("company"));
         System.out.println("company name: " + getCompany().getUsername());
         products = getCompany().getProducts();
-
+        newOtherSoftware = new OtherSoftware();
+        newOtherSoftware.setTags(new ArrayList<Tag>());
         categories = categorySessionBean.retrieveAllCategories();
         tags = tagSessionBean.retrieveAllTags();
     }
-
+    
     public void viewProductDetailsMethod(ActionEvent event) throws IOException {
-          Long productIdToView = (Long)event.getComponent().getAttributes().get("productId");
+        Long productIdToView = (Long) event.getComponent().getAttributes().get("productId");
         FacesContext.getCurrentInstance().getExternalContext().getFlash().put("productIdToView", productIdToView);
-     //   FacesContext.getCurrentInstance().getExternalContext().redirect("viewProductDetails.xhtml");
+        //   FacesContext.getCurrentInstance().getExternalContext().redirect("viewProductDetails.xhtml");
     }
-
-    public void createNewSystemAdmin(ActionEvent event) throws SystemAdminUsernameExistException {
-
+    
+    public void createNewProduct(ActionEvent event) throws SystemAdminUsernameExistException {
+        
         String buttonID = event.getComponent().getId();
-
+        
         switch (buttonID) {
             case "AddGameButton":
                 try {
@@ -105,35 +110,54 @@ public class CompanyProductManagedBean implements Serializable {
                     });
                     Game game = gameSessionBean.createNewGame(newGame, newGame.getCategory().getCategoryId(), tagIds, getCompany().getUserId());
                     products.add((Product) game);
-
+                    
                     FacesContext.getCurrentInstance().addMessage(null,
                             new FacesMessage(FacesMessage.SEVERITY_INFO, "New Game " + newGame.getName() + " added successfully "
                                     + "(ID: " + game.getProductId() + ")", null));
                     newGame = new Game();
-
+                    
                 } catch (UnknownPersistenceException | ProductSkuCodeExistException | InputDataValidationException | CreateNewProductException
                         | CompanyNotFoundException ex) {
                     FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
-                            "An error has occurred while creating a new system admin  " + ex.getMessage(), null));
+                            "An error has occurred while creating a new game " + ex.getMessage(), null));
                 }
                 break;
-            case "AddSoftwareButton":
+            case "AddOtherSoftwareButton":
+                try {
+                    List<Long> tagIds = new ArrayList<>();
+                    getNewOtherSoftware().getTags().forEach(tag -> {
+                        tagIds.add(tag.getTagId());
+                    });
+                    OtherSoftware otherSoftware = otherSoftwareSessionBean.createNewOtherSoftware(newOtherSoftware,
+                            newOtherSoftware.getCategory().getCategoryId(), tagIds, getCompany().getUserId());
+                    products.add((Product) otherSoftware);
+                    
+                    FacesContext.getCurrentInstance().addMessage(null,
+                            new FacesMessage(FacesMessage.SEVERITY_INFO, "New Game " + newGame.getName() + " added successfully "
+                                    + "(ID: " + otherSoftware.getProductId() + ")", null));
+                    newOtherSoftware = new OtherSoftware();
+                    
+                } catch (UnknownPersistenceException | ProductSkuCodeExistException | InputDataValidationException | CreateNewProductException
+                        | CompanyNotFoundException ex) {
+                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                            "An error has occurred while creating a new other software  " + ex.getMessage(), null));
+                }
                 break;
             case "AddHardwareButton":
                 break;
             default:
                 break;
-
+            
         }
-
+        
     }
-
+    
     public void deleteProduct(ActionEvent event) {
         try {
             Product productToBeDeleted = (Product) event.getComponent().getAttributes().get("productToBeDeleted");
             productSessionBean.deleteProduct(productToBeDeleted);
             products.remove(productToBeDeleted);
-
+            
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
                     "Product deleted successfully ID: " + productToBeDeleted.getProductId(), null));
         } catch (Exception ex) {
@@ -311,4 +335,18 @@ public class CompanyProductManagedBean implements Serializable {
         this.viewProductManagedBean = viewProductManagedBean;
     }
 
+    /**
+     * @return the newOtherSoftware
+     */
+    public OtherSoftware getNewOtherSoftware() {
+        return newOtherSoftware;
+    }
+
+    /**
+     * @param newOtherSoftware the newOtherSoftware to set
+     */
+    public void setNewOtherSoftware(OtherSoftware newOtherSoftware) {
+        this.newOtherSoftware = newOtherSoftware;
+    }
+    
 }

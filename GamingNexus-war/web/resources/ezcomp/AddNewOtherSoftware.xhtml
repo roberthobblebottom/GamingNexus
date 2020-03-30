@@ -16,16 +16,18 @@
     <!-- IMPLEMENTATION -->
     <cc:implementation>
 
-        <h:form id="formAddNewGame">
-            <p:dialog id="dialogAddNewGame" widgetVar="dialogAddNewGame" header="Add New Game" closable="true" >
+        <h:form id="formAddNewSoftware">
+
+            <p:dialog id="dialogAddNewSoftware" widgetVar="dialogAddNewSoftware" header="Add New Software (other than game)" closable="true">
+
                 <p:messages id="messagesAddNewGame" redisplay="false" />
-                <p:panelGrid >
+                <p:panelGrid>
                     <p:row>
                         <p:column>
                             <p:outputLabel for="name" value="name" style="font-weight: bold;"/>               
                         </p:column>
                         <p:column>
-                            <p:inputText id="name" value="#{companyProductManagedBean.newGame.name}" placeholder="name" required="true" requiredMessage="Name is required" />
+                            <p:inputText id="name" value="#{companyProductManagedBean.newOtherSoftware.name}" placeholder="name" required="true" requiredMessage="Name is required" />
                         </p:column>
                         <p:column>
                             <p:messages for ="name" />
@@ -39,7 +41,7 @@
                         <p:column>
                             <p:inputTextarea id = "description" rows="5" cols="30" counter="display" 
                                              maxlength="1000" counterTemplate="{0} characters remaining." autoResize="true" 
-                                             value="#{companyProductManagedBean.newGame.description}" />
+                                             value="#{companyProductManagedBean.newOtherSoftware.description}" />
                             <br />
                             <h:outputText id="display" />   
                         </p:column>
@@ -55,7 +57,7 @@
                         <p:column>
                             <p:inputTextarea id = "computerRequirements" rows="5" cols="30" counter="display2" maxlength="1000" 
                                              counterTemplate="{0} characters remaining." autoResize="true" 
-                                             value="#{companyProductManagedBean.newGame.computerRequirements}" />
+                                             value="#{companyProductManagedBean.newOtherSoftware.computerRequirements}" />
                             <br />
                             <h:outputText id="display2" />   
                         </p:column>
@@ -70,7 +72,7 @@
                         </p:column>
                         <p:column>
                             <p:inputText id="price"  placeholder="price" required="true" requiredMessage="Name is required" 
-                                         value="#{companyProductManagedBean.newGame.price}" />
+                                         value="#{companyProductManagedBean.newOtherSoftware.price}" />
                         </p:column>
                         <p:column>
                             <p:messages for ="price" />
@@ -82,7 +84,7 @@
                             <p:outputLabel for="tag" value="tag" style="font-weight: bold;"/>               
                         </p:column>
                         <p:column>
-                            <p:selectCheckboxMenu id="tag"  label="tag" value="#{companyProductManagedBean.newGame.tags}" 
+                            <p:selectCheckboxMenu id="tag"  label="tag" value="#{companyProductManagedBean.newOtherSoftware.tags}" 
                                                   filter="true" filterMatchMode="startsWith" panelStyle="width:250px">
                                 <f:selectItems  value="#{companyProductManagedBean.tags}" var="tag" itemLabel="#{tag.tagName}" itemValue="#{tag}">
                                 </f:selectItems>
@@ -97,7 +99,7 @@
                             <p:outputLabel for="category" value="category" style="font-weight: bold;"/>               
                         </p:column>
                         <p:column>
-                            <p:selectOneMenu id="category" style="width:125px" value="#{companyProductManagedBean.newGame.category}" 
+                            <p:selectOneMenu id="category" style="width:125px" value="#{companyProductManagedBean.newOtherSoftware.category}" 
                                              converter="omnifaces.SelectItemsConverter">
                                 <f:selectItems  value="#{companyProductManagedBean.categories}" 
                                                 var="category" itemLabel="#{category.name}" 
@@ -109,36 +111,18 @@
                             <p:messages for ="category" />
                         </p:column>     
                     </p:row>
-                    <p:row>
-                        <p:column>
-                            <p:outputLabel for="parentAdvisory" value="parentAdvisory" style="font-weight: bold;" />               
-                        </p:column>
-                        <p:column>
-                            <p:selectOneMenu id="parentAdvisory" style="width:125px"
-                                             value="#{companyProductManagedBean.newGame.name}" >
-                                <f:selectItem  itemValue="G" itemLabel="G"/>
-                                <f:selectItem itemValue="Teen" itemLabel="Teen"/>
-                                <f:selectItem itemValue="R" itemLabel="R"/>
-
-                            </p:selectOneMenu>                             
-                        </p:column>
-                        <p:column>
-                            <p:messages for ="parentAdvisory" />
-                        </p:column>     
-                    </p:row>
 
                     <p:row>
                         <p:column colspan="3">
                             <p:commandButton type="reset" value="Clear" />&nbsp;
-                            <p:commandButton  id="AddGameButton" value="Add" update="@form formAllProducts:dataTableAllProducts" 
+                            <p:commandButton   id="AddOtherSoftwareButton" value="Add" update="@form formAllProducts:dataTableAllProducts" 
                                               actionListener="#{companyProductManagedBean.createNewProduct}"    
-                                              oncomplete="PF('dialogViewProductDetal').show()"  />
+                                              oncomplete="PF('dialogViewProductDetal').show()" />
                         </p:column>
                     </p:row>
 
                 </p:panelGrid>
             </p:dialog>
         </h:form>
-
     </cc:implementation>
 </html>

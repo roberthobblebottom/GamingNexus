@@ -218,36 +218,6 @@
                 </p:dialog>
             </h:form>
 
-            <h:form id="formAddNewSoftware">
-
-                <p:dialog id="dialogAddNewSoftware" widgetVar="dialogAddNewSoftware" header="dialogAddNewSoftware" closable="true">
-
-                    <p:messages id="messagesAddNewGame" redisplay="false" />
-                    <p:panelGrid>
-                        <p:row>
-                            <p:column>
-                                <p:outputLabel for="name" value="name" style="font-weight: bold;"/>               
-                            </p:column>
-                            <p:column>
-                                <p:inputText id="name" value="" placeholder="name" required="true" requiredMessage="Name is required" />
-                            </p:column>
-                            <p:column>
-                                <p:messages for ="name" />
-                            </p:column>     
-                        </p:row>
-
-
-                        <p:row>
-                            <p:column colspan="3">
-                                <p:commandButton type="reset" value="Clear" />&nbsp;
-                                <p:commandButton  value="Create" update="@form formAllProducts:dataTableAllProducts" 
-                                                  />
-                            </p:column>
-                        </p:row>
-
-                    </p:panelGrid>
-                </p:dialog>
-            </h:form>
 
             <h:form id="formAddNewHardware">
 
@@ -285,6 +255,7 @@
 
             <ez:ViewProductDetails id="ccViewProductDetail"/>
             <ez:AddNewGame id="ccAddNewGame"/>
+            <ez:AddNewOtherSoftware id="ccAddNewOtherSoftware"/>
 
         </div>
 
