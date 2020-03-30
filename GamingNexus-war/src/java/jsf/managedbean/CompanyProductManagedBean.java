@@ -8,6 +8,7 @@ package jsf.managedbean;
 import ejb.session.stateless.CategorySessionBeanLocal;
 import ejb.session.stateless.CompanySessionBeanLocal;
 import ejb.session.stateless.GameSessionBeanLocal;
+import ejb.session.stateless.HardwareSessionBeanLocal;
 import ejb.session.stateless.OtherSoftwareSessionBeanLocal;
 import ejb.session.stateless.ProductSessionBeanLocal;
 import ejb.session.stateless.TagSessionBeanLocal;
@@ -45,6 +46,9 @@ import util.exception.UnknownPersistenceException;
 @Named(value = "companyProductManagedBean")
 @ViewScoped
 public class CompanyProductManagedBean implements Serializable {
+
+    @EJB
+    private HardwareSessionBeanLocal hardwareSessionBean;
     
     @EJB
     private OtherSoftwareSessionBeanLocal otherSoftwareSessionBean;
@@ -67,7 +71,7 @@ public class CompanyProductManagedBean implements Serializable {
     private ViewProductManagedBean viewProductManagedBean;
     private Game newGame, gameToBeUpdated, gameToViewInDetails = null;
     private Product productToViewInDetails;
-    private Hardware hardwareToViewInDetails = null;
+    private Hardware newHardware,hardwareToViewInDetails = null;
     private OtherSoftware newOtherSoftware, otherSoftwareToViewInDetails = null;
     private List<Product> products, filteredProducts;
     private List<Category> categories;
@@ -87,6 +91,8 @@ public class CompanyProductManagedBean implements Serializable {
         products = getCompany().getProducts();
         newOtherSoftware = new OtherSoftware();
         newOtherSoftware.setTags(new ArrayList<Tag>());
+        setNewHardware(new Hardware());
+        getNewHardware().setTags(new ArrayList<Tag>());
         categories = categorySessionBean.retrieveAllCategories();
         tags = tagSessionBean.retrieveAllTags();
     }
@@ -144,6 +150,25 @@ public class CompanyProductManagedBean implements Serializable {
                 }
                 break;
             case "AddHardwareButton":
+                try {
+                    List<Long> tagIds = new ArrayList<>();
+                    getNewHardware().getTags().forEach(tag -> {
+                        tagIds.add(tag.getTagId());
+                    });
+                    Hardware hardware = hardwareSessionBean.createNewHardware(newHardware,
+                            newHardware.getCategory().getCategoryId(), tagIds, getCompany().getUserId());
+                    products.add((Product) hardware);
+                    
+                    FacesContext.getCurrentInstance().addMessage(null,
+                            new FacesMessage(FacesMessage.SEVERITY_INFO, "New Game " + newGame.getName() + " added successfully "
+                                    + "(ID: " + newHardware.getProductId() + ")", null));
+                    newHardware = new Hardware();
+                    
+                } catch (UnknownPersistenceException | ProductSkuCodeExistException | InputDataValidationException | CreateNewProductException
+                        | CompanyNotFoundException ex) {
+                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                            "An error has occurred while creating a new other software  " + ex.getMessage(), null));
+                }
                 break;
             default:
                 break;
@@ -347,6 +372,34 @@ public class CompanyProductManagedBean implements Serializable {
      */
     public void setNewOtherSoftware(OtherSoftware newOtherSoftware) {
         this.newOtherSoftware = newOtherSoftware;
+    }
+
+    /**
+     * @return the hardwareSessionBean
+     */
+    public HardwareSessionBeanLocal getHardwareSessionBean() {
+        return hardwareSessionBean;
+    }
+
+    /**
+     * @param hardwareSessionBean the hardwareSessionBean to set
+     */
+    public void setHardwareSessionBean(HardwareSessionBeanLocal hardwareSessionBean) {
+        this.hardwareSessionBean = hardwareSessionBean;
+    }
+
+    /**
+     * @return the newHardware
+     */
+    public Hardware getNewHardware() {
+        return newHardware;
+    }
+
+    /**
+     * @param newHardware the newHardware to set
+     */
+    public void setNewHardware(Hardware newHardware) {
+        this.newHardware = newHardware;
     }
     
 }
