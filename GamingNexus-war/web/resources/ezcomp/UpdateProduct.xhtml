@@ -10,15 +10,17 @@
     </cc:interface>
 
     <cc:implementation>
-        <h:form id="formViewProductDetails">
-            <p:dialog id="dialogViewProductDetails"  widgetVar="dialogViewProductDetails" header="View Product Detail" closable="true" >
+        <h:form id="formUpdateProduct">
+            <p:dialog id="dialogUpdateProduct"  widgetVar="dialogUpdateProduct" 
+                      header="Update Product Detail" closable="true" >
                 <p:panelGrid>
                     <p:row>
                         <p:column>
                             <h:outputText value="Product ID" />
                         </p:column>
                         <p:column>
-                            <h:outputText value="#{companyProductManagedBean.viewProductManagedBean.productToViewInDetails.productId}" />
+                            <p:inputText value="#{companyProductManagedBean.viewProductManagedBean.
+                                                  productToViewInDetails.productId}" />
                         </p:column>
                     </p:row>
                     <p:row>
@@ -26,7 +28,7 @@
                             <h:outputText value="Name" />
                         </p:column>
                         <p:column>
-                            <h:outputText value="#{companyProductManagedBean.viewProductManagedBean.productToViewInDetails.name}" />
+                            <p:inputText value="#{companyProductManagedBean.viewProductManagedBean.productToViewInDetails.name}" />
                         </p:column>
                     </p:row>
 
@@ -44,7 +46,7 @@
                             <h:outputText value="Price" />
                         </p:column>
                         <p:column>
-                            <h:outputText value="#{companyProductManagedBean.viewProductManagedBean.productToViewInDetails.price}" />
+                            <p:inputText value="#{companyProductManagedBean.viewProductManagedBean.productToViewInDetails.price}" />
                         </p:column>
                     </p:row>
 
@@ -53,7 +55,7 @@
                             <h:outputText value="Average Ratings" />
                         </p:column>
                         <p:column>
-                            <h:outputText value="#{companyProductManagedBean.viewProductManagedBean.productToViewInDetails.averageRating}" />
+                            <p:inputText value="#{companyProductManagedBean.viewProductManagedBean.productToViewInDetails.averageRating}" />
                         </p:column>
                     </p:row>
                     <p:row>
@@ -61,7 +63,7 @@
                             <h:outputText value="Category" />
                         </p:column>
                         <p:column>
-                            <h:outputText value="#{companyProductManagedBean.viewProductManagedBean.productToViewInDetails.category.name}" />
+                            <p:inputText value="#{companyProductManagedBean.viewProductManagedBean.productToViewInDetails.category.name}" />
                         </p:column>
                     </p:row>
                     <p:row>
@@ -79,7 +81,7 @@
                             <h:outputText value="Forum" />
                         </p:column>
                         <p:column headerText="Forum link">
-                            <h:outputText value="not implemented" />
+                            <p:inputText value="not implemented" />
                         </p:column>
                     </p:row>
 
@@ -88,7 +90,7 @@
                             <h:outputText value="Game Pictures" />
                         </p:column>
                         <p:column >
-                            <h:outputText value="#{companyProductManagedBean.viewProductManagedBean.gameToViewInDetails.gamePicturesURLs}" />
+                            <p:inputText value="#{companyProductManagedBean.viewProductManagedBean.gameToViewInDetails.gamePicturesURLs}" />
                         </p:column>
                     </p:row> 
 
@@ -97,28 +99,27 @@
                             <h:outputText value="Game Videos" />
                         </p:column>
                         <p:column >
-                            <h:outputText value="#{companyProductManagedBean.viewProductManagedBean.gameToViewInDetails.gameTrailersURLS}" />
+                            <p:inputText value="#{companyProductManagedBean.viewProductManagedBean.gameToViewInDetails.gameTrailersURLS}" />
                         </p:column>
                     </p:row> 
 
                     <p:row rendered="#{companyProductManagedBean.viewProductManagedBean.gameToViewInDetails != null}">
                         <p:column>
-                            <h:outputText value="Parent Advisory" 
-                                          />
+                            <h:outputText value="Parent Advisory" />
                         </p:column>
                         <p:column >
-                            <h:outputText value="#{companyProductManagedBean.viewProductManagedBean.gameToViewInDetails.parentAdvisory}"/>
+                            <p:inputText value="#{companyProductManagedBean.viewProductManagedBean.gameToViewInDetails.parentAdvisory}"/>
                         </p:column>
                     </p:row> 
- 
-
+                    
+                    
                     <p:row rendered="#{companyProductManagedBean.viewProductManagedBean.hardwareToViewInDetails != null}">
                         <p:column>
                             <h:outputText value="Manufactoring Country" 
                                           />
                         </p:column>
                         <p:column >
-                            <h:outputText value="#{companyProductManagedBean.viewProductManagedBean.hardwareToViewInDetails.manufactoringCountry}" />
+                            <p:inputText value="#{companyProductManagedBean.viewProductManagedBean.hardwareToViewInDetails.manufactoringCountry}" />
                         </p:column>
                     </p:row> 
 
