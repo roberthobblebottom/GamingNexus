@@ -49,6 +49,8 @@ public class ViewProductManagedBean implements Serializable {
             setHardwareToViewInDetails(null);
             setOtherSoftwareToViewInDetails(null);
 
+            getGameToViewInDetails().getTags().size();
+
         } else if (productToViewInDetails instanceof Hardware) {
             setHardwareToViewInDetails((Hardware) productToViewInDetails);
             setGameToViewInDetails(null);
@@ -61,6 +63,13 @@ public class ViewProductManagedBean implements Serializable {
 
         }
         this.productToViewInDetails = productToViewInDetails;
+    }
+
+    public void resetManageBean() {
+        this.gameToViewInDetails = null;
+        this.hardwareToViewInDetails = null;
+        this.otherSoftwareToViewInDetails = null;
+        this.productToViewInDetails = null;
     }
 
     /**

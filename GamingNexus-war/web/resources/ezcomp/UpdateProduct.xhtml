@@ -37,7 +37,12 @@
                             <h:outputText value="Description" />
                         </p:column>
                         <p:column>
-                            <p value="#{companyProductManagedBean.viewProductManagedBean.productToViewInDetails.description}"/>
+                            <p:inputTextarea id = "description" rows="5" cols="30" counter="display" 
+                                             maxlength="1000" counterTemplate="{0} characters remaining." autoResize="true" 
+                                             value="#{companyProductManagedBean.productToViewInDetails.description}" 
+                                             rendered="#{companyProductManagedBean.productToViewInDetails.description}"/>
+                            <br/>
+                            <h:outputText id="display" />   
                         </p:column>
                     </p:row>
 
@@ -55,15 +60,32 @@
                             <h:outputText value="Average Ratings" />
                         </p:column>
                         <p:column>
-                            <p:inputText value="#{companyProductManagedBean.viewProductManagedBean.productToViewInDetails.averageRating}" />
+                            <p:inputText value="#{companyProductManagedBean.viewProductManagedBean.
+                                                  productToViewInDetails.averageRating}" />
                         </p:column>
                     </p:row>
                     <p:row>
                         <p:column>
                             <h:outputText value="Category" />
-                        </p:column>
+                        </p:column>                                                   
+
                         <p:column>
-                            <p:inputText value="#{companyProductManagedBean.viewProductManagedBean.productToViewInDetails.category.name}" />
+                            <p:selectOneMenu id="category" style="width:125px" 
+                                             value="#{companyProductManagedBean.
+                                                      viewProductManagedBean.
+                                                      productToViewInDetails.
+                                                      category}" 
+                                             converter="omnifaces.SelectItemsConverter">
+
+                                <f:selectItems  value="#{companyProductManagedBean.categories}" 
+                                                var="category" 
+                                                itemLabel="#{category.name}" 
+                                                itemValue="#{category}">
+
+                                </f:selectItems>/>
+                            </p:selectOneMenu>
+
+
                         </p:column>
                     </p:row>
                     <p:row>
@@ -71,9 +93,13 @@
                             <h:outputText value="Tags" />
                         </p:column>
                         <p:column>
-                            <p:dataList value="#{companyProductManagedBean.viewProductManagedBean.productToViewInDetails.tags}" var="tag" type="ordered" >
-                                #{tag.tagName}  
-                            </p:dataList>
+                            <p:selectCheckboxMenu id="tag"  label="tag" 
+                                                  value="#{companyProductManagedBean.tagIdsUpdate}"
+                                                  filter="true" filterMatchMode="startsWith" panelStyle="width:250px">
+                                <f:selectItems  value="#{companyProductManagedBean.tags}" var="tag" 
+                                                itemLabel="#{tag.tagName}" itemValue="#{tag.tagId}">
+                                </f:selectItems>
+                            </p:selectCheckboxMenu>                         
                         </p:column>
                     </p:row>
                     <p:row>
@@ -111,8 +137,8 @@
                             <p:inputText value="#{companyProductManagedBean.viewProductManagedBean.gameToViewInDetails.parentAdvisory}"/>
                         </p:column>
                     </p:row> 
-                    
-                    
+
+
                     <p:row rendered="#{companyProductManagedBean.viewProductManagedBean.hardwareToViewInDetails != null}">
                         <p:column>
                             <h:outputText value="Manufactoring Country" 
@@ -143,6 +169,14 @@
                             #{companyProductManagedBean.viewProductManagedBean.hardwareToViewInDetails.warrentyDescription}
                         </p:column>
                     </p:row> 
+                    <p:row>
+                        <p:column colspan="3">
+                            <p:commandButton  id="updateProductButton" value="Update" 
+                                              update="@form formAllProducts:dataTableAllProducts" 
+                                              actionListener="#{companyProductManagedBean.updateProduct}"    
+                                               />
+                        </p:column>
+                    </p:row>
                 </p:panelGrid>
             </p:dialog>
 

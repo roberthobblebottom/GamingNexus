@@ -69,8 +69,9 @@
                             <h:outputText value="Tags" />
                         </p:column>
                         <p:column>
-                            <p:dataList value="#{companyProductManagedBean.viewProductManagedBean.productToViewInDetails.tags}" var="tag" type="ordered" >
-                                #{tag.tagName}  
+                            <p:dataList value="#{companyProductManagedBean.viewProductManagedBean.
+                                                 productToViewInDetails.tags}" var="tag" type="ordered" >
+                                        #{tag.tagName}  
                             </p:dataList>
                         </p:column>
                     </p:row>
@@ -110,7 +111,7 @@
                             <h:outputText value="#{companyProductManagedBean.viewProductManagedBean.gameToViewInDetails.parentAdvisory}"/>
                         </p:column>
                     </p:row> 
- 
+
 
                     <p:row rendered="#{companyProductManagedBean.viewProductManagedBean.hardwareToViewInDetails != null}">
                         <p:column>

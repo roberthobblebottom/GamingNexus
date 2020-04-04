@@ -146,7 +146,7 @@ public class GameManagementManagedBean implements Serializable{
         
         try
         {
-            gameSessionBeanLocal.updateProduct(selectedGameToUpdate, categoryIdUpdate, tagIdsUpdate);
+         //   gameSessionBeanLocal.updateProduct(selectedGameToUpdate, categoryIdUpdate, tagIdsUpdate);
                         
             for(Category ce:categoryEntities)
             {
@@ -169,10 +169,10 @@ public class GameManagementManagedBean implements Serializable{
 
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Product updated successfully", null));
         }
-        catch(ProductNotFoundException ex)
-        {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "An error has occurred while updating product: " + ex.getMessage(), null));
-        }
+//        catch(ProductNotFoundException ex)
+//        {
+//            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "An error has occurred while updating product: " + ex.getMessage(), null));
+//        }
         catch(Exception ex)
         {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "An unexpected error has occurred: " + ex.getMessage(), null));

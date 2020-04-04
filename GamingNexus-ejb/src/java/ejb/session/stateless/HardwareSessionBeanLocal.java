@@ -13,8 +13,11 @@ import util.exception.CategoryNotFoundException;
 import util.exception.CompanyNotFoundException;
 import util.exception.CreateNewProductException;
 import util.exception.InputDataValidationException;
+import util.exception.ProductNotFoundException;
 import util.exception.ProductSkuCodeExistException;
+import util.exception.TagNotFoundException;
 import util.exception.UnknownPersistenceException;
+import util.exception.UpdateProductException;
 
 /**
  *
@@ -30,5 +33,9 @@ public interface HardwareSessionBeanLocal {
     public List<Product> filterProductsByCategory(Long categoryId) throws CategoryNotFoundException;
 
     public List<Hardware> searchHardwaresByName(String searchString);
+
+    public Hardware retrieveHardwareById(Long hardwareId) throws ProductNotFoundException;
+
+    public void updateHardware(Hardware hardware, Long categoryId, List<Long> tagIds) throws ProductNotFoundException, CategoryNotFoundException, TagNotFoundException, UpdateProductException, InputDataValidationException;
     
 }

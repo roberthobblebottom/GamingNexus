@@ -55,6 +55,7 @@ public class OtherSoftwareSessionBean implements OtherSoftwareSessionBeanLocal {
     public OtherSoftwareSessionBean() {
     }
 
+    @Override
     public OtherSoftware createNewOtherSoftware(OtherSoftware newOtherSoftware, Long categoryId, List<Long> tagIds, Long CompanyId) throws ProductSkuCodeExistException, UnknownPersistenceException, InputDataValidationException, CreateNewProductException, CompanyNotFoundException {
         try {
             if (categoryId == null) {
@@ -98,6 +99,7 @@ public class OtherSoftwareSessionBean implements OtherSoftwareSessionBeanLocal {
         }
     }
 
+    @Override
     public List<OtherSoftware> retrieveAllOtherSoftwares() {
         Query query = em.createQuery("SELECT g FROM Game g ORDER BY g.averageRating ASC");
         List<OtherSoftware> otherSoftwares = query.getResultList();
@@ -110,6 +112,7 @@ public class OtherSoftwareSessionBean implements OtherSoftwareSessionBeanLocal {
         return otherSoftwares;
     }
 
+    @Override
     public List<OtherSoftware> searchOtherSoftwaresByName(String searchString) {
         Query query = em.createQuery("SELECT o FROM OtherSoftware o WHERE o.name LIKE :inSearchString");
         query.setParameter("inSearchString", "%" + searchString + "%");
@@ -199,48 +202,56 @@ public class OtherSoftwareSessionBean implements OtherSoftwareSessionBeanLocal {
         }
     }
 
-    public Product retrieveProductByProductId(Long productId) throws ProductNotFoundException {
-        Product productEntity = em.find(Product.class, productId);
+    @Override
+    public OtherSoftware retrieveOtherSoftwareById(Long productId) throws ProductNotFoundException {
+        OtherSoftware otherSoftware = em.find(OtherSoftware.class, productId);
 
-        if (productEntity != null) {
-            productEntity.getCategory();
-            productEntity.getTags().size();
+        if (otherSoftware != null) {
+            otherSoftware.getCategory();
+            otherSoftware.getTags().size();
 
-            return productEntity;
+            return otherSoftware;
         } else {
             throw new ProductNotFoundException("Product ID " + productId + " does not exist!");
         }
     }
 
-    public void updateProduct(Product productEntity, Long categoryId, List<Long> tagIds) throws ProductNotFoundException, CategoryNotFoundException, TagNotFoundException, UpdateProductException, InputDataValidationException {
-        if (productEntity != null && productEntity.getProductId() != null) {
-            Product productEntityToUpdate = retrieveProductByProductId(productEntity.getProductId());
+    @Override
+    public void updateOtherSoftware(OtherSoftware otherSoftware, Long categoryId, List<Long> tagIds) throws ProductNotFoundException, CategoryNotFoundException, TagNotFoundException, UpdateProductException, InputDataValidationException {
+        if (otherSoftware != null && otherSoftware.getProductId() != null) {
+            Product otherSoftwareEntityToUpdate = this.retrieveOtherSoftwareById(otherSoftware.getProductId());
 
-            if (categoryId != null && (!productEntityToUpdate.getCategory().getCategoryId().equals(categoryId))) {
+            if (categoryId != null && (!otherSoftwareEntityToUpdate.getCategory().getCategoryId().equals(categoryId))) {
                 Category categoryEntityToUpdate = categorySessionBeanLocal.retrieveCategoryByCategoryId(categoryId);
 
                 if (!categoryEntityToUpdate.getSubCategories().isEmpty()) {
                     throw new UpdateProductException("Selected category for the new product is not a leaf category");
                 }
 
-                productEntityToUpdate.setCategory(categoryEntityToUpdate);
+                otherSoftwareEntityToUpdate.setCategory(categoryEntityToUpdate);
             }
             if (tagIds != null) {
-                for (Tag tagEntity : productEntityToUpdate.getTags()) {
-                    tagEntity.getProducts().remove(productEntityToUpdate);
+                for (Tag tagEntity : otherSoftwareEntityToUpdate.getTags()) {
+                    tagEntity.getProducts().remove(otherSoftwareEntityToUpdate);
                 }
-                productEntityToUpdate.getTags().clear();
+                otherSoftwareEntityToUpdate.getTags().clear();
                 for (Long tagId : tagIds) {
                     Tag tagEntity = tagSessionBeanLocal.retrieveTagByTagId(tagId);
-                    productEntityToUpdate.addTag(tagEntity);
+                    otherSoftwareEntityToUpdate.addTag(tagEntity);
                 }
             }
-            productEntityToUpdate.setName(productEntity.getName());
-            productEntityToUpdate.setDescription(productEntity.getDescription());
-            productEntityToUpdate.setComputerRequirements(productEntity.getComputerRequirements());
-            productEntityToUpdate.setPrice(productEntity.getPrice());
-            productEntityToUpdate.setCompany(productEntity.getCompany());
-            productEntityToUpdate.setAverageRating((productEntity.getAverageRating()));
+            otherSoftwareEntityToUpdate.setName(otherSoftware.getName());
+            otherSoftwareEntityToUpdate.setDescription(otherSoftware.getDescription());
+            otherSoftwareEntityToUpdate.setComputerRequirements(otherSoftware.getComputerRequirements());
+            otherSoftwareEntityToUpdate.setPrice(otherSoftware.getPrice());
+            otherSoftwareEntityToUpdate.setCompany(otherSoftware.getCompany());
+            otherSoftwareEntityToUpdate.setAverageRating((otherSoftware.getAverageRating()));
+            otherSoftwareEntityToUpdate.setCartItems(otherSoftware.getCartItems());
+            otherSoftwareEntityToUpdate.setOwnedItems(otherSoftware.getOwnedItems());
+            otherSoftwareEntityToUpdate.setPromotions(otherSoftware.getPromotions());
+            otherSoftwareEntityToUpdate.setRatings(otherSoftware.getRatings());
+            otherSoftwareEntityToUpdate.setTags(otherSoftware.getTags());
+
         } else {
             throw new ProductNotFoundException("Product ID not provided for product to be updated");
         }
