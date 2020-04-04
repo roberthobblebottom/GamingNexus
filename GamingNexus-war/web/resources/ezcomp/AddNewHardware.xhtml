@@ -18,7 +18,7 @@
 
         <h:form id="formAddNewHardware">
 
-            <p:dialog id="dialogAddNewHardware" widgetVar="dialogAddNewHardware" header="dialogAddNewHardware" closable="true">
+            <p:dialog id="dialogAddNewHardware" widgetVar="dialogAddNewHardware" header="Add New Hardware" closable="true">
 
                 <p:messages id="messagesAddNewGame" redisplay="false" />
 
@@ -116,6 +116,49 @@
                     </p:row>
 
 
+                    
+                    <p:row >
+                        <p:column>
+                            <h:outputText value="Manufactoring Country" 
+                                          />
+                        </p:column>
+                        <p:column >
+                            <p:inputText value="#{companyProductManagedBean.newHardware.manufactoringCountry}" />
+                        </p:column>
+                    </p:row> 
+
+                    <p:row >
+                        <p:column>
+                            <h:outputText value="Technical Specification" 
+                                          />
+                        </p:column>
+                        <p:column >
+                             <p:inputTextarea  rows="5" cols="30" counter="technicalSpecificationAddDisplay" 
+                                             maxlength="1000" counterTemplate="{0} characters remaining." autoResize="true" 
+                                             value="#{companyProductManagedBean.newHardware.technicalspecification}" />
+                            <br/>
+                            <h:outputText id="technicalSpecificationAddDisplay" />
+
+                        </p:column>
+                    </p:row> 
+
+
+                    <p:row >
+                        <p:column>
+                            <h:outputText value="Warrenty Description" 
+                                          />
+                        </p:column>
+                        <p:column >
+                             <p:inputTextarea  rows="5" cols="30" counter="WarrentDescriptionAddDisplay" 
+                                             maxlength="1000" counterTemplate="{0} characters remaining." autoResize="true" 
+                                             value="#{companyProductManagedBean.newHardware.warrentyDescription}" />
+                            <br/>
+                            <h:outputText id="WarrentDescriptionAddDisplay" />
+                        </p:column>
+                    </p:row> 
+                    
+                    
+                    
                     <p:row>
                         <p:column colspan="3">
                             <p:commandButton type="reset" value="Clear" />&nbsp;

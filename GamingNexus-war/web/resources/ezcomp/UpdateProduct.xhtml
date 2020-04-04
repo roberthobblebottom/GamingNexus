@@ -19,7 +19,7 @@
                             <h:outputText value="Product ID" />
                         </p:column>
                         <p:column>
-                            <p:inputText value="#{companyProductManagedBean.viewProductManagedBean.
+                            <h:outputText value="#{companyProductManagedBean.viewProductManagedBean.
                                                   productToViewInDetails.productId}" />
                         </p:column>
                     </p:row>
@@ -37,12 +37,11 @@
                             <h:outputText value="Description" />
                         </p:column>
                         <p:column>
-                            <p:inputTextarea id = "description" rows="5" cols="30" counter="display" 
+                            <p:inputTextarea id = "descriptionUpdate" rows="5" cols="30" counter="displayUpdate" 
                                              maxlength="1000" counterTemplate="{0} characters remaining." autoResize="true" 
-                                             value="#{companyProductManagedBean.productToViewInDetails.description}" 
-                                             rendered="#{companyProductManagedBean.productToViewInDetails.description}"/>
+                                             value="#{companyProductManagedBean.viewProductManagedBean.productToViewInDetails.description}" />
                             <br/>
-                            <h:outputText id="display" />   
+                            <h:outputText id="displayUpdate" />   
                         </p:column>
                     </p:row>
 
@@ -60,7 +59,7 @@
                             <h:outputText value="Average Ratings" />
                         </p:column>
                         <p:column>
-                            <p:inputText value="#{companyProductManagedBean.viewProductManagedBean.
+                            <h:outputText value="#{companyProductManagedBean.viewProductManagedBean.
                                                   productToViewInDetails.averageRating}" />
                         </p:column>
                     </p:row>
@@ -76,7 +75,6 @@
                                                       productToViewInDetails.
                                                       category}" 
                                              converter="omnifaces.SelectItemsConverter">
-
                                 <f:selectItems  value="#{companyProductManagedBean.categories}" 
                                                 var="category" 
                                                 itemLabel="#{category.name}" 
@@ -134,7 +132,13 @@
                             <h:outputText value="Parent Advisory" />
                         </p:column>
                         <p:column >
-                            <p:inputText value="#{companyProductManagedBean.viewProductManagedBean.gameToViewInDetails.parentAdvisory}"/>
+                              <p:selectOneMenu id="parentAdvisory" style="width:125px"
+                                               value="#{companyProductManagedBean.viewProductManagedBean.gameToViewInDetails.parentAdvisory}" >
+                                <f:selectItem  itemValue="G" itemLabel="G"/>
+                                <f:selectItem itemValue="Teen" itemLabel="Teen"/>
+                                <f:selectItem itemValue="R" itemLabel="R"/>
+
+                            </p:selectOneMenu>  
                         </p:column>
                     </p:row> 
 
@@ -155,7 +159,12 @@
                                           />
                         </p:column>
                         <p:column >
-                            #{companyProductManagedBean.viewProductManagedBean.hardwareToViewInDetails.technicalspecification}
+                             <p:inputTextarea id = "technicalSpecification" rows="5" cols="30" counter="technicalSpecificationDisplay" 
+                                             maxlength="1000" counterTemplate="{0} characters remaining." autoResize="true" 
+                                             value="#{companyProductManagedBean.viewProductManagedBean.hardwareToViewInDetails.technicalspecification}" />
+                            <br/>
+                            <h:outputText id="technicalSpecificationDisplay" />
+
                         </p:column>
                     </p:row> 
 
@@ -166,7 +175,11 @@
                                           />
                         </p:column>
                         <p:column >
-                            #{companyProductManagedBean.viewProductManagedBean.hardwareToViewInDetails.warrentyDescription}
+                             <p:inputTextarea id = "WarrentDescription" rows="5" cols="30" counter="WarrentDescriptionDisplay" 
+                                             maxlength="1000" counterTemplate="{0} characters remaining." autoResize="true" 
+                                             value="#{companyProductManagedBean.viewProductManagedBean.hardwareToViewInDetails.warrentyDescription}" />
+                            <br/>
+                            <h:outputText id="WarrentDescriptionDisplay" />
                         </p:column>
                     </p:row> 
                     <p:row>

@@ -35,7 +35,7 @@
                             <h:outputText value="Description" />
                         </p:column>
                         <p:column>
-                            <p value="#{companyProductManagedBean.viewProductManagedBean.productToViewInDetails.description}"/>
+                            <h:outputText style="display:block; width:10px; .someClass {word-wrap: break-word;}" value="#{companyProductManagedBean.viewProductManagedBean.productToViewInDetails.description}"/>
                         </p:column>
                     </p:row>
 
@@ -55,6 +55,9 @@
                         <p:column>
                             <h:outputText value="#{companyProductManagedBean.viewProductManagedBean.productToViewInDetails.averageRating}" />
                         </p:column>
+                        
+                        
+                        
                     </p:row>
                     <p:row>
                         <p:column>
