@@ -27,11 +27,14 @@
                         <p:column>
                             <p:inputText id="name" value="#{companyProductManagedBean.newGame.name}" placeholder="name" 
                                          required="true" requiredMessage="Name is required" >
-                                <f:validateLength minimum="1" maximum="100" />
+                                <f:validateLength minimum="1" maximum="100">
+                                    <p:ajax event="keyup" update="nameValidation" process="@this"/> 
+
+                                </f:validateLength>
                             </p:inputText>
                         </p:column>
                         <p:column>
-                            <p:messages for ="name" />
+                            <p:messages id="nameValidation" for ="name" />
                         </p:column>     
                     </p:row>
 
@@ -47,7 +50,7 @@
                             <h:outputText id="display" />   
                         </p:column>
                         <p:column>
-                            <p:messages for ="description" />
+                            <p:messages  for ="description" />
                         </p:column>     
                     </p:row>
 
@@ -72,13 +75,15 @@
                             <p:outputLabel for="price" value="price" style="font-weight: bold;"/>               
                         </p:column>
                         <p:column>
-                            <p:inputText id="price"  placeholder="price" required="true" requiredMessage="Name is required" 
+                            <p:inputText id="price"  placeholder="price" required="true" requiredMessage="Price is required" 
                                          value="#{companyProductManagedBean.newGame.price}" >
-                                <f:validateDoubleRange minimum="0.00"/>
+                                <f:validateDoubleRange minimum="0.00">
+                                    <p:ajax event="keyup" update="priceValidation" process="@this"/> 
+                                </f:validateDoubleRange>
                             </p:inputText>
                         </p:column>
                         <p:column>
-                            <p:messages for ="price" />
+                            <p:messages id="priceValidation" for ="price" />
                         </p:column>     
                     </p:row>
 
@@ -166,7 +171,7 @@
                             <p:commandButton type="reset" value="Clear" />&nbsp;
                             <p:commandButton  id="AddGameButton" value="Add" update="@form formAllProducts:dataTableAllProducts" 
                                               actionListener="#{companyProductManagedBean.createNewProduct}"    
-                                              oncomplete="PF('dialogViewProductDetails').show()"  />
+                                              />
                         </p:column>
                     </p:row>
 
