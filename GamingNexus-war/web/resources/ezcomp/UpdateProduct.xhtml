@@ -20,7 +20,7 @@
                         </p:column>
                         <p:column>
                             <h:outputText value="#{companyProductManagedBean.viewProductManagedBean.
-                                                  productToViewInDetails.productId}" />
+                                                   productToViewInDetails.productId}" />
                         </p:column>
                     </p:row>
                     <p:row>
@@ -28,8 +28,13 @@
                             <h:outputText value="Name" />
                         </p:column>
                         <p:column>
-                            <p:inputText value="#{companyProductManagedBean.viewProductManagedBean.productToViewInDetails.name}" />
+                            <p:inputText id="name" value="#{companyProductManagedBean.viewProductManagedBean.productToViewInDetails.name}" >
+                                <f:validateLength minimum="1" maximum="100" />
+                            </p:inputText>/>
                         </p:column>
+                        <p:column>
+                            <p:messages for ="name" />
+                        </p:column>   
                     </p:row>
 
                     <p:row>
@@ -47,10 +52,33 @@
 
                     <p:row>
                         <p:column>
+                            <p:outputLabel for="computerRequirements" value="Computer Requirements" style="font-weight: bold;"/>               
+                        </p:column>
+                        <p:column>
+                            <p:inputTextarea id = "computerRequirements" rows="5" cols="30" counter="display2" maxlength="1000" 
+                                             counterTemplate="{0} characters remaining." autoResize="true" 
+                                             value="#{companyProductManagedBean.newOtherSoftware.computerRequirements}" />
+                            <br />
+                            <h:outputText id="display2" />   
+                        </p:column>
+                        <p:column>
+                            <p:messages for ="computerRequirements" />
+                        </p:column>     
+                    </p:row>
+
+                    <p:row>
+                        <p:column>
                             <h:outputText value="Price" />
                         </p:column>
                         <p:column>
-                            <p:inputText value="#{companyProductManagedBean.viewProductManagedBean.productToViewInDetails.price}" />
+                            <p:inputText id="price" value="#{companyProductManagedBean.viewProductManagedBean.productToViewInDetails.price}" >
+
+                                <f:validateDoubleRange minimum="0.00"/>
+                            </p:inputText>/>
+                        </p:column>
+                        <p:column>
+                            <p:message for="price"/>
+
                         </p:column>
                     </p:row>
 
@@ -60,7 +88,7 @@
                         </p:column>
                         <p:column>
                             <h:outputText value="#{companyProductManagedBean.viewProductManagedBean.
-                                                  productToViewInDetails.averageRating}" />
+                                                   productToViewInDetails.averageRating}" />
                         </p:column>
                     </p:row>
                     <p:row>
@@ -74,7 +102,8 @@
                                                       viewProductManagedBean.
                                                       productToViewInDetails.
                                                       category}" 
-                                             converter="omnifaces.SelectItemsConverter">
+                                             converter="omnifaces.SelectItemsConverter" required="true" 
+                                             requiredMessage="Category selection is required">
                                 <f:selectItems  value="#{companyProductManagedBean.categories}" 
                                                 var="category" 
                                                 itemLabel="#{category.name}" 
@@ -85,6 +114,9 @@
 
 
                         </p:column>
+                        <p:column>
+                            <p:message for="category"/>
+                        </p:column>
                     </p:row>
                     <p:row>
                         <p:column>
@@ -93,11 +125,15 @@
                         <p:column>
                             <p:selectCheckboxMenu id="tag"  label="tag" 
                                                   value="#{companyProductManagedBean.tagIdsUpdate}"
-                                                  filter="true" filterMatchMode="startsWith" panelStyle="width:250px">
+                                                  filter="true" filterMatchMode="startsWith" panelStyle="width:250px" 
+                                                  >
                                 <f:selectItems  value="#{companyProductManagedBean.tags}" var="tag" 
                                                 itemLabel="#{tag.tagName}" itemValue="#{tag.tagId}">
                                 </f:selectItems>
                             </p:selectCheckboxMenu>                         
+                        </p:column>
+                        <p:column>
+                            <p:message for = "tag"/>
                         </p:column>
                     </p:row>
                     <p:row>
@@ -114,7 +150,10 @@
                             <h:outputText value="Game Pictures" />
                         </p:column>
                         <p:column >
-                            <p:inputText value="#{companyProductManagedBean.viewProductManagedBean.gameToViewInDetails.gamePicturesURLs}" />
+                            <p:inputText id="gamePicturesURLs" value="#{companyProductManagedBean.viewProductManagedBean.gameToViewInDetails.gamePicturesURLs}" />
+                        </p:column>
+                        <p:column >
+                            <p:message for="gamePicturesURLs"/>
                         </p:column>
                     </p:row> 
 
@@ -123,7 +162,10 @@
                             <h:outputText value="Game Videos" />
                         </p:column>
                         <p:column >
-                            <p:inputText value="#{companyProductManagedBean.viewProductManagedBean.gameToViewInDetails.gameTrailersURLS}" />
+                            <p:inputText id="gameTrailersURLs" value="#{companyProductManagedBean.viewProductManagedBean.gameToViewInDetails.gameTrailersURLS}" />
+                        </p:column>
+                        <p:column>
+                            <p:message for ="gameTrailersURLs"/>
                         </p:column>
                     </p:row> 
 
@@ -132,13 +174,17 @@
                             <h:outputText value="Parent Advisory" />
                         </p:column>
                         <p:column >
-                              <p:selectOneMenu id="parentAdvisory" style="width:125px"
-                                               value="#{companyProductManagedBean.viewProductManagedBean.gameToViewInDetails.parentAdvisory}" >
+                            <p:selectOneMenu id="parentAdvisory" style="width:125px"
+                                             value="#{companyProductManagedBean.viewProductManagedBean.gameToViewInDetails.parentAdvisory}" 
+                                             required="true" requiredMessage="Parent Adisory is required">
                                 <f:selectItem  itemValue="G" itemLabel="G"/>
                                 <f:selectItem itemValue="Teen" itemLabel="Teen"/>
                                 <f:selectItem itemValue="R" itemLabel="R"/>
 
                             </p:selectOneMenu>  
+                        </p:column>
+                        <p:column>
+                            <p:message for="parentAdvisory"/>
                         </p:column>
                     </p:row> 
 
@@ -149,8 +195,16 @@
                                           />
                         </p:column>
                         <p:column >
-                            <p:inputText value="#{companyProductManagedBean.viewProductManagedBean.hardwareToViewInDetails.manufactoringCountry}" />
+                            <p:inputText id = "manufactoringCountry" 
+                                         value="#{companyProductManagedBean.viewProductManagedBean.hardwareToViewInDetails.manufactoringCountry}" 
+                                         >
+                                <f:validateLength minimum="0" maximum="300"/>
+                            </p:inputText>
                         </p:column>
+                        <p:column>
+                            <p:message for="manufactoringCountry"/>
+                        </p:column>
+
                     </p:row> 
 
                     <p:row rendered="#{companyProductManagedBean.viewProductManagedBean.hardwareToViewInDetails != null}">
@@ -159,12 +213,15 @@
                                           />
                         </p:column>
                         <p:column >
-                             <p:inputTextarea id = "technicalSpecification" rows="5" cols="30" counter="technicalSpecificationDisplay" 
+                            <p:inputTextarea id = "technicalSpecification" rows="5" cols="30" counter="technicalSpecificationDisplay" 
                                              maxlength="1000" counterTemplate="{0} characters remaining." autoResize="true" 
                                              value="#{companyProductManagedBean.viewProductManagedBean.hardwareToViewInDetails.technicalspecification}" />
                             <br/>
                             <h:outputText id="technicalSpecificationDisplay" />
 
+                        </p:column>
+                        <p:column>
+                            <p:message for="techicalSpecification"/>
                         </p:column>
                     </p:row> 
 
@@ -175,11 +232,14 @@
                                           />
                         </p:column>
                         <p:column >
-                             <p:inputTextarea id = "WarrentDescription" rows="5" cols="30" counter="WarrentDescriptionDisplay" 
+                            <p:inputTextarea id = "WarrentDescription" rows="5" cols="30" counter="WarrentDescriptionDisplay" 
                                              maxlength="1000" counterTemplate="{0} characters remaining." autoResize="true" 
                                              value="#{companyProductManagedBean.viewProductManagedBean.hardwareToViewInDetails.warrentyDescription}" />
                             <br/>
                             <h:outputText id="WarrentDescriptionDisplay" />
+                        </p:column>
+                        <p:column>
+                            <p:message for="warrentyDescription"/>
                         </p:column>
                     </p:row> 
                     <p:row>
@@ -187,7 +247,8 @@
                             <p:commandButton  id="updateProductButton" value="Update" 
                                               update="@form formAllProducts:dataTableAllProducts" 
                                               actionListener="#{companyProductManagedBean.updateProduct}"    
-                                               />
+                                              oncomplete="PF('dialogViewProductDetails').show()"
+                                              />
                         </p:column>
                     </p:row>
                 </p:panelGrid>

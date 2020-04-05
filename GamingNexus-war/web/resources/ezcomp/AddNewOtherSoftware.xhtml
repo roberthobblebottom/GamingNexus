@@ -27,7 +27,9 @@
                             <p:outputLabel for="name" value="name" style="font-weight: bold;"/>               
                         </p:column>
                         <p:column>
-                            <p:inputText id="name" value="#{companyProductManagedBean.newOtherSoftware.name}" placeholder="name" required="true" requiredMessage="Name is required" />
+                            <p:inputText id="name" value="#{companyProductManagedBean.newOtherSoftware.name}" placeholder="name" required="true" requiredMessage="Name is required" >
+                                <f:validateLength minimum="1" maximum="100" />
+                            </p:inputText>/>
                         </p:column>
                         <p:column>
                             <p:messages for ="name" />
@@ -72,7 +74,9 @@
                         </p:column>
                         <p:column>
                             <p:inputText id="price"  placeholder="price" required="true" requiredMessage="Name is required" 
-                                         value="#{companyProductManagedBean.newOtherSoftware.price}" />
+                                         value="#{companyProductManagedBean.newOtherSoftware.price}" >
+                                <f:validateDoubleRange minimum="0.00"/>
+                            </p:inputText>/>
                         </p:column>
                         <p:column>
                             <p:messages for ="price" />
@@ -100,7 +104,7 @@
                         </p:column>
                         <p:column>
                             <p:selectOneMenu id="category" style="width:125px" value="#{companyProductManagedBean.newOtherSoftware.category}" 
-                                             converter="omnifaces.SelectItemsConverter">
+                                             converter="omnifaces.SelectItemsConverter" required="true" requiredMessage="Category selection is required">
                                 <f:selectItems  value="#{companyProductManagedBean.categories}" 
                                                 var="category" itemLabel="#{category.name}" 
                                                 itemValue="#{category}">
@@ -117,7 +121,7 @@
                             <p:commandButton type="reset" value="Clear" />&nbsp;
                             <p:commandButton id="AddOtherSoftwareButton" value="Add" update="@form formAllProducts:dataTableAllProducts" 
                                              actionListener="#{companyProductManagedBean.createNewProduct}"    
-                                             oncomplete="PF('dialogViewProductDetal').show()" />
+                                             oncomplete="PF('dialogViewProductDetails').show()" />
                         </p:column>
                     </p:row>
 
