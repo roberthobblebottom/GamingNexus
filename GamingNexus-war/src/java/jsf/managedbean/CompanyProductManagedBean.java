@@ -196,30 +196,20 @@ public class CompanyProductManagedBean implements Serializable {
     }
 
     public void updateProduct(ActionEvent event) {
-//        if (getCategoryIdUpdate() == 0) {
-//            setCategoryIdUpdate(null);
-//        }
 
-        Hardware hardwareEntityFragment = (Hardware) viewProductManagedBean.getHardwareToViewInDetails();
-        OtherSoftware otherSoftwareEntityFragment = (OtherSoftware) viewProductManagedBean.getOtherSoftwareToViewInDetails();
-        Game gameEntityFragment = viewProductManagedBean.getGameToViewInDetails();
         Product productToBeUpdated = viewProductManagedBean.getProductToViewInDetails();
-        for (Category ce : categories) {
-            if (ce.getCategoryId().equals(getCategoryIdUpdate())) {
-                productToBeUpdated.setCategory(ce);
-                break;
-            }
-        }
 
-        productToBeUpdated.getTags().clear();
-        tags.forEach(tag -> {
-            if (getTagIdsUpdate().contains(tag.getTagId())) {
-                productToBeUpdated.getTags().add(tag);
-            }
-        });
+        Hardware hardwareEntityFragment = viewProductManagedBean.getHardwareToViewInDetails();
+        OtherSoftware otherSoftwareEntityFragment = viewProductManagedBean.getOtherSoftwareToViewInDetails();
+        Game gameEntityFragment = viewProductManagedBean.getGameToViewInDetails();
 
+//        System.out.println(getCategoryIdUpdate());
+//
+//        getTagIdsUpdate().forEach(id -> {
+//            System.out.println(String.valueOf(id));
+//        }
+//        );
         try {
-
             if (gameToBeUpdated != null
                     && otherSoftwareEntityFragment == null
                     && hardwareEntityFragment == null) {
@@ -244,18 +234,29 @@ public class CompanyProductManagedBean implements Serializable {
                 hardwareToBeUpdated.setWarrentyDescription(hardwareEntityFragment.getWarrentyDescription());
                 hardwareSessionBean.updateHardware(hardwareToBeUpdated, getCategoryIdUpdate(), getTagIdsUpdate());
             }
+
+            for (Category ce : categories) {
+                if (ce.getCategoryId().equals(getCategoryIdUpdate())) {
+                    viewProductManagedBean.getProductToViewInDetails().setCategory(ce);
+                    break;
+                }
+            }
+
+            productToBeUpdated.getTags().clear();
+            tags.forEach(tag -> {
+                if (getTagIdsUpdate().contains(tag.getTagId())) {
+                    viewProductManagedBean.getProductToViewInDetails().getTags().add(tag);
+                }
+            });
+
         } catch (ProductNotFoundException | CategoryNotFoundException | TagNotFoundException
                 | UpdateProductException | InputDataValidationException ex) {
-
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
                     "Error for updating productEntity (ID: " + viewProductManagedBean.getProductToViewInDetails().getProductId() + ") "
                     + "Error Message: " + ex.getMessage(), null));
-
         }
-
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Product updated successfully", null));
-        viewProductManagedBean.resetManageBean();
-
+        //   viewProductManagedBean.resetManageBean();
     }
 
     public void deleteProduct(ActionEvent event) {

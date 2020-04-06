@@ -105,16 +105,13 @@
 
                         <p:column>
                             <p:selectOneMenu id="category" style="width:125px" 
-                                             value="#{companyProductManagedBean.
-                                                      viewProductManagedBean.
-                                                      productToViewInDetails.
-                                                      category}" 
+                                             value="#{companyProductManagedBean.categoryIdUpdate}" 
                                              converter="omnifaces.SelectItemsConverter" required="true" 
                                              requiredMessage="Category selection is required">
                                 <f:selectItems  value="#{companyProductManagedBean.categories}" 
                                                 var="category" 
                                                 itemLabel="#{category.name}" 
-                                                itemValue="#{category}">
+                                                itemValue="#{category.categoryId}">
 
                                 </f:selectItems>/>
                             </p:selectOneMenu>
@@ -256,7 +253,6 @@
                             <p:commandButton  id="updateProductButton" value="Update" 
                                               update="@form formAllProducts:dataTableAllProducts" 
                                               actionListener="#{companyProductManagedBean.updateProduct}"    
-
                                               />
                         </p:column>
                     </p:row>
