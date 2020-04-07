@@ -9,6 +9,8 @@ import entity.Game;
 import entity.Hardware;
 import entity.OtherSoftware;
 import entity.Product;
+import entity.Tag;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -48,10 +50,17 @@ public class ProductSessionBean implements ProductSessionBeanLocal {
             OtherSoftware retrivedOtherSoftware = (OtherSoftware) em.find(OtherSoftware.class, productId);
             this.lazyLoadOtherSoftware(retrivedOtherSoftware);
             return retrivedOtherSoftware;
-        }
+        } 
         assert false : "Product must always be a child entity";
         return null;
     }
+//    @Override
+//    public List<Tag> retrievedTagsByProduct(Long productID){
+//     Product retrievedProduct = em.find(Product.class, productID);
+//     retrievedProduct.getTags().size();
+//     return retrievedProduct.get;
+//             
+//    }
 
     @Override
     public void deleteProduct(Product productToBeDeleted) {
@@ -76,6 +85,7 @@ public class ProductSessionBean implements ProductSessionBeanLocal {
     }
 
     public void lazyLoadGame(Game game) {
+        game.getTags().size();
         game.getCartItems().size();
         game.getOwnedItems().size();
         game.getPromotions().size();
@@ -84,6 +94,7 @@ public class ProductSessionBean implements ProductSessionBeanLocal {
     }
 
     public void lazyLoadOtherSoftware(OtherSoftware otherSoftware) {
+        otherSoftware.getTags().size();
         otherSoftware.getCartItems().size();
         otherSoftware.getOwnedItems().size();
         otherSoftware.getPromotions().size();
@@ -92,6 +103,7 @@ public class ProductSessionBean implements ProductSessionBeanLocal {
     }
 
     public void lazyLoadHardware(Hardware hardware) {
+        hardware.getTags().size();
         hardware.getCartItems().size();
         hardware.getOwnedItems().size();
         hardware.getPromotions().size();

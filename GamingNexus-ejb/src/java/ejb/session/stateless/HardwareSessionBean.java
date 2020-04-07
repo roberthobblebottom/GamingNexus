@@ -228,7 +228,7 @@ public class HardwareSessionBean implements HardwareSessionBeanLocal {
 
                 hardwareToUpdate.setCategory(categoryEntityToUpdate);
             }
-            if (tagIds != null) {
+            if (tagIds != null && !tagIds.isEmpty()) {
                 for (Tag tagEntity : hardwareToUpdate.getTags()) {
                     tagEntity.getProducts().remove(hardwareToUpdate);
                 }

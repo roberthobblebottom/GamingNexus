@@ -6,7 +6,6 @@
 package jsf.managedbean;
 
 import ejb.session.stateless.CategorySessionBeanLocal;
-import ejb.session.stateless.CompanySessionBeanLocal;
 import ejb.session.stateless.GameSessionBeanLocal;
 import ejb.session.stateless.HardwareSessionBeanLocal;
 import ejb.session.stateless.OtherSoftwareSessionBeanLocal;
@@ -23,7 +22,6 @@ import java.io.IOException;
 import javax.inject.Named;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import javax.annotation.PostConstruct;
@@ -70,8 +68,6 @@ public class CompanyProductManagedBean implements Serializable {
     @EJB
     private TagSessionBeanLocal tagSessionBean;
 
-    @EJB
-    private CompanySessionBeanLocal companySessionBeanLocal;
     @Inject
     private ViewProductManagedBean viewProductManagedBean;
     private Game newGame, gameToBeUpdated, gameToViewInDetails = null;
@@ -94,7 +90,7 @@ public class CompanyProductManagedBean implements Serializable {
     public void postConstruct() {
         Map<String, Object> sessionMap = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
         setCompany((Company) sessionMap.get("company"));
-        System.out.println("company name: " + getCompany().getUsername());
+
         products = getCompany().getProducts();
         newOtherSoftware = new OtherSoftware();
         newOtherSoftware.setTags(new ArrayList<>());
@@ -107,6 +103,7 @@ public class CompanyProductManagedBean implements Serializable {
     public void viewProductDetailsMethod(ActionEvent event) throws IOException {
         Long productIdToView = (Long) event.getComponent().getAttributes().get("productId");
         FacesContext.getCurrentInstance().getExternalContext().getFlash().put("productIdToView", productIdToView);
+
         //   FacesContext.getCurrentInstance().getExternalContext().redirect("viewProductDetails.xhtml");
     }
 
@@ -183,17 +180,17 @@ public class CompanyProductManagedBean implements Serializable {
         }
 
     }
-
-    public void doUpdateProduct(ActionEvent event) {
-        // setSelectedProductToUpdate((Product)event.getComponent().getAttributes().get("productEntityToUpdate"));
-
-        setCategoryIdUpdate(selectedProductToUpdate.getCategory().getCategoryId());
-        setTagIdsUpdate(new ArrayList<>());
-
-        for (Tag tag : selectedProductToUpdate.getTags()) {
-            getTagIdsUpdate().add(tag.getTagId());
-        }
-    }
+//
+//    public void doUpdateProduct(ActionEvent event) {
+//        // setSelectedProductToUpdate((Product)event.getComponent().getAttributes().get("productEntityToUpdate"));
+//
+//        setCategoryIdUpdate(viewProductManagedBean.getProductToViewInDetails().getCategory().getCategoryId());
+//        setTagIdsUpdate(new ArrayList<>());
+//
+//        for (Tag tag : selectedProductToUpdate.getTags()) {
+//            getTagIdsUpdate().add(tag.getTagId());
+//        }
+//    }
 
     public void updateProduct(ActionEvent event) {
 
@@ -202,13 +199,18 @@ public class CompanyProductManagedBean implements Serializable {
         Hardware hardwareEntityFragment = viewProductManagedBean.getHardwareToViewInDetails();
         OtherSoftware otherSoftwareEntityFragment = viewProductManagedBean.getOtherSoftwareToViewInDetails();
         Game gameEntityFragment = viewProductManagedBean.getGameToViewInDetails();
+        try {
+            System.out.println("---------------");
+            tagIdsUpdate.forEach(id -> {
+                System.out.println("tag id: " + id);
+            }
+            );
+            System.out.println("---------------");
 
-//        System.out.println(getCategoryIdUpdate());
-//
-//        getTagIdsUpdate().forEach(id -> {
-//            System.out.println(String.valueOf(id));
-//        }
-//        );
+        } catch (NullPointerException ex) {
+            System.err.println("Nullpointer exception occured.");
+        }
+        categoryIdUpdate = viewProductManagedBean.getProductToViewInDetails().getCategory().getCategoryId();
         try {
             if (gameToBeUpdated != null
                     && otherSoftwareEntityFragment == null
@@ -243,11 +245,14 @@ public class CompanyProductManagedBean implements Serializable {
             }
 
             productToBeUpdated.getTags().clear();
-            tags.forEach(tag -> {
-                if (getTagIdsUpdate().contains(tag.getTagId())) {
-                    viewProductManagedBean.getProductToViewInDetails().getTags().add(tag);
-                }
-            });
+            if (!tagIdsUpdate.isEmpty()) {
+                System.out.println("!tagidsupdate.isempty block entered.");
+                tags.forEach(tag -> {
+                    if (getTagIdsUpdate().contains(tag.getTagId())) {
+                        viewProductManagedBean.getProductToViewInDetails().getTags().add(tag);
+                    }
+                });
+            }
 
         } catch (ProductNotFoundException | CategoryNotFoundException | TagNotFoundException
                 | UpdateProductException | InputDataValidationException ex) {
@@ -255,7 +260,9 @@ public class CompanyProductManagedBean implements Serializable {
                     "Error for updating productEntity (ID: " + viewProductManagedBean.getProductToViewInDetails().getProductId() + ") "
                     + "Error Message: " + ex.getMessage(), null));
         }
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Product updated successfully", null));
+
+        FacesContext.getCurrentInstance()
+                .addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Product updated successfully", null));
         //   viewProductManagedBean.resetManageBean();
     }
 

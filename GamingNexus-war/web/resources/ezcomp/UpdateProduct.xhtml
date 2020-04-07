@@ -105,18 +105,15 @@
 
                         <p:column>
                             <p:selectOneMenu id="category" style="width:125px" 
-                                             value="#{companyProductManagedBean.categoryIdUpdate}" 
+                                             value="#{companyProductManagedBean.viewProductManagedBean.productToViewInDetails.category}" 
                                              converter="omnifaces.SelectItemsConverter" required="true" 
                                              requiredMessage="Category selection is required">
                                 <f:selectItems  value="#{companyProductManagedBean.categories}" 
                                                 var="category" 
                                                 itemLabel="#{category.name}" 
-                                                itemValue="#{category.categoryId}">
-
+                                                itemValue="#{category}">
                                 </f:selectItems>/>
                             </p:selectOneMenu>
-
-
                         </p:column>
                         <p:column>
                             <p:message for="category"/>
@@ -227,7 +224,7 @@
 
                         </p:column>
                         <p:column>
-                            <p:message for="techicalSpecification"/>
+                            <p:message for="technicalSpecification"/>
                         </p:column>
                     </p:row> 
 
@@ -238,14 +235,14 @@
                                           />
                         </p:column>
                         <p:column >
-                            <p:inputTextarea id = "WarrentDescription" rows="5" cols="30" counter="WarrentDescriptionDisplay" 
+                            <p:inputTextarea id = "warretyDescription" rows="5" cols="30" counter="WarrentDescriptionDisplay" 
                                              maxlength="1000" counterTemplate="{0} characters remaining." autoResize="true" 
                                              value="#{companyProductManagedBean.viewProductManagedBean.hardwareToViewInDetails.warrentyDescription}" />
                             <br/>
                             <h:outputText id="WarrentDescriptionDisplay" />
                         </p:column>
                         <p:column>
-                            <p:message for="warrentyDescription"/>
+                            <p:message for="warretyDescription"/>
                         </p:column>
                     </p:row> 
                     <p:row>

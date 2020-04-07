@@ -219,6 +219,7 @@ public class GameSessionBean implements GameSessionBeanLocal {
             Game gameToBeUpdated = retrieveGamebyId(game.getProductId());
 
             if (categoryId != null && (!gameToBeUpdated.getCategory().getCategoryId().equals(categoryId))) {
+                System.out.println("GameSessionBean: Entered category update block");
                 Category categoryEntityToUpdate = categorySessionBeanLocal.retrieveCategoryByCategoryId(categoryId);
 
                 if (!categoryEntityToUpdate.getSubCategories().isEmpty()) {
@@ -227,7 +228,9 @@ public class GameSessionBean implements GameSessionBeanLocal {
 
                 gameToBeUpdated.setCategory(categoryEntityToUpdate);
             }
-            if (tagIds != null) {
+            if (tagIds != null && !tagIds.isEmpty()) {
+                                System.out.println("GameSessionBean: Entered tag update block");
+
                 for (Tag tagEntity : gameToBeUpdated.getTags()) {
                     tagEntity.getProducts().remove(gameToBeUpdated);
                 }

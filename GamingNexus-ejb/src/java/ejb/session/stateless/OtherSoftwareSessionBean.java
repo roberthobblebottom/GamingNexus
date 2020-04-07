@@ -230,7 +230,7 @@ public class OtherSoftwareSessionBean implements OtherSoftwareSessionBeanLocal {
 
                 otherSoftwareEntityToUpdate.setCategory(categoryEntityToUpdate);
             }
-            if (tagIds != null) {
+            if (tagIds != null && !tagIds.isEmpty()) {
                 for (Tag tagEntity : otherSoftwareEntityToUpdate.getTags()) {
                     tagEntity.getProducts().remove(otherSoftwareEntityToUpdate);
                 }
