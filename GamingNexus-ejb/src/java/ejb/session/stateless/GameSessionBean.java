@@ -27,7 +27,7 @@ import util.exception.UpdateProductException;
 
 /**
  *
- * @author jinyichen
+ * @author 63216
  */
 @Stateless
 public class GameSessionBean implements GameSessionBeanLocal {
@@ -51,7 +51,6 @@ public class GameSessionBean implements GameSessionBeanLocal {
 
     }
 
-    @Override
     public Game createNewGame(Game newGame, Long categoryId, List<Long> tagIds, Long CompanyId) throws ProductSkuCodeExistException, UnknownPersistenceException, InputDataValidationException, CreateNewProductException, CompanyNotFoundException {
         try {
             if (categoryId == null) {
@@ -95,7 +94,6 @@ public class GameSessionBean implements GameSessionBeanLocal {
         }
     }
 
-    @Override
     public List<Game> retrieveAllGames() {
         Query query = em.createQuery("SELECT g FROM Game g ORDER BY g.averageRating ASC");
         List<Game> games = query.getResultList();
@@ -108,7 +106,6 @@ public class GameSessionBean implements GameSessionBeanLocal {
         return games;
     }
 
-    @Override
     public List<Game> searchGamesByName(String searchString) {
         Query query = em.createQuery("SELECT g FROM Game g WHERE g.name LIKE :inSearchString");
         query.setParameter("inSearchString", "%" + searchString + "%");
@@ -122,7 +119,6 @@ public class GameSessionBean implements GameSessionBeanLocal {
         return games;
     }
 
-    @Override
     public List<Product> filterProductsByCategory(Long categoryId) throws CategoryNotFoundException {
         List<Product> productEntities = new ArrayList<>();
         Category categoryEntity = categorySessionBeanLocal.retrieveCategoryByCategoryId(categoryId);

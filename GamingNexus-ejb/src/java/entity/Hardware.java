@@ -24,10 +24,14 @@ public class Hardware extends Product implements Serializable {
     @Size(min = 0, max = 5000)
     private String warrentyDescription;
     @Size(min = 0, max = 5000)
+    @NotNull
     private String technicalspecification;
     @Size(min = 0, max = 100)
+    @NotNull
     private String manufactoringCountry;
-    
+    @Size(min = 0, max = 100)
+    @NotNull
+    private String deliveryFirm;
     
     @OneToMany(mappedBy = "hardware")
     private List<Deliverables> deliverables;
@@ -37,14 +41,25 @@ public class Hardware extends Product implements Serializable {
         deliverables = new ArrayList<>();
     }
 
-    public Hardware(String warrentyDescription, String technicalspecification, String manufactoringCountry, String name, String description, String computerRequirements, double price, double averageRating) {
+    
+    public Hardware(String name, String description, String computerRequirements, double price, double averageRating) {
+        super(name, description, computerRequirements, price, averageRating);
+        deliverables = new ArrayList<>();
+    }
+
+    
+    public Hardware(String warrentyDescription, String technicalspecification, String manufactoringCountry, String deliveryFirm, String name, String description, String computerRequirements, double price, double averageRating) {
         super(name, description, computerRequirements, price, averageRating);
         this.warrentyDescription = warrentyDescription;
         this.technicalspecification = technicalspecification;
         this.manufactoringCountry = manufactoringCountry;
+        this.deliveryFirm = deliveryFirm;
     }
 
     
+    
+
+
     /**
      * @return the warrentyDescription
      */
@@ -85,6 +100,20 @@ public class Hardware extends Product implements Serializable {
      */
     public void setManufactoringCountry(String manufactoringCountry) {
         this.manufactoringCountry = manufactoringCountry;
+    }
+
+    /**
+     * @return the deliveryFirm
+     */
+    public String getDeliveryFirm() {
+        return deliveryFirm;
+    }
+
+    /**
+     * @param deliveryFirm the deliveryFirm to set
+     */
+    public void setDeliveryFirm(String deliveryFirm) {
+        this.deliveryFirm = deliveryFirm;
     }
 
     /**
