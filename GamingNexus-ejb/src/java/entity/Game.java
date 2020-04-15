@@ -34,13 +34,11 @@ public class Game extends Product implements Serializable {
     public Game() {
         super();
         gameAccounts = new ArrayList<>();
-        forums = new ArrayList<>();
     }
 
     public Game(String name, String description, String computerRequirements, double price, double averageRating) {
         super(name, description, computerRequirements, price, averageRating);
         gameAccounts = new ArrayList<>();
-        forums = new ArrayList<>();
     }
 
     public Game(String parentAdvisory, List<String> gamePicturesURLs, List<String> gameTrailersURLS, String name, String description, String computerRequirements, double price, double averageRating) {

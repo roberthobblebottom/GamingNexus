@@ -1,8 +1,14 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package ejb.session.stateless;
 
 import entity.Category;
 import entity.Company;
 import entity.Game;
+import entity.Hardware;
 import entity.Product;
 import entity.Tag;
 import java.util.ArrayList;
@@ -30,12 +36,12 @@ import util.exception.UpdateProductException;
  * @author jinyichen
  */
 @Stateless
-public class GameSessionBean implements GameSessionBeanLocal {
+public class HardwareSessionBean implements HardwareSessionBeanLocal {
 
-    @EJB
+    @EJB(name = "SaleTransactionSessionBeanLocal")
     private SaleTransactionSessionBeanLocal saleTransactionSessionBeanLocal;
 
-    @EJB
+    @EJB(name = "CompanySessionBeanLocal")
     private CompanySessionBeanLocal companySessionBeanLocal;
 
     @EJB(name = "TagSessionBeanLocal")
@@ -47,12 +53,10 @@ public class GameSessionBean implements GameSessionBeanLocal {
     @PersistenceContext(unitName = "GamingNexus-ejbPU")
     private EntityManager em;
 
-    public GameSessionBean() {
-
+    public HardwareSessionBean() {
     }
 
-    @Override
-    public Game createNewGame(Game newGame, Long categoryId, List<Long> tagIds, Long CompanyId) throws ProductSkuCodeExistException, UnknownPersistenceException, InputDataValidationException, CreateNewProductException, CompanyNotFoundException {
+    public Hardware createNewHardware(Hardware newHardware, Long categoryId, List<Long> tagIds, Long CompanyId) throws ProductSkuCodeExistException, UnknownPersistenceException, InputDataValidationException, CreateNewProductException, CompanyNotFoundException {
         try {
             if (categoryId == null) {
                 throw new CreateNewProductException("The new product must be associated a leaf category");
@@ -68,18 +72,18 @@ public class GameSessionBean implements GameSessionBeanLocal {
             }
             Company company = companySessionBeanLocal.retrieveCompanyById(categoryId);
 
-            em.persist(newGame);
-            newGame.setCategory(category);
-            newGame.setCompany(company);
+            em.persist(newHardware);
+            newHardware.setCategory(category);
+            newHardware.setCompany(company);
 
             if (tagIds != null && (!tagIds.isEmpty())) {
                 for (Long tagId : tagIds) {
                     Tag tag = tagSessionBeanLocal.retrieveTagByTagId(tagId);
-                    newGame.addTag(tag);
+                    newHardware.addTag(tag);
                 }
             }
             em.flush();
-            return newGame;
+            return newHardware;
         } catch (PersistenceException ex) {
             if (ex.getCause() != null && ex.getCause().getClass().getName().equals("org.eclipse.persistence.exceptions.DatabaseException")) {
                 if (ex.getCause().getCause() != null && ex.getCause().getCause().getClass().getName().equals("java.sql.SQLIntegrityConstraintViolationException")) {
@@ -95,35 +99,31 @@ public class GameSessionBean implements GameSessionBeanLocal {
         }
     }
 
-    @Override
-    public List<Game> retrieveAllGames() {
-        Query query = em.createQuery("SELECT g FROM Game g ORDER BY g.averageRating ASC");
-        List<Game> games = query.getResultList();
+    public List<Hardware> retrieveAllHardwares() {
+        Query query = em.createQuery("SELECT h FROM Hardware h ORDER BY h.averageRating ASC");
+        List<Hardware> hardwares = query.getResultList();
 
-        for (Game game : games) {
-            game.getCategory();
-            game.getTags().size();
+        for (Hardware hardware : hardwares) {
+            hardware.getCategory();
+            hardware.getTags().size();
         }
 
-        return games;
+        return hardwares;
     }
 
-    @Override
-    public List<Game> searchGamesByName(String searchString) {
-        Query query = em.createQuery("SELECT g FROM Game g WHERE g.name LIKE :inSearchString");
+    public List<Hardware> searchHardwaresByName(String searchString) {
+        Query query = em.createQuery("SELECT h FROM Hardware h WHERE h.name LIKE :inSearchString");
         query.setParameter("inSearchString", "%" + searchString + "%");
-        List<Game> games = query.getResultList();
+        List<Hardware> hardwares = query.getResultList();
 
-        for (Game game : games) {
-            game.getCategory();
-            game.getTags().size();
+        for (Hardware hardware : hardwares) {
+            hardware.getCategory();
+            hardware.getTags().size();
         }
 
-        return games;
+        return hardwares;
     }
-
-    @Override
-    public List<Product> filterProductsByCategory(Long categoryId) throws CategoryNotFoundException {
+public List<Product> filterProductsByCategory(Long categoryId) throws CategoryNotFoundException {
         List<Product> productEntities = new ArrayList<>();
         Category categoryEntity = categorySessionBeanLocal.retrieveCategoryByCategoryId(categoryId);
 

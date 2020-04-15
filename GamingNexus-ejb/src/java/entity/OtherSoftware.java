@@ -5,10 +5,28 @@
  */
 package entity;
 
+import java.io.Serializable;
+import java.util.ArrayList;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
 /**
  *
  * @author jinyichen
  */
-public class OtherSoftware {
+@Entity
+public class OtherSoftware extends Product implements Serializable {
+
+
+    public OtherSoftware() {
+        super();
+    }
+
+    public OtherSoftware(String name, String description, String computerRequirements, double price, double averageRating) {
+        super(name, description, computerRequirements, price, averageRating);
+    }
+   
     
 }
