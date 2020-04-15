@@ -21,7 +21,7 @@ public class RetrieveAllSoftwareRsp {
     public RetrieveAllSoftwareRsp(List<OtherSoftware> otherSoftware) {
         this.otherSoftware = otherSoftware;
     }
-
+ 
     public List<OtherSoftware> getOtherSoftware() {
         return otherSoftware;
     }
