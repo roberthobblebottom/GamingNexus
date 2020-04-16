@@ -40,12 +40,12 @@ public class Promotion implements Serializable {
     private String description;
     @Digits(integer = 2, fraction = 2)
     @Max(100)
-    @Min(1)
+   // @Min(1)
     private double percentageDiscount;
     @Digits(integer = 1000000000, fraction = 2)
-    @Min(1)
+   // @Min(1)
     private double dollarDiscount;
-    @Past
+   // @Past
     @NotNull
     private LocalDateTime startDate;
     @NotNull

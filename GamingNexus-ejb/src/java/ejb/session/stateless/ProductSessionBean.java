@@ -9,8 +9,6 @@ import entity.Game;
 import entity.Hardware;
 import entity.OtherSoftware;
 import entity.Product;
-import entity.Tag;
-import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;

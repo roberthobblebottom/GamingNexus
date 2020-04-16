@@ -109,6 +109,7 @@ public class CustomerSessionBean implements CustomerSessionBeanLocal {
         }
     }
 
+    @Override
     public void deleteCustomer(Long customerId) throws CustomerNotFoundException {
         Customer customerToRemove = retrieveCustomerById(customerId);
 

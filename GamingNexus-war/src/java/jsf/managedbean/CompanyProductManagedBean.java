@@ -70,6 +70,7 @@ public class CompanyProductManagedBean implements Serializable {
 
     @Inject
     private ViewProductManagedBean viewProductManagedBean;
+    
     private Game newGame, gameToBeUpdated, gameToViewInDetails = null;
     private Product productToViewInDetails, selectedProductToUpdate;
     private Hardware newHardware, hardwareToViewInDetails = null;
