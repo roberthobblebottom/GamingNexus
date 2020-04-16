@@ -18,6 +18,11 @@ import entity.Product;
 import entity.Promotion;
 import javax.inject.Named;
 import java.io.Serializable;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import javax.annotation.PostConstruct;
@@ -59,16 +64,22 @@ public class CompanyPromotionManagedBean implements Serializable {
     private Product productToViewInDetails;
     private Hardware hardwareToViewInDetails = null;
     private OtherSoftware otherSoftwareToViewInDetails = null;
+    private Promotion newPromotion = null;
+    private Date newPromotionStartDate = null,
+            newPromotionEndDate = null, today = null;
+    private List<Date> range = null;
     private List<Promotion> promotions, filteredPromotions;
     private List<Product> products, filteredProducts;
     private Company company;
 
     public CompanyPromotionManagedBean() {
-
+        newPromotion = new Promotion();
+        today = Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant());
+        range = new ArrayList<>();
     }
 
     @PostConstruct
-    public void postConstruct()  {
+    public void postConstruct() {
         System.out.println("**************Entered postConstruct of Company Promotion Managed Bean");
         Map<String, Object> sessionMap
                 = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
@@ -77,26 +88,40 @@ public class CompanyPromotionManagedBean implements Serializable {
         try {
             promotions = promotionSessionBean.retrivePromotionsByCompanyID(company.getUserId());
         } catch (CompanyNotFoundException ex) {
-            
+
         }
-        if(promotions.isEmpty()){
+        if (promotions.isEmpty()) {
             System.out.println("**********promotions is empty");
-        } 
+        }
     }
 
     public void createNewPromotion(ActionEvent event) {
+//          List<Long> productIds = new ArrayList<>();
+//                    newPromotion.getProducts().forEach(product -> {
+//                        productIds.add(tag.getTagId());
+//                    });
+    
+        newPromotion.setStartDate(range.get(0).toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime());
+        newPromotion.setEndDate(range.get(range.size()-1).toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime());
+        Promotion promotion = promotionSessionBean.createPromotion(newPromotion);
+        promotions.add(promotion);
+
+        FacesContext.getCurrentInstance().addMessage(null,
+                new FacesMessage(FacesMessage.SEVERITY_INFO, "New Game " + newPromotion.getName() + " added successfully "
+                        + "(ID: " + newPromotion.getPromotionID() + ")", null));
+        newPromotion = new Promotion();
     }
 
     public void updatePromotion(ActionEvent event) {
     }
 
     public void deletePromotion(ActionEvent event) {
-            Promotion promotionToBeDeleted = 
-                    (Promotion) event.getComponent().getAttributes().get("promotionToBeDeleted");
-            promotionSessionBean.deletePromotion(promotionToBeDeleted.getPromotionID());
-            promotions.remove(promotionToBeDeleted);
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
-                    "Prmotion deleted successfully. ID: " + promotionToBeDeleted.getPromotionID(), null));
+        Promotion promotionToBeDeleted
+                = (Promotion) event.getComponent().getAttributes().get("promotionToBeDeleted");
+        promotionSessionBean.deletePromotion(promotionToBeDeleted.getPromotionID());
+        promotions.remove(promotionToBeDeleted);
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+                "Prmotion deleted successfully. ID: " + promotionToBeDeleted.getPromotionID(), null));
     }
 
     /**
@@ -310,4 +335,80 @@ public class CompanyPromotionManagedBean implements Serializable {
         this.filteredPromotions = filteredPromotions;
     }
 
-}
+    /**
+     * @return the newPromotion
+     */
+    public Promotion getNewPromotion() {
+        return newPromotion;
+    }
+
+    /**
+     * @param newPromotion the newPromotion to set
+     */
+    public void setNewPromotion(Promotion newPromotion) {
+        this.newPromotion = newPromotion;
+    }
+
+    /**
+     * @return the newPromotionStartDate
+     */
+    public Date getNewPromotionStartDate() {
+        return newPromotionStartDate;
+    }
+
+    /**
+     * @param newPromotionStartDate the newPromotionStartDate to set
+     */
+    public void setNewPromotionStartDate(Date newPromotionStartDate) {
+        this.newPromotionStartDate = newPromotionStartDate;
+        this.newPromotion.setStartDate(
+                LocalDateTime.ofInstant(newPromotionStartDate.toInstant(), ZoneId.systemDefault())
+        );
+    }
+
+    /**
+     * @return the newPromotionEndDate
+     */
+    public Date getNewPromotionEndDate() {
+        return newPromotionEndDate;
+    }
+
+    /**
+     * @param newPromotionEndDate the newPromotionEndDate to set
+     */
+    public void setNewPromotionEndDate(Date newPromotionEndDate) {
+        this.newPromotionEndDate = newPromotionEndDate;
+        this.newPromotion.setEndDate(
+                LocalDateTime.ofInstant(newPromotionEndDate.toInstant(), ZoneId.systemDefault())
+        );
+    }
+
+    /**
+     * @return the today
+     */
+    public Date getToday() {
+        return today;
+    }
+
+    /**
+     * @param today the today to set
+     */
+    public void setToday(Date today) {
+        this.today = today;
+    }
+
+    /**
+     * @return the range
+     */
+    public List<Date> getRange() {
+        return range;
+    }
+
+    /**
+     * @param range the range to set
+     */
+    public void setRange(List<Date> range) {
+        this.range = range;
+    }
+
+};
