@@ -74,9 +74,9 @@ public abstract class User implements Serializable {
         this.email = email;
         this.country = country;
         this.username = username;
-        this.password = password;
         this.profilePictureURL = profilePictureURL;
         this.lastOnline = lastOnline;
+        setPassword(password);
     }
 
     public Long getUserId() {
@@ -179,7 +179,14 @@ public abstract class User implements Serializable {
      * @param password the password to set
      */
     public void setPassword(String password) {
-        this.password = password;
+        if(password != null)
+        {
+            this.password = CryptographicHelper.getInstance().byteArrayToHexString(CryptographicHelper.getInstance().doMD5Hashing(password + this.salt));
+        }
+        else
+        {
+            this.password = null;
+        }
     }
 
  

@@ -10,6 +10,7 @@ package ws.restful.model;
  * @author chenli
  */
 public class ErrorRsp {
+
     private String message;
 
     public ErrorRsp() {
@@ -26,6 +27,5 @@ public class ErrorRsp {
     public void setMessage(String message) {
         this.message = message;
     }
-    
-    
+
 }
