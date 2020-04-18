@@ -7,7 +7,7 @@
       template="/template/defaultTemplate.xhtml"
       xmlns:p="http://primefaces.org/ui"
       >
-<!-- THIS IS FOR COMPANY USE ONLY-->
+    <!-- THIS IS FOR COMPANY USE ONLY-->
 
     <!-- INTERFACE -->
     <cc:interface>
@@ -25,10 +25,16 @@
                             <p:outputLabel for="name" value="name" style="font-weight: bold;"/>               
                         </p:column>
                         <p:column>
-                            <p:inputText id="name" value="#{companyProductManagedBean.newGame.name}" placeholder="name" required="true" requiredMessage="Name is required" />
+                            <p:inputText id="name" value="#{companyProductManagedBean.newGame.name}" placeholder="name" 
+                                         required="true" requiredMessage="Name is required" >
+                                <f:validateLength minimum="1" maximum="100">
+                                    <p:ajax event="keyup" update="nameValidation" process="@this"/> 
+
+                                </f:validateLength>
+                            </p:inputText>
                         </p:column>
                         <p:column>
-                            <p:messages for ="name" />
+                            <p:messages id="nameValidation" for ="name" />
                         </p:column>     
                     </p:row>
 
@@ -44,7 +50,7 @@
                             <h:outputText id="display" />   
                         </p:column>
                         <p:column>
-                            <p:messages for ="description" />
+                            <p:messages  for ="description" />
                         </p:column>     
                     </p:row>
 
@@ -69,11 +75,15 @@
                             <p:outputLabel for="price" value="price" style="font-weight: bold;"/>               
                         </p:column>
                         <p:column>
-                            <p:inputText id="price"  placeholder="price" required="true" requiredMessage="Name is required" 
-                                         value="#{companyProductManagedBean.newGame.price}" />
+                            <p:inputText id="price"  placeholder="price" required="true" requiredMessage="Price is required" 
+                                         value="#{companyProductManagedBean.newGame.price}" >
+                                <f:validateDoubleRange minimum="0.00">
+                                    <p:ajax event="keyup" update="priceValidation" process="@this"/> 
+                                </f:validateDoubleRange>
+                            </p:inputText>
                         </p:column>
                         <p:column>
-                            <p:messages for ="price" />
+                            <p:messages id="priceValidation" for ="price" />
                         </p:column>     
                     </p:row>
 
@@ -98,7 +108,8 @@
                         </p:column>
                         <p:column>
                             <p:selectOneMenu id="category" style="width:125px" value="#{companyProductManagedBean.newGame.category}" 
-                                             converter="omnifaces.SelectItemsConverter">
+                                             converter="omnifaces.SelectItemsConverter" required="true" 
+                                             requiredMessage="Category selection is required">
                                 <f:selectItems  value="#{companyProductManagedBean.categories}" 
                                                 var="category" itemLabel="#{category.name}" 
                                                 itemValue="#{category}">
@@ -115,7 +126,8 @@
                         </p:column>
                         <p:column>
                             <p:selectOneMenu id="parentAdvisory" style="width:125px"
-                                             value="#{companyProductManagedBean.newGame.name}" >
+                                             value="#{companyProductManagedBean.newGame.name}" 
+                                             required="true" requiredMessage="Parent Advisory is required">
                                 <f:selectItem  itemValue="G" itemLabel="G"/>
                                 <f:selectItem itemValue="Teen" itemLabel="Teen"/>
                                 <f:selectItem itemValue="R" itemLabel="R"/>
@@ -127,12 +139,39 @@
                         </p:column>     
                     </p:row>
 
+
+
+                    <p:row >
+                        <p:column>
+                            <h:outputText value="Game Pictures" />
+                        </p:column>
+                        <p:column >
+                            <p:inputText id="gamePicturesURLs" value="#{companyProductManagedBean.newGame.gamePicturesURLs}" />
+                        </p:column>
+                        <p:column>
+                            <p:message for="gamePicturesURLs"/>
+                        </p:column>
+                    </p:row> 
+
+                    <p:row >
+                        <p:column>
+                            <h:outputText value="Game Videos" />
+                        </p:column>
+                        <p:column >
+                            <p:inputText id="gameTrailersURLs" value="#{companyProductManagedBean.newGame.gameTrailersURLS}" />
+                        </p:column>
+                        <p:column>
+                            <p:message for="gameTrailersURLs"/>
+                        </p:column>
+                    </p:row> 
+
+
                     <p:row>
                         <p:column colspan="3">
                             <p:commandButton type="reset" value="Clear" />&nbsp;
                             <p:commandButton  id="AddGameButton" value="Add" update="@form formAllProducts:dataTableAllProducts" 
                                               actionListener="#{companyProductManagedBean.createNewProduct}"    
-                                              oncomplete="PF('dialogViewProductDetal').show()"  />
+                                              />
                         </p:column>
                     </p:row>
 

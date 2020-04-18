@@ -34,11 +34,11 @@ public interface GameSessionBeanLocal {
 
     public List<Product> filterProductsByTags(List<Long> tagIds, String condition);
 
-    public Product retrieveProductByProductId(Long productId) throws ProductNotFoundException;
-
-    public void updateProduct(Product productEntity, Long categoryId, List<Long> tagIds) throws ProductNotFoundException, CategoryNotFoundException, TagNotFoundException, UpdateProductException, InputDataValidationException;
-
     public Game createNewGame(Game newGame, Long categoryId, List<Long> tagIds, Long CompanyId) throws ProductSkuCodeExistException, UnknownPersistenceException, InputDataValidationException, CreateNewProductException, CompanyNotFoundException;
+
+    public void updateGame(Game game, Long categoryId, List<Long> tagIds) throws ProductNotFoundException, CategoryNotFoundException, TagNotFoundException, UpdateProductException, InputDataValidationException;
+
+    public Game retrieveGamebyId(Long gameId) throws ProductNotFoundException;
 
     
 }

@@ -5,11 +5,13 @@
  */
 package jsf.managedbean;
 
+import ejb.session.stateless.ProductSessionBeanLocal;
 import entity.Game;
 import entity.Hardware;
 import entity.OtherSoftware;
 import entity.Product;
 import java.io.Serializable;
+import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
 
@@ -20,6 +22,9 @@ import javax.faces.view.ViewScoped;
 @Named(value = "viewProductManagedBean")
 @ViewScoped
 public class ViewProductManagedBean implements Serializable {
+
+    @EJB
+    private ProductSessionBeanLocal productSessionBean;
 
     /**
      * Creates a new instance of ViewProductManagedBean
@@ -44,11 +49,11 @@ public class ViewProductManagedBean implements Serializable {
      * @param productToViewInDetails the productToViewInDetails to set
      */
     public void setProductToViewInDetails(Product productToViewInDetails) {
+     
         if (productToViewInDetails instanceof Game) {
             setGameToViewInDetails((Game) productToViewInDetails);
             setHardwareToViewInDetails(null);
             setOtherSoftwareToViewInDetails(null);
-
         } else if (productToViewInDetails instanceof Hardware) {
             setHardwareToViewInDetails((Hardware) productToViewInDetails);
             setGameToViewInDetails(null);
@@ -61,6 +66,13 @@ public class ViewProductManagedBean implements Serializable {
 
         }
         this.productToViewInDetails = productToViewInDetails;
+    }
+
+    public void resetManageBean() {
+        this.gameToViewInDetails = null;
+        this.hardwareToViewInDetails = null;
+        this.otherSoftwareToViewInDetails = null;
+        this.productToViewInDetails = null;
     }
 
     /**

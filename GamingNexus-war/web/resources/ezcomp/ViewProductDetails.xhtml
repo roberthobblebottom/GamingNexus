@@ -35,7 +35,19 @@
                             <h:outputText value="Description" />
                         </p:column>
                         <p:column>
-                            <p value="#{companyProductManagedBean.viewProductManagedBean.productToViewInDetails.description}"/>
+                            <h:outputText style="display:block; width:10px; .someClass {word-wrap: break-word;}" value="#{companyProductManagedBean.viewProductManagedBean.productToViewInDetails.description}"/>
+                        </p:column>
+                    </p:row>
+                    
+                    
+                     <p:row>
+                        <p:column>
+                            <h:outputText value="Computer Requirements" />
+                        </p:column>
+                        <p:column>
+                            <h:outputText style="display:block; width:10px; .someClass {word-wrap: break-word;}"
+                                          
+                                          value="#{companyProductManagedBean.viewProductManagedBean.productToViewInDetails.computerRequirements}"/>
                         </p:column>
                     </p:row>
 
@@ -55,6 +67,9 @@
                         <p:column>
                             <h:outputText value="#{companyProductManagedBean.viewProductManagedBean.productToViewInDetails.averageRating}" />
                         </p:column>
+                        
+                        
+                        
                     </p:row>
                     <p:row>
                         <p:column>
@@ -69,8 +84,9 @@
                             <h:outputText value="Tags" />
                         </p:column>
                         <p:column>
-                            <p:dataList value="#{companyProductManagedBean.viewProductManagedBean.productToViewInDetails.tags}" var="tag" type="ordered" >
-                                #{tag.tagName}  
+                            <p:dataList value="#{companyProductManagedBean.viewProductManagedBean.
+                                                 productToViewInDetails.tags}" var="tag" type="ordered" >
+                                        #{tag.tagName}  
                             </p:dataList>
                         </p:column>
                     </p:row>
@@ -104,11 +120,42 @@
                     <p:row rendered="#{companyProductManagedBean.viewProductManagedBean.gameToViewInDetails != null}">
                         <p:column>
                             <h:outputText value="Parent Advisory" 
-                                          rendered="#{companyProductManagedBean.viewProductManagedBean.gameToViewInDetails != null}"/>
+                                          />
                         </p:column>
                         <p:column >
-                            <h:outputText value="#{companyProductManagedBean.viewProductManagedBean.gameToViewInDetails.parentAdvisory}" 
-                                          rendered="#{companyProductManagedBean.viewProductManagedBean.gameToViewInDetails != null}"/>
+                            <h:outputText value="#{companyProductManagedBean.viewProductManagedBean.gameToViewInDetails.parentAdvisory}"/>
+                        </p:column>
+                    </p:row> 
+
+
+                    <p:row rendered="#{companyProductManagedBean.viewProductManagedBean.hardwareToViewInDetails != null}">
+                        <p:column>
+                            <h:outputText value="Manufactoring Country" 
+                                          />
+                        </p:column>
+                        <p:column >
+                            <h:outputText value="#{companyProductManagedBean.viewProductManagedBean.hardwareToViewInDetails.manufactoringCountry}" />
+                        </p:column>
+                    </p:row> 
+
+                    <p:row rendered="#{companyProductManagedBean.viewProductManagedBean.hardwareToViewInDetails != null}">
+                        <p:column>
+                            <h:outputText value="Technical Specification" 
+                                          />
+                        </p:column>
+                        <p:column >
+                            #{companyProductManagedBean.viewProductManagedBean.hardwareToViewInDetails.technicalspecification}
+                        </p:column>
+                    </p:row> 
+
+
+                    <p:row rendered="#{companyProductManagedBean.viewProductManagedBean.hardwareToViewInDetails != null}">
+                        <p:column>
+                            <h:outputText value="Warrenty Description" 
+                                          />
+                        </p:column>
+                        <p:column >
+                            #{companyProductManagedBean.viewProductManagedBean.hardwareToViewInDetails.warrentyDescription}
                         </p:column>
                     </p:row> 
                 </p:panelGrid>

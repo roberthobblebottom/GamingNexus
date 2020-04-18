@@ -72,6 +72,8 @@ public class TagSessionBean implements TagSessionBeanLocal {
         }
     }
 
+    
+    
     @Override
     public void updateTag(Tag tagEntity) throws InputDataValidationException, TagNotFoundException, UpdateTagException {
         if (tagEntity.getTagId() != null) {

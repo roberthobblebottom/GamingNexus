@@ -5,6 +5,7 @@
  */
 package ejb.session.stateless;
 
+import entity.Product;
 import entity.Tag;
 import java.util.List;
 import javax.ejb.Local;
@@ -30,5 +31,6 @@ public interface TagSessionBeanLocal {
     public void updateTag(Tag tagEntity) throws InputDataValidationException, TagNotFoundException, UpdateTagException;
 
     public void deleteTag(Long tagId) throws TagNotFoundException, DeleteTagException;
+
     
 }

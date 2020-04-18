@@ -37,14 +37,28 @@ public class ProductSessionBean implements ProductSessionBeanLocal {
     public Product retrieveProductById(Long productId) {
         Product retrievedProduct = (Product) em.find(Product.class, productId);
         if (retrievedProduct instanceof Game) {
-            return (Game) em.find(Game.class, productId);
+            Game retrievedGame = (Game) em.find(Game.class, productId);
+            this.lazyLoadGame(retrievedGame);
+            return retrievedGame;
         } else if (retrievedProduct instanceof Hardware) {
-            return (Hardware) em.find(Hardware.class, productId);
+            Hardware retrievedHardware = (Hardware) em.find(Hardware.class, productId);
+            this.lazyLoadHardware(retrievedHardware);
+            return retrievedHardware;
         } else if (retrievedProduct instanceof OtherSoftware) {
-            return (OtherSoftware) em.find(OtherSoftware.class, productId);
-        }
+            OtherSoftware retrivedOtherSoftware = (OtherSoftware) em.find(OtherSoftware.class, productId);
+            this.lazyLoadOtherSoftware(retrivedOtherSoftware);
+            return retrivedOtherSoftware;
+        } 
+        assert false : "Product must always be a child entity";
         return null;
     }
+//    @Override
+//    public List<Tag> retrievedTagsByProduct(Long productID){
+//     Product retrievedProduct = em.find(Product.class, productID);
+//     retrievedProduct.getTags().size();
+//     return retrievedProduct.get;
+//             
+//    }
 
     @Override
     public void deleteProduct(Product productToBeDeleted) {
@@ -66,5 +80,32 @@ public class ProductSessionBean implements ProductSessionBeanLocal {
 
     public void persist(Object object) {
         em.persist(object);
+    }
+
+    public void lazyLoadGame(Game game) {
+        game.getTags().size();
+        game.getCartItems().size();
+        game.getOwnedItems().size();
+        game.getPromotions().size();
+        game.getRatings().size();
+        game.getRatings().size();
+    }
+
+    public void lazyLoadOtherSoftware(OtherSoftware otherSoftware) {
+        otherSoftware.getTags().size();
+        otherSoftware.getCartItems().size();
+        otherSoftware.getOwnedItems().size();
+        otherSoftware.getPromotions().size();
+        otherSoftware.getRatings().size();
+        otherSoftware.getRatings().size();
+    }
+
+    public void lazyLoadHardware(Hardware hardware) {
+        hardware.getTags().size();
+        hardware.getCartItems().size();
+        hardware.getOwnedItems().size();
+        hardware.getPromotions().size();
+        hardware.getRatings().size();
+        hardware.getRatings().size();
     }
 }

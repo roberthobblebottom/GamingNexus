@@ -62,7 +62,7 @@ public class GameSessionBean implements GameSessionBeanLocal {
             if (!category.getSubCategories().isEmpty()) {
                 throw new CreateNewProductException("Selected category for the new product is not a leaf category");
             }
-            
+
             if (CompanyId == null) {
                 throw new CreateNewProductException("The new product must be associated a company");
             }
@@ -199,48 +199,64 @@ public class GameSessionBean implements GameSessionBeanLocal {
         }
     }
 
-    public Product retrieveProductByProductId(Long productId) throws ProductNotFoundException {
-        Product productEntity = em.find(Product.class, productId);
+    @Override
+    public Game retrieveGamebyId(Long gameId) throws ProductNotFoundException {
+        Game game = em.find(Game.class, gameId);
 
-        if (productEntity != null) {
-            productEntity.getCategory();
-            productEntity.getTags().size();
+        if (game != null) {
+            game.getCategory();
+            game.getTags().size();
 
-            return productEntity;
+            return game;
         } else {
-            throw new ProductNotFoundException("Product ID " + productId + " does not exist!");
+            throw new ProductNotFoundException("Product ID " + game + " does not exist!");
         }
     }
 
-    public void updateProduct(Product productEntity, Long categoryId, List<Long> tagIds) throws ProductNotFoundException, CategoryNotFoundException, TagNotFoundException, UpdateProductException, InputDataValidationException {
-        if (productEntity != null && productEntity.getProductId() != null) {
-            Product productEntityToUpdate = retrieveProductByProductId(productEntity.getProductId());
+    @Override
+    public void updateGame(Game game, Long categoryId, List<Long> tagIds) throws ProductNotFoundException, CategoryNotFoundException, TagNotFoundException, UpdateProductException, InputDataValidationException {
+        if (game != null && game.getProductId() != null) {
+            Game gameToBeUpdated = retrieveGamebyId(game.getProductId());
 
-            if (categoryId != null && (!productEntityToUpdate.getCategory().getCategoryId().equals(categoryId))) {
+            if (categoryId != null && (!gameToBeUpdated.getCategory().getCategoryId().equals(categoryId))) {
+                System.out.println("GameSessionBean: Entered category update block");
                 Category categoryEntityToUpdate = categorySessionBeanLocal.retrieveCategoryByCategoryId(categoryId);
 
                 if (!categoryEntityToUpdate.getSubCategories().isEmpty()) {
                     throw new UpdateProductException("Selected category for the new product is not a leaf category");
                 }
 
-                productEntityToUpdate.setCategory(categoryEntityToUpdate);
+                gameToBeUpdated.setCategory(categoryEntityToUpdate);
             }
-            if (tagIds != null) {
-                for (Tag tagEntity : productEntityToUpdate.getTags()) {
-                    tagEntity.getProducts().remove(productEntityToUpdate);
+            if (tagIds != null && !tagIds.isEmpty()) {
+                                System.out.println("GameSessionBean: Entered tag update block");
+
+                for (Tag tagEntity : gameToBeUpdated.getTags()) {
+                    tagEntity.getProducts().remove(gameToBeUpdated);
                 }
-                productEntityToUpdate.getTags().clear();
+                gameToBeUpdated.getTags().clear();
                 for (Long tagId : tagIds) {
                     Tag tagEntity = tagSessionBeanLocal.retrieveTagByTagId(tagId);
-                    productEntityToUpdate.addTag(tagEntity);
+                    gameToBeUpdated.addTag(tagEntity);
                 }
             }
-            productEntityToUpdate.setName(productEntity.getName());
-            productEntityToUpdate.setDescription(productEntity.getDescription());
-            productEntityToUpdate.setComputerRequirements(productEntity.getComputerRequirements());
-            productEntityToUpdate.setPrice(productEntity.getPrice());
-            productEntityToUpdate.setCompany(productEntity.getCompany());
-            productEntityToUpdate.setAverageRating((productEntity.getAverageRating()));
+            gameToBeUpdated.setName(game.getName());
+            gameToBeUpdated.setDescription(game.getDescription());
+            gameToBeUpdated.setComputerRequirements(game.getComputerRequirements());
+            gameToBeUpdated.setPrice(game.getPrice());
+            gameToBeUpdated.setCompany(game.getCompany());
+            gameToBeUpdated.setAverageRating((game.getAverageRating()));
+            gameToBeUpdated.setCartItems(game.getCartItems());
+            //  gameToBeUpdated.setCategory(game.getCategory());
+            gameToBeUpdated.setForums(game.getForums());
+            gameToBeUpdated.setGameAccounts(game.getGameAccounts());
+            gameToBeUpdated.setGamePicturesURLs(game.getGamePicturesURLs());
+            gameToBeUpdated.setOwnedItems(game.getOwnedItems());
+            gameToBeUpdated.setParentAdvisory(game.getParentAdvisory());
+            gameToBeUpdated.setPromotions(game.getPromotions());
+            gameToBeUpdated.setRatings(game.getRatings());
+            // gameToBeUpdated.setTags(game.getTags());
+
         } else {
             throw new ProductNotFoundException("Product ID not provided for product to be updated");
         }

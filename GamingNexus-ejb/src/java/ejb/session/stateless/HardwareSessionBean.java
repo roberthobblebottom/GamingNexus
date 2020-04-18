@@ -66,7 +66,7 @@ public class HardwareSessionBean implements HardwareSessionBeanLocal {
             if (!category.getSubCategories().isEmpty()) {
                 throw new CreateNewProductException("Selected category for the new product is not a leaf category");
             }
-            
+
             if (CompanyId == null) {
                 throw new CreateNewProductException("The new product must be associated a company");
             }
@@ -123,7 +123,8 @@ public class HardwareSessionBean implements HardwareSessionBeanLocal {
 
         return hardwares;
     }
-public List<Product> filterProductsByCategory(Long categoryId) throws CategoryNotFoundException {
+
+    public List<Product> filterProductsByCategory(Long categoryId) throws CategoryNotFoundException {
         List<Product> productEntities = new ArrayList<>();
         Category categoryEntity = categorySessionBeanLocal.retrieveCategoryByCategoryId(categoryId);
 
@@ -199,48 +200,61 @@ public List<Product> filterProductsByCategory(Long categoryId) throws CategoryNo
         }
     }
 
-    public Product retrieveProductByProductId(Long productId) throws ProductNotFoundException {
-        Product productEntity = em.find(Product.class, productId);
+    @Override
+    public Hardware retrieveHardwareById(Long hardwareId) throws ProductNotFoundException {
+        Hardware hardware = em.find(Hardware.class, hardwareId);
 
-        if (productEntity != null) {
-            productEntity.getCategory();
-            productEntity.getTags().size();
+        if (hardware != null) {
+            hardware.getCategory();
+            hardware.getTags().size();
 
-            return productEntity;
+            return hardware;
         } else {
-            throw new ProductNotFoundException("Product ID " + productId + " does not exist!");
+            throw new ProductNotFoundException("Product ID " + hardwareId + " does not exist!");
         }
     }
 
-    public void updateProduct(Product productEntity, Long categoryId, List<Long> tagIds) throws ProductNotFoundException, CategoryNotFoundException, TagNotFoundException, UpdateProductException, InputDataValidationException {
-        if (productEntity != null && productEntity.getProductId() != null) {
-            Product productEntityToUpdate = retrieveProductByProductId(productEntity.getProductId());
+    @Override
+    public void updateHardware(Hardware hardware, Long categoryId, List<Long> tagIds) throws ProductNotFoundException, CategoryNotFoundException, TagNotFoundException, UpdateProductException, InputDataValidationException {
+        if (hardware != null && hardware.getProductId() != null) {
+            Hardware hardwareToUpdate = retrieveHardwareById(hardware.getProductId());
 
-            if (categoryId != null && (!productEntityToUpdate.getCategory().getCategoryId().equals(categoryId))) {
+            if (categoryId != null && (!hardwareToUpdate.getCategory().getCategoryId().equals(categoryId))) {
                 Category categoryEntityToUpdate = categorySessionBeanLocal.retrieveCategoryByCategoryId(categoryId);
 
                 if (!categoryEntityToUpdate.getSubCategories().isEmpty()) {
                     throw new UpdateProductException("Selected category for the new product is not a leaf category");
                 }
 
-                productEntityToUpdate.setCategory(categoryEntityToUpdate);
+                hardwareToUpdate.setCategory(categoryEntityToUpdate);
             }
-            if (tagIds != null) {
-                for (Tag tagEntity : productEntityToUpdate.getTags()) {
-                    tagEntity.getProducts().remove(productEntityToUpdate);
+            if (tagIds != null && !tagIds.isEmpty()) {
+                for (Tag tagEntity : hardwareToUpdate.getTags()) {
+                    tagEntity.getProducts().remove(hardwareToUpdate);
                 }
-                productEntityToUpdate.getTags().clear();
+                hardwareToUpdate.getTags().clear();
                 for (Long tagId : tagIds) {
                     Tag tagEntity = tagSessionBeanLocal.retrieveTagByTagId(tagId);
-                    productEntityToUpdate.addTag(tagEntity);
+                    hardwareToUpdate.addTag(tagEntity);
                 }
             }
-            productEntityToUpdate.setName(productEntity.getName());
-            productEntityToUpdate.setDescription(productEntity.getDescription());
-            productEntityToUpdate.setComputerRequirements(productEntity.getComputerRequirements());
-            productEntityToUpdate.setPrice(productEntity.getPrice());
-            productEntityToUpdate.setCompany(productEntity.getCompany());
-            productEntityToUpdate.setAverageRating((productEntity.getAverageRating()));
+            hardwareToUpdate.setName(hardware.getName());
+            hardwareToUpdate.setDescription(hardware.getDescription());
+            hardwareToUpdate.setComputerRequirements(hardware.getComputerRequirements());
+            hardwareToUpdate.setPrice(hardware.getPrice());
+            hardwareToUpdate.setCompany(hardware.getCompany());
+            hardwareToUpdate.setAverageRating((hardware.getAverageRating()));
+            hardwareToUpdate.setCartItems(hardware.getCartItems());
+            hardwareToUpdate.setDeliverables(hardware.getDeliverables());
+            hardwareToUpdate.setManufactoringCountry(hardware.getManufactoringCountry());
+            hardwareToUpdate.setOwnedItems(hardware.getOwnedItems());
+            hardwareToUpdate.setOwnedItems(hardware.getOwnedItems());
+            hardwareToUpdate.setPromotions(hardware.getPromotions());
+            hardwareToUpdate.setRatings(hardware.getRatings());
+            hardwareToUpdate.setTags(hardware.getTags());
+            hardwareToUpdate.setTechnicalspecification(hardware.getTechnicalspecification());
+            hardwareToUpdate.setWarrentyDescription(hardware.getWarrentyDescription());
+
         } else {
             throw new ProductNotFoundException("Product ID not provided for product to be updated");
         }

@@ -6,7 +6,6 @@
 package jsf.managedbean;
 
 import ejb.session.stateless.CategorySessionBeanLocal;
-import ejb.session.stateless.CompanySessionBeanLocal;
 import ejb.session.stateless.GameSessionBeanLocal;
 import ejb.session.stateless.HardwareSessionBeanLocal;
 import ejb.session.stateless.OtherSoftwareSessionBeanLocal;
@@ -32,12 +31,16 @@ import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
+import util.exception.CategoryNotFoundException;
 import util.exception.CompanyNotFoundException;
 import util.exception.CreateNewProductException;
 import util.exception.InputDataValidationException;
+import util.exception.ProductNotFoundException;
 import util.exception.ProductSkuCodeExistException;
 import util.exception.SystemAdminUsernameExistException;
+import util.exception.TagNotFoundException;
 import util.exception.UnknownPersistenceException;
+import util.exception.UpdateProductException;
 
 /**
  *
@@ -49,64 +52,66 @@ public class CompanyProductManagedBean implements Serializable {
 
     @EJB
     private HardwareSessionBeanLocal hardwareSessionBean;
-    
+
     @EJB
     private OtherSoftwareSessionBeanLocal otherSoftwareSessionBean;
-    
+
     @EJB
     private ProductSessionBeanLocal productSessionBean;
-    
+
     @EJB
     private GameSessionBeanLocal gameSessionBean;
-    
+
     @EJB
     private CategorySessionBeanLocal categorySessionBean;
-    
+
     @EJB
     private TagSessionBeanLocal tagSessionBean;
-    
-    @EJB
-    private CompanySessionBeanLocal companySessionBeanLocal;
+
     @Inject
     private ViewProductManagedBean viewProductManagedBean;
+    
     private Game newGame, gameToBeUpdated, gameToViewInDetails = null;
-    private Product productToViewInDetails;
-    private Hardware newHardware,hardwareToViewInDetails = null;
+    private Product productToViewInDetails, selectedProductToUpdate;
+    private Hardware newHardware, hardwareToViewInDetails = null;
     private OtherSoftware newOtherSoftware, otherSoftwareToViewInDetails = null;
     private List<Product> products, filteredProducts;
     private List<Category> categories;
     private List<Tag> tags;
     private Company company;
-    
+    private Long categoryIdUpdate;
+    private List<Long> tagIdsUpdate;
+
     public CompanyProductManagedBean() {
         newGame = new Game();
         gameToBeUpdated = new Game();
     }
-    
+
     @PostConstruct
     public void postConstruct() {
         Map<String, Object> sessionMap = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
         setCompany((Company) sessionMap.get("company"));
-        System.out.println("company name: " + getCompany().getUsername());
+
         products = getCompany().getProducts();
         newOtherSoftware = new OtherSoftware();
-        newOtherSoftware.setTags(new ArrayList<Tag>());
+        newOtherSoftware.setTags(new ArrayList<>());
         setNewHardware(new Hardware());
-        getNewHardware().setTags(new ArrayList<Tag>());
+        getNewHardware().setTags(new ArrayList<>());
         categories = categorySessionBean.retrieveAllCategories();
         tags = tagSessionBean.retrieveAllTags();
     }
-    
+
     public void viewProductDetailsMethod(ActionEvent event) throws IOException {
         Long productIdToView = (Long) event.getComponent().getAttributes().get("productId");
         FacesContext.getCurrentInstance().getExternalContext().getFlash().put("productIdToView", productIdToView);
+
         //   FacesContext.getCurrentInstance().getExternalContext().redirect("viewProductDetails.xhtml");
     }
-    
+
     public void createNewProduct(ActionEvent event) throws SystemAdminUsernameExistException {
-        
+
         String buttonID = event.getComponent().getId();
-        
+
         switch (buttonID) {
             case "AddGameButton":
                 try {
@@ -116,12 +121,12 @@ public class CompanyProductManagedBean implements Serializable {
                     });
                     Game game = gameSessionBean.createNewGame(newGame, newGame.getCategory().getCategoryId(), tagIds, getCompany().getUserId());
                     products.add((Product) game);
-                    
+
                     FacesContext.getCurrentInstance().addMessage(null,
                             new FacesMessage(FacesMessage.SEVERITY_INFO, "New Game " + newGame.getName() + " added successfully "
                                     + "(ID: " + game.getProductId() + ")", null));
                     newGame = new Game();
-                    
+
                 } catch (UnknownPersistenceException | ProductSkuCodeExistException | InputDataValidationException | CreateNewProductException
                         | CompanyNotFoundException ex) {
                     FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
@@ -137,12 +142,12 @@ public class CompanyProductManagedBean implements Serializable {
                     OtherSoftware otherSoftware = otherSoftwareSessionBean.createNewOtherSoftware(newOtherSoftware,
                             newOtherSoftware.getCategory().getCategoryId(), tagIds, getCompany().getUserId());
                     products.add((Product) otherSoftware);
-                    
+
                     FacesContext.getCurrentInstance().addMessage(null,
                             new FacesMessage(FacesMessage.SEVERITY_INFO, "New Game " + newGame.getName() + " added successfully "
                                     + "(ID: " + otherSoftware.getProductId() + ")", null));
                     newOtherSoftware = new OtherSoftware();
-                    
+
                 } catch (UnknownPersistenceException | ProductSkuCodeExistException | InputDataValidationException | CreateNewProductException
                         | CompanyNotFoundException ex) {
                     FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
@@ -158,12 +163,12 @@ public class CompanyProductManagedBean implements Serializable {
                     Hardware hardware = hardwareSessionBean.createNewHardware(newHardware,
                             newHardware.getCategory().getCategoryId(), tagIds, getCompany().getUserId());
                     products.add((Product) hardware);
-                    
+
                     FacesContext.getCurrentInstance().addMessage(null,
                             new FacesMessage(FacesMessage.SEVERITY_INFO, "New Game " + newGame.getName() + " added successfully "
                                     + "(ID: " + newHardware.getProductId() + ")", null));
                     newHardware = new Hardware();
-                    
+
                 } catch (UnknownPersistenceException | ProductSkuCodeExistException | InputDataValidationException | CreateNewProductException
                         | CompanyNotFoundException ex) {
                     FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
@@ -172,17 +177,102 @@ public class CompanyProductManagedBean implements Serializable {
                 break;
             default:
                 break;
-            
+
         }
-        
+
     }
-    
+//
+//    public void doUpdateProduct(ActionEvent event) {
+//        // setSelectedProductToUpdate((Product)event.getComponent().getAttributes().get("productEntityToUpdate"));
+//
+//        setCategoryIdUpdate(viewProductManagedBean.getProductToViewInDetails().getCategory().getCategoryId());
+//        setTagIdsUpdate(new ArrayList<>());
+//
+//        for (Tag tag : selectedProductToUpdate.getTags()) {
+//            getTagIdsUpdate().add(tag.getTagId());
+//        }
+//    }
+
+    public void updateProduct(ActionEvent event) {
+
+        Product productToBeUpdated = viewProductManagedBean.getProductToViewInDetails();
+
+        Hardware hardwareEntityFragment = viewProductManagedBean.getHardwareToViewInDetails();
+        OtherSoftware otherSoftwareEntityFragment = viewProductManagedBean.getOtherSoftwareToViewInDetails();
+        Game gameEntityFragment = viewProductManagedBean.getGameToViewInDetails();
+        try {
+            System.out.println("---------------");
+            tagIdsUpdate.forEach(id -> {
+                System.out.println("tag id: " + id);
+            }
+            );
+            System.out.println("---------------");
+
+        } catch (NullPointerException ex) {
+            System.err.println("Nullpointer exception occured.");
+        }
+        categoryIdUpdate = viewProductManagedBean.getProductToViewInDetails().getCategory().getCategoryId();
+        try {
+            if (gameToBeUpdated != null
+                    && otherSoftwareEntityFragment == null
+                    && hardwareEntityFragment == null) {
+                Game gameToBeUpdated = (Game) productToBeUpdated;
+                gameToBeUpdated.setParentAdvisory(gameEntityFragment.getParentAdvisory());
+                gameToBeUpdated.setGamePicturesURLs(gameEntityFragment.getGamePicturesURLs());
+                gameToBeUpdated.setGameTrailersURLS(gameEntityFragment.getGameTrailersURLS());
+                gameToBeUpdated.setForums(gameEntityFragment.getForums());
+                gameSessionBean.updateGame(gameToBeUpdated, getCategoryIdUpdate(), getTagIdsUpdate());
+            } else if (viewProductManagedBean.getGameToViewInDetails() == null
+                    && otherSoftwareEntityFragment != null
+                    && hardwareEntityFragment == null) {
+                OtherSoftware otherSoftwareToBeUpdated = (OtherSoftware) productToBeUpdated;
+                otherSoftwareSessionBean.updateOtherSoftware(otherSoftwareToBeUpdated, getCategoryIdUpdate(), getTagIdsUpdate());
+            } else if (viewProductManagedBean.getGameToViewInDetails() == null
+                    && otherSoftwareEntityFragment == null
+                    && hardwareEntityFragment != null) {
+                Hardware hardwareToBeUpdated = (Hardware) productToBeUpdated;
+                hardwareToBeUpdated.setDeliverables(hardwareEntityFragment.getDeliverables());
+                hardwareToBeUpdated.setManufactoringCountry(hardwareEntityFragment.getManufactoringCountry());
+                hardwareToBeUpdated.setTechnicalspecification(hardwareEntityFragment.getTechnicalspecification());
+                hardwareToBeUpdated.setWarrentyDescription(hardwareEntityFragment.getWarrentyDescription());
+                hardwareSessionBean.updateHardware(hardwareToBeUpdated, getCategoryIdUpdate(), getTagIdsUpdate());
+            }
+
+            for (Category ce : categories) {
+                if (ce.getCategoryId().equals(getCategoryIdUpdate())) {
+                    viewProductManagedBean.getProductToViewInDetails().setCategory(ce);
+                    break;
+                }
+            }
+
+            productToBeUpdated.getTags().clear();
+            if (!tagIdsUpdate.isEmpty()) {
+                System.out.println("!tagidsupdate.isempty block entered.");
+                tags.forEach(tag -> {
+                    if (getTagIdsUpdate().contains(tag.getTagId())) {
+                        viewProductManagedBean.getProductToViewInDetails().getTags().add(tag);
+                    }
+                });
+            }
+
+        } catch (ProductNotFoundException | CategoryNotFoundException | TagNotFoundException
+                | UpdateProductException | InputDataValidationException ex) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                    "Error for updating productEntity (ID: " + viewProductManagedBean.getProductToViewInDetails().getProductId() + ") "
+                    + "Error Message: " + ex.getMessage(), null));
+        }
+
+        FacesContext.getCurrentInstance()
+                .addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Product updated successfully", null));
+        //   viewProductManagedBean.resetManageBean();
+    }
+
     public void deleteProduct(ActionEvent event) {
         try {
             Product productToBeDeleted = (Product) event.getComponent().getAttributes().get("productToBeDeleted");
             productSessionBean.deleteProduct(productToBeDeleted);
             products.remove(productToBeDeleted);
-            
+
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
                     "Product deleted successfully ID: " + productToBeDeleted.getProductId(), null));
         } catch (Exception ex) {
@@ -401,5 +491,47 @@ public class CompanyProductManagedBean implements Serializable {
     public void setNewHardware(Hardware newHardware) {
         this.newHardware = newHardware;
     }
-    
+
+    /**
+     * @return the selectedProductToUpdate
+     */
+    public Product getSelectedProductToUpdate() {
+        return selectedProductToUpdate;
+    }
+
+    /**
+     * @param selectedProductToUpdate the selectedProductToUpdate to set
+     */
+    public void setSelectedProductToUpdate(Product selectedProductToUpdate) {
+        this.selectedProductToUpdate = selectedProductToUpdate;
+    }
+
+    /**
+     * @return the categoryIdUpdate
+     */
+    public Long getCategoryIdUpdate() {
+        return categoryIdUpdate;
+    }
+
+    /**
+     * @param categoryIdUpdate the categoryIdUpdate to set
+     */
+    public void setCategoryIdUpdate(Long categoryIdUpdate) {
+        this.categoryIdUpdate = categoryIdUpdate;
+    }
+
+    /**
+     * @return the tagIdsUpdate
+     */
+    public List<Long> getTagIdsUpdate() {
+        return tagIdsUpdate;
+    }
+
+    /**
+     * @param tagIdsUpdate the tagIdsUpdate to set
+     */
+    public void setTagIdsUpdate(List<Long> tagIdsUpdate) {
+        this.tagIdsUpdate = tagIdsUpdate;
+    }
+
 }
