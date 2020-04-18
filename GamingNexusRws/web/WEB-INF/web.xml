@@ -21,4 +21,22 @@
     <welcome-file-list>
         <welcome-file>faces/index.xhtml</welcome-file>
     </welcome-file-list>
+    <ejb-local-ref>
+        <ejb-ref-name>CategorySessionBeanLocal</ejb-ref-name>
+        <ejb-ref-type>Session</ejb-ref-type>
+        <local>ejb.session.stateless.CategorySessionBeanLocal</local>
+        <ejb-link>GamingNexus-ejb.jar#CategorySessionBean</ejb-link>
+    </ejb-local-ref>
+    <ejb-local-ref>
+        <ejb-ref-name>ProductSessionBeanLocal</ejb-ref-name>
+        <ejb-ref-type>Session</ejb-ref-type>
+        <local>ejb.session.stateless.ProductSessionBeanLocal</local>
+        <ejb-link>GamingNexus-ejb.jar#ProductSessionBean</ejb-link>
+    </ejb-local-ref>
+    <ejb-local-ref>
+        <ejb-ref-name>TagSessionBeanLocal</ejb-ref-name>
+        <ejb-ref-type>Session</ejb-ref-type>
+        <local>ejb.session.stateless.TagSessionBeanLocal</local>
+        <ejb-link>GamingNexus-ejb.jar#TagSessionBean</ejb-link>
+    </ejb-local-ref>
 </web-app>

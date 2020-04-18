@@ -97,7 +97,7 @@ public class GameSessionBean implements GameSessionBeanLocal {
 
     @Override
     public List<Game> retrieveAllGames() {
-        Query query = em.createQuery("SELECT g FROM Game g ORDER BY g.averageRating ASC");
+        Query query = em.createQuery("SELECT g FROM Game g ");
         List<Game> games = query.getResultList();
 
         for (Game game : games) {

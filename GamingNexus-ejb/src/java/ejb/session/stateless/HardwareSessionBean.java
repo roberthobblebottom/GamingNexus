@@ -100,7 +100,7 @@ public class HardwareSessionBean implements HardwareSessionBeanLocal {
     }
 
     public List<Hardware> retrieveAllHardwares() {
-        Query query = em.createQuery("SELECT h FROM Hardware h ORDER BY h.averageRating ASC");
+        Query query = em.createQuery("SELECT h FROM hardware h ORDER BY h.averageRating ASC");
         List<Hardware> hardwares = query.getResultList();
 
         for (Hardware hardware : hardwares) {

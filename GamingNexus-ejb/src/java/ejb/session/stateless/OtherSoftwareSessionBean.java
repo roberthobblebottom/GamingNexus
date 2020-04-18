@@ -101,7 +101,7 @@ public class OtherSoftwareSessionBean implements OtherSoftwareSessionBeanLocal {
 
     @Override
     public List<OtherSoftware> retrieveAllOtherSoftwares() {
-        Query query = em.createQuery("SELECT g FROM Game g ORDER BY g.averageRating ASC");
+        Query query = em.createQuery("SELECT o FROM othersoftware o ORDER BY o.averageRating ASC");
         List<OtherSoftware> otherSoftwares = query.getResultList();
 
         for (OtherSoftware othersoftware : otherSoftwares) {

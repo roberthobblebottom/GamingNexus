@@ -10,9 +10,10 @@ import java.util.List;
 
 /**
  *
- * @author jinycichen
+ * @author chenli
  */
 public class RetrieveAllGamesRsp {
+
     private List<Game> games;
 
     public RetrieveAllGamesRsp() {
@@ -29,6 +30,6 @@ public class RetrieveAllGamesRsp {
     public void setGames(List<Game> games) {
         this.games = games;
     }
-    
-    
+
+
 }
