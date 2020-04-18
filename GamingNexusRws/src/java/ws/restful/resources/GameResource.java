@@ -7,6 +7,7 @@ package ws.restful.resources;
 
 import ejb.session.stateless.GameSessionBeanLocal;
 import entity.Game;
+import entity.Tag;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -33,10 +34,9 @@ import ws.restful.model.RetrieveAllGamesRsp;
 @Path("Game")
 public class GameResource {
 
-    
     @Context
     private UriInfo context;
-    
+
     private GameSessionBeanLocal gameSessionBean = lookupGameSessionBeanLocal();
 
     /**
@@ -46,18 +46,36 @@ public class GameResource {
     }
 
     /**
-     * Retrieves representation of an instance of ws.restful.resources.GameResource
+     * Retrieves representation of an instance of
+     * ws.restful.resources.GameResource
+     *
      * @return an instance of java.lang.String
      */
+    @Path("retrieveAllGames")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response RetrieveAllGames() {
         try {
-        List<Game> games = gameSessionBean.retrieveAllGames();
-        
-        RetrieveAllGamesRsp retrieveAllGamesRsp = new RetrieveAllGamesRsp(games);
-        
-        return Response.status(Status.OK).entity(retrieveAllGamesRsp).build();
+            List<Game> games = gameSessionBean.retrieveAllGames();
+
+            for(Game game: games)
+            {
+                if(game.getCategory().getParentCategory() != null)
+                {
+                    game.getCategory().getParentCategory().getSubCategories().clear();
+                }
+                
+                game.getCategory().getProducts().clear();
+                
+                for(Tag tagEntity: game.getTags())
+                {
+                    tagEntity.getProducts().clear();
+                }
+            }
+            
+            RetrieveAllGamesRsp retrieveAllGamesRsp = new RetrieveAllGamesRsp(games);
+
+            return Response.status(Status.OK).entity(retrieveAllGamesRsp).build();
         } catch (Exception ex) {
             ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());
             return Response.status(Status.INTERNAL_SERVER_ERROR).entity(errorRsp).build();
@@ -66,6 +84,7 @@ public class GameResource {
 
     /**
      * PUT method for updating or creating an instance of GameResource
+     *
      * @param content representation for the resource
      */
     @PUT
