@@ -40,12 +40,14 @@ public abstract class User implements Serializable {
     protected String address;
     @NotNull
     @Size(min = 6, max = 100)
+    @Column(unique = true)
     protected String email;
     @NotNull
     @Size(min = 1, max = 50)
     protected String country;
     @Size(min = 1, max = 100)
     @NotNull
+    @Column(unique = true)
     protected String username;
     @Column(columnDefinition = "CHAR(32) NOT NULL")
     @NotNull

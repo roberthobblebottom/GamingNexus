@@ -18,6 +18,7 @@ import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.Produces;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PUT;
 
@@ -26,9 +27,11 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 import util.exception.InvalidLoginCredentialException;
+import util.exception.UpdateCustomerException;
 import ws.restful.model.CustomerLoginRsp;
 import ws.restful.model.CustomerRegisterReq;
 import ws.restful.model.CustomerRegisterRsp;
+import ws.restful.model.CustomerUpdateReq;
 import ws.restful.model.ErrorRsp;
 import ws.restful.model.RetrieveAllCustomersRsp;
 
@@ -116,6 +119,43 @@ public class CustomerResource {
         }
     }
 
+    @Path("customerUpdate")
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response updateProduct(CustomerUpdateReq updateCustomerReq)
+    {
+        if(updateCustomerReq != null)
+        {
+            try
+            {                
+                Customer customer = customerSessionBean.customerLogin(updateCustomerReq.getUsername(), updateCustomerReq.getPassword());
+                System.out.println("********** CustomerResources.customerUpdate(): Customer " + customer.getUsername() + " login remotely via web service");
+                
+                customerSessionBean.updateCustomer(updateCustomerReq.getCustomer());
+                
+                return Response.status(Response.Status.OK).build();
+            }
+            catch(InvalidLoginCredentialException ex)
+            {
+                ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());
+            
+                return Response.status(Status.UNAUTHORIZED).entity(errorRsp).build();
+            }
+            catch(Exception ex)
+            {
+                ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());
+
+                return Response.status(Status.INTERNAL_SERVER_ERROR).entity(errorRsp).build();
+            }
+        }
+        else
+        {
+            ErrorRsp errorRsp = new ErrorRsp("Invalid update product request");
+            
+            return Response.status(Response.Status.BAD_REQUEST).entity(errorRsp).build();
+        }
+    }
     private CustomerSessionBeanLocal lookupCustomerSessionBeanLocal() {
         try {
             javax.naming.Context c = new InitialContext();

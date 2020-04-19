@@ -20,6 +20,7 @@ import util.exception.CustomerNotFoundException;
 import util.exception.CustomerUsernameExistException;
 import util.exception.InvalidLoginCredentialException;
 import util.exception.UnknownPersistenceException;
+import util.exception.UpdateCustomerException;
 import util.security.CryptographicHelper;
 
 /**
@@ -60,6 +61,7 @@ public class CustomerSessionBean implements CustomerSessionBeanLocal {
         return query.getResultList();
     }
 
+    @Override
     public Customer retrieveCustomerById(Long customerId) throws CustomerNotFoundException {
         Customer customer = em.find(Customer.class, customerId);
 
@@ -70,6 +72,7 @@ public class CustomerSessionBean implements CustomerSessionBeanLocal {
         }
     }
 
+    @Override
     public Customer retrieveCustomerByUsername(String username) throws CustomerNotFoundException {
         Query query = em.createQuery("SELECT c FROM Customer c WHERE c.username = :inUsername");
         query.setParameter("inUsername", username);
@@ -81,6 +84,7 @@ public class CustomerSessionBean implements CustomerSessionBeanLocal {
         }
     }
 
+    @Override
     public Customer customerLogin(String username, String password) throws InvalidLoginCredentialException {
         try {
             Customer customer = retrieveCustomerByUsername(username);
@@ -96,14 +100,19 @@ public class CustomerSessionBean implements CustomerSessionBeanLocal {
         }
     }
 
+    @Override
     public void updateCustomer(Customer customer) throws CustomerNotFoundException {
         if (customer != null && customer.getUserId() != null) {
 
             Customer customerToUpdate = retrieveCustomerById(customer.getUserId());
-
+            
             customerToUpdate.setAddress(customer.getAddress());
             customerToUpdate.setPhoneNumber(customer.getPhoneNumber());
             customerToUpdate.setEmail(customer.getEmail());
+            customerToUpdate.setCountry(customer.getCountry());
+            customerToUpdate.setProfilePictureURL(customer.getProfilePictureURL());
+            customerToUpdate.setPassword(CryptographicHelper.getInstance().byteArrayToHexString(CryptographicHelper.getInstance().doMD5Hashing(customer.getPassword() + customerToUpdate.getSalt())));
+            
         } else {
             throw new CustomerNotFoundException("Customer ID not provided for SystemAdmin to be updated");
         }
