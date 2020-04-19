@@ -6,7 +6,12 @@
 package ws.restful.resources;
 
 import ejb.session.stateless.OtherSoftwareSessionBeanLocal;
+import entity.CartItem;
+import entity.Forum;
 import entity.OtherSoftware;
+import entity.Promotion;
+import entity.Rating;
+import entity.Tag;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -23,7 +28,6 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 import ws.restful.model.ErrorRsp;
-import ws.restful.model.RetrieveAllGamesRsp;
 import ws.restful.model.RetrieveAllSoftwareRsp;
 
 /**
@@ -51,13 +55,36 @@ public class OtherSoftwareResource {
      * Retrieves representation of an instance of ws.restful.resources.OtherSoftwareResource
      * @return an instance of java.lang.String
      */
+    @Path("retrieveAllOtherSoftware")
     @GET
+    @Consumes(MediaType.TEXT_PLAIN)
     @Produces(MediaType.APPLICATION_JSON)
      public Response RetrieveAllOtherSoftware() {
         try {
-        List<OtherSoftware> otherSoftware = otherSoftwareSessionBean.retrieveAllOtherSoftwares();
-        
-        RetrieveAllSoftwareRsp retrieveAllotherSoftwareRsp = new RetrieveAllSoftwareRsp(otherSoftware);
+        List<OtherSoftware> allOtherSoftware = otherSoftwareSessionBean.retrieveAllOtherSoftwares();
+        for (OtherSoftware otehrSoftware : allOtherSoftware) {
+                if (otehrSoftware.getCategory().getParentCategory() != null) {
+                    otehrSoftware.getCategory().getParentCategory().getSubCategories().clear();
+                }
+                otehrSoftware.getCategory().getProducts().clear();
+                for (Tag tagEntity : otehrSoftware.getTags()) {
+                    tagEntity.getProducts().clear();
+                }
+                for (Promotion promotion : otehrSoftware.getPromotions()) {
+                    promotion.getProducts().clear();
+                }
+                otehrSoftware.getCompany().getProducts().clear();
+                for (Rating rating : otehrSoftware.getRatings()) {
+                    rating.setProduct(null);
+                }
+                for (CartItem cartItem : otehrSoftware.getCartItems()) {
+                    cartItem.setProduct(null);
+                }
+                for (Forum forum : otehrSoftware.getForums()) {
+                    forum.setProduct(null);
+                }
+            }
+        RetrieveAllSoftwareRsp retrieveAllotherSoftwareRsp = new RetrieveAllSoftwareRsp(allOtherSoftware);
         
         return Response.status(Status.OK).entity(retrieveAllotherSoftwareRsp).build();
         } catch (Exception ex) {

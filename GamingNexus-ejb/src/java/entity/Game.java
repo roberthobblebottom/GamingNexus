@@ -108,14 +108,14 @@ public class Game extends Product implements Serializable {
      * @return the forums
      */
     public List<Forum> getForums() {
-        return forums;
+        return getForums();
     }
 
     /**
      * @param forums the forums to set
      */
     public void setForums(List<Forum> forums) {
-        this.forums = forums;
+        this.setForums(forums);
     }
 
 }

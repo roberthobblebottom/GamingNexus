@@ -6,7 +6,13 @@
 package ws.restful.resources;
 
 import ejb.session.stateless.HardwareSessionBeanLocal;
+import entity.CartItem;
+import entity.Deliverables;
+import entity.Forum;
 import entity.Hardware;
+import entity.Promotion;
+import entity.Rating;
+import entity.Tag;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -47,13 +53,39 @@ public class HardwareResource {
      * Retrieves representation of an instance of ws.restful.resources.HardwareResource
      * @return an instance of java.lang.String
      */
+    @Path("retrieveAllHardware")
     @GET
+    @Consumes(MediaType.TEXT_PLAIN)
     @Produces(MediaType.APPLICATION_JSON)
      public Response RetrieveAllHardtware() {
         try {
-        List<Hardware> hardware = hardwareSessionBean.retrieveAllHardwares();
-        
-        RetrieveAllHardwareRsp retrieveAllHardwareRsp = new RetrieveAllHardwareRsp(hardware);
+        List<Hardware> allHardware = hardwareSessionBean.retrieveAllHardwares();
+        for (Hardware hardware : allHardware) {
+                if (hardware.getCategory().getParentCategory() != null) {
+                    hardware.getCategory().getParentCategory().getSubCategories().clear();
+                }
+                hardware.getCategory().getProducts().clear();
+                for (Tag tagEntity : hardware.getTags()) {
+                    tagEntity.getProducts().clear();
+                }
+                for (Promotion promotion : hardware.getPromotions()) {
+                    promotion.getProducts().clear();
+                }
+                hardware.getCompany().getProducts().clear();
+                for (Rating rating : hardware.getRatings()) {
+                    rating.setProduct(null);
+                }
+                for (CartItem cartItem : hardware.getCartItems()) {
+                    cartItem.setProduct(null);
+                }
+                for (Forum forum : hardware.getForums()) {
+                    forum.setProduct(null);
+                }
+                for(Deliverables deliverables : hardware.getDeliverables()) {
+                    deliverables.setHardware(null);
+                }
+            }
+        RetrieveAllHardwareRsp retrieveAllHardwareRsp = new RetrieveAllHardwareRsp(allHardware);
         
         return Response.status(Status.OK).entity(retrieveAllHardwareRsp).build();
         } catch (Exception ex) {

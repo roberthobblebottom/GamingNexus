@@ -97,12 +97,11 @@ public class GameSessionBean implements GameSessionBeanLocal {
 
     @Override
     public List<Game> retrieveAllGames() {
-        Query query = em.createQuery("SELECT g FROM Game g ");
+        Query query = em.createQuery("SELECT g FROM Game g ORDER BY g.averageRating ASC");
         List<Game> games = query.getResultList();
 
         for (Game game : games) {
-            game.getCategory();
-            game.getTags().size();
+            lazyLoadGame(game);
         }
 
         return games;
@@ -115,8 +114,7 @@ public class GameSessionBean implements GameSessionBeanLocal {
         List<Game> games = query.getResultList();
 
         for (Game game : games) {
-            game.getCategory();
-            game.getTags().size();
+            lazyLoadGame(game);
         }
 
         return games;
@@ -204,8 +202,7 @@ public class GameSessionBean implements GameSessionBeanLocal {
         Game game = em.find(Game.class, gameId);
 
         if (game != null) {
-            game.getCategory();
-            game.getTags().size();
+            lazyLoadGame(game);
 
             return game;
         } else {
@@ -287,5 +284,14 @@ public class GameSessionBean implements GameSessionBeanLocal {
 
             return productEntities;
         }
+    }
+    
+    private void lazyLoadGame(Game game) {
+        game.getTags().size();
+        game.getCartItems().size();
+        game.getOwnedItems().size();
+        game.getPromotions().size();
+        game.getRatings().size();
+        game.getGameAccounts().size();
     }
 }
