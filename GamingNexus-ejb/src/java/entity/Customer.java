@@ -58,8 +58,8 @@ public class Customer extends User implements Serializable {
         listOfDeliverables = new ArrayList<>();   
     }
 
-    public Customer(String phoneNumber, String address, String email, String country, String username, String password, String profilePictureURL, LocalDateTime lastOnline) {
-        super(phoneNumber, address, email, country, username, password, profilePictureURL, lastOnline);
+    public Customer(String phoneNumber, String address, String email, String country, String username, String password) {
+        super(phoneNumber, address, email, country, username, password);
         ownedItems = new ArrayList<>();
         ratings = new ArrayList<>();
         otherCustomers = new ArrayList<>();
@@ -69,8 +69,8 @@ public class Customer extends User implements Serializable {
     }
 
     
-    public Customer(String currentGamePlaying, Date unbanDate, String securityQuestion, String securityAnswer, String phoneNumber, String address, String email, String country, String username, String password, String profilePictureURL, LocalDateTime lastOnline) {
-        super(phoneNumber, address, email, country, username, password, profilePictureURL, lastOnline);
+    public Customer(String currentGamePlaying, Date unbanDate, String securityQuestion, String securityAnswer, String phoneNumber, String address, String email, String country, String username, String password) {
+        super(phoneNumber, address, email, country, username, password);
         this.currentGamePlaying = currentGamePlaying;
         this.unbanDate = unbanDate;
         this.securityQuestion = securityQuestion;

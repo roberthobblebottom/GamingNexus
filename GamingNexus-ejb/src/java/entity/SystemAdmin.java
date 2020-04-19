@@ -19,8 +19,8 @@ public class SystemAdmin  extends User implements Serializable{
     public SystemAdmin() {
     }
 
-    public SystemAdmin(String phoneNumber, String address, String email, String country, String username, String password,LocalDateTime lastOnline) {
-        super(phoneNumber, address, email, country, username, password, null , lastOnline);
+    public SystemAdmin(String phoneNumber, String address, String email, String country, String username, String password) {
+        super(phoneNumber, address, email, country, username, password);
     }
 
         

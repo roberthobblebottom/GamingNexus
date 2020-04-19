@@ -16,9 +16,7 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.OneToMany;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import util.security.CryptographicHelper;
 import java.util.ArrayList;
@@ -27,7 +25,6 @@ import java.util.ArrayList;
  *
  * @author root
  */
-
 @Entity
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public abstract class User implements Serializable {
@@ -49,7 +46,7 @@ public abstract class User implements Serializable {
     protected String country;
     @Size(min = 1, max = 100)
     @NotNull
-    protected String username;    
+    protected String username;
     @Column(columnDefinition = "CHAR(32) NOT NULL")
     @NotNull
     @Size(min = 6)
@@ -57,25 +54,25 @@ public abstract class User implements Serializable {
     @Column(columnDefinition = "CHAR(32) NOT NULL")
     private String salt;
     protected String profilePictureURL;//https://stackoverflow.com/questions/29208007/what-is-the-data-type-for-images-in-java
-    @NotNull
     protected LocalDateTime lastOnline;
-    
+
     @OneToMany(mappedBy = "user")
     private List<SaleTransaction> saleTransactions;
+
     public User() {
         this.salt = CryptographicHelper.getInstance().generateRandomString(32);
         saleTransactions = new ArrayList<>();
+        this.lastOnline = LocalDateTime.now();
     }
 
-    public User(String phoneNumber, String address, String email, String country, String username, String password, String profilePictureURL, LocalDateTime lastOnline) {
+    public User(String phoneNumber, String address, String email, String country, String username, String password) {
         this();
         this.phoneNumber = phoneNumber;
         this.address = address;
         this.email = email;
         this.country = country;
         this.username = username;
-        this.profilePictureURL = profilePictureURL;
-        this.lastOnline = lastOnline;
+        this.password = password;
         setPassword(password);
     }
 
@@ -179,17 +176,13 @@ public abstract class User implements Serializable {
      * @param password the password to set
      */
     public void setPassword(String password) {
-        if(password != null)
-        {
+        if (password != null) {
             this.password = CryptographicHelper.getInstance().byteArrayToHexString(CryptographicHelper.getInstance().doMD5Hashing(password + this.salt));
-        }
-        else
-        {
+        } else {
             this.password = null;
         }
     }
 
- 
     /**
      * @return the lastOnline
      */

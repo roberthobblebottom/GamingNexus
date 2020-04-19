@@ -16,6 +16,7 @@ import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import util.exception.CompanyNotFoundException;
 
 /**
@@ -49,6 +50,17 @@ public class PromotionSessionBean implements PromotionSessionBeanLocal {
         return retrievedPromotion;
     }
 
+    public List<Promotion> retrieveAllPromotions() {
+        Query query = em.createQuery("SELECT p FROM Promotion p ");
+        List<Promotion> promotions = query.getResultList();
+        
+        for(Promotion p : promotions) {
+            lazyLoadPromotion(p);
+        }
+        
+        return promotions;
+    }
+    
     @Override
     public List<Promotion> retrivePromotionsByCompanyID(long companyID) throws CompanyNotFoundException {
         System.out.println("***********Entered Promotion Session Bean retrieve Promotions By Company ID");
@@ -81,4 +93,7 @@ public class PromotionSessionBean implements PromotionSessionBeanLocal {
         em.flush();
     }
 
+    public void lazyLoadPromotion(Promotion promotion) {
+        promotion.getProducts().size();
+    }
 }

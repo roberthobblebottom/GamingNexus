@@ -27,9 +27,10 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 import util.exception.InvalidLoginCredentialException;
 import ws.restful.model.CustomerLoginRsp;
+import ws.restful.model.CustomerRegisterReq;
+import ws.restful.model.CustomerRegisterRsp;
 import ws.restful.model.ErrorRsp;
 import ws.restful.model.RetrieveAllCustomersRsp;
-import ws.restful.model.RetrieveAllGamesRsp;
 
 /**
  * REST Web Service
@@ -95,9 +96,24 @@ public class CustomerResource {
      *
      * @param content representation for the resource
      */
+    @Path("customerRegister")
     @PUT
-    @Consumes(MediaType.APPLICATION_XML)
-    public void putXml(String content) {
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response customerRegister(CustomerRegisterReq customerRegisterReq) {
+        if (customerRegisterReq != null) {
+            try {
+                Long newCustomerId = customerSessionBean.createCustomer(customerRegisterReq.getNewCustomer()).getUserId();
+                CustomerRegisterRsp customerRegisterRsp = new CustomerRegisterRsp(newCustomerId);
+                return Response.status(Status.OK).entity(customerRegisterRsp).build();
+            } catch (Exception ex) {
+                ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());
+                return Response.status(Status.INTERNAL_SERVER_ERROR).entity(errorRsp).build();
+            }
+        } else {
+            ErrorRsp errorRsp = new ErrorRsp("Invalid request");
+            return Response.status(Status.BAD_REQUEST).entity(errorRsp).build();
+        }
     }
 
     private CustomerSessionBeanLocal lookupCustomerSessionBeanLocal() {

@@ -107,8 +107,7 @@ public class DataInitSessionBean {
         try {
             System.out.println("**************Entered initialize data   ");
 
-            SystemAdmin systemAdmin = new SystemAdmin("123456", "addr 1", "email@hotmail.com",
-                    "Singapore", "admin1", "password", LocalDateTime.now(ZoneId.of("UTC+08:00")));
+            SystemAdmin systemAdmin = new SystemAdmin("123456", "addr 1", "email@hotmail.com","Singapore", "admin1", "password");
             systemAdminSessionBeanLocal.createNewSystemAdmin(systemAdmin);
 //            systemAdminSessionBeanLocal.createNewSystemAdmin(new SystemAdmin("Default", "System Admin2", "admin2", "password"));
 
@@ -144,17 +143,17 @@ public class DataInitSessionBean {
             List<Long> tagIdsEmpty = new ArrayList<>();
 
             Company company1 = companySessionBeanLocal.createNewCompany(new Company("123123", "Singapore", "company1@gmail.com",
-                    "Singapore", "company1", "password", "picture", LocalDateTime.now()));
-            Company company2 = companySessionBeanLocal.createNewCompany(new Company("1231234", "Singapore", "company2@gmail.com", "Singapore", "company2", "password", "picture", LocalDateTime.now()));
-            Company company3 = companySessionBeanLocal.createNewCompany(new Company("123223", "Singapore", "company3@gmail.com", "Singapore", "company3", "password", "picture", LocalDateTime.now()));
-            Company company4 = companySessionBeanLocal.createNewCompany(new Company("1232234", "Singapore", "company4@gmail.com", "Singapore", "company4", "password", "picture", LocalDateTime.now()));
-            Company company5 = companySessionBeanLocal.createNewCompany(new Company("123323", "Singapore", "company5@gmail.com", "Singapore", "company5", "password", "picture", LocalDateTime.now()));
+                    "Singapore", "company1", "password"));
+            Company company2 = companySessionBeanLocal.createNewCompany(new Company("1231234", "Singapore", "company2@gmail.com", "Singapore", "company2", "password"));
+            Company company3 = companySessionBeanLocal.createNewCompany(new Company("123223", "Singapore", "company3@gmail.com", "Singapore", "company3", "password"));
+            Company company4 = companySessionBeanLocal.createNewCompany(new Company("1232234", "Singapore", "company4@gmail.com", "Singapore", "company4", "password"));
+            Company company5 = companySessionBeanLocal.createNewCompany(new Company("123323", "Singapore", "company5@gmail.com", "Singapore", "company5", "password"));
 
-            Customer customer1 = customerSessionBeanlocal.createCustomer(new Customer("7654321", "Singapore", "customer1@gmail.com", "Singapore", "customer1", "password", "portfolio", LocalDateTime.now()));
-            Customer customer2 = customerSessionBeanlocal.createCustomer(new Customer("76543210", "Singapore", "customer2@gmail.com", "Singapore", "customer2", "password", "portfolio", LocalDateTime.now()));
-            Customer customer3 = customerSessionBeanlocal.createCustomer(new Customer("765432101", "Singapore", "customer3@gmail.com", "Singapore", "customer3", "password", "portfolio", LocalDateTime.now()));
-            Customer customer4 = customerSessionBeanlocal.createCustomer(new Customer("765432102", "Singapore", "customer4@gmail.com", "Singapore", "customer4", "password", "portfolio", LocalDateTime.now()));
-            Customer customer5 = customerSessionBeanlocal.createCustomer(new Customer("765432103", "Singapore", "customer5@gmail.com", "Singapore", "customer5", "password", "portfolio", LocalDateTime.now()));
+            Customer customer1 = customerSessionBeanlocal.createCustomer(new Customer("7654321", "Singapore", "customer1@gmail.com", "Singapore", "customer1", "password"));
+            Customer customer2 = customerSessionBeanlocal.createCustomer(new Customer("76543210", "Singapore", "customer2@gmail.com", "Singapore", "customer2", "password"));
+            Customer customer3 = customerSessionBeanlocal.createCustomer(new Customer("765432101", "Singapore", "customer3@gmail.com", "Singapore", "customer3", "password"));
+            Customer customer4 = customerSessionBeanlocal.createCustomer(new Customer("765432102", "Singapore", "customer4@gmail.com", "Singapore", "customer4", "password"));
+            Customer customer5 = customerSessionBeanlocal.createCustomer(new Customer("765432103", "Singapore", "customer5@gmail.com", "Singapore", "customer5", "password"));
 
             Game csgo = gameSessionBeanLocal.createNewGame(new Game("CSGO", "World famous first person shooter.",
                     "Windows 7 4 gigs of ram and 500MB of free space", 10, 5),
