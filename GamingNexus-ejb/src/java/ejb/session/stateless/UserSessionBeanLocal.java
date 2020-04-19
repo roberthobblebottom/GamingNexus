@@ -8,6 +8,8 @@ package ejb.session.stateless;
 import entity.User;
 import javax.ejb.Local;
 import javax.persistence.NoResultException;
+import util.exception.InvalidLoginCredentialException;
+import util.exception.UserNotFoundException;
 
 /**
  *
@@ -16,6 +18,7 @@ import javax.persistence.NoResultException;
 @Local
 public interface UserSessionBeanLocal {
 
-    User retrieveUserByUsernameAndPassword(String username, String password) throws NoResultException;
+     public User retrieveUserByUsername(String username) throws UserNotFoundException;
+     public User userLogin(String username, String password) throws InvalidLoginCredentialException;
     
 }

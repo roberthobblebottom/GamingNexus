@@ -24,6 +24,7 @@ public class ApplicationConfig extends Application {
      * out calling this method in getClasses().
      */
     private void addRestResourceClasses(Set<Class<?>> resources) {
+        resources.add(ws.restful.resources.CorsFilter.class);
         resources.add(ws.restful.resources.CustomerResource.class);
         resources.add(ws.restful.resources.GameResource.class);
         resources.add(ws.restful.resources.HardwareResource.class);

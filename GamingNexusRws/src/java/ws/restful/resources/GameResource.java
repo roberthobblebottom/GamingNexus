@@ -51,7 +51,6 @@ public class GameResource {
      *
      * @return an instance of java.lang.String
      */
-    @Path("retrieveAllGames")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response RetrieveAllGames() {
@@ -60,7 +59,7 @@ public class GameResource {
 
             for(Game game: games)
             {
-                if(game.getCategory().getParentCategory() != null)
+                if(game.getCategory() == null)
                 {
                     game.getCategory().getParentCategory().getSubCategories().clear();
                 }
@@ -72,10 +71,8 @@ public class GameResource {
                     tagEntity.getProducts().clear();
                 }
             }
-            
-            RetrieveAllGamesRsp retrieveAllGamesRsp = new RetrieveAllGamesRsp(games);
 
-            return Response.status(Status.OK).entity(retrieveAllGamesRsp).build();
+            return Response.status(Status.OK).entity(new RetrieveAllGamesRsp(games)).build();
         } catch (Exception ex) {
             ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());
             return Response.status(Status.INTERNAL_SERVER_ERROR).entity(errorRsp).build();
