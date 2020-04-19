@@ -56,7 +56,6 @@ public class GameResource {
      *
      * @return an instance of java.lang.String
      */
-    @Path("retrieveAllGames")
     @GET
     @Consumes(MediaType.TEXT_PLAIN)
     @Produces(MediaType.APPLICATION_JSON)
@@ -90,9 +89,8 @@ public class GameResource {
                     gameAccount.setGame(null);
                 }
             }
-            
-            return Response.status(Status.OK).entity(new RetrieveAllGamesRsp(games)).build();
 
+            return Response.status(Status.OK).entity(new RetrieveAllGamesRsp(games)).build();
         } catch (Exception ex) {
             ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());
 

@@ -15,6 +15,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.persistence.NoResultException;
 import javax.servlet.http.HttpSession;
+import util.exception.InvalidLoginCredentialException;
 
 @Named(value = "loginManagedBean")
 @RequestScoped
@@ -39,13 +40,14 @@ public class LoginManagedBean {
         SystemAdmin currentSystemAdmin = null;
         Company currentCompany = null;
         User user;
-        user = userSessionBean.retrieveUserByUsernameAndPassword(username, password);
+        
+        try{
+        user = userSessionBean.userLogin(username, password);
         if (user == null) {
             System.out.println("**********************************did you catch error???");
             FacesContext.getCurrentInstance().addMessage(null,
                     new FacesMessage(FacesMessage.SEVERITY_ERROR,
-                            "Sorry you have entered the wrong username or password", null));
-            
+                            "Sorry you have entered the wrong username or password", null));      
             return;
         }
     
@@ -63,6 +65,12 @@ public class LoginManagedBean {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("successfully logged in as company: " + user.getUsername()));
             FacesContext.getCurrentInstance().getExternalContext().redirect(FacesContext.getCurrentInstance().getExternalContext().getRequestContextPath() + "/index.xhtml");
         }
+       }catch(InvalidLoginCredentialException ex)
+        {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Invalid login credential: " + ex.getMessage(), null));
+        }
+        
+       
 
     }
 
