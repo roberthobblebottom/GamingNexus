@@ -36,41 +36,41 @@ public abstract class Product implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    protected Long productId;
+    private Long productId;
     @NotNull
     @Size(min = 1, max = 100)
-    protected String name;
+    private String name;
     @NotNull
     @Size(min = 0, max = 5000)
-    protected String description;
+    private String description;
     //@NotNull
     @Size(min = 0, max = 5000)
-    protected String computerRequirements;
+    private String computerRequirements;
     @NotNull
     @Digits(integer = 1000000000, fraction = 2)
-    protected double price;
+    private double price;
     @Digits(integer = 1, fraction = 2)
     @Min(0)
     @Max(5)
     @NotNull
-    protected double averageRating;
+    private double averageRating;
 
     @ManyToOne(optional = false)
-    protected Company company;
+    private Company company;
     @ManyToOne(optional = false)
-    protected Category category;
+    private Category category;
     @ManyToMany(mappedBy = "products")
-    protected List<Tag> tags;   
+    private List<Tag> tags;   
     @ManyToMany(mappedBy = "products")
-    protected List<Promotion> promotions;
+    private List<Promotion> promotions;
     @OneToMany(mappedBy = "product")
-    protected List<Rating> ratings;
+    private List<Rating> ratings;
     @OneToMany(mappedBy = "product")
     private List<CartItem> cartItems;
     @OneToMany(mappedBy = "product")
-    protected List<OwnedItem> ownedItems;
+    private List<OwnedItem> ownedItems;
     @OneToMany(mappedBy = "product")
-    protected List<Forum> forums;
+    private List<Forum> forums;
 
     public Product() {
         tags = new ArrayList<>();
@@ -324,6 +324,14 @@ public abstract class Product implements Serializable {
 
     public void setCartItems(List<CartItem> cartItems) {
         this.cartItems = cartItems;
+    }
+
+    public List<Forum> getForums() {
+        return forums;
+    }
+
+    public void setForums(List<Forum> forums) {
+        this.forums = forums;
     }
 
 

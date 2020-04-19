@@ -100,12 +100,11 @@ public class HardwareSessionBean implements HardwareSessionBeanLocal {
     }
 
     public List<Hardware> retrieveAllHardwares() {
-        Query query = em.createQuery("SELECT h FROM Hardware h ORDER BY h.averageRating ASC");
+        Query query = em.createQuery("SELECT h FROM hardware h ORDER BY h.averageRating ASC");
         List<Hardware> hardwares = query.getResultList();
 
         for (Hardware hardware : hardwares) {
-            hardware.getCategory();
-            hardware.getTags().size();
+            lazyLoadHardware(hardware);
         }
 
         return hardwares;
@@ -117,8 +116,7 @@ public class HardwareSessionBean implements HardwareSessionBeanLocal {
         List<Hardware> hardwares = query.getResultList();
 
         for (Hardware hardware : hardwares) {
-            hardware.getCategory();
-            hardware.getTags().size();
+            lazyLoadHardware(hardware);
         }
 
         return hardwares;
@@ -285,5 +283,14 @@ public class HardwareSessionBean implements HardwareSessionBeanLocal {
 
             return productEntities;
         }
+    }
+    
+    private void lazyLoadHardware(Hardware hardware) {
+        hardware.getTags().size();
+        hardware.getCartItems().size();
+        hardware.getOwnedItems().size();
+        hardware.getPromotions().size();
+        hardware.getRatings().size();
+        hardware.getDeliverables().size();
     }
 }

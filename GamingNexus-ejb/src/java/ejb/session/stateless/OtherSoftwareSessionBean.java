@@ -101,12 +101,11 @@ public class OtherSoftwareSessionBean implements OtherSoftwareSessionBeanLocal {
 
     @Override
     public List<OtherSoftware> retrieveAllOtherSoftwares() {
-        Query query = em.createQuery("SELECT g FROM Game g ORDER BY g.averageRating ASC");
+        Query query = em.createQuery("SELECT o FROM othersoftware o ORDER BY o.averageRating ASC");
         List<OtherSoftware> otherSoftwares = query.getResultList();
 
         for (OtherSoftware othersoftware : otherSoftwares) {
-            othersoftware.getCategory();
-            othersoftware.getTags().size();
+            lazyLoadOtherSoftware(othersoftware);
         }
 
         return otherSoftwares;
@@ -119,8 +118,7 @@ public class OtherSoftwareSessionBean implements OtherSoftwareSessionBeanLocal {
         List<OtherSoftware> otherSoftwares = query.getResultList();
 
         for (OtherSoftware otherSoftware : otherSoftwares) {
-            otherSoftware.getCategory();
-            otherSoftware.getTags().size();
+            lazyLoadOtherSoftware(otherSoftware);
         }
 
         return otherSoftwares;
@@ -282,5 +280,13 @@ public class OtherSoftwareSessionBean implements OtherSoftwareSessionBeanLocal {
 
             return productEntities;
         }
+    }
+    
+    private void lazyLoadOtherSoftware(OtherSoftware otherSoftware) {
+        otherSoftware.getTags().size();
+        otherSoftware.getCartItems().size();
+        otherSoftware.getOwnedItems().size();
+        otherSoftware.getPromotions().size();
+        otherSoftware.getRatings().size();
     }
 }

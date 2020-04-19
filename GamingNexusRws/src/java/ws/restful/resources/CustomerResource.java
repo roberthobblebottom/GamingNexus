@@ -7,6 +7,7 @@ package ws.restful.resources;
 
 import ejb.session.stateless.CustomerSessionBeanLocal;
 import entity.Customer;
+import java.util.List;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -27,6 +28,8 @@ import javax.ws.rs.core.Response.Status;
 import util.exception.InvalidLoginCredentialException;
 import ws.restful.model.CustomerLoginRsp;
 import ws.restful.model.ErrorRsp;
+import ws.restful.model.RetrieveAllCustomersRsp;
+import ws.restful.model.RetrieveAllGamesRsp;
 
 /**
  * REST Web Service
@@ -66,6 +69,23 @@ public class CustomerResource {
         } catch (Exception ex) {
             ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());
 
+            return Response.status(Status.INTERNAL_SERVER_ERROR).entity(errorRsp).build();
+        }
+    }
+
+    @Path("retrieveAllCustomers")
+    @GET
+    @Consumes(MediaType.TEXT_PLAIN)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response RetrieveAllCustomers() {
+        try {
+            List<Customer> customers = customerSessionBean.retrieveAllCustomers();
+
+            RetrieveAllCustomersRsp retrieveAllCustomersRsp = new RetrieveAllCustomersRsp(customers);
+
+            return Response.status(Status.OK).entity(retrieveAllCustomersRsp).build();
+        } catch (Exception ex) {
+            ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());
             return Response.status(Status.INTERNAL_SERVER_ERROR).entity(errorRsp).build();
         }
     }

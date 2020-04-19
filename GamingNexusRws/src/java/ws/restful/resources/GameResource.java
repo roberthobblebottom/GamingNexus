@@ -6,7 +6,12 @@
 package ws.restful.resources;
 
 import ejb.session.stateless.GameSessionBeanLocal;
+import entity.CartItem;
+import entity.Forum;
 import entity.Game;
+import entity.GameAccount;
+import entity.Promotion;
+import entity.Rating;
 import entity.Tag;
 import java.util.List;
 import java.util.logging.Level;
@@ -52,29 +57,43 @@ public class GameResource {
      * @return an instance of java.lang.String
      */
     @GET
+    @Consumes(MediaType.TEXT_PLAIN)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response RetrieveAllGames() {
+    public Response retrieveAllGames() {
         try {
+
             List<Game> games = gameSessionBean.retrieveAllGames();
 
-            for(Game game: games)
-            {
-                if(game.getCategory() == null)
-                {
+            for (Game game : games) {
+                if (game.getCategory().getParentCategory() != null) {
                     game.getCategory().getParentCategory().getSubCategories().clear();
                 }
-                
                 game.getCategory().getProducts().clear();
-                
-                for(Tag tagEntity: game.getTags())
-                {
+                for (Tag tagEntity : game.getTags()) {
                     tagEntity.getProducts().clear();
+                }
+                for (Promotion promotion : game.getPromotions()) {
+                    promotion.getProducts().clear();
+                }
+                game.getCompany().getProducts().clear();
+                for (Rating rating : game.getRatings()) {
+                    rating.setProduct(null);
+                }
+                for (CartItem cartItem : game.getCartItems()) {
+                    cartItem.setProduct(null);
+                }
+                for (Forum forum : game.getForums()) {
+                    forum.setProduct(null);
+                }
+                for (GameAccount gameAccount : game.getGameAccounts()) {
+                    gameAccount.setGame(null);
                 }
             }
 
             return Response.status(Status.OK).entity(new RetrieveAllGamesRsp(games)).build();
         } catch (Exception ex) {
             ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());
+
             return Response.status(Status.INTERNAL_SERVER_ERROR).entity(errorRsp).build();
         }
     }
@@ -86,7 +105,8 @@ public class GameResource {
      */
     @PUT
     @Consumes(MediaType.APPLICATION_XML)
-    public void putXml(String content) {
+    public void putXml(String content
+    ) {
     }
 
     private GameSessionBeanLocal lookupGameSessionBeanLocal() {
