@@ -32,8 +32,7 @@ public class Forum implements Serializable {
     @NotNull
     @Size(min = 1, max = 50)
     private String forumName;
-    
-    
+
     @ManyToOne
     private Product product;
     @OneToOne
@@ -49,9 +48,6 @@ public class Forum implements Serializable {
         this();
         this.forumName = forumName;
     }
-
-    
-
 
     public Long getForumId() {
         return forumId;
@@ -99,7 +95,6 @@ public class Forum implements Serializable {
     public void setForumName(String forumName) {
         this.forumName = forumName;
     }
-
 
     /**
      * @return the forum

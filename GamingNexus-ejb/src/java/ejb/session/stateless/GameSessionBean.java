@@ -226,7 +226,7 @@ public class GameSessionBean implements GameSessionBeanLocal {
                 gameToBeUpdated.setCategory(categoryEntityToUpdate);
             }
             if (tagIds != null && !tagIds.isEmpty()) {
-                                System.out.println("GameSessionBean: Entered tag update block");
+                System.out.println("GameSessionBean: Entered tag update block");
 
                 for (Tag tagEntity : gameToBeUpdated.getTags()) {
                     tagEntity.getProducts().remove(gameToBeUpdated);
@@ -285,13 +285,16 @@ public class GameSessionBean implements GameSessionBeanLocal {
             return productEntities;
         }
     }
-    
-    private void lazyLoadGame(Game game) {
+
+    public void lazyLoadGame(Game game) {
+        game.getCompany();
+        game.getCategory();
         game.getTags().size();
-        game.getCartItems().size();
-        game.getOwnedItems().size();
         game.getPromotions().size();
         game.getRatings().size();
+        game.getCartItems().size();
+        game.getOwnedItems().size();
+        game.getForums().size();
         game.getGameAccounts().size();
     }
 }
