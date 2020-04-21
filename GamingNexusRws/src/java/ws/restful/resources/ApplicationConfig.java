@@ -26,6 +26,7 @@ public class ApplicationConfig extends Application {
     private void addRestResourceClasses(Set<Class<?>> resources) {
         resources.add(ws.restful.resources.CosFilter.class);
         resources.add(ws.restful.resources.CustomerResource.class);
+        resources.add(ws.restful.resources.ProductResource.class);
 
     }
 
