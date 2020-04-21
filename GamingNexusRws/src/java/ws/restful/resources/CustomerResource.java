@@ -128,7 +128,9 @@ public class CustomerResource {
         if(updateCustomerReq != null)
         {
             try
-            {                
+            {   
+                System.out.println("********** updateCustomerReq: " + updateCustomerReq.getUsername());
+                        
                 Customer customer = customerSessionBean.customerLogin(updateCustomerReq.getUsername(), updateCustomerReq.getPassword());
                 System.out.println("********** CustomerResources.customerUpdate(): Customer " + customer.getUsername() + " login remotely via web service");
                 

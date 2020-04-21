@@ -114,7 +114,7 @@ public class CustomerSessionBean implements CustomerSessionBeanLocal {
             customerToUpdate.setPassword(CryptographicHelper.getInstance().byteArrayToHexString(CryptographicHelper.getInstance().doMD5Hashing(customer.getPassword() + customerToUpdate.getSalt())));
             
         } else {
-            throw new CustomerNotFoundException("Customer ID not provided for SystemAdmin to be updated");
+            throw new CustomerNotFoundException("Customer Not Found");
         }
     }
 
