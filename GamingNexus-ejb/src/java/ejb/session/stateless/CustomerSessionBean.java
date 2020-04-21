@@ -105,7 +105,7 @@ public class CustomerSessionBean implements CustomerSessionBeanLocal {
             customerToUpdate.setPhoneNumber(customer.getPhoneNumber());
             customerToUpdate.setEmail(customer.getEmail());
         } else {
-            throw new CustomerNotFoundException("Customer ID not provided for SystemAdmin to be updated");
+            throw new CustomerNotFoundException("Customer Not Found");
         }
     }
 

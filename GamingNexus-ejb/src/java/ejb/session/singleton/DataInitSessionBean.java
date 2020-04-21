@@ -83,17 +83,20 @@ public class DataInitSessionBean {
 
     @PostConstruct
     public void postConstruct() {
+        if (em.find(Game.class, 1l) == null) {      
+            try {
+           
+           initializeData();
+           systemAdminSessionBeanLocal.retrieveSystemAdminByUsername("manager");        
+       } catch (SystemAdminNotFoundException ex) {
+           initializeData();
+           System.out.print("dataInit");
+       }
+       System.out.println("**************Entered Post construct");
 
-        initializeData();
-//        try {
-//            
-//            initializeData();
-//            systemAdminSessionBeanLocal.retrieveSystemAdminByUsername("manager");
-//            
-//        } catch (SystemAdminNotFoundException ex) {
-//            initializeData();
-//            System.out.print("dataInit");
-//        }
+    }
+       
+        
     }
 
     private void initializeData() {

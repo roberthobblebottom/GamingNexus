@@ -85,6 +85,45 @@ public class CustomerResource {
     public void putXml(String content) {
     }
 
+    @Path("customerUpdate")
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response updateProduct(CustomerUpdateReq updateCustomerReq)
+    {
+        if(updateCustomerReq != null)
+        {
+            try
+            {   
+                System.out.println("********** updateCustomerReq: " + updateCustomerReq.getUsername());
+                        
+                Customer customer = customerSessionBean.customerLogin(updateCustomerReq.getUsername(), updateCustomerReq.getPassword());
+                System.out.println("********** CustomerResources.customerUpdate(): Customer " + customer.getUsername() + " login remotely via web service");
+                
+                customerSessionBean.updateCustomer(updateCustomerReq.getCustomer());
+                
+                return Response.status(Response.Status.OK).build();
+            }
+            catch(InvalidLoginCredentialException ex)
+            {
+                ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());
+            
+                return Response.status(Status.UNAUTHORIZED).entity(errorRsp).build();
+            }
+            catch(Exception ex)
+            {
+                ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());
+
+                return Response.status(Status.INTERNAL_SERVER_ERROR).entity(errorRsp).build();
+            }
+        }
+        else
+        {
+            ErrorRsp errorRsp = new ErrorRsp("Invalid update product request");
+            
+            return Response.status(Response.Status.BAD_REQUEST).entity(errorRsp).build();
+        }
+    }
     private CustomerSessionBeanLocal lookupCustomerSessionBeanLocal() {
         try {
             javax.naming.Context c = new InitialContext();
