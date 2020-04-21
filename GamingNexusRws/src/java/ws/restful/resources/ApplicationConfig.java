@@ -27,6 +27,12 @@ public class ApplicationConfig extends Application {
         resources.add(ws.restful.resources.CosFilter.class);
         resources.add(ws.restful.resources.CustomerResource.class);
         resources.add(ws.restful.resources.ProductResource.class);
+        resources.add(ws.restful.resources.CategoryResource.class);
+        resources.add(ws.restful.resources.GameResource.class);
+        resources.add(ws.restful.resources.HardwareResource.class);
+        resources.add(ws.restful.resources.OtherSoftwareResource.class);
+        resources.add(ws.restful.resources.PromotionResource.class);
+        resources.add(ws.restful.resources.TagResource.class);
 
     }
 

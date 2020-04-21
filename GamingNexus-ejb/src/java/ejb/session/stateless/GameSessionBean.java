@@ -3,6 +3,7 @@ package ejb.session.stateless;
 import entity.Category;
 import entity.Company;
 import entity.Game;
+import entity.Game;
 import entity.Product;
 import entity.Tag;
 import java.util.ArrayList;
@@ -166,80 +167,54 @@ public class GameSessionBean implements GameSessionBeanLocal {
         return games;
     }
     
+   
     @Override
-    public List<Product> filterProductsByCategory(Long categoryId) throws CategoryNotFoundException {
-        List<Product> productEntities = new ArrayList<>();
-        Category categoryEntity = categorySessionBeanLocal.retrieveCategoryByCategoryId(categoryId);
-        
-        if (categoryEntity.getSubCategories().isEmpty()) {
-            productEntities = categoryEntity.getProducts();
-        } else {
-            for (Category subCategoryEntity : categoryEntity.getSubCategories()) {
-                productEntities.addAll(addSubCategoryProducts(subCategoryEntity));
-            }
-        }
-        
-        for (Product productEntity : productEntities) {
-            productEntity.getCategory();
-            productEntity.getTags().size();
-        }
-        
-        Collections.sort(productEntities, new Comparator<Product>() {
-            public int compare(Product pe1, Product pe2) {
-                return pe1.getProductId().compareTo(pe2.getProductId());
-            }
-        });
-        
-        return productEntities;
-    }
-    
-    public List<Product> filterProductsByTags(List<Long> tagIds, String condition) {
-        List<Product> productEntities = new ArrayList<>();
+    public List<Game> filterGamesByTags(List<Long> tagIds, String condition) {
+        List<Game> games = new ArrayList<>();
         
         if (tagIds == null || tagIds.isEmpty() || (!condition.equals("AND") && !condition.equals("OR"))) {
-            return productEntities;
+            return games;
         } else {
             if (condition.equals("OR")) {
-                Query query = em.createQuery("SELECT DISTINCT pe FROM Product pe, IN (pe.tags) te WHERE te.tagID IN :inTagIDs ORDER BY pe.productID ASC");
+                Query query = em.createQuery("SELECT DISTINCT ge FROM Game ge, IN (ge.tags) te WHERE te.tagID IN :inTagIDs ORDER BY ge.productId");
                 query.setParameter("inTagIDs", tagIds);
-                productEntities = query.getResultList();
+                games = query.getResultList();
             } else // AND
             {
-                String selectClause = "SELECT pe FROM ProductEntity pe";
+                String selectClause = "SELECT ge FROM Game ge";
                 String whereClause = "";
                 Boolean firstTag = true;
                 Integer tagCount = 1;
                 
                 for (Long tagId : tagIds) {
-                    selectClause += ", IN (pe.tagEntities) te" + tagCount;
+                    selectClause += ", IN (ge.tags) te" + tagCount;
                     
                     if (firstTag) {
                         whereClause = "WHERE te1.tagId = " + tagId;
                         firstTag = false;
                     } else {
                         whereClause += " AND te" + tagCount + ".tagId = " + tagId;
-                    }
-                    
+                    }                
                     tagCount++;
                 }
                 
-                String jpql = selectClause + " " + whereClause + " ORDER BY pe.skuCode ASC";
+                String jpql = selectClause + " " + whereClause + " ORDER BY ge.productId";
                 Query query = em.createQuery(jpql);
-                productEntities = query.getResultList();
+                games = query.getResultList();
             }
             
-            for (Product productEntity : productEntities) {
-                productEntity.getCategory();
-                productEntity.getTags().size();
+            for (Game game : games) {
+                game.getCategory();
+                game.getTags().size();
             }
             
-            Collections.sort(productEntities, new Comparator<Product>() {
-                public int compare(Product pe1, Product pe2) {
-                    return pe1.getProductId().compareTo(pe2.getProductId());
+            Collections.sort(games, new Comparator<Game>() {
+                public int compare(Game ge1, Game ge2) {
+                    return ge1.getProductId().compareTo(ge2.getProductId());
                 }
             });
             
-            return productEntities;
+            return games;
         }
     }
     
@@ -252,7 +227,7 @@ public class GameSessionBean implements GameSessionBeanLocal {
             
             return game;
         } else {
-            throw new ProductNotFoundException("Product ID " + game + " does not exist!");
+            throw new ProductNotFoundException("Game ID " + game + " does not exist!");
         }
     }
     
@@ -301,7 +276,7 @@ public class GameSessionBean implements GameSessionBeanLocal {
             // gameToBeUpdated.setTags(game.getTags());
 
         } else {
-            throw new ProductNotFoundException("Product ID not provided for product to be updated");
+            throw new ProductNotFoundException("Game ID not provided for product to be updated");
         }
     }
 
@@ -314,23 +289,11 @@ public class GameSessionBean implements GameSessionBeanLocal {
         if (saleTransactionLineItemEntities.isEmpty()) {
             entityManager.remove(productEntityToRemove);
         } else {
-            throw new DeleteProductException("Product ID " + productId + " is associated with existing sale transaction line item(s) and cannot be deleted!");
+            throw new DeleteProductException("Game ID " + productId + " is associated with existing sale transaction line item(s) and cannot be deleted!");
         }
     }
      */
-    private List<Product> addSubCategoryProducts(Category categoryEntity) {
-        List<Product> productEntities = new ArrayList<>();
-        
-        if (categoryEntity.getSubCategories().isEmpty()) {
-            return categoryEntity.getProducts();
-        } else {
-            for (Category subCategoryEntity : categoryEntity.getSubCategories()) {
-                productEntities.addAll(addSubCategoryProducts(subCategoryEntity));
-            }
-            
-            return productEntities;
-        }
-    }
+   
     
     public void lazyLoadGame(Game game) {
         game.getCompany();
@@ -343,4 +306,6 @@ public class GameSessionBean implements GameSessionBeanLocal {
         game.getForums().size();
         game.getGameAccounts().size();
     }
+
+   
 }
