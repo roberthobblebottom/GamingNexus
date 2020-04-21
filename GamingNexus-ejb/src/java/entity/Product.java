@@ -6,19 +6,21 @@
 package entity;
 
 import java.io.Serializable;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
-import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
@@ -41,19 +43,27 @@ public abstract class Product implements Serializable {
     @Size(min = 1, max = 100)
     private String name;
     @NotNull
-    @Size(min = 0, max = 5000)
+    //@Size(min = 0, max = 5000)
+    @Lob
+    @Column
     private String description;
     //@NotNull
-    @Size(min = 0, max = 5000)
+    //@Size(min = 0, max = 5000)
+    @Lob
+    @Column
     private String computerRequirements;
     @NotNull
-    @Digits(integer = 1000000000, fraction = 2)
+    //@Digits(integer = 1000000000, fraction = 2)
     private double price;
-    @Digits(integer = 1, fraction = 2)
-    @Min(0)
-    @Max(5)
+    //@Digits(integer = 1, fraction = 2)
+    //@Min(0)
+    //@Max(100)
     @NotNull
     private double averageRating;
+    
+    private LocalDate releaseDate;
+    
+    private double sales;
 
     @ManyToOne(optional = false)
     private Company company;
@@ -88,6 +98,19 @@ public abstract class Product implements Serializable {
         this.price = price;
         this.averageRating = averageRating;
     }
+
+    public Product(String name, String description, String computerRequirements, double price, double averageRating, LocalDate releaseDate, double sales) {
+        this();
+        this.name = name;
+        this.description = description;
+        this.computerRequirements = computerRequirements;
+        this.price = price;
+        this.averageRating = averageRating;
+        this.releaseDate = releaseDate;
+        this.sales = sales;
+    }
+    
+    
 
     public void addTag(Tag tagEntity) {
         if (tagEntity != null) {
@@ -332,6 +355,36 @@ public abstract class Product implements Serializable {
 
     public void setForums(List<Forum> forums) {
         this.forums = forums;
+    }
+
+
+
+    /**
+     * @return the sales
+     */
+    public double getSales() {
+        return sales;
+    }
+
+    /**
+     * @param sales the sales to set
+     */
+    public void setSales(double sales) {
+        this.sales = sales;
+    }
+
+    /**
+     * @return the releaseDate
+     */
+    public LocalDate getReleaseDate() {
+        return releaseDate;
+    }
+
+    /**
+     * @param releaseDate the releaseDate to set
+     */
+    public void setReleaseDate(LocalDate releaseDate) {
+        this.releaseDate = releaseDate;
     }
 
 

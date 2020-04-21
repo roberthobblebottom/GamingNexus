@@ -6,13 +6,11 @@
 package entity;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 /**
  *
@@ -22,10 +20,10 @@ import javax.validation.constraints.Size;
 public class Game extends Product implements Serializable {
 
     
-    @Size(min = 1, max = 5)
-    private String parentAdvisory;
+    private Boolean parentAdvisory;
     private List<String> gamePicturesURLs;
     private List<String> gameTrailersURLS;
+    private String headerImage;
 
 
     @OneToMany(mappedBy = "game")
@@ -36,31 +34,12 @@ public class Game extends Product implements Serializable {
         gameAccounts = new ArrayList<>();
     }
 
-    public Game(String name, String description, String computerRequirements, double price, double averageRating) {
-        super(name, description, computerRequirements, price, averageRating);
-        gameAccounts = new ArrayList<>();
-    }
-
-    public Game(String parentAdvisory, List<String> gamePicturesURLs, List<String> gameTrailersURLS, String name, String description, String computerRequirements, double price, double averageRating) {
-        super(name, description, computerRequirements, price, averageRating);
+    public Game(Boolean parentAdvisory, String headerImage, String name, String description, String computerRequirements, double price, double averageRating, LocalDate releaseDate, double sales) {
+        super(name, description, computerRequirements, price, averageRating, releaseDate, sales);
         this.parentAdvisory = parentAdvisory;
-        this.gamePicturesURLs = gamePicturesURLs;
-        this.gameTrailersURLS = gameTrailersURLS;
+        this.headerImage = headerImage;
     }
 
-    /**
-     * @return the parentAdvisory
-     */
-    public String getParentAdvisory() {
-        return parentAdvisory;
-    }
-
-    /**
-     * @param parentAdvisory the parentAdvisory to set
-     */
-    public void setParentAdvisory(String parentAdvisory) {
-        this.parentAdvisory = parentAdvisory;
-    }
 
     /**
      * @return the gamePicturesURLs
@@ -102,6 +81,34 @@ public class Game extends Product implements Serializable {
      */
     public void setGameAccounts(List<GameAccount> gameAccounts) {
         this.gameAccounts = gameAccounts;
+    }
+
+    /**
+     * @return the headerImage
+     */
+    public String getHeaderImage() {
+        return headerImage;
+    }
+
+    /**
+     * @param headerImage the headerImage to set
+     */
+    public void setHeaderImage(String headerImage) {
+        this.headerImage = headerImage;
+    }
+
+    /**
+     * @return the parentAdvisory
+     */
+    public Boolean getParentAdvisory() {
+        return parentAdvisory;
+    }
+
+    /**
+     * @param parentAdvisory the parentAdvisory to set
+     */
+    public void setParentAdvisory(Boolean parentAdvisory) {
+        this.parentAdvisory = parentAdvisory;
     }
 
 

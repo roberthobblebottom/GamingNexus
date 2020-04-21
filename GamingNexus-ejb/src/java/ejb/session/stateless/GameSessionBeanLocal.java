@@ -40,5 +40,7 @@ public interface GameSessionBeanLocal {
 
     public Game retrieveGamebyId(Long gameId) throws ProductNotFoundException;
 
+    public Game createNewGame(Game newGame, Long categoryId, List<Long> tagIds, Long CompanyId, boolean parentAdvisory, String headerImage) throws ProductSkuCodeExistException, UnknownPersistenceException, InputDataValidationException, CreateNewProductException, CompanyNotFoundException;
+
     
 }
