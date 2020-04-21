@@ -83,6 +83,9 @@ public class CompanyPromotionManagedBean implements Serializable {
         setProducts(getCompany().getProducts());
         try {
             promotions = promotionSessionBean.retrivePromotionsByCompanyID(company.getUserId());
+            
+            System.out.println("********** promotions: " + promotions.size());
+            
         } catch (CompanyNotFoundException ex) {
 
         }
@@ -108,14 +111,18 @@ public class CompanyPromotionManagedBean implements Serializable {
         promotionToBeUpdated = (Promotion) event.getComponent().getAttributes().get("promotionToBeUpdatedFaceletAtribute");
         setProductsToBeUpdated(promotionToBeUpdated.getProducts());
         LocalDateTime currentPointer;
+       
         ChronoLocalDateTime endPointer = promotionToBeUpdated.getEndDate();
+        System.out.println("Start pointer: "+promotionToBeUpdated.getStartDate());
+        System.out.println("End Pointer: "+promotionToBeUpdated.getEndDate());
         for (currentPointer = promotionToBeUpdated.getStartDate();
-                !currentPointer.isAfter(endPointer);
+                currentPointer.isBefore(endPointer);
                 currentPointer.plusDays(1)) {
             Date date = Timestamp.valueOf(currentPointer);
             dateRangeToBeUpdated.add(date);
         }
-        dateRangeToBeUpdated.forEach(date -> {
+    
+dateRangeToBeUpdated.forEach(date -> {
             System.out.println("dates to be updated: " + date.toString());
         });
     }

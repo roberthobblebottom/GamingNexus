@@ -66,16 +66,19 @@ public class GameSessionBean implements GameSessionBeanLocal {
             if (CompanyId == null) {
                 throw new CreateNewProductException("The new product must be associated a company");
             }
-            Company company = companySessionBeanLocal.retrieveCompanyById(categoryId);
+            Company company = companySessionBeanLocal.retrieveCompanyById(CompanyId);
 
             em.persist(newGame);
             newGame.setCategory(category);
+            category.getProducts().add(newGame);
             newGame.setCompany(company);
+            company.getProducts().add(newGame);
 
             if (tagIds != null && (!tagIds.isEmpty())) {
                 for (Long tagId : tagIds) {
                     Tag tag = tagSessionBeanLocal.retrieveTagByTagId(tagId);
                     newGame.addTag(tag);
+                    tag.getProducts().add(newGame);
                 }
             }
             em.flush();

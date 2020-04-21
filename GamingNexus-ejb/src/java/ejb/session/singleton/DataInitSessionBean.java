@@ -156,6 +156,8 @@ public class DataInitSessionBean {
             Customer customer4 = customerSessionBeanlocal.createCustomer(new Customer("765432102", "Singapore", "customer4@gmail.com", "Singapore", "customer4", "password", "portfolio", LocalDateTime.now()));
             Customer customer5 = customerSessionBeanlocal.createCustomer(new Customer("765432103", "Singapore", "customer5@gmail.com", "Singapore", "customer5", "password", "portfolio", LocalDateTime.now()));
 
+            System.out.println("********** company1.getUserId() " + company1.getUserId());
+            
             Game csgo = gameSessionBeanLocal.createNewGame(new Game("CSGO", "World famous first person shooter.",
                     "Windows 7 4 gigs of ram and 500MB of free space", 10, 5),
                     categoryEntityFPS.getCategoryId(), tagIdsPopularDiscount, company1.getUserId());
@@ -165,11 +167,13 @@ public class DataInitSessionBean {
             Game halflife = gameSessionBeanLocal.createNewGame(new Game("half life alyx", "The half life series is back with a brand new VR game",
                     "Windows 10 8 gigs of ram and yes", 30, 5), categoryEntityFPS.getCategoryId(), tagIdsPopularNew, company1.getUserId());
 
+            
             Game game2 = gameSessionBeanLocal.createNewGame(new Game("Game2", "Worse Than CF", "No Mac Pls", 23.5, 2.5), categoryEntityFPS.getCategoryId(), tagIdsDiscount, company2.getUserId());
             Game game3 = gameSessionBeanLocal.createNewGame(new Game("Game3", "Worse Than CF", "No Mac Pls", 24.5, 3.5), categoryEntityFPS.getCategoryId(), tagIdsDiscount, company3.getUserId());
             Game game4 = gameSessionBeanLocal.createNewGame(new Game("Game4", "Worse Than CF", "No Mac Pls", 25.5, 4.5), categoryEntityFPS.getCategoryId(), tagIdsDiscount, company4.getUserId());
             Game game5 = gameSessionBeanLocal.createNewGame(new Game("Game5", "Worse Than CF", "No Mac Pls", 26.5, 5.5), categoryEntityFPS.getCategoryId(), tagIdsDiscount, company5.getUserId());
-
+            
+            
             Hardware valveindex = hardwareSessionBeanLocal.createNewHardware(new Hardware("1 year", "High responseiiveness, high display resolution",
                     "America", "Valve Index", "Virtual Reality Headset", "windows 10 8 gigs of ram 1 gig of free space", 100, 4.3), categoryEntityHardWare.getCategoryId(), tagIdsPopular, company1.getUserId());
 
@@ -196,16 +200,13 @@ public class DataInitSessionBean {
                 ex.printStackTrace();
             }
             
-            List<Product> company1Products = company1.getProducts();
-            company1Products.add(csgo);
-            company1Products.add(dota);
-            company1Products.add(valveindex);
-            company1Products.add(softwaretool1);
-
-            company1.setProducts(company1Products);
-            companySessionBeanLocal.updateCompany(company1);
+            
 
         } catch (SystemAdminUsernameExistException | UnknownPersistenceException | InputDataValidationException | CreateNewCategoryException | CreateNewTagException | CreateNewProductException | ProductSkuCodeExistException | CompanyNotFoundException | CompanyUsernameExistException | CustomerUsernameExistException ex) {
+            ex.printStackTrace();
+        }
+        catch (Exception ex)
+        {
             ex.printStackTrace();
         }
     }
