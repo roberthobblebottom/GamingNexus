@@ -62,6 +62,18 @@ public class TagSessionBean implements TagSessionBeanLocal {
     }
 
     @Override
+    public List<Tag> retrieveAllGameTags() {
+        Query query = em.createQuery("SELECT t FROM Tag t WHERE t.isGameTag = TRUE ORDER BY t.tagName ASC");
+        List<Tag> tagEntities = query.getResultList();
+
+        for (Tag tagEntity : tagEntities) {
+            tagEntity.getProducts().size();
+        }
+
+        return tagEntities;
+    }
+    
+    @Override
     public Tag retrieveTagByTagId(Long tagId) throws TagNotFoundException {
         Tag tagEntity = em.find(Tag.class, tagId);
 

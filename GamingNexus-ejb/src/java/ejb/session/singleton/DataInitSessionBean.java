@@ -116,26 +116,27 @@ public class DataInitSessionBean {
             Category categoryEntitySoftwareTool = categorySessionBeanLocal.createNewCategoryEntity(new Category("SoftwareTool", "SoftwareTool"), null);
             Category categoryEntityHardware = categorySessionBeanLocal.createNewCategoryEntity(new Category("Hardware", "Hardware"), null);
 
-            Tag tagEntityPopular = tagSessionBeanLocal.createNewTagEntity(new Tag("Popular"));
-            Tag tagEntityDiscount = tagSessionBeanLocal.createNewTagEntity(new Tag("Discount"));
-            Tag tagEntityNew = tagSessionBeanLocal.createNewTagEntity(new Tag("New"));
-            Tag tagEntityAction = tagSessionBeanLocal.createNewTagEntity(new Tag("Action"));
-            Tag tagEntityAdventure = tagSessionBeanLocal.createNewTagEntity(new Tag("Adventure"));
-            Tag tagEntityCasual = tagSessionBeanLocal.createNewTagEntity(new Tag("Casual"));
-            Tag tagEntitySimulation = tagSessionBeanLocal.createNewTagEntity(new Tag("Simulation"));
-            Tag tagEntityMultiplayer = tagSessionBeanLocal.createNewTagEntity(new Tag("Multiplayer"));
-            Tag tagEntitySingleplayer = tagSessionBeanLocal.createNewTagEntity(new Tag("Singleplayer"));
-            Tag tagEntitySports = tagSessionBeanLocal.createNewTagEntity(new Tag("Sports"));
-            Tag tagEntityRacing = tagSessionBeanLocal.createNewTagEntity(new Tag("Racing"));
-            Tag tagEntityStrategy = tagSessionBeanLocal.createNewTagEntity(new Tag("Strategy"));
-            Tag tagEntityRPG = tagSessionBeanLocal.createNewTagEntity(new Tag("RPG"));
-            Tag tagEntityFPS = tagSessionBeanLocal.createNewTagEntity(new Tag("FPS"));
-            Tag tagEntityMOBA = tagSessionBeanLocal.createNewTagEntity(new Tag("MOBA"));
-            Tag tagEntityPuzzle = tagSessionBeanLocal.createNewTagEntity(new Tag("Puzzle"));
-            Tag tagEntityOpenworld = tagSessionBeanLocal.createNewTagEntity(new Tag("Openworld"));
-            Tag tagEntityZombies = tagSessionBeanLocal.createNewTagEntity(new Tag("Zombies"));
-            Tag tagEntityHorror = tagSessionBeanLocal.createNewTagEntity(new Tag("Horror"));
-            Tag tagEntityFunny = tagSessionBeanLocal.createNewTagEntity(new Tag("Funny"));
+            Tag tagEntityPopular = tagSessionBeanLocal.createNewTagEntity(new Tag("Popular",false));
+            Tag tagEntityDiscount = tagSessionBeanLocal.createNewTagEntity(new Tag("Discount",false));
+            Tag tagEntityNew = tagSessionBeanLocal.createNewTagEntity(new Tag("New",false));
+            
+            Tag tagEntityAction = tagSessionBeanLocal.createNewTagEntity(new Tag("Action",true));
+            Tag tagEntityAdventure = tagSessionBeanLocal.createNewTagEntity(new Tag("Adventure",true));
+            Tag tagEntityCasual = tagSessionBeanLocal.createNewTagEntity(new Tag("Casual",true));
+            Tag tagEntitySimulation = tagSessionBeanLocal.createNewTagEntity(new Tag("Simulation",true));
+            Tag tagEntityMultiplayer = tagSessionBeanLocal.createNewTagEntity(new Tag("Multiplayer",true));
+            Tag tagEntitySingleplayer = tagSessionBeanLocal.createNewTagEntity(new Tag("Singleplayer",true));
+            Tag tagEntitySports = tagSessionBeanLocal.createNewTagEntity(new Tag("Sports",true));
+            Tag tagEntityRacing = tagSessionBeanLocal.createNewTagEntity(new Tag("Racing",true));
+            Tag tagEntityStrategy = tagSessionBeanLocal.createNewTagEntity(new Tag("Strategy",true));
+            Tag tagEntityRPG = tagSessionBeanLocal.createNewTagEntity(new Tag("RPG",true));
+            Tag tagEntityFPS = tagSessionBeanLocal.createNewTagEntity(new Tag("FPS",true));
+            Tag tagEntityMOBA = tagSessionBeanLocal.createNewTagEntity(new Tag("MOBA",true));
+            Tag tagEntityPuzzle = tagSessionBeanLocal.createNewTagEntity(new Tag("Puzzle",true));
+            Tag tagEntityOpenworld = tagSessionBeanLocal.createNewTagEntity(new Tag("Openworld",true));
+            Tag tagEntityZombies = tagSessionBeanLocal.createNewTagEntity(new Tag("Zombies",true));
+            Tag tagEntityHorror = tagSessionBeanLocal.createNewTagEntity(new Tag("Horror",true));
+            Tag tagEntityFunny = tagSessionBeanLocal.createNewTagEntity(new Tag("Funny",true));
             
 
             Company company1 = companySessionBeanLocal.createNewCompany(new Company("123123", "Singapore", "company1@gmail.com", "Singapore", "company1", "password"));
