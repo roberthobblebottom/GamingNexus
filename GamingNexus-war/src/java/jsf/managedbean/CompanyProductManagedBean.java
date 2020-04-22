@@ -232,9 +232,9 @@ public class CompanyProductManagedBean implements Serializable {
                     && hardwareEntityFragment != null) {
                 Hardware hardwareToBeUpdated = (Hardware) productToBeUpdated;
                 hardwareToBeUpdated.setDeliverables(hardwareEntityFragment.getDeliverables());
-                hardwareToBeUpdated.setManufactoringCountry(hardwareEntityFragment.getManufactoringCountry());
+                hardwareToBeUpdated.setManufacturingCountry(hardwareEntityFragment.getManufacturingCountry());
                 hardwareToBeUpdated.setTechnicalspecification(hardwareEntityFragment.getTechnicalspecification());
-                hardwareToBeUpdated.setWarrentyDescription(hardwareEntityFragment.getWarrentyDescription());
+                hardwareToBeUpdated.setWarrantyDescription(hardwareEntityFragment.getWarrantyDescription());
                 hardwareSessionBean.updateHardware(hardwareToBeUpdated, getCategoryIdUpdate(), getTagIdsUpdate());
             }
 
