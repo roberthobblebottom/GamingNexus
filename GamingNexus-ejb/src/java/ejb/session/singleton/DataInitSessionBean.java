@@ -123,24 +123,29 @@ public class DataInitSessionBean {
             Category categoryEntityHardware = categorySessionBeanLocal
                     .createNewCategoryEntity(new Category("Hardware", "Hardware"), null);
 
-            Tag tagEntityPopular = tagSessionBeanLocal.createNewTagEntity(new Tag("Popular"));
-            Tag tagEntityDiscount = tagSessionBeanLocal.createNewTagEntity(new Tag("Discount"));
-            Tag tagEntityNew = tagSessionBeanLocal.createNewTagEntity(new Tag("New"));
-            Tag tagEntityAction = tagSessionBeanLocal.createNewTagEntity(new Tag("Action"));
-            Tag tagEntityAdventure = tagSessionBeanLocal.createNewTagEntity(new Tag("Adventure"));
-            Tag tagEntityCasual = tagSessionBeanLocal.createNewTagEntity(new Tag("Casual"));
-            Tag tagEntitySimulation = tagSessionBeanLocal.createNewTagEntity(new Tag("Simulation"));
-            Tag tagEntityMultiplayer = tagSessionBeanLocal.createNewTagEntity(new Tag("Multiplayer"));
-            Tag tagEntitySingleplayer = tagSessionBeanLocal.createNewTagEntity(new Tag("Singleplayer"));
-            Tag tagEntitySports = tagSessionBeanLocal.createNewTagEntity(new Tag("Sports"));
-            Tag tagEntityRacing = tagSessionBeanLocal.createNewTagEntity(new Tag("Racing"));
-            Tag tagEntityStrategy = tagSessionBeanLocal.createNewTagEntity(new Tag("Strategy"));
-            Tag tagEntityRPG = tagSessionBeanLocal.createNewTagEntity(new Tag("RPG"));
-            Tag tagEntityFPS = tagSessionBeanLocal.createNewTagEntity(new Tag("FPS"));
-            Tag tagEntityMOBA = tagSessionBeanLocal.createNewTagEntity(new Tag("MOBA"));
-            Tag tagEntityPuzzle = tagSessionBeanLocal.createNewTagEntity(new Tag("Puzzle"));
-            Tag tagEntityOpenworld = tagSessionBeanLocal.createNewTagEntity(new Tag("Openworld"));
-            Tag tagEntityZombies = tagSessionBeanLocal.createNewTagEntity(new Tag("Zombies"));
+            Tag tagEntityPopular = tagSessionBeanLocal.createNewTagEntity(new Tag("Popular",false));
+            Tag tagEntityDiscount = tagSessionBeanLocal.createNewTagEntity(new Tag("Discount",false));
+            Tag tagEntityNew = tagSessionBeanLocal.createNewTagEntity(new Tag("New",false));
+            
+            Tag tagEntityAction = tagSessionBeanLocal.createNewTagEntity(new Tag("Action",true));
+            
+            Tag tagEntityAdventure = tagSessionBeanLocal.createNewTagEntity(new Tag("Adventure",true));
+            Tag tagEntityCasual = tagSessionBeanLocal.createNewTagEntity(new Tag("Casual",true));
+            Tag tagEntitySimulation = tagSessionBeanLocal.createNewTagEntity(new Tag("Simulation",true));
+            Tag tagEntityMultiplayer = tagSessionBeanLocal.createNewTagEntity(new Tag("Multiplayer",true));
+            Tag tagEntitySingleplayer = tagSessionBeanLocal.createNewTagEntity(new Tag("Singleplayer",true));
+            Tag tagEntitySports = tagSessionBeanLocal.createNewTagEntity(new Tag("Sports",true));
+            Tag tagEntityRacing = tagSessionBeanLocal.createNewTagEntity(new Tag("Racing",true));
+            Tag tagEntityStrategy = tagSessionBeanLocal.createNewTagEntity(new Tag("Strategy",true));
+            Tag tagEntityRPG = tagSessionBeanLocal.createNewTagEntity(new Tag("RPG",true));
+            Tag tagEntityFPS = tagSessionBeanLocal.createNewTagEntity(new Tag("FPS",true));
+            Tag tagEntityMOBA = tagSessionBeanLocal.createNewTagEntity(new Tag("MOBA",true));
+            Tag tagEntityPuzzle = tagSessionBeanLocal.createNewTagEntity(new Tag("Puzzle",true));
+            Tag tagEntityOpenworld = tagSessionBeanLocal.createNewTagEntity(new Tag("Openworld",true));
+            Tag tagEntityZombies = tagSessionBeanLocal.createNewTagEntity(new Tag("Zombies",true));
+            Tag tagEntityHorror = tagSessionBeanLocal.createNewTagEntity(new Tag("Horror",true));
+            Tag tagEntityFunny = tagSessionBeanLocal.createNewTagEntity(new Tag("Funny",true));
+            
 
             Company company1 = companySessionBeanLocal.createNewCompany(new Company("123123", "Singapore",
                     "company1@gmail.com", "Singapore", "company1", "password"));
@@ -548,11 +553,324 @@ public class DataInitSessionBean {
             tags.add(tagEntityAction.getTagId());
             tags.add(tagEntityAdventure.getTagId());
             tags.add(tagEntityRPG.getTagId());
-            Game darksidersWarmasteredEdition = gameSessionBeanLocal.createNewGame(
-                    new Game(parentAdvisory, headerImage, name, description, computerRequirements,
-                            price, averageRating, releaseDate, sales),
+            tags.add(tagEntitySingleplayer.getTagId());
+            Game darksidersWarmasteredEdition = gameSessionBeanLocal.createNewGame(new Game(parentAdvisory, headerImage, name, description, computerRequirements, price, averageRating, releaseDate, sales),
                     categoryid, tags, company1.getUserId());
 
+            name = "Killing Floor";
+            releaseDate = LocalDate.parse("2009-05-14", formatter);
+            parentAdvisory = true;
+            averageRating = 72;
+            sales = 3496958;
+            price = 19.99;
+            description = "Killing Floor is a Co-op Survival Horror FPS set in the devastated cities and countryside of England after a series of cloning experiments for the military goes horribly wrong. You and your friends are members of the military dropped into these locations with a simple mission: Survive long enough to cleanse the area of the failed experiments!Cooperative gameplay for up to six players against multiple waves of specimensPersistent Perks system allowing players to convert their in-game achievements into permanent improvements to their characters skills and abilities.";
+            headerImage = "http://cdn.akamai.steamstatic.com/steam/apps/1250/header.jpg?t=1464640213";
+            computerRequirements = "Minimum:OS: Windows XP/Vista Processor: 1.2 GHZ or Equivalent Memory: 1 GB RAM Graphics: 64 MB DX9 Compliant Hard Drive: 2 GB free hard drive space Sound: DX 8.1 Compatible Audio";
+            categoryid = categoryEntitySoftwareGame.getCategoryId();
+            tags = new ArrayList<>();
+            tags.add(tagEntityZombies.getTagId());
+            tags.add(tagEntityFPS.getTagId());
+            tags.add(tagEntityHorror.getTagId());
+            tags.add(tagEntitySingleplayer.getTagId());
+            tags.add(tagEntityMultiplayer.getTagId());
+            Game killingfloor = gameSessionBeanLocal.createNewGame(new Game(parentAdvisory, headerImage, name, description, computerRequirements, price, averageRating, releaseDate, sales),
+                    categoryid, tags, company1.getUserId());
+            
+            name = "RollerCoaster Tycoon 3: Platinum!";
+            releaseDate = LocalDate.parse("2006-10-26", formatter);
+            parentAdvisory = false;
+            averageRating = 81;
+            sales = 799182;
+            price = 19.99;
+            description = "Rollercoaster Tycoon 3 Platinum combines the excitement of rollercoasters with the fun of great strategy sim. RCT3 Platinum combines the roller coaster theme park fun of the Roller Coaster Tycoon 3 with included expansion packs Soaked! and Wild! Now enjoy more options than ever. Build your own water slide or create your own safari with real animals. Watch guest reactions to your ultimate theme park!";
+            headerImage = "http://cdn.akamai.steamstatic.com/steam/apps/2700/header.jpg?t=1473276734";
+            computerRequirements = "Minimum: Supported OS: Windows 2000/XPProcessor: Pentium(r) III 733 MHz or compatible (Pentium(r) 4 1.2 GHz or compatible recommended)Memory: 128 MB RAM; 256 MB for XP (256 MB; 384 MB for XP recommended)Graphics: Any ATI Radeon(tm) or GeForce(tm) 2 with 32MB or higher; or other video card with 32MB and hardware T&L (ATI Radeon(tm) 64 MB SDR or GeForce(tm) 2 Pro or other video card with 64 MB or more memory and hardware T&L recommended)*DirectX Version: DirectX(r) version 9 (included) or higherSound: Windows(r) 2000/XP-compatible 16-bit sound card*Hard Drive: 600 MB free* Indicates device should be compatible with DirectX(r) version 9.0b or higher.";
+            categoryid = categoryEntitySoftwareGame.getCategoryId();
+            tags = new ArrayList<>();
+            tags.add(tagEntitySimulation.getTagId());
+            tags.add(tagEntitySingleplayer.getTagId());
+            Game rollercoaster = gameSessionBeanLocal.createNewGame(new Game(parentAdvisory, headerImage, name, description, computerRequirements, price, averageRating, releaseDate, sales),
+                    categoryid, tags, company1.getUserId());
+            
+            name = "Garry's Mod";
+            releaseDate = LocalDate.parse("2006-11-29", formatter);
+            parentAdvisory = false;
+            averageRating = 90;
+            sales = 12790674;
+            price = 19.99;
+            description = "Garrys Mod is a physics sandbox. There arent any predefined aims or goals. We give you the tools and leave you to play.You spawn objects and weld them together to create your own contraptions - whether thats a car a rocket a catapult or something that doesnt have a name yet - thats up to you. You can do it offline or join the thousands of players who play online each day. If youre not too great at construction - dont worry! You can place a variety of characters in silly positions.";
+            headerImage = "http://cdn.akamai.steamstatic.com/steam/apps/4000/header.jpg?t=1469897414";
+            computerRequirements = "Minimum:OS: Windows(r) Vista/XPProcessor: 1.8 GHz ProcessorMemory: 2 GB RAMGraphics: DirectX(r) 9 level Graphics Card (Requires support for SSE)DirectX: Version 9.0cNetwork: Broadband Internet connectionStorage: 5 GB available spaceSound Card: DirectX(r) 9 compatibleAdditional Notes: Mouse Keyboard Monitor";
+            categoryid = categoryEntitySoftwareGame.getCategoryId();
+            tags = new ArrayList<>();
+            tags.add(tagEntitySimulation.getTagId());
+            tags.add(tagEntitySingleplayer.getTagId());
+            tags.add(tagEntityMultiplayer.getTagId());
+            Game garysmod = gameSessionBeanLocal.createNewGame(new Game(parentAdvisory, headerImage, name, description, computerRequirements, price, averageRating, releaseDate, sales),
+                    categoryid, tags, company1.getUserId());
+            
+            name = "Watch Dogs 2";
+            releaseDate = LocalDate.parse("2016-11-29", formatter);
+            parentAdvisory = true;
+            averageRating = 86;
+            sales = 147605;
+            price = 70.00;
+            description = "Play as Marcus Holloway, a brilliant young hacker living in the birthplace of the tech revolution, the San Francisco Bay Area. Team up with Dedsec, a notorious group of hackers, to execute the biggest hack in history; take down ctOS 2.0, an invasive operating system being used by criminal masterminds to monitor and manipulate citizens on a massive scale.";
+            headerImage = "http://cdn.akamai.steamstatic.com/steam/apps/447040/header.jpg?t=1481044335";
+            computerRequirements = "Minimum:OS: Windows 7 SP1 Windows 8.1 Windows 10 (64bit versions only)Processor: Intel Core i5 2400s @ 2.5 GHz AMD FX 6120 @ 3.5 GHz or betterMemory: 6 GB RAMGraphics: NVIDIA GeForce GTX 660 with 2 GB VRAM or AMD Radeon HD 7870 with 2 GB VRAM or better - See supported List*Network: Broadband Internet connectionStorage: 50 GB available spaceSound Card: DirectX compatible using the latest driversAdditional Notes: Periphericals: Microsoft Xbox One Controller DUALSHOCK(r) 4 Controller Windows-compatible keyboard mouse optional controller / Multiplayer: 256 kbps or faster broadband connection / Note: This product supports 64-bit operating systems only. Laptop versions of these cards may work but are not officially supported. For the most up-to-date requirement listings please visit the FAQ on our support website at support.ubi.com.  High speed internet access and a valid Ubisoft account are required to activate the game after installation to authenticate your system and continue gameplay after any re-activation access online features play online or unlock exclusive content.";
+            categoryid = categoryEntitySoftwareGame.getCategoryId();
+            tags = new ArrayList<>();
+            tags.add(tagEntityAction.getTagId());
+            tags.add(tagEntitySingleplayer.getTagId());
+            tags.add(tagEntityOpenworld.getTagId());
+            Game watchdogs2 = gameSessionBeanLocal.createNewGame(new Game(parentAdvisory, headerImage, name, description, computerRequirements, price, averageRating, releaseDate, sales),
+                    categoryid, tags, company1.getUserId());
+            
+            name = "Call of Duty: Infinite Warfare";
+            releaseDate = LocalDate.parse("2016-11-03", formatter);
+            parentAdvisory = true;
+            averageRating = 87;
+            sales = 255932;
+            price = 76.90;
+            description = "Includes the Terminal Bonus Map and Zombies in Spaceland Pack contains a weapon camo calling card and a Fate and Fortune Card Pack! Infinite Warfare delivers three unique game modes: Campaign Multiplayer and Zombies.";
+            headerImage = "http://cdn.akamai.steamstatic.com/steam/apps/292730/header.jpg?t=1479411431";
+            computerRequirements = "Minimum:OS: Windows 7 64-Bit or laterProcessor: Intel Core i3-3225 @ 3.30GHz or equivalentMemory: 8 GB RAMGraphics: NVIDIA GeForce GTX 660 2GB / AMD Radeon HD 7850 2GBDirectX: Version 11Network: Broadband Internet connectionStorage: 70 GB available spaceSound Card: DirectX 11 CompatibleAdditional Notes: Disk space requirement may change over time.";
+            categoryid = categoryEntitySoftwareGame.getCategoryId();
+            tags = new ArrayList<>();
+            tags.add(tagEntityAction.getTagId());
+            tags.add(tagEntitySingleplayer.getTagId());
+            tags.add(tagEntityOpenworld.getTagId());
+            Game callofdutyinfinitewarfare = gameSessionBeanLocal.createNewGame(new Game(parentAdvisory, headerImage, name, description, computerRequirements, price, averageRating, releaseDate, sales),
+                    categoryid, tags, company1.getUserId());
+            
+            name = "Project CARS - Pagani Edition";
+            releaseDate = LocalDate.parse("2016-10-28", formatter);
+            parentAdvisory = false;
+            averageRating = 75;
+            sales = 342378;
+            price = 0.0;
+            description = "'Project CARS – Pagani Edition' Features the Pagani Huayra, Huayra BC, Zonda Cinque, Zonda R, and Zonda Revolucion, and three intricately modeled tracks — the Nürburgring and Nordschleife combo, Monza GP, and Azure Coast — along with two game modes, and full VR support on both Oculus Rift and HTC Vive, as well as support for 4K screens and traditional displays.";
+            headerImage = "http://cdn.akamai.steamstatic.com/steam/apps/429180/header.jpg?t=1477731204";
+            computerRequirements = "Minimum:OS: Windows Vista Windows 7 with latest Service Packs or laterProcessor: 2.66 GHz Intel Core 2 Quad Q8400 3.0 GHz AMD Phenom II X4 940Memory: 4 GB RAMGraphics: nVidia GTX 260 ATI Radeon HD 5770DirectX: Version 9.0Network: Broadband Internet connectionStorage: 25 GB available spaceSound Card: DirectX compatible sound card";
+            categoryid = categoryEntitySoftwareGame.getCategoryId();
+            tags = new ArrayList<>();
+            tags.add(tagEntityRacing.getTagId());
+            tags.add(tagEntitySingleplayer.getTagId());
+            tags.add(tagEntitySimulation.getTagId());
+            Game projectcars = gameSessionBeanLocal.createNewGame(new Game(parentAdvisory, headerImage, name, description, computerRequirements, price, averageRating, releaseDate, sales),
+                    categoryid, tags, company1.getUserId());
+            
+            name = "Soccer Manager 2017";
+            releaseDate = LocalDate.parse("2016-09-16", formatter);
+            parentAdvisory = false;
+            averageRating = 65;
+            sales = 217551;
+            price = 10.50;
+            description = "Soccer Manager 2017 - Play for Free Compete for Real.The most diverse FREE 2 PLAY football management simulator in the world. Take on a top flight club and test your management skills against the best or help a struggling lower division team fight for glory.Soccer Manager 2017 FeaturesReactive 2D Live Match EnvironmentMonitor your teams performance during live games. React with different tactics and strategies and watch your team adapt to your decisions in real time.Play Anywhere EverywhereOur cloud-based technology allows you to save your game on any device and continue to play on another. No need to set up a different account for different devices take your team with you anywhere and play anytime.Soccer Manager 2017 contains the following new improvements and features:Updated leagues and teams for 2016/17 season.Updated domestic and continental competitions.New user interface.New facilities upgrade.Player Spotlight.Player manager and team awards.So dust off your tracksuit and get ready to start your new managerial career on Soccer Manager 2017.";
+            headerImage = "http://cdn.akamai.steamstatic.com/steam/apps/510630/header.jpg?t=1474049541";
+            computerRequirements = "Minimum:OS: Windows XP or LaterProcessor: 1 GHz or higherMemory: 1 GB RAMNetwork: Broadband Internet connectionStorage: 80 MB available space";
+            categoryid = categoryEntitySoftwareGame.getCategoryId();
+            tags = new ArrayList<>();
+            tags.add(tagEntitySports.getTagId());
+            tags.add(tagEntityStrategy.getTagId());
+            tags.add(tagEntitySimulation.getTagId());
+            tags.add(tagEntitySingleplayer.getTagId());
+            tags.add(tagEntityCasual.getTagId());
+            Game soccermanager2017 = gameSessionBeanLocal.createNewGame(new Game(parentAdvisory, headerImage, name, description, computerRequirements, price, averageRating, releaseDate, sales),
+                    categoryid, tags, company1.getUserId());
+            
+            name = "Paladins";
+            releaseDate = LocalDate.parse("2016-09-15", formatter);
+            parentAdvisory = false;
+            averageRating = 83;
+            sales = 5979874;
+            price = 0.0;
+            description = "Join 25+ million players in Paladins, the free-to-play fantasy team-based shooter sensation. Wield guns and magic as a legendary Champion of the Realm, customizing your core set of abilities to play exactly how you want to play.";
+            headerImage = "http://cdn.akamai.steamstatic.com/steam/apps/444090/header.jpg?t=1474591627";
+            computerRequirements = "Minimum:OS: Windows XP SP2 Windows Vista or Windows 7Processor: Core 2 Duo 2.4 GHz or Althon X2 2.7 GHzMemory: 2 GB RAMGraphics: ATI or Nvidia graphics card with 512MB video ram or better and Shader Model 3.0+ support. (ATI Radeon 3870 or higher Nvidia GeForce 8800 GT or higher)Storage: 10 GB available spaceSound Card: DirectX compatible sound card";
+            categoryid = categoryEntitySoftwareGame.getCategoryId();
+            tags = new ArrayList<>();
+            tags.add(tagEntityMultiplayer.getTagId());
+            tags.add(tagEntityFPS.getTagId());
+            tags.add(tagEntityAction.getTagId());
+            tags.add(tagEntityMOBA.getTagId());
+            Game paladins = gameSessionBeanLocal.createNewGame(new Game(parentAdvisory, headerImage, name, description, computerRequirements, price, averageRating, releaseDate, sales),
+                    categoryid, tags, company1.getUserId());
+            
+            name = "BioShock 2 Remastered";
+            releaseDate = LocalDate.parse("2016-09-15", formatter);
+            parentAdvisory = true;
+            averageRating = 79;
+            sales = 3219325;
+            price = 19.99;
+            description = "BioShock 2 provides players with the perfect blend of explosive first-person shooter combat and compelling award-winning storytelling. The halls of Rapture once again echo with sins of the past. Along the Atlantic coastline, a monster has been snatching little girls and bringing them back to the undersea city of Rapture. Players step into the boots of the most iconic denizen of Rapture, the Big Daddy, as they travel through the decrepit and beautiful fallen city, chasing an unseen foe in search of answers and their own survival.";
+            headerImage = "http://cdn.akamai.steamstatic.com/steam/apps/409720/header.jpg?t=1473983496";
+            computerRequirements = "Minimum:OS: Windows 7 Service Pack 1 64-bit. Platform Update for Windows 7 SP1 and Windows Server 2008 R2 SP1Processor: Intel E6750 Core 2 Duo 2.66 GHz / AMD Athlon X2 2.7 GHZMemory: 4 GB RAMGraphics: 2GB AMD Radeon HD 7770 / 2GB NVIDIA GeForce GTX 670DirectX: Version 11Storage: 25 GB available spaceSound Card: DirectX Compatible Sound Device";
+            categoryid = categoryEntitySoftwareGame.getCategoryId();
+            tags = new ArrayList<>();
+            tags.add(tagEntitySingleplayer.getTagId());
+            tags.add(tagEntityFPS.getTagId());
+            tags.add(tagEntityAction.getTagId());
+            tags.add(tagEntityRPG.getTagId());
+            tags.add(tagEntityAdventure.getTagId());
+            Game bioshock2 = gameSessionBeanLocal.createNewGame(new Game(parentAdvisory, headerImage, name, description, computerRequirements, price, averageRating, releaseDate, sales),
+                    categoryid, tags, company1.getUserId());
+            
+            name = "NBA 2K17";
+            releaseDate = LocalDate.parse("2016-09-20", formatter);
+            parentAdvisory = false;
+            averageRating = 90;
+            sales = 153165;
+            price = 19.99;
+            description = "Following the record-breaking launch of NBA 2K16, the NBA 2K franchise continues to stake its claim as the most authentic sports video game with NBA 2K17. As the franchise that “all sports video games should aspire to be” (GamesRadar), NBA 2K17 will take the game to new heights and continue to blur the lines between video game and reality.";
+            headerImage = "http://cdn.akamai.steamstatic.com/steam/apps/385760/header.jpg?t=1474391274";
+            computerRequirements = "Minimum:OS: Windows 7 64-bit Windows 8.1 64-bit or Windows 10 64-bitProcessor: Intel(r) Core(tm) i3-530 @ 2.93 GHz / AMD Phenom(tm) II X4 805 @ 2.50 GHz or betterMemory: 4 GB RAMGraphics: NVIDIA(r) GeForce(r) GT 430 1GB / ATI(r) Radeon(tm) HD 6450 1GB or betterDirectX: Version 11Storage: 70 GB available spaceSound Card: DirectX 9.0x compatibleAdditional Notes: Dual-analog gamepad";
+            categoryid = categoryEntitySoftwareGame.getCategoryId();
+            tags = new ArrayList<>();
+            tags.add(tagEntitySingleplayer.getTagId());
+            tags.add(tagEntitySports.getTagId());
+            tags.add(tagEntityMultiplayer.getTagId());
+            tags.add(tagEntitySimulation.getTagId());
+            Game nba2k17 = gameSessionBeanLocal.createNewGame(new Game(parentAdvisory, headerImage, name, description, computerRequirements, price, averageRating, releaseDate, sales),
+                    categoryid, tags, company1.getUserId());
+            
+            name = "The Elder Scrolls V: Skyrim Special Edition";
+            releaseDate = LocalDate.parse("2016-10-28", formatter);
+            parentAdvisory = false;
+            averageRating = 74;
+            sales = 5791198;
+            price = 53.99;
+            description = "Winner of more than 200 Game of the Year Awards, Skyrim Special Edition brings the epic fantasy to life in stunning detail. The Special Edition includes the critically acclaimed game and add-ons with all-new features like remastered art and effects, volumetric god rays, dynamic depth of field, screen-space reflections, and more. Skyrim Special Edition also brings the full power of mods to the PC and consoles. New quests, environments, characters, dialogue, armor, weapons and more – with Mods, there are no limits to what you can experience.";
+            headerImage = "http://cdn.akamai.steamstatic.com/steam/apps/489830/header.jpg?t=1473436209";
+            computerRequirements = "Minimum:OS: Windows 7 64-bit Windows 8.1 64-bit or Windows 10 64-bitProcessor: Intel i5-750/AMD Phenom II X4-945 Memory: 8 GB RAM Graphics: NVIDIA GTX 470 1GB /AMD HD 7870 2GB or better Storage: 12 GB available space";
+            categoryid = categoryEntitySoftwareGame.getCategoryId();
+            tags = new ArrayList<>();
+            tags.add(tagEntitySingleplayer.getTagId());
+            tags.add(tagEntityOpenworld.getTagId());
+            tags.add(tagEntityAdventure.getTagId());
+            tags.add(tagEntityRPG.getTagId());
+            Game elderscrollsV = gameSessionBeanLocal.createNewGame(new Game(parentAdvisory, headerImage, name, description, computerRequirements, price, averageRating, releaseDate, sales),
+                    categoryid, tags, company1.getUserId());
+            
+            name = "Football Manager 2017";
+            releaseDate = LocalDate.parse("2016-11-04", formatter);
+            parentAdvisory = false;
+            averageRating = 74;
+            sales = 5791198;
+            price = 49.99;
+            description = "Take control of your favourite football team in Football Manager 2017 the most realistic and immersive football management game to date. Its the closest thing to doing the job for real!With over 2500 real clubs to manage and over 500000 real footballers and staff to sign Football Manager 2017 elevates you into a living breathing world of football management with you at the centre.  Youll have full control of transfers and decide who plays and who sits on the bench. Youre in complete control of tactics team-talks and pitch-side instructions and youll follow the match live with our acclaimed 3D match engine. Youll also deal with real football media solve player-happiness problems and the board will watch your every move.Fans who pre-purchase Football Manager 2017 on Steam will be rewarded with Football Manager Touch 2017 for free (on PC Mac or Linux) and as a thank you for pre-purchasing youll also get a range of free downloadable content for Touch including Board override No firing All job applications National management and 3 brand new challenges to play in the Challenge game mode. Touch is the more streamlined transfers and tactics way to manage and can be purchased separately as a standalone game.In addition youll also enjoy access to a fully-playable Beta version of the game which will be available roughly two weeks prior to the official release date. Single player careers started in this Beta version will continue in the full game.Loyal fans of the series can enjoy an exclusive Steam-only discount of five per cent off for every Football Manager game they own (PC Mac or Linux) dating back to Football Manager 2013. This means theres a maximum 20 per cent discount available to fans who own all of the last four versions.";
+            headerImage = "http://cdn.akamai.steamstatic.com/steam/apps/482730/header.jpg?t=1473937693";
+            computerRequirements = "Minimum:OS: Windows Vista (SP2) 7 (SP1) 8 8.1 10 (1607) - 64-bit or 32-bitProcessor: Intel Pentium 4 Intel Core AMD Athlon 2.2GHz+Memory: 2 GB RAMGraphics: NVIDIA  GeForce 8600M GT AMD/ATI Mobility Radeon HD 2400 Intel GMA X3100 256MB VRAMDirectX: Version 9.0cStorage: 3 GB available space";
+            categoryid = categoryEntitySoftwareGame.getCategoryId();
+            tags = new ArrayList<>();
+            tags.add(tagEntitySingleplayer.getTagId());
+            tags.add(tagEntitySports.getTagId());
+            tags.add(tagEntitySimulation.getTagId());
+            Game footballmanager2017 = gameSessionBeanLocal.createNewGame(new Game(parentAdvisory, headerImage, name, description, computerRequirements, price, averageRating, releaseDate, sales),
+                    categoryid, tags, company1.getUserId());
+            
+            name = "Titan Quest Anniversary Edition";
+            releaseDate = LocalDate.parse("2016-08-31", formatter);
+            parentAdvisory = false;
+            averageRating = 74;
+            sales = 1743816;
+            price = 20.00;
+            description = "For its 10 year anniversary, Titan Quest will shine in new splendour. This Anniversary Edition combines both Titan Quest and Titan Quest Immortal Throne in one game, and has been given a massive overhaul for the ultimate ARPG experience.";
+            headerImage = "http://cdn.akamai.steamstatic.com/steam/apps/475150/header.jpg?t=1473470071";
+            computerRequirements = "Minimum:OS: Windows XP / Vista / 7 / 8 / 10 32 or 64 bitProcessor: 2.0 GHz CPUMemory: 1 GB RAMGraphics: 128 MB NVIDIA GeForce 6800 series or ATI Radeon X800 series or equivalentDirectX: Version 9.0cStorage: 5 GB available spaceSound Card: DirectX compatible";
+            categoryid = categoryEntitySoftwareGame.getCategoryId();
+            tags = new ArrayList<>();
+            tags.add(tagEntitySingleplayer.getTagId());
+            tags.add(tagEntityAction.getTagId());
+            tags.add(tagEntityMultiplayer.getTagId());
+            tags.add(tagEntityRPG.getTagId());
+            Game titanquest = gameSessionBeanLocal.createNewGame(new Game(parentAdvisory, headerImage, name, description, computerRequirements, price, averageRating, releaseDate, sales),
+                    categoryid, tags, company1.getUserId());
+           
+            name = "H1Z1: King of the Kill";
+            releaseDate = LocalDate.parse("2016-02-17", formatter);
+            parentAdvisory = false;
+            averageRating = 74;
+            sales = 3186504;
+            price = 20.00;
+            description = "King of the Kill is a large-scale fight-to-the-death shooter where every moment counts. Drop into the high-intensity arena-style grudge match and activate your inner beast mode. Gear up fast throw together a game plan and well see if you have what it takes to be the last man standing. Rack up a kill streak or just add to the chaos - this is a spectacle and only one can be King of the Kill.";
+            headerImage = "http://cdn.akamai.steamstatic.com/steam/apps/439700/header.jpg?t=1460503021";
+            computerRequirements = "Minimum:OS: Windows 7 SP1 64 bitProcessor: Intel i3 Dual-Core with Hyper-Threading (required)Memory: 4 GB RAMGraphics: nVidia GeForce GTX 275 series or higherDirectX: Version 10Network: Broadband Internet connectionStorage: 20 GB available spaceSound Card: DirectX Compatible Sound Card";
+            categoryid = categoryEntitySoftwareGame.getCategoryId();
+            tags = new ArrayList<>();
+            tags.add(tagEntityMultiplayer.getTagId());
+            tags.add(tagEntityAction.getTagId());
+            Game h1z1 = gameSessionBeanLocal.createNewGame(new Game(parentAdvisory, headerImage, name, description, computerRequirements, price, averageRating, releaseDate, sales),
+                    categoryid, tags, company1.getUserId());
+            
+            name = "BlackShot: Mercenary Warfare FPS";
+            releaseDate = LocalDate.parse("2016-05-31", formatter);
+            parentAdvisory = false;
+            averageRating = 80;
+            sales = 680094;
+            price = 0.00;
+            description = "BlackShotBlackShot is a free-to-play first-person shooter set in a post-apocalyptic world.Join other mercenaries in brutal team combat multiple game modes and experience in-depth customization to create your perfect warrior!StoryThe old world ended on the fourth of December 2033.In the preceding decade advances in human cloning had led to the development of the ultimate weapon; the expendable clone soldier the Mercenary.Nations began expanding their borders aggressively seeking more resources in order to expand their clone armies. The entire world soon became embroiled in global conflict. BlackShot is one the worlds elite mercenary groups. You are a newly contracted Mercenary. Will you rise through the ranks to become elite?Multiply Game ModesRunning Man Mode (RM)Team Death Match (TDM)Team Flag Match (TFM)Search & Destroy (SD)Protect the Commander (PC)Unlimited Battle Arena (UBA)Bunker Defense (BD)Mercenary Level & Rank SystemRise from lowly Recruit all the way up to Commander-in-ChiefReceive Weapons Gear and Tactics at every level!Gear SystemEnhance your mercenary with Gear to make them better stronger faster!Receive stat bonuses or increase your weapon load.Tactical SlotsAdd depth to your character customization by assigning weapons expertise.Unlock more slots as you gain ranks and create a deadly mercenary!Clan System & Dedicated Clan ServersCreate your own or join an existing clan customize your emblem and dominate!Clan rankings and Clan servers for team matches.WeaponsMassive array of weapons such as AR BR Snipers SMG Shotguns and many more.7 Mastery categories and multiple ranks that unlock unique weaponry!";
+            headerImage = "http://cdn.akamai.steamstatic.com/steam/apps/433350/header.jpg?t=1471036012";
+            computerRequirements = "Minimum:OS: Windows XP / 2000 / Vista / 7/ 8 /10Processor: Pentium 4 2.0GhzMemory: 1 GB RAMGraphics: GeForce 6800 GT / RADEON X800 GTDirectX: Version 9.0cNetwork: Broadband Internet connectionStorage: 2 GB available space";
+            categoryid = categoryEntitySoftwareGame.getCategoryId();
+            tags = new ArrayList<>();
+            tags.add(tagEntityMultiplayer.getTagId());
+            tags.add(tagEntityFPS.getTagId());
+            Game blackshot = gameSessionBeanLocal.createNewGame(new Game(parentAdvisory, headerImage, name, description, computerRequirements, price, averageRating, releaseDate, sales),
+                    categoryid, tags, company1.getUserId());
+            
+            name = "ARK: Survival Of The Fittest";
+            releaseDate = LocalDate.parse("2016-03-15", formatter);
+            parentAdvisory = false;
+            averageRating = 81;
+            sales = 5995836;
+            price = 42.00;
+            description = "Welcome to ARK: Survival of the Fittest, the first ever M.O.S.A. - a Multiplayer Online Survival Arena - that Studio Wildcard designed for the burgeoning wild west of eSports. A spin-off from the most popular open-world Early Access game on Steam ARK: Survival Evolved, ARK: Survival of the Fittest (SotF) pits up to 72 combatants in an action-packed struggle for survival where players are ultimately pushed into an epic final showdown where only one “Tribe” will make it out alive.";
+            headerImage = "http://cdn.akamai.steamstatic.com/steam/apps/407530/header.jpg?t=1471325195";
+            computerRequirements = "Minimum:OS: 64-Bit Windows 7 Service Pack 1 or Windows 8/10Processor: 2 GHz Dual-Core 64-bit CPUMemory: 4000 MB RAMGraphics: GTX 500 or Above DirectX10 Compatible GPU with 2 GB or More Video RAMDirectX: Version 10Storage: 37000 MB available space";
+            categoryid = categoryEntitySoftwareGame.getCategoryId();
+            tags = new ArrayList<>();
+            tags.add(tagEntityMultiplayer.getTagId());
+            tags.add(tagEntityOpenworld.getTagId());
+            tags.add(tagEntityAction.getTagId());
+            tags.add(tagEntityAdventure.getTagId());
+            Game arksurvivalofthefittest = gameSessionBeanLocal.createNewGame(new Game(parentAdvisory, headerImage, name, description, computerRequirements, price, averageRating, releaseDate, sales),
+                    categoryid, tags, company1.getUserId());
+            
+            name = "Undertale";
+            releaseDate = LocalDate.parse("2015-09-15", formatter);
+            parentAdvisory = false;
+            averageRating = 92;
+            sales = 2105743;
+            price = 10.05;
+            description = "Welcome to UNDERTALE. In this RPG, you control a human who falls underground into the world of monsters. Now you must find your way out... or stay trapped forever.";
+            headerImage = "http://cdn.akamai.steamstatic.com/steam/apps/391540/header.jpg?t=1468759045";
+            computerRequirements = "Minimum:OS: Windows XP Vista 7 8 or 10Memory: 2 GB RAMGraphics: 128MBStorage: 200 MB available space";
+            categoryid = categoryEntitySoftwareGame.getCategoryId();
+            tags = new ArrayList<>();
+            tags.add(tagEntityFunny.getTagId());
+            tags.add(tagEntityRPG.getTagId());
+            tags.add(tagEntitySingleplayer.getTagId());
+            Game undertale = gameSessionBeanLocal.createNewGame(new Game(parentAdvisory, headerImage, name, description, computerRequirements, price, averageRating, releaseDate, sales),
+                    categoryid, tags, company1.getUserId());
+            
+            name = "Rise of the Tomb Raider";
+            releaseDate = LocalDate.parse("2016-01-18", formatter);
+            parentAdvisory = true;
+            averageRating = 86;
+            sales = 1186398;
+            price = 59.99;
+            description = "After uncovering an ancient mystery Lara must explore the most treacherous and remote regions of Siberia to find the secret of immortality before a ruthless organization known as Trinity. Lara must use her wits and survival skills form new alliances and ultimately embrace her destiny as the Tomb Raider. Experience high-octane action moments conquer beautifully hostile environments engage in brutal guerilla combat and explore awe-inspiring deadly tombs in the evolution of survival action. In Rise of the Tomb Raider Lara becomes more than a survivor as she embarks on her first Tomb Raiding expedition.Key Features:Laras Journey - Lara uncovers an ancient mystery that places her in the cross-hairs of a ruthless organization known as Trinity. As she races to find the secret before Trinity the trail leads to a myth about the Lost City of Kitezh. Lara knows she must reach the Lost City and its hidden secrets before Trinity. With that she sets out for Siberia on her first Tomb Raiding expedition.Woman vs. Wild - In Rise of the Tomb Raider Lara battles with not only enemies from around the world but the world itself. Hunt animals to craft weapons and scavenge for rare resources in densely populated ecosystems. Youll encounter beautifully hostile environments full of treacherous conditions and unstable landscapes that will require Lara to push her limits to the very edge. Guerilla Combat - Use the environment to your advantage scale trees and dive underwater to avoid or takedown enemies configure Laras gear weapons and ammo to suit your play style from stealth to guns blazing craft explosives on the fly to sow chaos and wield Laras signature combat bows and climbing axe. Return to Tomb Raiding - Tombs are back and theyre bigger and better than ever. In Rise of the Tomb Raider youll explore huge awe-inspiring ancient spaces littered with deadly traps solve dramatic environmental puzzles and decipher ancient texts to reveal crypts as you take on a world filled with secrets to discover.";
+            headerImage = "http://cdn.akamai.steamstatic.com/steam/apps/391220/header.jpg?t=1473961644";
+            computerRequirements = "Minimum:OS: Windows 7 64bitProcessor: Intel Core i3-2100 or AMD equivalentMemory: 6 GB RAMGraphics: NVIDIA GTX 650 2GB or AMD HD7770 2GBDirectX: Version 11Storage: 25 GB available space";
+            categoryid = categoryEntitySoftwareGame.getCategoryId();
+            tags = new ArrayList<>();
+            tags.add(tagEntityAdventure.getTagId());
+            tags.add(tagEntityAction.getTagId());
+            tags.add(tagEntitySingleplayer.getTagId());
+            Game riseofthetombraider = gameSessionBeanLocal.createNewGame(new Game(parentAdvisory, headerImage, name, description, computerRequirements, price, averageRating, releaseDate, sales),
+                    categoryid, tags, company1.getUserId());
+            
             List<Long> tagIdsPopular = new ArrayList<>();
             tagIdsPopular.add(tagEntityPopular.getTagId());
 
