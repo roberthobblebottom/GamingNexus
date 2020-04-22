@@ -64,6 +64,10 @@ public abstract class Product implements Serializable {
     private LocalDate releaseDate;
     
     private double sales;
+    
+    private String headerImage;
+    
+    private String videoLink;
 
     @ManyToOne(optional = false)
     private Company company;
@@ -90,16 +94,8 @@ public abstract class Product implements Serializable {
         forums = new ArrayList<>();
     }
 
-    public Product(String name, String description, String computerRequirements, double price, double averageRating) {
-        this();
-        this.name = name;
-        this.description = description;
-        this.computerRequirements = computerRequirements;
-        this.price = price;
-        this.averageRating = averageRating;
-    }
-
-    public Product(String name, String description, String computerRequirements, double price, double averageRating, LocalDate releaseDate, double sales) {
+    //for software games and products with videolink
+    public Product(String name, String description, String computerRequirements, double price, double averageRating, LocalDate releaseDate, double sales, String headerImage, String videoLink) {
         this();
         this.name = name;
         this.description = description;
@@ -108,8 +104,21 @@ public abstract class Product implements Serializable {
         this.averageRating = averageRating;
         this.releaseDate = releaseDate;
         this.sales = sales;
+        this.headerImage = headerImage;
+        this.videoLink = videoLink;
     }
-    
+    // for hardware
+    public Product(String name, String description, double price, double averageRating, LocalDate releaseDate, double sales, String headerImage, String videoLink) {
+        this();
+        this.name = name;
+        this.description = description;
+        this.price = price;
+        this.averageRating = averageRating;
+        this.releaseDate = releaseDate;
+        this.sales = sales;
+        this.headerImage = headerImage;
+        this.videoLink = videoLink;
+    }
     
 
     public void addTag(Tag tagEntity) {
@@ -385,6 +394,34 @@ public abstract class Product implements Serializable {
      */
     public void setReleaseDate(LocalDate releaseDate) {
         this.releaseDate = releaseDate;
+    }
+
+    /**
+     * @return the headerImage
+     */
+    public String getHeaderImage() {
+        return headerImage;
+    }
+
+    /**
+     * @param headerImage the headerImage to set
+     */
+    public void setHeaderImage(String headerImage) {
+        this.headerImage = headerImage;
+    }
+
+    /**
+     * @return the videoLink
+     */
+    public String getVideoLink() {
+        return videoLink;
+    }
+
+    /**
+     * @param videoLink the videoLink to set
+     */
+    public void setVideoLink(String videoLink) {
+        this.videoLink = videoLink;
     }
 
 

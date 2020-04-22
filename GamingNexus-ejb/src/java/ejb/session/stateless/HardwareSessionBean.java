@@ -56,6 +56,7 @@ public class HardwareSessionBean implements HardwareSessionBeanLocal {
     public HardwareSessionBean() {
     }
 
+    @Override
     public Hardware createNewHardware(Hardware newHardware, Long categoryId, List<Long> tagIds, Long CompanyId) throws ProductSkuCodeExistException, UnknownPersistenceException, InputDataValidationException, CreateNewProductException, CompanyNotFoundException {
         try {
             if (categoryId == null) {
@@ -244,14 +245,14 @@ public class HardwareSessionBean implements HardwareSessionBeanLocal {
             hardwareToUpdate.setAverageRating((hardware.getAverageRating()));
             hardwareToUpdate.setCartItems(hardware.getCartItems());
             hardwareToUpdate.setDeliverables(hardware.getDeliverables());
-            hardwareToUpdate.setManufactoringCountry(hardware.getManufactoringCountry());
+            hardwareToUpdate.setManufacturingCountry(hardware.getManufacturingCountry());
             hardwareToUpdate.setOwnedItems(hardware.getOwnedItems());
             hardwareToUpdate.setOwnedItems(hardware.getOwnedItems());
             hardwareToUpdate.setPromotions(hardware.getPromotions());
             hardwareToUpdate.setRatings(hardware.getRatings());
             hardwareToUpdate.setTags(hardware.getTags());
             hardwareToUpdate.setTechnicalspecification(hardware.getTechnicalspecification());
-            hardwareToUpdate.setWarrentyDescription(hardware.getWarrentyDescription());
+            hardwareToUpdate.setWarrantyDescription(hardware.getWarrantyDescription());
 
         } else {
             throw new ProductNotFoundException("Product ID not provided for product to be updated");
