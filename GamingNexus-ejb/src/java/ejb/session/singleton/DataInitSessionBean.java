@@ -96,11 +96,13 @@ public class DataInitSessionBean {
 
     @PostConstruct
     public void postConstruct() {
-        System.out.println("**************Entered Post construct");
-        //if (em.find(Game.class, 1l) == null) {
+        if (em.find(Game.class, 1l) == null) {
+            initializeData();
+            System.out.print("dataInit");
+            System.out.println("**************Entered Post construct");
 
-        this.initializeData();
-        //}
+        }
+
     }
 
     private void initializeData() {
@@ -108,19 +110,25 @@ public class DataInitSessionBean {
         try {
             System.out.println("**************Entered initialize data   ");
 
-            SystemAdmin systemAdmin = new SystemAdmin("123456", "addr 1", "email@hotmail.com", "Singapore", "admin1", "password");
+            SystemAdmin systemAdmin = new SystemAdmin("123456", "addr 1", "email@hotmail.com", "Singapore",
+                    "admin1", "password");
             systemAdminSessionBeanLocal.createNewSystemAdmin(systemAdmin);
-//            systemAdminSessionBeanLocal.createNewSystemAdmin(new SystemAdmin("Default", "System Admin2", "admin2", "password"));
+            // systemAdminSessionBeanLocal.createNewSystemAdmin(new SystemAdmin("Default",
+            // "System Admin2", "admin2", "password"));
 
-            Category categoryEntitySoftwareGame = categorySessionBeanLocal.createNewCategoryEntity(new Category("SoftwareGame", "Game"), null);
-            Category categoryEntitySoftwareTool = categorySessionBeanLocal.createNewCategoryEntity(new Category("SoftwareTool", "SoftwareTool"), null);
-            Category categoryEntityHardware = categorySessionBeanLocal.createNewCategoryEntity(new Category("Hardware", "Hardware"), null);
+            Category categoryEntitySoftwareGame = categorySessionBeanLocal
+                    .createNewCategoryEntity(new Category("SoftwareGame", "Game"), null);
+            Category categoryEntitySoftwareTool = categorySessionBeanLocal
+                    .createNewCategoryEntity(new Category("SoftwareTool", "SoftwareTool"), null);
+            Category categoryEntityHardware = categorySessionBeanLocal
+                    .createNewCategoryEntity(new Category("Hardware", "Hardware"), null);
 
             Tag tagEntityPopular = tagSessionBeanLocal.createNewTagEntity(new Tag("Popular",false));
             Tag tagEntityDiscount = tagSessionBeanLocal.createNewTagEntity(new Tag("Discount",false));
             Tag tagEntityNew = tagSessionBeanLocal.createNewTagEntity(new Tag("New",false));
             
             Tag tagEntityAction = tagSessionBeanLocal.createNewTagEntity(new Tag("Action",true));
+            
             Tag tagEntityAdventure = tagSessionBeanLocal.createNewTagEntity(new Tag("Adventure",true));
             Tag tagEntityCasual = tagSessionBeanLocal.createNewTagEntity(new Tag("Casual",true));
             Tag tagEntitySimulation = tagSessionBeanLocal.createNewTagEntity(new Tag("Simulation",true));
@@ -139,11 +147,16 @@ public class DataInitSessionBean {
             Tag tagEntityFunny = tagSessionBeanLocal.createNewTagEntity(new Tag("Funny",true));
             
 
-            Company company1 = companySessionBeanLocal.createNewCompany(new Company("123123", "Singapore", "company1@gmail.com", "Singapore", "company1", "password"));
-            Company company2 = companySessionBeanLocal.createNewCompany(new Company("1231234", "Singapore", "company2@gmail.com", "Singapore", "company2", "password"));
-            Company company3 = companySessionBeanLocal.createNewCompany(new Company("123223", "Singapore", "company3@gmail.com", "Singapore", "company3", "password"));
-            Company company4 = companySessionBeanLocal.createNewCompany(new Company("1232234", "Singapore", "company4@gmail.com", "Singapore", "company4", "password"));
-            Company company5 = companySessionBeanLocal.createNewCompany(new Company("123323", "Singapore", "company5@gmail.com", "Singapore", "company5", "password"));
+            Company company1 = companySessionBeanLocal.createNewCompany(new Company("123123", "Singapore",
+                    "company1@gmail.com", "Singapore", "company1", "password"));
+            Company company2 = companySessionBeanLocal.createNewCompany(new Company("1231234", "Singapore",
+                    "company2@gmail.com", "Singapore", "company2", "password"));
+            Company company3 = companySessionBeanLocal.createNewCompany(new Company("123223", "Singapore",
+                    "company3@gmail.com", "Singapore", "company3", "password"));
+            Company company4 = companySessionBeanLocal.createNewCompany(new Company("1232234", "Singapore",
+                    "company4@gmail.com", "Singapore", "company4", "password"));
+            Company company5 = companySessionBeanLocal.createNewCompany(new Company("123323", "Singapore",
+                    "company5@gmail.com", "Singapore", "company5", "password"));
 
             List<Long> tags = new ArrayList<>();
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
@@ -162,7 +175,9 @@ public class DataInitSessionBean {
             tags.add(tagEntityPopular.getTagId());
             tags.add(tagEntityFPS.getTagId());
             tags.add(tagEntitySingleplayer.getTagId());
-            Game cs = gameSessionBeanLocal.createNewGame(new Game(parentAdvisory, headerImage, name, description, computerRequirements, price, averageRating, releaseDate, sales),
+            Game cs = gameSessionBeanLocal.createNewGame(
+                    new Game(parentAdvisory, headerImage, name, description, computerRequirements,
+                            price, averageRating, releaseDate, sales),
                     categoryid, tags, company1.getUserId());
 
             name = "Portal";
@@ -178,7 +193,9 @@ public class DataInitSessionBean {
             tags = new ArrayList<>();
             tags.add(tagEntityPuzzle.getTagId());
             tags.add(tagEntitySingleplayer.getTagId());
-            Game portal = gameSessionBeanLocal.createNewGame(new Game(parentAdvisory, headerImage, name, description, computerRequirements, price, averageRating, releaseDate, sales),
+            Game portal = gameSessionBeanLocal.createNewGame(
+                    new Game(parentAdvisory, headerImage, name, description, computerRequirements,
+                            price, averageRating, releaseDate, sales),
                     categoryid, tags, company1.getUserId());
 
             name = "Dota 2";
@@ -195,7 +212,9 @@ public class DataInitSessionBean {
             tags.add(tagEntityPopular.getTagId());
             tags.add(tagEntityMultiplayer.getTagId());
             tags.add(tagEntityMOBA.getTagId());
-            Game dota2 = gameSessionBeanLocal.createNewGame(new Game(parentAdvisory, headerImage, name, description, computerRequirements, price, averageRating, releaseDate, sales),
+            Game dota2 = gameSessionBeanLocal.createNewGame(
+                    new Game(parentAdvisory, headerImage, name, description, computerRequirements,
+                            price, averageRating, releaseDate, sales),
                     categoryid, tags, company1.getUserId());
 
             name = "Team Fortress 2";
@@ -211,7 +230,9 @@ public class DataInitSessionBean {
             tags = new ArrayList<>();
             tags.add(tagEntityFPS.getTagId());
             tags.add(tagEntityMultiplayer.getTagId());
-            Game teamFortress2 = gameSessionBeanLocal.createNewGame(new Game(parentAdvisory, headerImage, name, description, computerRequirements, price, averageRating, releaseDate, sales),
+            Game teamFortress2 = gameSessionBeanLocal.createNewGame(
+                    new Game(parentAdvisory, headerImage, name, description, computerRequirements,
+                            price, averageRating, releaseDate, sales),
                     categoryid, tags, company1.getUserId());
 
             name = "Counter-Strike: Global Offensive";
@@ -228,7 +249,9 @@ public class DataInitSessionBean {
             tags.add(tagEntityPopular.getTagId());
             tags.add(tagEntityFPS.getTagId());
             tags.add(tagEntityMultiplayer.getTagId());
-            Game csgo = gameSessionBeanLocal.createNewGame(new Game(parentAdvisory, headerImage, name, description, computerRequirements, price, averageRating, releaseDate, sales),
+            Game csgo = gameSessionBeanLocal.createNewGame(
+                    new Game(parentAdvisory, headerImage, name, description, computerRequirements,
+                            price, averageRating, releaseDate, sales),
                     categoryid, tags, company1.getUserId());
 
             name = "Portal 2";
@@ -244,7 +267,9 @@ public class DataInitSessionBean {
             tags = new ArrayList<>();
             tags.add(tagEntityPuzzle.getTagId());
             tags.add(tagEntitySingleplayer.getTagId());
-            Game portal2 = gameSessionBeanLocal.createNewGame(new Game(parentAdvisory, headerImage, name, description, computerRequirements, price, averageRating, releaseDate, sales),
+            Game portal2 = gameSessionBeanLocal.createNewGame(
+                    new Game(parentAdvisory, headerImage, name, description, computerRequirements,
+                            price, averageRating, releaseDate, sales),
                     categoryid, tags, company1.getUserId());
 
             name = "Day of Defeat";
@@ -261,7 +286,9 @@ public class DataInitSessionBean {
             tags.add(tagEntityFPS.getTagId());
             tags.add(tagEntityMultiplayer.getTagId());
             tags.add(tagEntityAction.getTagId());
-            Game dayofdefeat = gameSessionBeanLocal.createNewGame(new Game(parentAdvisory, headerImage, name, description, computerRequirements, price, averageRating, releaseDate, sales),
+            Game dayofdefeat = gameSessionBeanLocal.createNewGame(
+                    new Game(parentAdvisory, headerImage, name, description, computerRequirements,
+                            price, averageRating, releaseDate, sales),
                     categoryid, tags, company1.getUserId());
 
             name = "Left 4 Dead";
@@ -279,7 +306,9 @@ public class DataInitSessionBean {
             tags.add(tagEntityMultiplayer.getTagId());
             tags.add(tagEntityAction.getTagId());
             tags.add(tagEntityZombies.getTagId());
-            Game left4dead = gameSessionBeanLocal.createNewGame(new Game(parentAdvisory, headerImage, name, description, computerRequirements, price, averageRating, releaseDate, sales),
+            Game left4dead = gameSessionBeanLocal.createNewGame(
+                    new Game(parentAdvisory, headerImage, name, description, computerRequirements,
+                            price, averageRating, releaseDate, sales),
                     categoryid, tags, company1.getUserId());
 
             name = "Left 4 Dead 2";
@@ -297,7 +326,9 @@ public class DataInitSessionBean {
             tags.add(tagEntityMultiplayer.getTagId());
             tags.add(tagEntityAction.getTagId());
             tags.add(tagEntityZombies.getTagId());
-            Game left4dead2 = gameSessionBeanLocal.createNewGame(new Game(parentAdvisory, headerImage, name, description, computerRequirements, price, averageRating, releaseDate, sales),
+            Game left4dead2 = gameSessionBeanLocal.createNewGame(
+                    new Game(parentAdvisory, headerImage, name, description, computerRequirements,
+                            price, averageRating, releaseDate, sales),
                     categoryid, tags, company1.getUserId());
 
             name = "DOOM II: Hell on Earth";
@@ -313,7 +344,9 @@ public class DataInitSessionBean {
             tags = new ArrayList<>();
             tags.add(tagEntityFPS.getTagId());
             tags.add(tagEntityAction.getTagId());
-            Game doom2 = gameSessionBeanLocal.createNewGame(new Game(parentAdvisory, headerImage, name, description, computerRequirements, price, averageRating, releaseDate, sales),
+            Game doom2 = gameSessionBeanLocal.createNewGame(
+                    new Game(parentAdvisory, headerImage, name, description, computerRequirements,
+                            price, averageRating, releaseDate, sales),
                     categoryid, tags, company1.getUserId());
 
             name = "Prototype";
@@ -331,7 +364,9 @@ public class DataInitSessionBean {
             tags.add(tagEntityAdventure.getTagId());
             tags.add(tagEntityOpenworld.getTagId());
             tags.add(tagEntitySingleplayer.getTagId());
-            Game prototype = gameSessionBeanLocal.createNewGame(new Game(parentAdvisory, headerImage, name, description, computerRequirements, price, averageRating, releaseDate, sales),
+            Game prototype = gameSessionBeanLocal.createNewGame(
+                    new Game(parentAdvisory, headerImage, name, description, computerRequirements,
+                            price, averageRating, releaseDate, sales),
                     categoryid, tags, company1.getUserId());
 
             name = "Sid Meier's Civilization VI";
@@ -348,7 +383,9 @@ public class DataInitSessionBean {
             tags.add(tagEntityStrategy.getTagId());
             tags.add(tagEntityMultiplayer.getTagId());
             tags.add(tagEntitySingleplayer.getTagId());
-            Game civVI = gameSessionBeanLocal.createNewGame(new Game(parentAdvisory, headerImage, name, description, computerRequirements, price, averageRating, releaseDate, sales),
+            Game civVI = gameSessionBeanLocal.createNewGame(
+                    new Game(parentAdvisory, headerImage, name, description, computerRequirements,
+                            price, averageRating, releaseDate, sales),
                     categoryid, tags, company1.getUserId());
 
             name = "Sid Meier's Civilization V";
@@ -365,7 +402,9 @@ public class DataInitSessionBean {
             tags.add(tagEntityStrategy.getTagId());
             tags.add(tagEntityMultiplayer.getTagId());
             tags.add(tagEntitySingleplayer.getTagId());
-            Game civV = gameSessionBeanLocal.createNewGame(new Game(parentAdvisory, headerImage, name, description, computerRequirements, price, averageRating, releaseDate, sales),
+            Game civV = gameSessionBeanLocal.createNewGame(
+                    new Game(parentAdvisory, headerImage, name, description, computerRequirements,
+                            price, averageRating, releaseDate, sales),
                     categoryid, tags, company1.getUserId());
 
             name = "Sid Meier's Civilization IV";
@@ -382,7 +421,9 @@ public class DataInitSessionBean {
             tags.add(tagEntityStrategy.getTagId());
             tags.add(tagEntityMultiplayer.getTagId());
             tags.add(tagEntitySingleplayer.getTagId());
-            Game civIV = gameSessionBeanLocal.createNewGame(new Game(parentAdvisory, headerImage, name, description, computerRequirements, price, averageRating, releaseDate, sales),
+            Game civIV = gameSessionBeanLocal.createNewGame(
+                    new Game(parentAdvisory, headerImage, name, description, computerRequirements,
+                            price, averageRating, releaseDate, sales),
                     categoryid, tags, company1.getUserId());
 
             name = "Grand Theft Auto: Vice City";
@@ -399,7 +440,9 @@ public class DataInitSessionBean {
             tags.add(tagEntityOpenworld.getTagId());
             tags.add(tagEntityAction.getTagId());
             tags.add(tagEntitySingleplayer.getTagId());
-            Game gtavicecity = gameSessionBeanLocal.createNewGame(new Game(parentAdvisory, headerImage, name, description, computerRequirements, price, averageRating, releaseDate, sales),
+            Game gtavicecity = gameSessionBeanLocal.createNewGame(
+                    new Game(parentAdvisory, headerImage, name, description, computerRequirements,
+                            price, averageRating, releaseDate, sales),
                     categoryid, tags, company1.getUserId());
 
             name = "Grand Theft Auto V";
@@ -415,7 +458,9 @@ public class DataInitSessionBean {
             tags = new ArrayList<>();
             tags.add(tagEntityOpenworld.getTagId());
             tags.add(tagEntityAction.getTagId());
-            Game gtaV = gameSessionBeanLocal.createNewGame(new Game(parentAdvisory, headerImage, name, description, computerRequirements, price, averageRating, releaseDate, sales),
+            Game gtaV = gameSessionBeanLocal.createNewGame(
+                    new Game(parentAdvisory, headerImage, name, description, computerRequirements,
+                            price, averageRating, releaseDate, sales),
                     categoryid, tags, company1.getUserId());
 
             name = "Call of Duty: Black Ops III";
@@ -432,7 +477,9 @@ public class DataInitSessionBean {
             tags.add(tagEntityMultiplayer.getTagId());
             tags.add(tagEntityAction.getTagId());
             tags.add(tagEntityFPS.getTagId());
-            Game callofdutyblackops3 = gameSessionBeanLocal.createNewGame(new Game(parentAdvisory, headerImage, name, description, computerRequirements, price, averageRating, releaseDate, sales),
+            Game callofdutyblackops3 = gameSessionBeanLocal.createNewGame(
+                    new Game(parentAdvisory, headerImage, name, description, computerRequirements,
+                            price, averageRating, releaseDate, sales),
                     categoryid, tags, company1.getUserId());
 
             name = "Half-Life";
@@ -449,7 +496,9 @@ public class DataInitSessionBean {
             tags.add(tagEntityAction.getTagId());
             tags.add(tagEntityFPS.getTagId());
             tags.add(tagEntitySingleplayer.getTagId());
-            Game halflife = gameSessionBeanLocal.createNewGame(new Game(parentAdvisory, headerImage, name, description, computerRequirements, price, averageRating, releaseDate, sales),
+            Game halflife = gameSessionBeanLocal.createNewGame(
+                    new Game(parentAdvisory, headerImage, name, description, computerRequirements,
+                            price, averageRating, releaseDate, sales),
                     categoryid, tags, company1.getUserId());
 
             name = "Half-Life 2";
@@ -466,7 +515,9 @@ public class DataInitSessionBean {
             tags.add(tagEntityAction.getTagId());
             tags.add(tagEntityFPS.getTagId());
             tags.add(tagEntitySingleplayer.getTagId());
-            Game halflife2 = gameSessionBeanLocal.createNewGame(new Game(parentAdvisory, headerImage, name, description, computerRequirements, price, averageRating, releaseDate, sales),
+            Game halflife2 = gameSessionBeanLocal.createNewGame(
+                    new Game(parentAdvisory, headerImage, name, description, computerRequirements,
+                            price, averageRating, releaseDate, sales),
                     categoryid, tags, company1.getUserId());
 
             name = "Plants vs. Zombies: Game of the Year";
@@ -483,7 +534,9 @@ public class DataInitSessionBean {
             tags.add(tagEntityZombies.getTagId());
             tags.add(tagEntityStrategy.getTagId());
             tags.add(tagEntitySingleplayer.getTagId());
-            Game plantsvszombies = gameSessionBeanLocal.createNewGame(new Game(parentAdvisory, headerImage, name, description, computerRequirements, price, averageRating, releaseDate, sales),
+            Game plantsvszombies = gameSessionBeanLocal.createNewGame(
+                    new Game(parentAdvisory, headerImage, name, description, computerRequirements,
+                            price, averageRating, releaseDate, sales),
                     categoryid, tags, company1.getUserId());
 
             name = "Darksiders Warmastered Edition";
@@ -839,35 +892,66 @@ public class DataInitSessionBean {
 
             List<Long> tagIdsEmpty = new ArrayList<>();
 
-            Customer customer1 = customerSessionBeanlocal.createCustomer(new Customer("7654321", "Singapore", "customer1@gmail.com", "Singapore", "customer1", "password"));
-            Customer customer2 = customerSessionBeanlocal.createCustomer(new Customer("76543210", "Singapore", "customer2@gmail.com", "Singapore", "customer2", "password"));
-            Customer customer3 = customerSessionBeanlocal.createCustomer(new Customer("765432101", "Singapore", "customer3@gmail.com", "Singapore", "customer3", "password"));
-            Customer customer4 = customerSessionBeanlocal.createCustomer(new Customer("765432102", "Singapore", "customer4@gmail.com", "Singapore", "customer4", "password"));
-            Customer customer5 = customerSessionBeanlocal.createCustomer(new Customer("765432103", "Singapore", "customer5@gmail.com", "Singapore", "customer5", "password"));
+            Customer customer1 = customerSessionBeanlocal.createCustomer(new Customer("7654321",
+                    "Singapore", "customer1@gmail.com", "Singapore", "customer1", "password"));
+            Customer customer2 = customerSessionBeanlocal.createCustomer(new Customer("76543210",
+                    "Singapore", "customer2@gmail.com", "Singapore", "customer2", "password"));
+            Customer customer3 = customerSessionBeanlocal.createCustomer(new Customer("765432101",
+                    "Singapore", "customer3@gmail.com", "Singapore", "customer3", "password"));
+            Customer customer4 = customerSessionBeanlocal.createCustomer(new Customer("765432102",
+                    "Singapore", "customer4@gmail.com", "Singapore", "customer4", "password"));
+            Customer customer5 = customerSessionBeanlocal.createCustomer(new Customer("765432103",
+                    "Singapore", "customer5@gmail.com", "Singapore", "customer5", "password"));
 
-            Hardware valveindex = hardwareSessionBeanLocal.createNewHardware(new Hardware("1 year", "High responseiiveness, high display resolution",
-                    "America", "Valve Index", "Virtual Reality Headset", "windows 10 8 gigs of ram 1 gig of free space", 100, 4.3), categoryEntityHardware.getCategoryId(), tagIdsPopular, company1.getUserId());
+            Hardware valveindex = hardwareSessionBeanLocal.createNewHardware(
+                    new Hardware("1 year", "High responseiiveness, high display resolution",
+                            "America", "Valve Index", "Virtual Reality Headset",
+                            "windows 10 8 gigs of ram 1 gig of free space", 100, 4.3),
+                    categoryEntityHardware.getCategoryId(), tagIdsPopular, company1.getUserId());
 
-            Hardware hardware2 = hardwareSessionBeanLocal.createNewHardware(new Hardware("2 year", "2x2x2", "America", "hardware2", "key board", "NA", 110, 1.5), categoryEntityHardware.getCategoryId(), tagIdsPopular, company2.getUserId());
-            Hardware hardware3 = hardwareSessionBeanLocal.createNewHardware(new Hardware("3 year", "2x2x2", "America", "hardware3", "monitor", "NA", 120, 2.5), categoryEntityHardware.getCategoryId(), tagIdsPopular, company3.getUserId());
-            Hardware hardware4 = hardwareSessionBeanLocal.createNewHardware(new Hardware("1 year", "2x2x2", "America", "hardware4", "controller", "NA", 130, 3.5), categoryEntityHardware.getCategoryId(), tagIdsPopular, company4.getUserId());
-            Hardware hardware5 = hardwareSessionBeanLocal.createNewHardware(new Hardware("2 year", "2x2x2", "America", "hardware5", "hard disk", "NA", 140, 4.5), categoryEntityHardware.getCategoryId(), tagIdsPopular, company5.getUserId());
+            Hardware hardware2 = hardwareSessionBeanLocal.createNewHardware(
+                    new Hardware("2 year", "2x2x2", "America", "hardware2", "key board", "NA", 110,
+                            1.5),
+                    categoryEntityHardware.getCategoryId(), tagIdsPopular, company2.getUserId());
+            Hardware hardware3 = hardwareSessionBeanLocal.createNewHardware(
+                    new Hardware("3 year", "2x2x2", "America", "hardware3", "monitor", "NA", 120,
+                            2.5),
+                    categoryEntityHardware.getCategoryId(), tagIdsPopular, company3.getUserId());
+            Hardware hardware4 = hardwareSessionBeanLocal.createNewHardware(
+                    new Hardware("1 year", "2x2x2", "America", "hardware4", "controller", "NA", 130,
+                            3.5),
+                    categoryEntityHardware.getCategoryId(), tagIdsPopular, company4.getUserId());
+            Hardware hardware5 = hardwareSessionBeanLocal.createNewHardware(
+                    new Hardware("2 year", "2x2x2", "America", "hardware5", "hard disk", "NA", 140,
+                            4.5),
+                    categoryEntityHardware.getCategoryId(), tagIdsPopular, company5.getUserId());
 
-            OtherSoftware softwaretool1 = otherSoftwareSessionBeanLocal.createNewOtherSoftware(new OtherSoftware("Steam", "IDE", "Windows 7", 1, 4.5), categoryEntitySoftwareTool.getCategoryId(), tagIdsEmpty, company1.getUserId());
-            OtherSoftware softwaretool2 = otherSoftwareSessionBeanLocal.createNewOtherSoftware(new OtherSoftware("software2", "IDE", "No requirements", 30, 5), categoryEntitySoftwareTool.getCategoryId(), tagIdsEmpty, company2.getUserId());
-            OtherSoftware softwaretool3 = otherSoftwareSessionBeanLocal.createNewOtherSoftware(new OtherSoftware("software3", "IDE", "No requirements", 40, 5), categoryEntitySoftwareTool.getCategoryId(), tagIdsEmpty, company3.getUserId());
-            OtherSoftware softwaretool4 = otherSoftwareSessionBeanLocal.createNewOtherSoftware(new OtherSoftware("software4", "IDE", "No requirements", 50, 5), categoryEntitySoftwareTool.getCategoryId(), tagIdsEmpty, company4.getUserId());
-            OtherSoftware softwaretool5 = otherSoftwareSessionBeanLocal.createNewOtherSoftware(new OtherSoftware("software5", "IDE", "No requirements", 60, 5), categoryEntitySoftwareTool.getCategoryId(), tagIdsEmpty, company5.getUserId());
+            OtherSoftware softwaretool1 = otherSoftwareSessionBeanLocal.createNewOtherSoftware(
+                    new OtherSoftware("Steam", "IDE", "Windows 7", 1, 4.5),
+                    categoryEntitySoftwareTool.getCategoryId(), tagIdsEmpty, company1.getUserId());
+            OtherSoftware softwaretool2 = otherSoftwareSessionBeanLocal.createNewOtherSoftware(
+                    new OtherSoftware("software2", "IDE", "No requirements", 30, 5),
+                    categoryEntitySoftwareTool.getCategoryId(), tagIdsEmpty, company2.getUserId());
+            OtherSoftware softwaretool3 = otherSoftwareSessionBeanLocal.createNewOtherSoftware(
+                    new OtherSoftware("software3", "IDE", "No requirements", 40, 5),
+                    categoryEntitySoftwareTool.getCategoryId(), tagIdsEmpty, company3.getUserId());
+            OtherSoftware softwaretool4 = otherSoftwareSessionBeanLocal.createNewOtherSoftware(
+                    new OtherSoftware("software4", "IDE", "No requirements", 50, 5),
+                    categoryEntitySoftwareTool.getCategoryId(), tagIdsEmpty, company4.getUserId());
+            OtherSoftware softwaretool5 = otherSoftwareSessionBeanLocal.createNewOtherSoftware(
+                    new OtherSoftware("software5", "IDE", "No requirements", 60, 5),
+                    categoryEntitySoftwareTool.getCategoryId(), tagIdsEmpty, company5.getUserId());
 
-            Promotion promo1 = promotionSessionBean.createPromotion(new Promotion("VALVE SALE", "YAAAY ANOTHER SALLLLEE",
-                    (double) 10, (double) 0, LocalDateTime.now(),
-                    LocalDateTime.now().plusDays(10),
-                    new ArrayList<>(Arrays.asList(csgo))));
+            Promotion promo1 = promotionSessionBean.createPromotion(new Promotion("VALVE SALE",
+                    "YAAAY ANOTHER SALLLLEE", (double) 10, (double) 0, LocalDateTime.now(),
+                    LocalDateTime.now().plusDays(10), new ArrayList<>(Arrays.asList(csgo))));
 
             csgo.getPromotions().add(promo1);
             try {
-                gameSessionBeanLocal.updateGame(csgo, csgo.getCategory().getCategoryId(), tagIdsPopularDiscount);
-            } catch (CategoryNotFoundException | ProductNotFoundException | TagNotFoundException | UpdateProductException ex) {
+                gameSessionBeanLocal.updateGame(csgo, csgo.getCategory().getCategoryId(),
+                        tagIdsPopularDiscount);
+            } catch (CategoryNotFoundException | ProductNotFoundException | TagNotFoundException
+                    | UpdateProductException ex) {
                 ex.printStackTrace();
             }
 
@@ -880,9 +964,12 @@ public class DataInitSessionBean {
             company1.setProducts(company1Products);
             companySessionBeanLocal.updateCompany(company1);
 
-        } catch (SystemAdminUsernameExistException | UnknownPersistenceException | InputDataValidationException | CreateNewCategoryException | CreateNewTagException | CreateNewProductException | ProductSkuCodeExistException | CompanyNotFoundException | CompanyUsernameExistException | CustomerUsernameExistException ex) {
+        } catch (SystemAdminUsernameExistException | UnknownPersistenceException | InputDataValidationException
+                | CreateNewCategoryException | CreateNewTagException | CreateNewProductException
+                | ProductSkuCodeExistException | CompanyNotFoundException
+                | CompanyUsernameExistException | CustomerUsernameExistException ex) {
             ex.printStackTrace();
         }
-    }
 
+}
 }

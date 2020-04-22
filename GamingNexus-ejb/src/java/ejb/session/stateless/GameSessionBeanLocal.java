@@ -30,9 +30,7 @@ public interface GameSessionBeanLocal {
 
     public List<Game> searchGamesByName(String searchString);
 
-    public List<Product> filterProductsByCategory(Long categoryId) throws CategoryNotFoundException;
-
-    public List<Product> filterProductsByTags(List<Long> tagIds, String condition);
+    public List<Game> filterGamesByTags(List<Long> tagIds, String condition);
 
     public Game createNewGame(Game newGame, Long categoryId, List<Long> tagIds, Long CompanyId) throws ProductSkuCodeExistException, UnknownPersistenceException, InputDataValidationException, CreateNewProductException, CompanyNotFoundException;
 
