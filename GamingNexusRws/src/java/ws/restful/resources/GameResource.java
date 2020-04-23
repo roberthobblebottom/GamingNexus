@@ -13,6 +13,7 @@ import entity.GameAccount;
 import entity.Promotion;
 import entity.Rating;
 import entity.Tag;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -25,11 +26,13 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PUT;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 import ws.restful.model.ErrorRsp;
 import ws.restful.model.RetrieveAllGamesRsp;
+import ws.restful.model.TagIdListReq;
 
 /**
  * REST Web Service
@@ -56,6 +59,7 @@ public class GameResource {
      *
      * @return an instance of java.lang.String
      */
+    @Path("retrieveAllGames")
     @GET
     @Consumes(MediaType.TEXT_PLAIN)
     @Produces(MediaType.APPLICATION_JSON)
@@ -103,6 +107,54 @@ public class GameResource {
      *
      * @param content representation for the resource
      */
+    //    
+    @Path("filterGamesByTags")
+    @GET
+    @Consumes(MediaType.TEXT_PLAIN)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response filterGamesByTags(@QueryParam("tagId") Integer tagId) {
+        try {
+            
+            List<Long> tagIds = new ArrayList<>();
+            tagIds.add(tagId.longValue());
+            
+            List<Game> games = gameSessionBean.filterGamesByTags(tagIds, "AND");
+
+            for (Game game : games) {
+                if (game.getCategory().getParentCategory() != null) {
+                    game.getCategory().getParentCategory().getSubCategories().clear();
+                }
+                game.getCategory().getProducts().clear();
+                for (Tag tagEntity : game.getTags()) {
+                    tagEntity.getProducts().clear();
+                }
+                for (Promotion promotion : game.getPromotions()) {
+                    promotion.getProducts().clear();
+                }
+                game.getCompany().getProducts().clear();
+                for (Rating rating : game.getRatings()) {
+                    rating.setProduct(null);
+                }
+                for (CartItem cartItem : game.getCartItems()) {
+                    cartItem.setProduct(null);
+                }
+                for (Forum forum : game.getForums()) {
+                    forum.setProduct(null);
+                }
+                for (GameAccount gameAccount : game.getGameAccounts()) {
+                    gameAccount.setGame(null);
+                }
+            }
+
+            return Response.status(Status.OK).entity(new RetrieveAllGamesRsp(games)).build();
+        } catch (Exception ex) {
+            ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());
+
+            return Response.status(Status.INTERNAL_SERVER_ERROR).entity(errorRsp).build();
+        }
+    }
+    
+    
     @PUT
     @Consumes(MediaType.APPLICATION_XML)
     public void putXml(String content
