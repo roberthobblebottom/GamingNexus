@@ -32,6 +32,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 import ws.restful.model.ErrorRsp;
 import ws.restful.model.RetrieveAllGamesRsp;
+import ws.restful.model.RetrieveOneGameRsp;
 import ws.restful.model.TagIdListReq;
 
 /**
@@ -95,6 +96,48 @@ public class GameResource {
             }
 
             return Response.status(Status.OK).entity(new RetrieveAllGamesRsp(games)).build();
+        } catch (Exception ex) {
+            ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());
+
+            return Response.status(Status.INTERNAL_SERVER_ERROR).entity(errorRsp).build();
+        }
+    }
+    
+    
+    @Path("retrieveGameById")
+    @GET
+    @Consumes(MediaType.TEXT_PLAIN)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response retrieveGameById(@QueryParam("gameId") Integer gameId) {
+        try {
+
+            Game game = gameSessionBean.retrieveGamebyId(Long.valueOf(gameId.longValue()));
+
+                if (game.getCategory().getParentCategory() != null) {
+                    game.getCategory().getParentCategory().getSubCategories().clear();
+                }
+                game.getCategory().getProducts().clear();
+                for (Tag tagEntity : game.getTags()) {
+                    tagEntity.getProducts().clear();
+                }
+                for (Promotion promotion : game.getPromotions()) {
+                    promotion.getProducts().clear();
+                }
+                game.getCompany().getProducts().clear();
+                for (Rating rating : game.getRatings()) {
+                    rating.setProduct(null);
+                }
+                for (CartItem cartItem : game.getCartItems()) {
+                    cartItem.setProduct(null);
+                }
+                for (Forum forum : game.getForums()) {
+                    forum.setProduct(null);
+                }
+                for (GameAccount gameAccount : game.getGameAccounts()) {
+                    gameAccount.setGame(null);
+                }
+ 
+            return Response.status(Status.OK).entity(new RetrieveOneGameRsp(game)).build();
         } catch (Exception ex) {
             ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());
 
