@@ -23,7 +23,7 @@ public class Game extends Product implements Serializable {
     private Boolean parentAdvisory;
     private List<String> gamePicturesURLs;
     private List<String> gameTrailersURLS;
-    private String headerImage;
+    
 
 
     @OneToMany(mappedBy = "game")
@@ -33,11 +33,12 @@ public class Game extends Product implements Serializable {
         super();
         gameAccounts = new ArrayList<>();
     }
-
-    public Game(Boolean parentAdvisory, String headerImage, String name, String description, String computerRequirements, double price, double averageRating, LocalDate releaseDate, double sales) {
-        super(name, description, computerRequirements, price, averageRating, releaseDate, sales);
+    
+    public Game(Boolean parentAdvisory, String headerImage, String videoLink, String name, String description, String computerRequirements, double price, 
+            double averageRating, LocalDate releaseDate, double sales) {
+        
+        super(name, description, computerRequirements, price, averageRating, releaseDate, sales, headerImage, videoLink);
         this.parentAdvisory = parentAdvisory;
-        this.headerImage = headerImage;
     }
 
 
@@ -83,19 +84,7 @@ public class Game extends Product implements Serializable {
         this.gameAccounts = gameAccounts;
     }
 
-    /**
-     * @return the headerImage
-     */
-    public String getHeaderImage() {
-        return headerImage;
-    }
 
-    /**
-     * @param headerImage the headerImage to set
-     */
-    public void setHeaderImage(String headerImage) {
-        this.headerImage = headerImage;
-    }
 
     /**
      * @return the parentAdvisory

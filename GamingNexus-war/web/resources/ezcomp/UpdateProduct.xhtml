@@ -12,13 +12,13 @@
     <cc:implementation>
         <h:form id="formUpdateProduct">
             <p:dialog id="dialogUpdateProduct"  widgetVar="dialogUpdateProduct" 
-                      header="Update Product Detail" closable="true" >
-                <p:panelGrid>
-                    <p:row>
-                        <p:column>
+                      header="Update Product Detail" closable="true" appendTo = "@(body)">
+                <p:panelGrid >
+                    <p:row >
+                        <p:column >
                             <h:outputText value="Product ID" />
                         </p:column>
-                        <p:column>
+                        <p:column >
                             <h:outputText value="#{companyProductManagedBean.viewProductManagedBean.
                                                    productToViewInDetails.productId}" />
                         </p:column>
@@ -28,16 +28,16 @@
                             <h:outputText value="Name" />
                         </p:column>
                         <p:column>
-                            <p:inputText id="name" value="#{companyProductManagedBean.viewProductManagedBean.productToViewInDetails.name}" >
+                            <p:inputText id="name" value="#{companyProductManagedBean.viewProductManagedBean.productToViewInDetails.name}">
                                 <f:validateLength minimum="1" maximum="100" >
                                     <p:ajax event="keyup" update="nameValidation" process="@this"/> 
 
                                 </f:validateLength>
-                            </p:inputText>/>
+                            </p:inputText>
                         </p:column>
-                        <p:column>
+                     <p:column>
                             <p:messages id="nameValidation" for ="name" />
-                        </p:column>   
+                        </p:column>  
                     </p:row>
 
                     <p:row>
@@ -45,7 +45,7 @@
                             <h:outputText value="Description" />
                         </p:column>
                         <p:column>
-                            <p:inputTextarea id = "descriptionUpdate" rows="5" cols="30" counter="displayUpdate" 
+                            <p:inputTextarea id = "descriptionUpdate" rows="7" cols="150" counter="displayUpdate" 
                                              maxlength="1000" counterTemplate="{0} characters remaining." autoResize="true" 
                                              value="#{companyProductManagedBean.viewProductManagedBean.productToViewInDetails.description}" />
                             <br/>
@@ -58,7 +58,7 @@
                             <p:outputLabel for="computerRequirements" value="Computer Requirements" style="font-weight: bold;"/>               
                         </p:column>
                         <p:column>
-                            <p:inputTextarea id = "computerRequirements" rows="5" cols="30" counter="display2" maxlength="1000" 
+                            <p:inputTextarea id = "computerRequirements" rows="5" cols="110" counter="display2" maxlength="1000" 
                                              counterTemplate="{0} characters remaining." autoResize="true" 
                                              value="#{companyProductManagedBean.newOtherSoftware.computerRequirements}" />
                             <br />
@@ -81,7 +81,7 @@
                                     <p:ajax event="keyup" update="priceValidation" process="@this"/> 
 
                                 </f:validateDoubleRange>
-                            </p:inputText>/>
+                            </p:inputText>
                         </p:column>
                         <p:column>
                             <p:message id="priceValidation" for="price"/>
@@ -177,10 +177,9 @@
                         <p:column >
                             <p:selectOneMenu id="parentAdvisory" style="width:125px"
                                              value="#{companyProductManagedBean.viewProductManagedBean.gameToViewInDetails.parentAdvisory}" 
-                                             required="true" requiredMessage="Parent Adisory is required">
-                                <f:selectItem  itemValue="G" itemLabel="G"/>
-                                <f:selectItem itemValue="Teen" itemLabel="Teen"/>
-                                <f:selectItem itemValue="R" itemLabel="R"/>
+                                             required="true" requiredMessage="Parent Advisory is required">
+                                <f:selectItem itemValue="Above 18" itemLabel="Above 18"/>
+                                <f:selectItem itemValue="None" itemLabel="None"/>
 
                             </p:selectOneMenu>  
                         </p:column>
@@ -192,20 +191,20 @@
 
                     <p:row rendered="#{companyProductManagedBean.viewProductManagedBean.hardwareToViewInDetails != null}">
                         <p:column>
-                            <h:outputText value="Manufactoring Country" 
+                            <h:outputText value="Manufacturing Country" 
                                           />
                         </p:column>
                         <p:column >
-                            <p:inputText id = "manufactoringCountry" 
-                                         value="#{companyProductManagedBean.viewProductManagedBean.hardwareToViewInDetails.manufactoringCountry}"         >
+                            <p:inputText id = "manufacturingCountry" 
+                                         value="#{companyProductManagedBean.viewProductManagedBean.hardwareToViewInDetails.manufacturingCountry}"         >
                                 <f:validateLength minimum="0" maximum="300">
-                                    <p:ajax event="keyup" update="manufactoringCountryValidation" process="@this"/> 
+                                    <p:ajax event="keyup" update="manufacturingCountryValidation" process="@this"/> 
 
                                 </f:validateLength>
                             </p:inputText>
                         </p:column>
                         <p:column>
-                            <p:message id="manufactoringCountryValidation" for="manufactoringCountry"/>
+                            <p:message id="manufacturingCountryValidation" for="manufacturingCountry"/>
                         </p:column>
 
                     </p:row> 
@@ -231,18 +230,18 @@
 
                     <p:row rendered="#{companyProductManagedBean.viewProductManagedBean.hardwareToViewInDetails != null}">
                         <p:column>
-                            <h:outputText value="Warrenty Description" 
+                            <h:outputText value="Warranty Description" 
                                           />
                         </p:column>
                         <p:column >
-                            <p:inputTextarea id = "warretyDescription" rows="5" cols="30" counter="WarrentDescriptionDisplay" 
+                            <p:inputTextarea id = "warrantyDescription" rows="5" cols="30" counter="WarrantDescriptionDisplay" 
                                              maxlength="1000" counterTemplate="{0} characters remaining." autoResize="true" 
-                                             value="#{companyProductManagedBean.viewProductManagedBean.hardwareToViewInDetails.warrentyDescription}" />
+                                             value="#{companyProductManagedBean.viewProductManagedBean.hardwareToViewInDetails.warrantyDescription}" />
                             <br/>
-                            <h:outputText id="WarrentDescriptionDisplay" />
+                            <h:outputText id="WarrantDescriptionDisplay" />
                         </p:column>
                         <p:column>
-                            <p:message for="warretyDescription"/>
+                            <p:message for="warrantyDescription"/>
                         </p:column>
                     </p:row> 
                     <p:row>

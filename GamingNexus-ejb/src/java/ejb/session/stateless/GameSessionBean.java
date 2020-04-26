@@ -69,6 +69,7 @@ public class GameSessionBean implements GameSessionBeanLocal {
             }
             Company company = companySessionBeanLocal.retrieveCompanyById(categoryId);
             
+            
             em.persist(newGame);
             newGame.setCategory(category);
             newGame.setCompany(company);

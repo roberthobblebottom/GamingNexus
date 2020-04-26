@@ -31,6 +31,8 @@ public class Tag implements Serializable {
     @Size(min = 1, max = 50)
     private String tagName;
     
+    private boolean isGameTag;
+    
     @ManyToMany
     private List<Product> products;
 
@@ -38,9 +40,10 @@ public class Tag implements Serializable {
         products = new ArrayList<>();
     }
 
-    public Tag(String tagName) {
+    public Tag(String tagName, boolean isGameTag) {
         this();
         this.tagName = tagName;
+        this.isGameTag = isGameTag;
     }
 
     public Long getTagId() {
@@ -102,6 +105,20 @@ public class Tag implements Serializable {
      */
     public void setProducts(List<Product> products) {
         this.products = products;
+    }
+
+    /**
+     * @return the isGameTag
+     */
+    public boolean isIsGameTag() {
+        return isGameTag;
+    }
+
+    /**
+     * @param isGameTag the isGameTag to set
+     */
+    public void setIsGameTag(boolean isGameTag) {
+        this.isGameTag = isGameTag;
     }
 
 }
