@@ -235,12 +235,22 @@ public List<Product> filterProductsByCategory(Long categoryId) throws CategoryNo
                     productEntityToUpdate.addTag(tagEntity);
                 }
             }
-            productEntityToUpdate.setName(productEntity.getName());
-            productEntityToUpdate.setDescription(productEntity.getDescription());
-            productEntityToUpdate.setComputerRequirements(productEntity.getComputerRequirements());
-            productEntityToUpdate.setPrice(productEntity.getPrice());
-            productEntityToUpdate.setCompany(productEntity.getCompany());
-            productEntityToUpdate.setAverageRating((productEntity.getAverageRating()));
+            hardwareToUpdate.setName(hardware.getName());
+            hardwareToUpdate.setDescription(hardware.getDescription());
+            hardwareToUpdate.setComputerRequirements(hardware.getComputerRequirements());
+            hardwareToUpdate.setPrice(hardware.getPrice());
+            hardwareToUpdate.setCompany(hardware.getCompany());
+            hardwareToUpdate.setAverageRating((hardware.getAverageRating()));
+            hardwareToUpdate.setDeliverables(hardware.getDeliverables());
+            hardwareToUpdate.setManufacturingCountry(hardware.getManufacturingCountry());
+            hardwareToUpdate.setOwnedItems(hardware.getOwnedItems());
+            hardwareToUpdate.setOwnedItems(hardware.getOwnedItems());
+            hardwareToUpdate.setPromotions(hardware.getPromotions());
+            hardwareToUpdate.setRatings(hardware.getRatings());
+            hardwareToUpdate.setTags(hardware.getTags());
+            hardwareToUpdate.setTechnicalspecification(hardware.getTechnicalspecification());
+            hardwareToUpdate.setWarrantyDescription(hardware.getWarrantyDescription());
+
         } else {
             throw new ProductNotFoundException("Product ID not provided for product to be updated");
         }
@@ -271,5 +281,16 @@ public List<Product> filterProductsByCategory(Long categoryId) throws CategoryNo
 
             return productEntities;
         }
+    }
+    
+    public void lazyLoadHardware(Hardware hardware) {
+        hardware.getCompany();
+        hardware.getCategory();
+        hardware.getTags().size();
+        hardware.getPromotions().size();
+        hardware.getRatings().size();
+        hardware.getOwnedItems().size();
+        hardware.getForums().size();
+        hardware.getDeliverables().size();
     }
 }

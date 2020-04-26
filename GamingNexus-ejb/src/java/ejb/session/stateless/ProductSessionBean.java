@@ -152,7 +152,8 @@ public class ProductSessionBean implements ProductSessionBeanLocal {
 
     public void lazyLoadGame(Game game) {
         game.getTags().size();
-        game.getCartItems().size();
+        game.getPromotions().size();
+        game.getRatings().size();
         game.getOwnedItems().size();
         game.getPromotions().size();
         game.getRatings().size();
@@ -161,7 +162,8 @@ public class ProductSessionBean implements ProductSessionBeanLocal {
 
     public void lazyLoadOtherSoftware(OtherSoftware otherSoftware) {
         otherSoftware.getTags().size();
-        otherSoftware.getCartItems().size();
+        otherSoftware.getPromotions().size();
+        otherSoftware.getRatings().size();
         otherSoftware.getOwnedItems().size();
         otherSoftware.getPromotions().size();
         otherSoftware.getRatings().size();
@@ -169,7 +171,6 @@ public class ProductSessionBean implements ProductSessionBeanLocal {
 
     public void lazyLoadHardware(Hardware hardware) {
         hardware.getTags().size();
-        hardware.getCartItems().size();
         hardware.getOwnedItems().size();
         hardware.getPromotions().size();
         hardware.getRatings().size();

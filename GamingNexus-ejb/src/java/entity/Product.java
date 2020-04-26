@@ -66,16 +66,13 @@ public abstract class Product implements Serializable {
     @OneToMany(mappedBy = "product")
     protected List<Rating> ratings;
     @OneToMany(mappedBy = "product")
-    private List<CartItem> cartItems;
-    @OneToMany(mappedBy = "product")
-    protected List<OwnedItem> ownedItems;
+    private List<OwnedItem> ownedItems;
     @OneToMany(mappedBy = "product")
     protected List<Forum> forums;
 
     public Product() {
         tags = new ArrayList<>();
         ratings = new ArrayList<>();
-        cartItems = new ArrayList<>();
         ownedItems = new ArrayList<>();
         forums = new ArrayList<>();
     }
@@ -318,12 +315,68 @@ public abstract class Product implements Serializable {
         }
     }
 
-    public List<CartItem> getCartItems() {
-        return cartItems;
+    public List<Forum> getForums() {
+        return forums;
     }
 
-    public void setCartItems(List<CartItem> cartItems) {
-        this.cartItems = cartItems;
+    public void setForums(List<Forum> forums) {
+        this.forums = forums;
+    }
+
+    /**
+     * @return the sales
+     */
+    public double getSales() {
+        return sales;
+    }
+
+    /**
+     * @param sales the sales to set
+     */
+    public void setSales(double sales) {
+        this.sales = sales;
+    }
+
+    /**
+     * @return the releaseDate
+     */
+    public LocalDate getReleaseDate() {
+        return releaseDate;
+    }
+
+    /**
+     * @param releaseDate the releaseDate to set
+     */
+    public void setReleaseDate(LocalDate releaseDate) {
+        this.releaseDate = releaseDate;
+    }
+
+    /**
+     * @return the headerImage
+     */
+    public String getHeaderImage() {
+        return headerImage;
+    }
+
+    /**
+     * @param headerImage the headerImage to set
+     */
+    public void setHeaderImage(String headerImage) {
+        this.headerImage = headerImage;
+    }
+
+    /**
+     * @return the videoLink
+     */
+    public String getVideoLink() {
+        return videoLink;
+    }
+
+    /**
+     * @param videoLink the videoLink to set
+     */
+    public void setVideoLink(String videoLink) {
+        this.videoLink = videoLink;
     }
 
 

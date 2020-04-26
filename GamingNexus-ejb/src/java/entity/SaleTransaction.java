@@ -27,7 +27,7 @@ import javax.validation.constraints.NotNull;
 
 /**
  *
- * @author jinyichen
+ * @author Yang Xi
  */
 @Entity
 public class SaleTransaction implements Serializable {
@@ -53,26 +53,27 @@ public class SaleTransaction implements Serializable {
     @NotNull
     private LocalDateTime transactionDateTime;    
     @OneToMany
-    private List<CartItem> cartItems;    
+    private List<SaleTransactionLineItem> saleTransactionLineItems;    
     @Column(nullable = false)
     @NotNull
     private Boolean voidRefund;
     
     // Updated in v5.0 to optional relationship
     @ManyToOne
-    private User user;
+    private Customer customer;
 
     public SaleTransaction() {
-        cartItems = new ArrayList<>();
+        saleTransactionLineItems = new ArrayList<>();
         voidRefund = false;
     }
 
     
-    public SaleTransaction(Integer totalLineItem, Integer totalQuantity, BigDecimal totalAmount, LocalDateTime transactionDateTime, Boolean voidRefund) {
+    public SaleTransaction(Integer totalLineItem, Integer totalQuantity, BigDecimal totalAmount, LocalDateTime transactionDateTime, List<SaleTransactionLineItem> saleTransactionLineItems, Boolean voidRefund) {
         this.totalLineItem = totalLineItem;
         this.totalQuantity = totalQuantity;
         this.totalAmount = totalAmount;
         this.transactionDateTime = transactionDateTime;
+        this.saleTransactionLineItems = saleTransactionLineItems;
         this.voidRefund = voidRefund;
     }
     
@@ -142,13 +143,7 @@ public class SaleTransaction implements Serializable {
         this.transactionDateTime = transactionDateTime;
     }
 
-    public List<CartItem> getCartItems() {
-        return cartItems;
-    }
 
-    public void setCartItems(List<CartItem> cartItems) {
-        this.cartItems = cartItems;
-    }
 
     public Boolean getVoidRefund() {
         return voidRefund;
@@ -158,12 +153,31 @@ public class SaleTransaction implements Serializable {
         this.voidRefund = voidRefund;
     }
 
-    public User getUser() {
-        return user;
+    public Customer getCustomer() {
+        return customer;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setCustomer(Customer customer) {
+        if(this.customer != null) {
+            this.customer.getSaleTransactions().remove(this);
+        }
+        this.customer = customer;
+        
+        if(this.customer != null) {
+            if (!this.customer.getSaleTransactions().contains(this)) {
+                this.customer.getSaleTransactions().add(this);
+            }
+        }
     }
+
+    public List<SaleTransactionLineItem> getSaleTransactionLineItems() {
+        return saleTransactionLineItems;
+    }
+
+    public void setSaleTransactionLineItems(List<SaleTransactionLineItem> saleTransactionLineItems) {
+        this.saleTransactionLineItems = saleTransactionLineItems;
+    }
+
+
     
 }

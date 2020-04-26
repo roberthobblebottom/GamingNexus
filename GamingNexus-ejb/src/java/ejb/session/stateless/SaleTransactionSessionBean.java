@@ -5,14 +5,23 @@
  */
 package ejb.session.stateless;
 
+import entity.Customer;
+import entity.SaleTransaction;
+import entity.SaleTransactionLineItem;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+import util.exception.CreateNewSaleTransactionException;
+import util.exception.CustomerNotFoundException;
+import util.exception.ProductNotFoundException;
+import util.exception.SaleTransactionNotFoundException;
 
 /**
  *
- * @author jinyichen
+ * @author yangxi
  */
 @Stateless
 public class SaleTransactionSessionBean implements SaleTransactionSessionBeanLocal {
@@ -22,16 +31,73 @@ public class SaleTransactionSessionBean implements SaleTransactionSessionBeanLoc
 
     @EJB
     private CompanySessionBeanLocal companySessionBeanLocal;
-    
-    
-    
-    
 
     @PersistenceContext(unitName = "GamingNexus-ejbPU")
     private EntityManager em;
 
+    public SaleTransactionSessionBean() {
+    }
+
+    public SaleTransaction createNewSaleTransaction(Long customerId, SaleTransaction newSaleTransaction) throws CustomerNotFoundException, CreateNewSaleTransactionException {
+        if (newSaleTransaction != null) {
+
+            Customer customer = customerSessionBeanLocal.retrieveCustomerById(customerId);
+            newSaleTransaction.setCustomer(customer);
+            customer.getSaleTransactions().add(newSaleTransaction);
+            em.persist(newSaleTransaction);
+
+            for (SaleTransactionLineItem saleTransactionLineItem : newSaleTransaction.getSaleTransactionLineItems()) {
+                em.persist(saleTransactionLineItem);
+            }
+
+            em.flush();
+
+            return newSaleTransaction;
+
+        } else {
+            throw new CreateNewSaleTransactionException("Sale transaction information not provided");
+        }
+    }
+    
+    @Override
+    public List<SaleTransaction> retrieveAllSaleTransactions()
+    {
+        Query query = em.createQuery("SELECT st FROM SaleTransaction st");
+        
+        return query.getResultList();
+    }
+    
+    
+    @Override
+    public SaleTransaction retrieveSaleTransactionBySaleTransactionId(Long saleTransactionId) throws SaleTransactionNotFoundException
+    {
+        SaleTransaction saleTransaction = em.find(SaleTransaction.class, saleTransactionId);
+        
+        if(saleTransaction != null)
+        {
+            saleTransaction.getSaleTransactionLineItems().size();
+            
+            return saleTransaction;
+        }
+        else
+        {
+            throw new SaleTransactionNotFoundException("Sale Transaction ID " + saleTransactionId + " does not exist!");
+        }                
+    }
+    
+    
+    
+    public List<SaleTransaction> retrieveAllSaleTransactionsByCustomerId(Long customerId)
+    {
+        Query query = em.createQuery("SELECT st FROM SaleTransaction st where st.customer.userId = :inCustomerId");
+        query.setParameter("inCustomerId", customerId);
+        return query.getResultList();
+    }
+    
+   
+    
+    
     
     
 
-    
 }

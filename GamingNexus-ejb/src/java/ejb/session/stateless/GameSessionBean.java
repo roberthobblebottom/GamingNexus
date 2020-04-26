@@ -235,12 +235,22 @@ public class GameSessionBean implements GameSessionBeanLocal {
                     productEntityToUpdate.addTag(tagEntity);
                 }
             }
-            productEntityToUpdate.setName(productEntity.getName());
-            productEntityToUpdate.setDescription(productEntity.getDescription());
-            productEntityToUpdate.setComputerRequirements(productEntity.getComputerRequirements());
-            productEntityToUpdate.setPrice(productEntity.getPrice());
-            productEntityToUpdate.setCompany(productEntity.getCompany());
-            productEntityToUpdate.setAverageRating((productEntity.getAverageRating()));
+            gameToBeUpdated.setName(game.getName());
+            gameToBeUpdated.setDescription(game.getDescription());
+            gameToBeUpdated.setComputerRequirements(game.getComputerRequirements());
+            gameToBeUpdated.setPrice(game.getPrice());
+            gameToBeUpdated.setCompany(game.getCompany());
+            gameToBeUpdated.setAverageRating((game.getAverageRating()));
+            //  gameToBeUpdated.setCategory(game.getCategory());
+            gameToBeUpdated.setForums(game.getForums());
+            gameToBeUpdated.setGameAccounts(game.getGameAccounts());
+            gameToBeUpdated.setGamePicturesURLs(game.getGamePicturesURLs());
+            gameToBeUpdated.setOwnedItems(game.getOwnedItems());
+            gameToBeUpdated.setParentAdvisory(game.getParentAdvisory());
+            gameToBeUpdated.setPromotions(game.getPromotions());
+            gameToBeUpdated.setRatings(game.getRatings());
+            // gameToBeUpdated.setTags(game.getTags());
+
         } else {
             throw new ProductNotFoundException("Product ID not provided for product to be updated");
         }
@@ -259,15 +269,18 @@ public class GameSessionBean implements GameSessionBeanLocal {
         }
     }
      */
-    private List<Product> addSubCategoryProducts(Category categoryEntity) {
-        List<Product> productEntities = new ArrayList<>();
-
-        if (categoryEntity.getSubCategories().isEmpty()) {
-            return categoryEntity.getProducts();
-        } else {
-            for (Category subCategoryEntity : categoryEntity.getSubCategories()) {
-                productEntities.addAll(addSubCategoryProducts(subCategoryEntity));
-            }
+   
+    
+    public void lazyLoadGame(Game game) {
+        game.getCompany();
+        game.getCategory();
+        game.getTags().size();
+        game.getPromotions().size();
+        game.getRatings().size();
+        game.getOwnedItems().size();
+        game.getForums().size();
+        game.getGameAccounts().size();
+    }
 
             return productEntities;
         }

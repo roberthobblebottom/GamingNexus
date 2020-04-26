@@ -59,13 +59,13 @@ public abstract class User implements Serializable {
     protected String profilePictureURL;//https://stackoverflow.com/questions/29208007/what-is-the-data-type-for-images-in-java
     @NotNull
     protected LocalDateTime lastOnline;
+
     
-    @OneToMany(mappedBy = "user")
-    private List<SaleTransaction> saleTransactions;
 
     public User() {
         this.salt = CryptographicHelper.getInstance().generateRandomString(32);
-        saleTransactions = new ArrayList<>();
+  
+        this.lastOnline = LocalDateTime.now();
     }
 
     public User(String phoneNumber, String address, String email, String country, String username, String password, String profilePictureURL, LocalDateTime lastOnline) {
@@ -241,15 +241,4 @@ public abstract class User implements Serializable {
         this.salt = salt;
     }
 
-    public List<SaleTransaction> getSaleTransactions() {
-        return saleTransactions;
-    }
-
-    public void setSaleTransactions(List<SaleTransaction> saleTransactions) {
-        this.saleTransactions = saleTransactions;
-    }
-
-    /**
-     * @return the birthDate
-     */
 }

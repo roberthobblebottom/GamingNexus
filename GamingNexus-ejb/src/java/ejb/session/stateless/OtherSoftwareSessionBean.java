@@ -235,12 +235,17 @@ public class OtherSoftwareSessionBean implements OtherSoftwareSessionBeanLocal {
                     productEntityToUpdate.addTag(tagEntity);
                 }
             }
-            productEntityToUpdate.setName(productEntity.getName());
-            productEntityToUpdate.setDescription(productEntity.getDescription());
-            productEntityToUpdate.setComputerRequirements(productEntity.getComputerRequirements());
-            productEntityToUpdate.setPrice(productEntity.getPrice());
-            productEntityToUpdate.setCompany(productEntity.getCompany());
-            productEntityToUpdate.setAverageRating((productEntity.getAverageRating()));
+            otherSoftwareEntityToUpdate.setName(otherSoftware.getName());
+            otherSoftwareEntityToUpdate.setDescription(otherSoftware.getDescription());
+            otherSoftwareEntityToUpdate.setComputerRequirements(otherSoftware.getComputerRequirements());
+            otherSoftwareEntityToUpdate.setPrice(otherSoftware.getPrice());
+            otherSoftwareEntityToUpdate.setCompany(otherSoftware.getCompany());
+            otherSoftwareEntityToUpdate.setAverageRating((otherSoftware.getAverageRating()));
+            otherSoftwareEntityToUpdate.setOwnedItems(otherSoftware.getOwnedItems());
+            otherSoftwareEntityToUpdate.setPromotions(otherSoftware.getPromotions());
+            otherSoftwareEntityToUpdate.setRatings(otherSoftware.getRatings());
+            otherSoftwareEntityToUpdate.setTags(otherSoftware.getTags());
+
         } else {
             throw new ProductNotFoundException("Product ID not provided for product to be updated");
         }
@@ -271,5 +276,16 @@ public class OtherSoftwareSessionBean implements OtherSoftwareSessionBeanLocal {
 
             return productEntities;
         }
+    }
+
+    public void lazyLoadOtherSoftware(OtherSoftware otherSoftware) {
+        otherSoftware.getCompany();
+        otherSoftware.getCategory();
+        otherSoftware.getTags().size();
+        otherSoftware.getPromotions().size();
+        otherSoftware.getRatings().size();
+        otherSoftware.getOwnedItems().size();
+        otherSoftware.getForums().size();
+
     }
 }

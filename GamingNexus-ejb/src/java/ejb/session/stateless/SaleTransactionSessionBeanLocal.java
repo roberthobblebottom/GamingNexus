@@ -5,7 +5,10 @@
  */
 package ejb.session.stateless;
 
+import entity.SaleTransaction;
+import java.util.List;
 import javax.ejb.Local;
+import util.exception.SaleTransactionNotFoundException;
 
 /**
  *
@@ -14,4 +17,9 @@ import javax.ejb.Local;
 @Local
 public interface SaleTransactionSessionBeanLocal {
     
+    public List<SaleTransaction> retrieveAllSaleTransactionsByCustomerId(Long customerId);
+
+    public SaleTransaction retrieveSaleTransactionBySaleTransactionId(Long saleTransactionId) throws SaleTransactionNotFoundException;
+
+    public List<SaleTransaction> retrieveAllSaleTransactions();
 }

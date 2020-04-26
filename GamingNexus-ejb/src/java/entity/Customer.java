@@ -7,15 +7,10 @@ package entity;
 
 import java.io.Serializable;
 import java.sql.Date;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.validation.constraints.Future;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 /**
@@ -47,6 +42,9 @@ public class Customer extends User implements Serializable {
     private List<Chat> chats;
     @OneToMany(mappedBy = "customer")
     private List<Deliverables> listOfDeliverables;
+    
+    @OneToMany(mappedBy = "customer")
+    private List<SaleTransaction> saleTransactions;
 
     public Customer() {
         super();
@@ -56,6 +54,7 @@ public class Customer extends User implements Serializable {
         gameAccounts = new ArrayList<>();
         chats = new ArrayList<>();
         listOfDeliverables = new ArrayList<>();   
+        saleTransactions = new ArrayList<>();
     }
 
     public Customer(String phoneNumber, String address, String email, String country, String username, String password, String profilePictureURL, LocalDateTime lastOnline) {
@@ -66,6 +65,7 @@ public class Customer extends User implements Serializable {
         gameAccounts = new ArrayList<>();
         chats = new ArrayList<>();
         listOfDeliverables = new ArrayList<>(); 
+        saleTransactions = new ArrayList<>();
     }
 
     
@@ -233,5 +233,13 @@ public class Customer extends User implements Serializable {
      */
     public void setListOfDeliverables(List<Deliverables> listOfDeliverables) {
         this.listOfDeliverables = listOfDeliverables;
+    }
+
+    public List<SaleTransaction> getSaleTransactions() {
+        return saleTransactions;
+    }
+
+    public void setSaleTransactions(List<SaleTransaction> saleTransactions) {
+        this.saleTransactions = saleTransactions;
     }
 }
