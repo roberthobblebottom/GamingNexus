@@ -244,7 +244,6 @@ public class OtherSoftwareSessionBean implements OtherSoftwareSessionBeanLocal {
             otherSoftwareEntityToUpdate.setPrice(otherSoftware.getPrice());
             otherSoftwareEntityToUpdate.setCompany(otherSoftware.getCompany());
             otherSoftwareEntityToUpdate.setAverageRating((otherSoftware.getAverageRating()));
-            otherSoftwareEntityToUpdate.setCartItems(otherSoftware.getCartItems());
             otherSoftwareEntityToUpdate.setOwnedItems(otherSoftware.getOwnedItems());
             otherSoftwareEntityToUpdate.setPromotions(otherSoftware.getPromotions());
             otherSoftwareEntityToUpdate.setRatings(otherSoftware.getRatings());
@@ -288,7 +287,6 @@ public class OtherSoftwareSessionBean implements OtherSoftwareSessionBeanLocal {
         otherSoftware.getTags().size();
         otherSoftware.getPromotions().size();
         otherSoftware.getRatings().size();
-        otherSoftware.getCartItems().size();
         otherSoftware.getOwnedItems().size();
         otherSoftware.getForums().size();
 

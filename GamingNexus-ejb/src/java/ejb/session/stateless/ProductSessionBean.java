@@ -18,7 +18,6 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-import util.exception.ProductNotFoundException;
 
 /**
  *
@@ -40,7 +39,7 @@ public class ProductSessionBean implements ProductSessionBeanLocal {
     private EntityManager em;
 
     @Override
-    public Product retrieveProductById(Long productId) throws ProductNotFoundException{
+    public Product retrieveProductById(Long productId) {
         Product retrievedProduct = (Product) em.find(Product.class, productId);
         if (retrievedProduct instanceof Game) {
             Game retrievedGame = (Game) em.find(Game.class, productId);
@@ -54,9 +53,9 @@ public class ProductSessionBean implements ProductSessionBeanLocal {
             OtherSoftware retrivedOtherSoftware = (OtherSoftware) em.find(OtherSoftware.class, productId);
             this.lazyLoadOtherSoftware(retrivedOtherSoftware);
             return retrivedOtherSoftware;
-        } else{
-            throw new ProductNotFoundException("Product ID " + productId + " does not exist!");
-        }
+        } 
+        assert false : "Product must always be a child entity";
+        return null;
     }
     
 //    @Override
@@ -130,7 +129,7 @@ public class ProductSessionBean implements ProductSessionBeanLocal {
     }
 
     @Override
-    public void deleteProduct(Product productToBeDeleted) throws ProductNotFoundException{
+    public void deleteProduct(Product productToBeDeleted) {
         Game gameToBeDeleted;
         Hardware hardwareToBeDeleted;
         OtherSoftware otherSoftwareToBeDeleted;
@@ -152,31 +151,26 @@ public class ProductSessionBean implements ProductSessionBeanLocal {
     }
 
     public void lazyLoadGame(Game game) {
-        game.getCompany();
-        game.getCategory();
         game.getTags().size();
         game.getPromotions().size();
         game.getRatings().size();
-        game.getCartItems().size();
         game.getOwnedItems().size();
-        game.getForums().size();
+        game.getPromotions().size();
+        game.getRatings().size();
         game.getGameAccounts().size();
     }
 
     public void lazyLoadOtherSoftware(OtherSoftware otherSoftware) {
-        otherSoftware.getCompany();
-        otherSoftware.getCategory();
         otherSoftware.getTags().size();
         otherSoftware.getPromotions().size();
         otherSoftware.getRatings().size();
-        otherSoftware.getCartItems().size();
         otherSoftware.getOwnedItems().size();
-        otherSoftware.getForums().size();
+        otherSoftware.getPromotions().size();
+        otherSoftware.getRatings().size();
     }
 
     public void lazyLoadHardware(Hardware hardware) {
         hardware.getTags().size();
-        hardware.getCartItems().size();
         hardware.getOwnedItems().size();
         hardware.getPromotions().size();
         hardware.getRatings().size();

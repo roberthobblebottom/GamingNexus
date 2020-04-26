@@ -243,7 +243,6 @@ public class HardwareSessionBean implements HardwareSessionBeanLocal {
             hardwareToUpdate.setPrice(hardware.getPrice());
             hardwareToUpdate.setCompany(hardware.getCompany());
             hardwareToUpdate.setAverageRating((hardware.getAverageRating()));
-            hardwareToUpdate.setCartItems(hardware.getCartItems());
             hardwareToUpdate.setDeliverables(hardware.getDeliverables());
             hardwareToUpdate.setManufacturingCountry(hardware.getManufacturingCountry());
             hardwareToUpdate.setOwnedItems(hardware.getOwnedItems());
@@ -292,7 +291,6 @@ public class HardwareSessionBean implements HardwareSessionBeanLocal {
         hardware.getTags().size();
         hardware.getPromotions().size();
         hardware.getRatings().size();
-        hardware.getCartItems().size();
         hardware.getOwnedItems().size();
         hardware.getForums().size();
         hardware.getDeliverables().size();

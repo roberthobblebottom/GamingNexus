@@ -265,7 +265,6 @@ public class GameSessionBean implements GameSessionBeanLocal {
             gameToBeUpdated.setPrice(game.getPrice());
             gameToBeUpdated.setCompany(game.getCompany());
             gameToBeUpdated.setAverageRating((game.getAverageRating()));
-            gameToBeUpdated.setCartItems(game.getCartItems());
             //  gameToBeUpdated.setCategory(game.getCategory());
             gameToBeUpdated.setForums(game.getForums());
             gameToBeUpdated.setGameAccounts(game.getGameAccounts());
@@ -302,10 +301,13 @@ public class GameSessionBean implements GameSessionBeanLocal {
         game.getTags().size();
         game.getPromotions().size();
         game.getRatings().size();
-        game.getCartItems().size();
         game.getOwnedItems().size();
         game.getForums().size();
         game.getGameAccounts().size();
+    }
+
+            return productEntities;
+        }
     }
 
    
