@@ -72,12 +72,14 @@ public class GameSessionBean implements GameSessionBeanLocal {
             
             em.persist(newGame);
             newGame.setCategory(category);
+            category.getProducts().add(newGame);
             newGame.setCompany(company);
             
             if (tagIds != null && (!tagIds.isEmpty())) {
                 for (Long tagId : tagIds) {
                     Tag tag = tagSessionBeanLocal.retrieveTagByTagId(tagId);
                     newGame.addTag(tag);
+                    tag.getProducts().add(newGame);
                 }
             }
             em.flush();

@@ -10,6 +10,7 @@ import java.util.List;
 import javax.ejb.Local;
 import util.exception.CreateNewSaleTransactionException;
 import util.exception.CustomerNotFoundException;
+import util.exception.InvalidLoginCredentialException;
 import util.exception.SaleTransactionNotFoundException;
 
 
@@ -27,7 +28,9 @@ public interface SaleTransactionSessionBeanLocal {
 
     public List<SaleTransaction> retrieveAllSaleTransactions();
 
-    public Long createNewSaleTransaction(Long customerId, SaleTransaction newSaleTransaction) throws CustomerNotFoundException, CreateNewSaleTransactionException;
-   
+
+    public SaleTransaction createNewSaleTransaction(Long customerId, SaleTransaction newSaleTransaction) throws CustomerNotFoundException, CreateNewSaleTransactionException;
+
+    public List<SaleTransaction> retrieveAllSaleTransactionByUsernameAndPassword(String username, String password) throws InvalidLoginCredentialException;
 }
 

@@ -11,16 +11,15 @@ import ejb.session.stateless.OtherSoftwareSessionBeanLocal;
 import ejb.session.stateless.ProductSessionBeanLocal;
 import ejb.session.stateless.PromotionSessionBeanLocal;
 import entity.Company;
-import entity.Game;
-import entity.Hardware;
-import entity.OtherSoftware;
 import entity.Product;
 import entity.Promotion;
 import javax.inject.Named;
 import java.io.Serializable;
+import java.sql.Timestamp;
+import java.time.Instant;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -30,6 +29,7 @@ import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
+import javax.faces.event.ActionListener;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import util.exception.CompanyNotFoundException;
@@ -60,22 +60,19 @@ public class CompanyPromotionManagedBean implements Serializable {
     @Inject
     private ViewProductManagedBean viewProductManagedBean;
 
-    private Game gameToViewInDetails = null;
-    private Product productToViewInDetails;
-    private Hardware hardwareToViewInDetails = null;
-    private OtherSoftware otherSoftwareToViewInDetails = null;
-    private Promotion newPromotion = null;
-    private Date newPromotionStartDate = null,
-            newPromotionEndDate = null, today = null;
-    private List<Date> range = null;
+    private Promotion newPromotion = null, promotionToBeUpdated = null;
+    private Date today = null;
+    private Date startDateToBeUpdated=null,endDateToBeUpdated=null;
+    private List<Date> newDateRange = null;
     private List<Promotion> promotions, filteredPromotions;
-    private List<Product> products, filteredProducts;
+    private List<Product> products, filteredProducts, productsToBeUpdated, promotionsProductsToBeViewed;
     private Company company;
 
     public CompanyPromotionManagedBean() {
         newPromotion = new Promotion();
         today = Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant());
-        range = new ArrayList<>();
+        newDateRange = new ArrayList<>();
+        promotionsProductsToBeViewed = new ArrayList<>();
     }
 
     @PostConstruct
@@ -87,6 +84,9 @@ public class CompanyPromotionManagedBean implements Serializable {
         setProducts(getCompany().getProducts());
         try {
             promotions = promotionSessionBean.retrivePromotionsByCompanyID(company.getUserId());
+
+            System.out.println("********** promotions: " + promotions.size());
+
         } catch (CompanyNotFoundException ex) {
 
         }
@@ -96,13 +96,8 @@ public class CompanyPromotionManagedBean implements Serializable {
     }
 
     public void createNewPromotion(ActionEvent event) {
-//          List<Long> productIds = new ArrayList<>();
-//                    newPromotion.getProducts().forEach(product -> {
-//                        productIds.add(tag.getTagId());
-//                    });
-    
-        newPromotion.setStartDate(range.get(0).toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime());
-        newPromotion.setEndDate(range.get(range.size()-1).toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime());
+        newPromotion.setStartDate(newDateRange.get(0).toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime());
+        newPromotion.setEndDate(newDateRange.get(newDateRange.size() - 1).toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime());
         Promotion promotion = promotionSessionBean.createPromotion(newPromotion);
         promotions.add(promotion);
 
@@ -110,9 +105,39 @@ public class CompanyPromotionManagedBean implements Serializable {
                 new FacesMessage(FacesMessage.SEVERITY_INFO, "New Game " + newPromotion.getName() + " added successfully "
                         + "(ID: " + newPromotion.getPromotionID() + ")", null));
         newPromotion = new Promotion();
+        newDateRange = new ArrayList<>();
+    }
+
+    public void viewPromotionsProducts(ActionListener event){
+        
+    }
+    
+    public void doUpdatePromotion(ActionEvent event) {
+        promotionToBeUpdated = (Promotion) event.getComponent().getAttributes().get("promotionToBeUpdatedFaceletAtribute");
+        setProductsToBeUpdated(promotionToBeUpdated.getProducts());
+        Instant instantStartdate = this.promotionToBeUpdated.getStartDate().toInstant(ZoneOffset.UTC);
+        Date startDate = Date.from(instantStartdate);
+        setStartDateToBeUpdated(startDate);
+        setEndDateToBeUpdated(Timestamp.valueOf( promotionToBeUpdated.getEndDate()));
+        
+//        ChronoLocalDateTime endPointer = promotionToBeUpdated.getEndDate();
+//        System.out.println("Start pointer: " + promotionToBeUpdated.getStartDate());
+//        System.out.println("End Pointer: " + promotionToBeUpdated.getEndDate());
+//        for (currentPointer = promotionToBeUpdated.getStartDate();
+//                currentPointer.compareTo(endPointer) < 1;
+//                currentPointer.plusDays(1)) {
+//            System.out.println("currentPointer.compareTo: "+currentPointer.compareTo(endPointer));
+//            System.out.println("    CurrentPOinter: "+currentPointer.toString());
+//            Date date = Timestamp.valueOf(currentPointer);
+//            dateRangeToBeUpdated.add(date);
+//        }
+
     }
 
     public void updatePromotion(ActionEvent event) {
+        setProductsToBeUpdated(null);
+        setStartDateToBeUpdated(null);
+        setEndDateToBeUpdated(null);
     }
 
     public void deletePromotion(ActionEvent event) {
@@ -223,63 +248,6 @@ public class CompanyPromotionManagedBean implements Serializable {
     }
 
     /**
-     * @return the gameToViewInDetails
-     */
-    public Game getGameToViewInDetails() {
-        return gameToViewInDetails;
-    }
-
-    /**
-     * @param gameToViewInDetails the gameToViewInDetails to set
-     */
-    public void setGameToViewInDetails(Game gameToViewInDetails) {
-        this.gameToViewInDetails = gameToViewInDetails;
-    }
-
-    /**
-     * @return the productToViewInDetails
-     */
-    public Product getProductToViewInDetails() {
-        return productToViewInDetails;
-    }
-
-    /**
-     * @param productToViewInDetails the productToViewInDetails to set
-     */
-    public void setProductToViewInDetails(Product productToViewInDetails) {
-        this.productToViewInDetails = productToViewInDetails;
-    }
-
-    /**
-     * @return the hardwareToViewInDetails
-     */
-    public Hardware getHardwareToViewInDetails() {
-        return hardwareToViewInDetails;
-    }
-
-    /**
-     * @param hardwareToViewInDetails the hardwareToViewInDetails to set
-     */
-    public void setHardwareToViewInDetails(Hardware hardwareToViewInDetails) {
-        this.hardwareToViewInDetails = hardwareToViewInDetails;
-    }
-
-    /**
-     * @return the otherSoftwareToViewInDetails
-     */
-    public OtherSoftware getOtherSoftwareToViewInDetails() {
-        return otherSoftwareToViewInDetails;
-    }
-
-    /**
-     * @param otherSoftwareToViewInDetails the otherSoftwareToViewInDetails to
-     * set
-     */
-    public void setOtherSoftwareToViewInDetails(OtherSoftware otherSoftwareToViewInDetails) {
-        this.otherSoftwareToViewInDetails = otherSoftwareToViewInDetails;
-    }
-
-    /**
      * @return the products
      */
     public List<Product> getProducts() {
@@ -350,40 +318,6 @@ public class CompanyPromotionManagedBean implements Serializable {
     }
 
     /**
-     * @return the newPromotionStartDate
-     */
-    public Date getNewPromotionStartDate() {
-        return newPromotionStartDate;
-    }
-
-    /**
-     * @param newPromotionStartDate the newPromotionStartDate to set
-     */
-    public void setNewPromotionStartDate(Date newPromotionStartDate) {
-        this.newPromotionStartDate = newPromotionStartDate;
-        this.newPromotion.setStartDate(
-                LocalDateTime.ofInstant(newPromotionStartDate.toInstant(), ZoneId.systemDefault())
-        );
-    }
-
-    /**
-     * @return the newPromotionEndDate
-     */
-    public Date getNewPromotionEndDate() {
-        return newPromotionEndDate;
-    }
-
-    /**
-     * @param newPromotionEndDate the newPromotionEndDate to set
-     */
-    public void setNewPromotionEndDate(Date newPromotionEndDate) {
-        this.newPromotionEndDate = newPromotionEndDate;
-        this.newPromotion.setEndDate(
-                LocalDateTime.ofInstant(newPromotionEndDate.toInstant(), ZoneId.systemDefault())
-        );
-    }
-
-    /**
      * @return the today
      */
     public Date getToday() {
@@ -398,17 +332,89 @@ public class CompanyPromotionManagedBean implements Serializable {
     }
 
     /**
-     * @return the range
+     * @return the newDateRange
      */
-    public List<Date> getRange() {
-        return range;
+    public List<Date> getNewDateRange() {
+        return newDateRange;
     }
 
     /**
-     * @param range the range to set
+     * @param newDateRange the newDateRange to set
      */
-    public void setRange(List<Date> range) {
-        this.range = range;
+    public void setNewDateRange(List<Date> newDateRange) {
+        this.newDateRange = newDateRange;
     }
+
+
+    /**
+     * @return the promotionToBeUpdated
+     */
+    public Promotion getPromotionToBeUpdated() {
+        return promotionToBeUpdated;
+    }
+
+    /**
+     * @param promotionToBeUpdated the promotionToBeUpdated to set
+     */
+    public void setPromotionToBeUpdated(Promotion promotionToBeUpdated) {
+        this.promotionToBeUpdated = promotionToBeUpdated;
+    }
+
+    /**
+     * @return the productsToBeUpdated
+     */
+    public List<Product> getProductsToBeUpdated() {
+        return productsToBeUpdated;
+    }
+
+    /**
+     * @param productsToBeUpdated the productsToBeUpdated to set
+     */
+    public void setProductsToBeUpdated(List<Product> productsToBeUpdated) {
+        this.productsToBeUpdated = productsToBeUpdated;
+    }
+
+    /**
+     * @return the startDateToBeUpdated
+     */
+    public Date getStartDateToBeUpdated() {
+        return startDateToBeUpdated;
+    }
+
+    /**
+     * @param startDateToBeUpdated the startDateToBeUpdated to set
+     */
+    public void setStartDateToBeUpdated(Date startDateToBeUpdated) {
+        this.startDateToBeUpdated = startDateToBeUpdated;
+    }
+
+    /**
+     * @return the endDateToBeUpdated
+     */
+    public Date getEndDateToBeUpdated() {
+        return endDateToBeUpdated;
+    }
+
+    /**
+     * @param endDateToBeUpdated the endDateToBeUpdated to set
+     */
+    public void setEndDateToBeUpdated(Date endDateToBeUpdated) {
+        this.endDateToBeUpdated = endDateToBeUpdated;
+    }
+
+    /**
+     * @return the promotionsProductsToBeViewed
+     */
+    public List<Product> getPromotionsProductsToBeViewed() {
+        return promotionsProductsToBeViewed;
+    }
+
+    /**
+     * @param promotionsProductsToBeViewed the promotionsProductsToBeViewed to set
+     */
+    public void setPromotionsProductsToBeViewed(List<Product> promotionsProductsToBeViewed) {
+        this.promotionsProductsToBeViewed = promotionsProductsToBeViewed;
+    }
+
 
 };
