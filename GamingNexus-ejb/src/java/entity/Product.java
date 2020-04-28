@@ -64,9 +64,11 @@ public abstract class Product implements Serializable {
     private LocalDate releaseDate;
     
     private double sales;
-    
+    @Lob
+    @Column
     private String headerImage;
-    
+    @Lob
+    @Column
     private String videoLink;
 
     @ManyToOne(optional = false)
