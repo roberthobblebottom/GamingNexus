@@ -35,7 +35,7 @@ public class Game extends Product implements Serializable {
     }
     
     public Game(Boolean parentAdvisory, String headerImage, String videoLink, String name, String description, String computerRequirements, double price, 
-            double averageRating, LocalDate releaseDate, double sales) {
+            double averageRating, LocalDate releaseDate, long sales) {
         
         super(name, description, computerRequirements, price, averageRating, releaseDate, sales, headerImage, videoLink);
         this.parentAdvisory = parentAdvisory;

@@ -25,7 +25,7 @@ public class OtherSoftware extends Product implements Serializable {
         super();
     }
     
-    public OtherSoftware(String name, String description, String computerRequirements, double price, double averageRating, LocalDate releaseDate, double sales, String headerImage, String videoLink) {
+    public OtherSoftware(String name, String description, String computerRequirements, double price, double averageRating, LocalDate releaseDate, long sales, String headerImage, String videoLink) {
         super(name, description, computerRequirements, price, averageRating, releaseDate, sales, headerImage, videoLink);
     }
    

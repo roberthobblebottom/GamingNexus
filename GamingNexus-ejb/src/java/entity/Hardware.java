@@ -11,7 +11,6 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 /**
@@ -39,7 +38,7 @@ public class Hardware extends Product implements Serializable {
     }
 
     public Hardware(String warrantyDescription, String technicalspecification, String manufacturingCountry, String name, String description, 
-            double price, double averageRating, LocalDate releaseDate, double sales, String headerImage, String videoLink) {
+            double price, double averageRating, LocalDate releaseDate, long sales, String headerImage, String videoLink) {
         
         super(name, description, price, averageRating, releaseDate, sales, headerImage, videoLink);
         this.warrantyDescription = warrantyDescription;

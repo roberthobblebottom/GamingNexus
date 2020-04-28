@@ -16,7 +16,6 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import util.exception.CreateNewSaleTransactionException;
 import util.exception.CustomerNotFoundException;
-import util.exception.ProductNotFoundException;
 import util.exception.SaleTransactionNotFoundException;
 
 /**
