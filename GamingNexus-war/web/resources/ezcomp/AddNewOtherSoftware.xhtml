@@ -122,7 +122,7 @@
 
                     <p:row>
                         <p:column colspan="3">
-                            <p:commandButton type="reset" value="Clear" />&nbsp;
+                            <p:commandButton type="reset" value="Clear" update="@form formAllProducts:dataTableAllProducts" />&nbsp;
                             <p:commandButton id="AddOtherSoftwareButton" value="Add" update="@form formAllProducts:dataTableAllProducts" 
                                              actionListener="#{companyProductManagedBean.createNewProduct}"    
                                              />
