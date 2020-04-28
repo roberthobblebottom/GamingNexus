@@ -27,7 +27,7 @@ public interface SaleTransactionSessionBeanLocal {
 
     public List<SaleTransaction> retrieveAllSaleTransactions();
 
-
-    public SaleTransaction createNewSaleTransaction(Long customerId, SaleTransaction newSaleTransaction) throws CustomerNotFoundException, CreateNewSaleTransactionException;
+    public Long createNewSaleTransaction(Long customerId, SaleTransaction newSaleTransaction) throws CustomerNotFoundException, CreateNewSaleTransactionException;
+   
 }
 

@@ -7,7 +7,6 @@ package ws.restful.model;
 
 import java.util.List;
 import ws.restful.helperClass.ProductAndQuantity;
-import ws.restful.helperClass.productAndCustomer;
 
 /**
  *
@@ -17,15 +16,15 @@ public class CreateSaleTransactionReq {
     
     private String username;
     private String password;
-    private List<ProductAndQuantity> list;
+    private List<ProductAndQuantity> productList;
 
     public CreateSaleTransactionReq() {
     }
 
-    public CreateSaleTransactionReq(String username, String password, List<ProductAndQuantity> list) {
+    public CreateSaleTransactionReq(String username, String password, List<ProductAndQuantity> productList) {
         this.username = username;
         this.password = password;
-        this.list = list;
+        this.productList = productList;
     }
 
     public String getUsername() {
@@ -44,12 +43,12 @@ public class CreateSaleTransactionReq {
         this.password = password;
     }
 
-    public List<ProductAndQuantity> getList() {
-        return list;
+    public List<ProductAndQuantity> getProductList() {
+        return productList;
     }
 
-    public void setList(List<ProductAndQuantity> list) {
-        this.list = list;
+    public void setProductList(List<ProductAndQuantity> productList) {
+        this.productList = productList;
     }
     
     

@@ -27,7 +27,6 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 import util.exception.InvalidLoginCredentialException;
-import util.exception.UpdateCustomerException;
 import ws.restful.model.CustomerLoginRsp;
 import ws.restful.model.CustomerRegisterReq;
 import ws.restful.model.CustomerRegisterRsp;
@@ -64,15 +63,13 @@ public class CustomerResource {
             Customer customer = lookupCustomerSessionBeanLocal().customerLogin(username, password);
 
             System.out.println("********** CustomerResource.customerLogin(): customer " + customer.getUsername() + " login remotely via web service");
-
-            return Response.status(Status.OK).entity(new CustomerLoginRsp(customer)).build();
+            CustomerLoginRsp customerLoginRsp = new CustomerLoginRsp(customer);
+            return Response.status(Status.OK).entity(customerLoginRsp).build();
         } catch (InvalidLoginCredentialException ex) {
             ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());
-
             return Response.status(Status.UNAUTHORIZED).entity(errorRsp).build();
         } catch (Exception ex) {
             ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());
-
             return Response.status(Status.INTERNAL_SERVER_ERROR).entity(errorRsp).build();
         }
     }
@@ -123,7 +120,7 @@ public class CustomerResource {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response updateProduct(CustomerUpdateReq updateCustomerReq)
+    public Response updateCustomer(CustomerUpdateReq updateCustomerReq)
     {
         if(updateCustomerReq != null)
         {

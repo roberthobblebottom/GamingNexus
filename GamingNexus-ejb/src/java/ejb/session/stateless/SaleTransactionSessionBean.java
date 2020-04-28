@@ -43,7 +43,7 @@ public class SaleTransactionSessionBean implements SaleTransactionSessionBeanLoc
     public SaleTransactionSessionBean() {
     }
 
-    public SaleTransaction createNewSaleTransaction(Long customerId, SaleTransaction newSaleTransaction) throws CustomerNotFoundException, CreateNewSaleTransactionException {
+    public Long createNewSaleTransaction(Long customerId, SaleTransaction newSaleTransaction) throws CustomerNotFoundException, CreateNewSaleTransactionException {
         if (newSaleTransaction != null) {
 
             Customer customer = customerSessionBeanLocal.retrieveCustomerById(customerId);
@@ -57,7 +57,7 @@ public class SaleTransactionSessionBean implements SaleTransactionSessionBeanLoc
 
             em.flush();
 
-            return newSaleTransaction;
+            return newSaleTransaction.getSaleTransactionId();
 
         } else {
             throw new CreateNewSaleTransactionException("Sale transaction information not provided");

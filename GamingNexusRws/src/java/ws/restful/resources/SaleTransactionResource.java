@@ -25,12 +25,16 @@ import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.Path;
 import javax.ws.rs.PUT;
+import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import util.exception.CreateNewSaleTransactionException;
 import util.exception.CustomerNotFoundException;
 import util.exception.ProductNotFoundException;
 import ws.restful.helperClass.ProductAndQuantity;
 import ws.restful.model.CreateSaleTransactionReq;
+import ws.restful.model.CreateSaleTransactionRsp;
+import ws.restful.model.ErrorRsp;
 
 /**
  * REST Web Service
@@ -70,40 +74,50 @@ public class SaleTransactionResource {
     @Path("createSaleTransaction")
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
-    public void createSaleTransation(CreateSaleTransactionReq createSaleTransactionReq) {
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response createSaleTransation(CreateSaleTransactionReq createSaleTransactionReq) {
 
         System.out.println("********** createSaleTransation() is successfully invoked");
         //System.out.println("*****" + createSaleTransactionReq.getUsername());
         //System.out.println("*****" + createSaleTransactionReq.getPassword());
-        
 
-        List<SaleTransactionLineItem> saleTransactionLineItems = new ArrayList<>();
-                
-        try {
-            Customer c = customerSessionBean.retrieveCustomerByUsername(createSaleTransactionReq.getUsername());
-            Integer totalLineItem = new Integer(createSaleTransactionReq.getList().size());
-            
-            Integer totalQuantity = 0;
-            BigDecimal totalAmount = BigDecimal.valueOf(0);
-            
-            for (ProductAndQuantity productAndQuantity : createSaleTransactionReq.getList()) {
-                //System.out.println("Product Id" + productAndQuantity.getProductId());
-                //System.out.println("Quantity" + productAndQuantity.getQuantity());      
-                
-                Product product = productSessionBean.retrieveProductById(productAndQuantity.getProductId());
-                BigDecimal unitPrice = BigDecimal.valueOf(product.getPrice());
-                BigDecimal subTotal = BigDecimal.valueOf(product.getPrice() * productAndQuantity.getQuantity());
-                SaleTransactionLineItem newSaleTransactionLineItem = new SaleTransactionLineItem(product, productAndQuantity.getQuantity(), unitPrice, subTotal);
-                saleTransactionLineItems.add(newSaleTransactionLineItem);
-                
-                totalQuantity += productAndQuantity.getQuantity();
-                totalAmount.add(subTotal);
+        if (createSaleTransactionReq != null) {
+            List<SaleTransactionLineItem> saleTransactionLineItems = new ArrayList<>();
+
+            try {
+                Customer c = customerSessionBean.retrieveCustomerByUsername(createSaleTransactionReq.getUsername());
+                Integer totalLineItem = new Integer(createSaleTransactionReq.getProductList().size());
+
+                Integer totalQuantity = 0;
+                BigDecimal totalAmount = BigDecimal.valueOf(0);
+
+                for (ProductAndQuantity productAndQuantity : createSaleTransactionReq.getProductList()) {
+                    //System.out.println("Product Id" + productAndQuantity.getProductId());
+                    //System.out.println("Quantity" + productAndQuantity.getQuantity());      
+
+                    Product product = productSessionBean.retrieveProductById(productAndQuantity.getProductId());
+                    BigDecimal unitPrice = BigDecimal.valueOf(product.getPrice());
+                    BigDecimal subTotal = BigDecimal.valueOf(product.getPrice() * productAndQuantity.getQuantity());
+                    System.out.println("Subtotal" + subTotal);
+                    SaleTransactionLineItem newSaleTransactionLineItem = new SaleTransactionLineItem(product, productAndQuantity.getQuantity(), unitPrice, subTotal);
+                    saleTransactionLineItems.add(newSaleTransactionLineItem);
+
+                    totalQuantity += productAndQuantity.getQuantity();
+                    totalAmount = totalAmount.add(subTotal);
+                    System.out.println("Total Amount" + totalAmount);
+                }
+                SaleTransaction newSaleTransaction = new SaleTransaction(totalLineItem, totalQuantity, totalAmount, LocalDateTime.now(), saleTransactionLineItems, false);
+                Long newSaleTransactionId = saleTransactionSessionBean.createNewSaleTransaction(c.getUserId(), newSaleTransaction);
+                CreateSaleTransactionRsp createSaleTransactionRsp = new CreateSaleTransactionRsp(newSaleTransactionId);
+                return Response.status(Response.Status.OK).entity(createSaleTransactionRsp).build();
+
+            } catch (ProductNotFoundException | CustomerNotFoundException | CreateNewSaleTransactionException ex) {
+                ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());
+                return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(errorRsp).build();
             }
-            SaleTransaction newSaleTransaction = new SaleTransaction(totalLineItem, totalQuantity, totalAmount, LocalDateTime.now(), saleTransactionLineItems, false);
-            SaleTransaction s = saleTransactionSessionBean.createNewSaleTransaction(c.getUserId(), newSaleTransaction);
-            
-        } catch (ProductNotFoundException | CustomerNotFoundException | CreateNewSaleTransactionException ex) {
-            System.out.println(ex.getMessage());
+        } else {
+            ErrorRsp errorRsp = new ErrorRsp("Invalid request");
+            return Response.status(Response.Status.BAD_REQUEST).entity(errorRsp).build();
         }
     }
 
