@@ -16,10 +16,10 @@ import entity.Promotion;
 import javax.inject.Named;
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.time.Instant;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.time.chrono.ChronoLocalDateTime;
+import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -29,9 +29,9 @@ import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
+import javax.faces.event.ActionListener;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
-import org.primefaces.PrimeFaces;
 import util.exception.CompanyNotFoundException;
 
 /**
@@ -62,16 +62,17 @@ public class CompanyPromotionManagedBean implements Serializable {
 
     private Promotion newPromotion = null, promotionToBeUpdated = null;
     private Date today = null;
-    private List<Date> newDateRange = null, dateRangeToBeUpdated = null;
+    private Date startDateToBeUpdated=null,endDateToBeUpdated=null;
+    private List<Date> newDateRange = null;
     private List<Promotion> promotions, filteredPromotions;
-    private List<Product> products, filteredProducts, productsToBeUpdated;
+    private List<Product> products, filteredProducts, productsToBeUpdated, promotionsProductsToBeViewed;
     private Company company;
 
     public CompanyPromotionManagedBean() {
         newPromotion = new Promotion();
         today = Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant());
         newDateRange = new ArrayList<>();
-        dateRangeToBeUpdated = new ArrayList<>();
+        promotionsProductsToBeViewed = new ArrayList<>();
     }
 
     @PostConstruct
@@ -83,9 +84,9 @@ public class CompanyPromotionManagedBean implements Serializable {
         setProducts(getCompany().getProducts());
         try {
             promotions = promotionSessionBean.retrivePromotionsByCompanyID(company.getUserId());
-            
+
             System.out.println("********** promotions: " + promotions.size());
-            
+
         } catch (CompanyNotFoundException ex) {
 
         }
@@ -107,27 +108,36 @@ public class CompanyPromotionManagedBean implements Serializable {
         newDateRange = new ArrayList<>();
     }
 
+    public void viewPromotionsProducts(ActionListener event){
+        
+    }
+    
     public void doUpdatePromotion(ActionEvent event) {
         promotionToBeUpdated = (Promotion) event.getComponent().getAttributes().get("promotionToBeUpdatedFaceletAtribute");
         setProductsToBeUpdated(promotionToBeUpdated.getProducts());
-        LocalDateTime currentPointer;
-       
-        ChronoLocalDateTime endPointer = promotionToBeUpdated.getEndDate();
-        System.out.println("Start pointer: "+promotionToBeUpdated.getStartDate());
-        System.out.println("End Pointer: "+promotionToBeUpdated.getEndDate());
-        for (currentPointer = promotionToBeUpdated.getStartDate();
-                currentPointer.isBefore(endPointer);
-                currentPointer.plusDays(1)) {
-            Date date = Timestamp.valueOf(currentPointer);
-            dateRangeToBeUpdated.add(date);
-        }
-    
-dateRangeToBeUpdated.forEach(date -> {
-            System.out.println("dates to be updated: " + date.toString());
-        });
+        Instant instantStartdate = this.promotionToBeUpdated.getStartDate().toInstant(ZoneOffset.UTC);
+        Date startDate = Date.from(instantStartdate);
+        setStartDateToBeUpdated(startDate);
+        setEndDateToBeUpdated(Timestamp.valueOf( promotionToBeUpdated.getEndDate()));
+        
+//        ChronoLocalDateTime endPointer = promotionToBeUpdated.getEndDate();
+//        System.out.println("Start pointer: " + promotionToBeUpdated.getStartDate());
+//        System.out.println("End Pointer: " + promotionToBeUpdated.getEndDate());
+//        for (currentPointer = promotionToBeUpdated.getStartDate();
+//                currentPointer.compareTo(endPointer) < 1;
+//                currentPointer.plusDays(1)) {
+//            System.out.println("currentPointer.compareTo: "+currentPointer.compareTo(endPointer));
+//            System.out.println("    CurrentPOinter: "+currentPointer.toString());
+//            Date date = Timestamp.valueOf(currentPointer);
+//            dateRangeToBeUpdated.add(date);
+//        }
+
     }
 
     public void updatePromotion(ActionEvent event) {
+        setProductsToBeUpdated(null);
+        setStartDateToBeUpdated(null);
+        setEndDateToBeUpdated(null);
     }
 
     public void deletePromotion(ActionEvent event) {
@@ -335,19 +345,6 @@ dateRangeToBeUpdated.forEach(date -> {
         this.newDateRange = newDateRange;
     }
 
-    /**
-     * @return the dateRangeToBeUpdated
-     */
-    public List<Date> getDateRangeToBeUpdated() {
-        return dateRangeToBeUpdated;
-    }
-
-    /**
-     * @param dateRangeToBeUpdated the dateRangeToBeUpdated to set
-     */
-    public void setDateRangeToBeUpdated(List<Date> dateRangeToBeUpdated) {
-        this.dateRangeToBeUpdated = dateRangeToBeUpdated;
-    }
 
     /**
      * @return the promotionToBeUpdated
@@ -376,5 +373,48 @@ dateRangeToBeUpdated.forEach(date -> {
     public void setProductsToBeUpdated(List<Product> productsToBeUpdated) {
         this.productsToBeUpdated = productsToBeUpdated;
     }
+
+    /**
+     * @return the startDateToBeUpdated
+     */
+    public Date getStartDateToBeUpdated() {
+        return startDateToBeUpdated;
+    }
+
+    /**
+     * @param startDateToBeUpdated the startDateToBeUpdated to set
+     */
+    public void setStartDateToBeUpdated(Date startDateToBeUpdated) {
+        this.startDateToBeUpdated = startDateToBeUpdated;
+    }
+
+    /**
+     * @return the endDateToBeUpdated
+     */
+    public Date getEndDateToBeUpdated() {
+        return endDateToBeUpdated;
+    }
+
+    /**
+     * @param endDateToBeUpdated the endDateToBeUpdated to set
+     */
+    public void setEndDateToBeUpdated(Date endDateToBeUpdated) {
+        this.endDateToBeUpdated = endDateToBeUpdated;
+    }
+
+    /**
+     * @return the promotionsProductsToBeViewed
+     */
+    public List<Product> getPromotionsProductsToBeViewed() {
+        return promotionsProductsToBeViewed;
+    }
+
+    /**
+     * @param promotionsProductsToBeViewed the promotionsProductsToBeViewed to set
+     */
+    public void setPromotionsProductsToBeViewed(List<Product> promotionsProductsToBeViewed) {
+        this.promotionsProductsToBeViewed = promotionsProductsToBeViewed;
+    }
+
 
 };

@@ -89,41 +89,31 @@
                         </p:column>     
                     </p:row>
 
-                    
                     <p:row>
                         <p:column>
-                            <p:outputLabel for="startDate" value="startDate" style="font-weight: bold;"/>               
+                            <p:outputLabel for="rangeDate" value="rangeDate" style="font-weight: bold;"/>               
                         </p:column>
                         <p:column>
-                            <p:datePicker id="startDate" value="#{companyPromotionManagedBean.startDateToBeUpdated}" 
-                                          showTime="true" 
-                                          required="true" requiredMessage="start date is required" 
-                                          
-                                          maxdate="#{companyPromotionManagedBean.endDateToBeUpdated}">
-                                <p:ajax update="startDateValidation " process="@this"/>
+                            <h:outputText value="Previous range:"/>&nbsp;
+                            <h:outputText value ="#{companyPromotionManagedBean.promotionToBeUpdated.startDate}"/>
+                            <h:outputText value ="#{companyPromotionManagedBean.promotionToBeUpdated.endDate}"/>
+
+                            <p:datePicker id="rangeDate" value="#{companyPromotionManagedBean.dateRangeToBeUpdated}" 
+                                          showTime="true" pattern="dd.MM.yyyy"
+                                          required="true" requiredMessage="the range of date is required" 
+                                          selectionMode="range"
+                                          mindate="#{companyPromotionManagedBean.today}">
+                                <p:ajax update="rangeDateValidation " process="@this"/>
+
+
                             </p:datePicker>
+
                         </p:column>
                         <p:column>
-                            <p:messages id="startDateValidation" for ="startDate" />
+                            <p:messages id="rangeDateValidation" for ="rangeDate" />
                         </p:column>     
                     </p:row>
 
-                     <p:row>
-                        <p:column>
-                            <p:outputLabel for="endDate" value="endDate" style="font-weight: bold;"/>               
-                        </p:column>
-                        <p:column>
-                            <p:datePicker id="endDate" value="#{companyPromotionManagedBean.endDateToBeUpdated}" 
-                                          showTime="true" 
-                                          required="true" requiredMessage="start date is required" 
-                                          mindate="#{companyPromotionManagedBean.startDateToBeUpdated}">
-                                <p:ajax update="endDateValidation " process="@this"/>
-                            </p:datePicker>
-                        </p:column>
-                        <p:column>
-                            <p:messages id="endDateValidation" for ="endDate" />
-                        </p:column>     
-                    </p:row>
 
 
 

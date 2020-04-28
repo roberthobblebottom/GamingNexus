@@ -97,7 +97,6 @@ public class DataInitSessionBean {
     public void postConstruct() {
         System.out.println("**************Entered Post construct");
         if (em.find(SystemAdmin.class, 1l) == null) {
-
             this.initializeData();
         }
     }
