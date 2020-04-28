@@ -5,9 +5,14 @@
  */
 package ejb.session.stateless;
 
+
 import entity.Customer;
+import entity.Product;
 import entity.SaleTransaction;
 import entity.SaleTransactionLineItem;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -30,6 +35,7 @@ public class SaleTransactionSessionBean implements SaleTransactionSessionBeanLoc
 
     @EJB
     private CompanySessionBeanLocal companySessionBeanLocal;
+
 
     @PersistenceContext(unitName = "GamingNexus-ejbPU")
     private EntityManager em;

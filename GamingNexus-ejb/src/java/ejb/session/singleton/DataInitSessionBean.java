@@ -964,7 +964,7 @@ public class DataInitSessionBean {
             tags = new ArrayList<>();
             Hardware alienware15 = hardwareSessionBeanLocal.createNewHardware(new Hardware(warrantyDescription, technicalSpecification, manufacturingCountry, 
                     name, description, price, averageRating, releaseDate, sales, headerImage, videoLink),
-                    categoryid, tags, company1.getUserId());
+                    categoryid, tags, company2.getUserId());
             
             name = "Alienware 17";
             warrantyDescription = "1 Year";
@@ -981,7 +981,7 @@ public class DataInitSessionBean {
             tags = new ArrayList<>();
             Hardware alienware17 = hardwareSessionBeanLocal.createNewHardware(new Hardware(warrantyDescription, technicalSpecification, manufacturingCountry, 
                     name, description, price, averageRating, releaseDate, sales, headerImage, videoLink),
-                    categoryid, tags, company1.getUserId());
+                    categoryid, tags, company2.getUserId());
             
             name = "Razer Viper Ultimate Mouse";
             warrantyDescription = "2 Years";
@@ -998,7 +998,7 @@ public class DataInitSessionBean {
             tags = new ArrayList<>();
             Hardware viperultimate = hardwareSessionBeanLocal.createNewHardware(new Hardware(warrantyDescription, technicalSpecification, manufacturingCountry, 
                     name, description, price, averageRating, releaseDate, sales, headerImage, videoLink),
-                    categoryid, tags, company1.getUserId());
+                    categoryid, tags, company2.getUserId());
             
 
 

@@ -64,6 +64,7 @@ public abstract class Product implements Serializable {
     private LocalDate releaseDate;
     
     private long sales;
+
     @Lob
     @Column
     private String headerImage;
