@@ -64,9 +64,11 @@ public abstract class Product implements Serializable {
     private LocalDate releaseDate;
     
     private double sales;
-    
+    @Lob
+    @Column
     private String headerImage;
-    
+    @Lob
+    @Column
     private String videoLink;
 
     @ManyToOne(optional = false)
@@ -411,72 +413,6 @@ public abstract class Product implements Serializable {
         this.videoLink = videoLink;
     }
 
-    public List<Forum> getForums() {
-        return forums;
-    }
-
-    public void setForums(List<Forum> forums) {
-        this.forums = forums;
-    }
-
-
-
-    /**
-     * @return the sales
-     */
-    public double getSales() {
-        return sales;
-    }
-
-    /**
-     * @param sales the sales to set
-     */
-    public void setSales(double sales) {
-        this.sales = sales;
-    }
-
-    /**
-     * @return the releaseDate
-     */
-    public LocalDate getReleaseDate() {
-        return releaseDate;
-    }
-
-    /**
-     * @param releaseDate the releaseDate to set
-     */
-    public void setReleaseDate(LocalDate releaseDate) {
-        this.releaseDate = releaseDate;
-    }
-
-    /**
-     * @return the headerImage
-     */
-    public String getHeaderImage() {
-        return headerImage;
-    }
-
-    /**
-     * @param headerImage the headerImage to set
-     */
-    public void setHeaderImage(String headerImage) {
-        this.headerImage = headerImage;
-    }
-
-    /**
-     * @return the videoLink
-     */
-    public String getVideoLink() {
-        return videoLink;
-    }
-
-    /**
-     * @param videoLink the videoLink to set
-     */
-    public void setVideoLink(String videoLink) {
-        this.videoLink = videoLink;
-    }
-
-
+    
 
 }

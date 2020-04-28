@@ -9,7 +9,7 @@ import entity.Game;
 
 /**
  *
- * @author ufoya
+ * @author Yang Xi
  */
 public class RetrieveOneGameRsp {
     

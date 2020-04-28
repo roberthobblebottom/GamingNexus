@@ -6,7 +6,6 @@
 package ws.restful.resources;
 
 import ejb.session.stateless.HardwareSessionBeanLocal;
-import entity.CartItem;
 import entity.Deliverables;
 import entity.Forum;
 import entity.Hardware;
@@ -39,8 +38,7 @@ import ws.restful.model.RetrieveAllHardwareRsp;
 @Path("Hardware")
 public class HardwareResource {
 
-    
-
+   
     @Context
     private UriInfo context;
 
@@ -74,9 +72,6 @@ public class HardwareResource {
                 hardware.getCompany().getProducts().clear();
                 for (Rating rating : hardware.getRatings()) {
                     rating.setProduct(null);
-                }
-                for (CartItem cartItem : hardware.getCartItems()) {
-                    cartItem.setProduct(null);
                 }
                 for (Forum forum : hardware.getForums()) {
                     forum.setProduct(null);

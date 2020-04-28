@@ -56,7 +56,7 @@ public class OtherSoftwareSessionBean implements OtherSoftwareSessionBeanLocal {
     }
 
     @Override
-    public OtherSoftware createNewOtherSoftware(OtherSoftware newOtherSoftware, Long categoryId, List<Long> tagIds, Long CompanyId) throws ProductSkuCodeExistException, UnknownPersistenceException, InputDataValidationException, CreateNewProductException, CompanyNotFoundException {
+    public OtherSoftware createNewOtherSoftware(OtherSoftware newOtherSoftware, Long categoryId, List<Long> tagIds, Long companyId) throws ProductSkuCodeExistException, UnknownPersistenceException, InputDataValidationException, CreateNewProductException, CompanyNotFoundException {
         try {
             if (categoryId == null) {
                 throw new CreateNewProductException("The new product must be associated a leaf category");
@@ -67,10 +67,10 @@ public class OtherSoftwareSessionBean implements OtherSoftwareSessionBeanLocal {
                 throw new CreateNewProductException("Selected category for the new product is not a leaf category");
             }
 
-            if (CompanyId == null) {
+            if (companyId == null) {
                 throw new CreateNewProductException("The new product must be associated a company");
             }
-            Company company = companySessionBeanLocal.retrieveCompanyById(categoryId);
+            Company company = companySessionBeanLocal.retrieveCompanyById(companyId);
 
             em.persist(newOtherSoftware);
             newOtherSoftware.setCategory(category);

@@ -93,10 +93,10 @@ public class CustomerSessionBean implements CustomerSessionBeanLocal {
             if (customer.getPassword().equals(passwordHash)) {
                 return customer;
             } else {
-                throw new InvalidLoginCredentialException("Username does not exist or invalid password!");
+                throw new InvalidLoginCredentialException("Invalid password!");
             }
         } catch (CustomerNotFoundException ex) {
-            throw new InvalidLoginCredentialException("Username does not exist or invalid password!");
+            throw new InvalidLoginCredentialException("Username does not exist!");
         }
     }
 
@@ -121,8 +121,6 @@ public class CustomerSessionBean implements CustomerSessionBeanLocal {
     @Override
     public void deleteCustomer(Long customerId) throws CustomerNotFoundException {
         Customer customerToRemove = retrieveCustomerById(customerId);
-
         em.remove(customerToRemove);
-
     }
 }

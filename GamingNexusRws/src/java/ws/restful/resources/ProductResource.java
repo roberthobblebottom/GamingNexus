@@ -6,10 +6,7 @@
 package ws.restful.resources;
 
 import ejb.session.stateless.ProductSessionBeanLocal;
-import entity.CartItem;
 import entity.Forum;
-import entity.Game;
-import entity.GameAccount;
 import entity.Product;
 import entity.Promotion;
 import entity.Rating;
@@ -25,14 +22,11 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PUT;
-import javax.ws.rs.PathParam;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import util.exception.InvalidLoginCredentialException;
 import util.exception.ProductNotFoundException;
 import ws.restful.model.ErrorRsp;
-import ws.restful.model.RetrieveAllProductsRsp;
 import ws.restful.model.RetrieveOneProductRsp;
 
 /**
@@ -63,7 +57,7 @@ public class ProductResource {
     @GET
     @Consumes(MediaType.TEXT_PLAIN)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response retrieveProductById(@PathParam("productId") Long productId)
+    public Response retrieveProductById(@QueryParam("productId") Long productId)
     {
         try
         {
@@ -83,9 +77,6 @@ public class ProductResource {
                 product.getCompany().getProducts().clear();
                 for (Rating rating : product.getRatings()) {
                     rating.setProduct(null);
-                }
-                for (CartItem cartItem : product.getCartItems()) {
-                    cartItem.setProduct(null);
                 }
                 for (Forum forum : product.getForums()) {
                     forum.setProduct(null);

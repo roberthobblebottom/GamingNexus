@@ -306,9 +306,7 @@ public class GameSessionBean implements GameSessionBeanLocal {
         game.getGameAccounts().size();
     }
 
-            return productEntities;
-        }
-    }
+         
 
    
 }

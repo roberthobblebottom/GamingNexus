@@ -10,7 +10,7 @@ import java.util.List;
 
 /**
  *
- * @author ufoya
+ * @author Yang Xi
  */
 public class RetrieveAllProductsRsp {
     private List<Product> products;

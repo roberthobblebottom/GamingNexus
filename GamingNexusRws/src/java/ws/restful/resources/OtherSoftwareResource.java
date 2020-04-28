@@ -6,7 +6,6 @@
 package ws.restful.resources;
 
 import ejb.session.stateless.OtherSoftwareSessionBeanLocal;
-import entity.CartItem;
 import entity.Forum;
 import entity.OtherSoftware;
 import entity.Promotion;
@@ -76,9 +75,6 @@ public class OtherSoftwareResource {
                 otehrSoftware.getCompany().getProducts().clear();
                 for (Rating rating : otehrSoftware.getRatings()) {
                     rating.setProduct(null);
-                }
-                for (CartItem cartItem : otehrSoftware.getCartItems()) {
-                    cartItem.setProduct(null);
                 }
                 for (Forum forum : otehrSoftware.getForums()) {
                     forum.setProduct(null);

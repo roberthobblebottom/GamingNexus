@@ -54,7 +54,7 @@ import util.exception.UpdateProductException;
 
 /**
  *
- * @author jinyichen
+ * @author Jinyichen & Jingyuan
  */
 @Singleton
 @LocalBean
@@ -100,7 +100,6 @@ public class DataInitSessionBean {
             initializeData();
             System.out.print("dataInit");
             System.out.println("**************Entered Post construct");
-
         }
 
     }
@@ -1001,17 +1000,7 @@ public class DataInitSessionBean {
                     name, description, price, averageRating, releaseDate, sales, headerImage, videoLink),
                     categoryid, tags, company1.getUserId());
             
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
+
 
             Customer customer1 = customerSessionBeanlocal.createCustomer(new Customer("7654321",
                     "Singapore", "customer1@gmail.com", "Singapore", "customer1", "password"));
@@ -1050,7 +1039,7 @@ public class DataInitSessionBean {
             description = "Wallpaper Engine enables you to use live wallpapers on your Windows desktop. Various types of animated wallpapers are supported, including 3D and 2D animations, websites, videos and even certain applications. Choose an existing wallpaper or create your own and share it on the Steam Workshop!";
             headerImage = "https://steamcdn-a.akamaihd.net/steam/apps/431960/header.jpg?t=1581697699";
             computerRequirements = "Minimum:OS: Windows 7 (with Aero), 8.1, 10. Processor: 1.66 GHz Intel i5 or equivalent.";
-            categoryid = categoryEntitySoftwareTool.getCategoryId();
+            categoryid = categoryEntityDesign.getCategoryId();
             tags = new ArrayList<>();
             tags.add(tagEntityPopular.getTagId());
             OtherSoftware wallpaperengine = otherSoftwareSessionBeanLocal.createNewOtherSoftware(new OtherSoftware(name, description, 
@@ -1198,21 +1187,8 @@ public class DataInitSessionBean {
                     price, averageRating, releaseDate, sales, headerImage,videoLink),
                     categoryid, tags, company1.getUserId());
             
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
+
+         
 
             Promotion promo1 = promotionSessionBean.createPromotion(new Promotion("VALVE SALE",
                     "YAAAY ANOTHER SALLLLEE", (double) 10, (double) 0, LocalDateTime.now(),

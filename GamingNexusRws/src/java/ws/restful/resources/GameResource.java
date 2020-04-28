@@ -6,7 +6,6 @@
 package ws.restful.resources;
 
 import ejb.session.stateless.GameSessionBeanLocal;
-import entity.CartItem;
 import entity.Forum;
 import entity.Game;
 import entity.GameAccount;
@@ -66,6 +65,8 @@ public class GameResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Response retrieveAllGames() {
         try {
+            
+            System.out.println("********** retrieveAllGames() is successfully invoked");
 
             List<Game> games = gameSessionBean.retrieveAllGames();
 
@@ -83,9 +84,6 @@ public class GameResource {
                 game.getCompany().getProducts().clear();
                 for (Rating rating : game.getRatings()) {
                     rating.setProduct(null);
-                }
-                for (CartItem cartItem : game.getCartItems()) {
-                    cartItem.setProduct(null);
                 }
                 for (Forum forum : game.getForums()) {
                     forum.setProduct(null);
@@ -126,9 +124,6 @@ public class GameResource {
                 game.getCompany().getProducts().clear();
                 for (Rating rating : game.getRatings()) {
                     rating.setProduct(null);
-                }
-                for (CartItem cartItem : game.getCartItems()) {
-                    cartItem.setProduct(null);
                 }
                 for (Forum forum : game.getForums()) {
                     forum.setProduct(null);
@@ -177,9 +172,6 @@ public class GameResource {
                 game.getCompany().getProducts().clear();
                 for (Rating rating : game.getRatings()) {
                     rating.setProduct(null);
-                }
-                for (CartItem cartItem : game.getCartItems()) {
-                    cartItem.setProduct(null);
                 }
                 for (Forum forum : game.getForums()) {
                     forum.setProduct(null);

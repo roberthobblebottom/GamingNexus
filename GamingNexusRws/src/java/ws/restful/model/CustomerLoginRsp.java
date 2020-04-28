@@ -10,7 +10,7 @@ import entity.Customer;
 
 /**
  *
- * @author ufoya
+ * @author Yang Xi
  */
 public class CustomerLoginRsp {
     

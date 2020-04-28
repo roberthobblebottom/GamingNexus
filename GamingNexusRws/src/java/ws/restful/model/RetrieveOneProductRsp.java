@@ -9,7 +9,7 @@ import entity.Product;
 
 /**
  *
- * @author ufoya
+ * @author Yang Xi
  */
 public class RetrieveOneProductRsp {
     
