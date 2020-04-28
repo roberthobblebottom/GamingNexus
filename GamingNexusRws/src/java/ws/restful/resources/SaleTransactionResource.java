@@ -72,6 +72,8 @@ public class SaleTransactionResource {
              System.out.println("Quantity"+ productAndQuantity.getQuantity());
         }
         
+        
+        
     }
 
     private ProductSessionBeanLocal lookupProductSessionBeanLocal() {
