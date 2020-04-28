@@ -63,7 +63,8 @@ public abstract class Product implements Serializable {
     
     private LocalDate releaseDate;
     
-    private double sales;
+    private long sales;
+
     @Lob
     @Column
     private String headerImage;
@@ -94,7 +95,7 @@ public abstract class Product implements Serializable {
     }
 
     //for software games and products with videolink
-    public Product(String name, String description, String computerRequirements, double price, double averageRating, LocalDate releaseDate, double sales, String headerImage, String videoLink) {
+    public Product(String name, String description, String computerRequirements, double price, double averageRating, LocalDate releaseDate, long sales, String headerImage, String videoLink) {
         this();
         this.name = name;
         this.description = description;
@@ -107,7 +108,7 @@ public abstract class Product implements Serializable {
         this.videoLink = videoLink;
     }
     // for hardware
-    public Product(String name, String description, double price, double averageRating, LocalDate releaseDate, double sales, String headerImage, String videoLink) {
+    public Product(String name, String description, double price, double averageRating, LocalDate releaseDate, long sales, String headerImage, String videoLink) {
         this();
         this.name = name;
         this.description = description;
@@ -360,14 +361,14 @@ public abstract class Product implements Serializable {
     /**
      * @return the sales
      */
-    public double getSales() {
+    public long getSales() {
         return sales;
     }
 
     /**
      * @param sales the sales to set
      */
-    public void setSales(double sales) {
+    public void setSales(long sales) {
         this.sales = sales;
     }
 

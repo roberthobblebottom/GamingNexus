@@ -6,11 +6,16 @@
 package ws.restful.resources;
 
 import ejb.session.stateless.ProductSessionBeanLocal;
+import entity.Deliverables;
 import entity.Forum;
+import entity.Game;
+import entity.GameAccount;
+import entity.Hardware;
 import entity.Product;
 import entity.Promotion;
 import entity.Rating;
 import entity.Tag;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.naming.InitialContext;
@@ -27,19 +32,19 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import util.exception.ProductNotFoundException;
 import ws.restful.model.ErrorRsp;
+import ws.restful.model.RetrieveAllProductsRsp;
 import ws.restful.model.RetrieveOneProductRsp;
 
 /**
  * REST Web Service
  *
- * @author yangxi
+ * @author jin yichen
  */
 @Path("Product")
 public class ProductResource {
 
     ProductSessionBeanLocal productSessionBean = lookupProductSessionBeanLocal();
-    
-    
+
     @Context
     private UriInfo context;
 
@@ -50,23 +55,63 @@ public class ProductResource {
     }
 
     /**
-     * Retrieves representation of an instance of ws.restful.resources.ProductResource
+     * Retrieves representation of an instance of
+     * ws.restful.resources.ProductResource
+     *
      * @return an instance of java.lang.String
      */
     @Path("retrieveProductById")
     @GET
     @Consumes(MediaType.TEXT_PLAIN)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response retrieveProductById(@QueryParam("productId") Long productId)
-    {
-        try
-        {
+    public Response retrieveProductById(@QueryParam("productId") Long productId) {
+        try {
             Product product = productSessionBean.retrieveProductById(productId);
-            
+
+            if (product.getCategory().getParentCategory() != null) {
+                product.getCategory().getParentCategory().getSubCategories().clear();
+            }
+
+            product.getCategory().getProducts().clear();
+            for (Tag tagEntity : product.getTags()) {
+                tagEntity.getProducts().clear();
+            }
+            for (Promotion promotion : product.getPromotions()) {
+                promotion.getProducts().clear();
+            }
+            product.getCompany().getProducts().clear();
+            for (Rating rating : product.getRatings()) {
+                rating.setProduct(null);
+            }
+            for (Forum forum : product.getForums()) {
+                forum.setProduct(null);
+            }
+
+            return Response.status(Response.Status.OK).entity(new RetrieveOneProductRsp(product)).build();
+        } catch (ProductNotFoundException ex) {
+            ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());
+
+            return Response.status(Response.Status.BAD_REQUEST).entity(errorRsp).build();
+        } catch (Exception ex) {
+            ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());
+
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(errorRsp).build();
+        }
+    }
+
+    @Path("searchProductsByName")
+    @GET
+    @Consumes(MediaType.TEXT_PLAIN)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response searchProductsByName(@QueryParam("name") String name) {
+        try {
+            List<Product> products = productSessionBean.searchProductsByName(name);
+
+            for (Product product : products) {
+
                 if (product.getCategory().getParentCategory() != null) {
                     product.getCategory().getParentCategory().getSubCategories().clear();
                 }
-                
                 product.getCategory().getProducts().clear();
                 for (Tag tagEntity : product.getTags()) {
                     tagEntity.getProducts().clear();
@@ -81,25 +126,30 @@ public class ProductResource {
                 for (Forum forum : product.getForums()) {
                     forum.setProduct(null);
                 }
+                if (product instanceof Game) {
+                    Game game = (Game) product;
 
-            return Response.status(Response.Status.OK).entity(new RetrieveOneProductRsp(product)).build();
-        }
-        catch(ProductNotFoundException ex)
-        {
+                    for (GameAccount gameAccount : game.getGameAccounts()) {
+                        gameAccount.setGame(null);
+                    }
+                } else if (product instanceof Hardware) {
+                    Hardware hardware = (Hardware) product;
+                    for (Deliverables deliverables : hardware.getDeliverables()) {
+                        deliverables.setHardware(null);
+                    }
+                }
+            }
+            return Response.status(Response.Status.OK).entity(new RetrieveAllProductsRsp(products)).build();
+        } catch (Exception ex) {
             ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());
-            
-            return Response.status(Response.Status.BAD_REQUEST).entity(errorRsp).build();
-        }
-        catch(Exception ex)
-        {
-            ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());
-            
+
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(errorRsp).build();
         }
     }
 
     /**
      * PUT method for updating or creating an instance of ProductResource
+     *
      * @param content representation for the resource
      */
     @PUT

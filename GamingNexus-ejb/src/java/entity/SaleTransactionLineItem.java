@@ -35,23 +35,20 @@ public class SaleTransactionLineItem implements Serializable {
     @JoinColumn(nullable = false)
     private Product product;
     
-    @Column(nullable = false)
-    @NotNull
-    @Min(1)
+    //@Column(nullable = false)
+    //@NotNull
+    //@Min(1)
     private Integer quantity;
-    @Column(nullable = false, precision = 11, scale = 2)
-    @NotNull
-    @DecimalMin("0.00")
-    @Digits(integer = 9, fraction = 2)
+    //@Column(nullable = false, precision = 11, scale = 2)
+    //@NotNull
+    //@DecimalMin("0.00")
+    //@Digits(integer = 9, fraction = 2)
     private BigDecimal unitPrice;
-    @Column(nullable = false, precision = 11, scale = 2)
-    @NotNull
-    @DecimalMin("0.00")
-    @Digits(integer = 9, fraction = 2)
-    private BigDecimal subTotal
-            
-       
-           ;
+    //@Column(nullable = false, precision = 11, scale = 2)
+    //@NotNull
+    //@DecimalMin("0.00")
+    //@Digits(integer = 9, fraction = 2)
+    private BigDecimal subTotal;
 
     public SaleTransactionLineItem() {
     }
@@ -62,7 +59,6 @@ public class SaleTransactionLineItem implements Serializable {
         this.unitPrice = unitPrice;
         this.subTotal = subTotal;
     }
-    
     
 
     public Long getSaleTransactionLineItemId() {
