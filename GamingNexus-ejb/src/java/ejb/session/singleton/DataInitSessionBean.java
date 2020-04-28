@@ -12,6 +12,7 @@ import ejb.session.stateless.GameSessionBeanLocal;
 import ejb.session.stateless.HardwareSessionBeanLocal;
 import ejb.session.stateless.OtherSoftwareSessionBeanLocal;
 import ejb.session.stateless.PromotionSessionBeanLocal;
+import ejb.session.stateless.SaleTransactionSessionBeanLocal;
 import ejb.session.stateless.SystemAdminSessionBeanLocal;
 import ejb.session.stateless.TagSessionBeanLocal;
 import entity.Category;
@@ -22,8 +23,11 @@ import entity.Hardware;
 import entity.OtherSoftware;
 import entity.Product;
 import entity.Promotion;
+import entity.SaleTransaction;
+import entity.SaleTransactionLineItem;
 import entity.SystemAdmin;
 import entity.Tag;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -42,7 +46,9 @@ import util.exception.CompanyNotFoundException;
 import util.exception.CompanyUsernameExistException;
 import util.exception.CreateNewCategoryException;
 import util.exception.CreateNewProductException;
+import util.exception.CreateNewSaleTransactionException;
 import util.exception.CreateNewTagException;
+import util.exception.CustomerNotFoundException;
 import util.exception.CustomerUsernameExistException;
 import util.exception.InputDataValidationException;
 import util.exception.ProductNotFoundException;
@@ -60,6 +66,9 @@ import util.exception.UpdateProductException;
 @LocalBean
 @Startup
 public class DataInitSessionBean {
+
+    @EJB(name = "SaleTransactionSessionBeanLocal")
+    private SaleTransactionSessionBeanLocal saleTransactionSessionBeanLocal;
 
     @EJB
     private PromotionSessionBeanLocal promotionSessionBean;
@@ -147,12 +156,6 @@ public class DataInitSessionBean {
                     .createNewCategoryEntity(new Category("Monitor", "Monitor"), categoryEntityHardware.getCategoryId());
             Category categoryEntityGraphicscard = categorySessionBeanLocal
                     .createNewCategoryEntity(new Category("Graphicscard", "Graphicscard"), categoryEntityHardware.getCategoryId());
-            
-            
-            
-            
-            
-            
 
             Tag tagEntityPopular = tagSessionBeanLocal.createNewTagEntity(new Tag("Popular", false));
             Tag tagEntityDiscount = tagSessionBeanLocal.createNewTagEntity(new Tag("Discount", false));
@@ -925,7 +928,7 @@ public class DataInitSessionBean {
             tags.add(tagEntityAdventure.getTagId());
             tags.add(tagEntityAction.getTagId());
             tags.add(tagEntitySingleplayer.getTagId());
-            Game riseofthetombraider = gameSessionBeanLocal.createNewGame(new Game(parentAdvisory, headerImage, videoLink,  name, description, computerRequirements, price, averageRating, releaseDate, sales),
+            Game riseofthetombraider = gameSessionBeanLocal.createNewGame(new Game(parentAdvisory, headerImage, videoLink, name, description, computerRequirements, price, averageRating, releaseDate, sales),
                     categoryid, tags, company1.getUserId());
 
             List<Long> tagIdsPopular = new ArrayList<>();
@@ -948,7 +951,7 @@ public class DataInitSessionBean {
             tagIdsPopularDiscountNew.add(tagEntityNew.getTagId());
 
             List<Long> tagIdsEmpty = new ArrayList<>();
-            
+
             name = "Alienware 15";
             String warrantyDescription = "1 Year";
             String technicalSpecification = "";
@@ -962,10 +965,10 @@ public class DataInitSessionBean {
             videoLink = "https://r2---sn-npoe7n7z.googlevideo.com/videoplayback?expire=1587579984&ei=8DegXoT0F8fg7QS_qYbgBQ&ip=95.85.80.135&id=o-AOysPbEWJYSEjIcaRmOTs1xwaW25YsAbyO9k3szwkHDG&itag=22&source=youtube&requiressl=yes&vprv=1&mime=video%2Fmp4&ratebypass=yes&dur=59.977&lmt=1579252483939415&fvip=14&fexp=23882513&c=WEB&txp=5432432&sparams=expire%2Cei%2Cip%2Cid%2Citag%2Csource%2Crequiressl%2Cvprv%2Cmime%2Cratebypass%2Cdur%2Clmt&sig=AJpPlLswRAIgP4SS2d6vcIaYpvr2G_RvCKZmxcUqQSqrp5cAO7VHXAECIDT1zht4TxgJxN4rYuY-OYyF60Av5-pBBLGU0MvVkxwT&rm=sn-ug5onuxaxjvh-n8vz7l,sn-n8vreez&req_id=2a38a94c6da2a3ee&ipbypass=yes&redirect_counter=3&cm2rm=sn-nposk7l&cms_redirect=yes&mh=qZ&mip=137.132.119.2&mm=34&mn=sn-npoe7n7z&ms=ltu&mt=1587558322&mv=m&mvi=1&pl=17&lsparams=ipbypass,mh,mip,mm,mn,ms,mv,mvi,pl&lsig=ALrAebAwRAIgMsPoPlkvdojYoXQHh2qb4oS-FnYziCv_6LwMSS3-S7kCIHyUHQa6sckBwNrYlkJ94diArP3ys4Dnza20xOa3-L8a";
             categoryid = categoryEntityLaptop.getCategoryId();
             tags = new ArrayList<>();
-            Hardware alienware15 = hardwareSessionBeanLocal.createNewHardware(new Hardware(warrantyDescription, technicalSpecification, manufacturingCountry, 
+            Hardware alienware15 = hardwareSessionBeanLocal.createNewHardware(new Hardware(warrantyDescription, technicalSpecification, manufacturingCountry,
                     name, description, price, averageRating, releaseDate, sales, headerImage, videoLink),
                     categoryid, tags, company2.getUserId());
-            
+
             name = "Alienware 17";
             warrantyDescription = "1 Year";
             technicalSpecification = "";
@@ -979,10 +982,10 @@ public class DataInitSessionBean {
             videoLink = "https://r3---sn-npoeen76.googlevideo.com/videoplayback?expire=1587580127&ei=fzigXrL1NIn0yQXEyb9I&ip=95.85.80.135&id=o-AAdaSi6A_EjrDBOF7yKu5vqsKL8peT4Br8ITgXF9qbQf&itag=22&source=youtube&requiressl=yes&vprv=1&mime=video%2Fmp4&ratebypass=yes&dur=47.484&lmt=1545221324245390&fvip=14&fexp=23882513&c=WEB&txp=2311222&sparams=expire%2Cei%2Cip%2Cid%2Citag%2Csource%2Crequiressl%2Cvprv%2Cmime%2Cratebypass%2Cdur%2Clmt&sig=AJpPlLswRQIhAK0rjZWS07OkNc3n-QgfEsoHrPeWsg1M-2n7VvTqTVM2AiAvjFywoDbV-Ocb3vc1G2e7fpi6kTkK3_p6yA722eanGQ%3D%3D&rm=sn-ug5onuxaxjvh-n8vz7r,sn-n8vrz7e&req_id=12ba22083e72a3ee&ipbypass=yes&redirect_counter=3&cm2rm=sn-npozs7s&cms_redirect=yes&mh=O2&mip=137.132.119.2&mm=34&mn=sn-npoeen76&ms=ltu&mt=1587558503&mv=m&mvi=2&pl=17&lsparams=ipbypass,mh,mip,mm,mn,ms,mv,mvi,pl&lsig=ALrAebAwRAIgLCDEL6VSVVbLA63A9bxnRZ3Loqg2EiirNcmgQlfGqx4CIDJZ_Lx3eU6ed-yg35b0lukdWevYvFNGaqgUBid-1Od_";
             categoryid = categoryEntityLaptop.getCategoryId();
             tags = new ArrayList<>();
-            Hardware alienware17 = hardwareSessionBeanLocal.createNewHardware(new Hardware(warrantyDescription, technicalSpecification, manufacturingCountry, 
+            Hardware alienware17 = hardwareSessionBeanLocal.createNewHardware(new Hardware(warrantyDescription, technicalSpecification, manufacturingCountry,
                     name, description, price, averageRating, releaseDate, sales, headerImage, videoLink),
                     categoryid, tags, company2.getUserId());
-            
+
             name = "Razer Viper Ultimate Mouse";
             warrantyDescription = "2 Years";
             technicalSpecification = "";
@@ -996,11 +999,9 @@ public class DataInitSessionBean {
             videoLink = "https://r3---sn-npoe7ned.googlevideo.com/videoplayback?expire=1587580664&ei=mDqgXsWZK-K47ASm7YGoDQ&ip=95.85.80.135&id=o-ACWupvaGHYYkbYJnJ6NxmNYXr5JoSiTcscO9BCUXPpq5&itag=22&source=youtube&requiressl=yes&vprv=1&mime=video%2Fmp4&ratebypass=yes&dur=60.046&lmt=1571879623143857&fvip=10&c=WEB&txp=5432432&sparams=expire%2Cei%2Cip%2Cid%2Citag%2Csource%2Crequiressl%2Cvprv%2Cmime%2Cratebypass%2Cdur%2Clmt&sig=AJpPlLswRgIhALVwhuqmihzF60q_7UsbA5RzrQTggm0wd1t_Qyq91YblAiEAwRQi4S7DdQSkUnZeJ6us5dhJBWuvU6Wb4W7pL9_oTJU%3D&rm=sn-ug5onuxaxjvh-n8vz7s,sn-n8vyse7&req_id=2f180d9b3120a3ee&redirect_counter=2&cms_redirect=yes&ipbypass=yes&mh=1p&mip=137.132.119.2&mm=30&mn=sn-npoe7ned&ms=nxu&mt=1587558854&mv=u&mvi=2&pl=17&lsparams=ipbypass,mh,mip,mm,mn,ms,mv,mvi,pl&lsig=AG3C_xAwRAIgBuaDX2oZugSeYSbZ2VfAbh4HQMxZEAnHc_oN6zpSGXYCIGc9sOqr51B2eo5ul4QDJkhxbTMvE-WzLf_RqNDj900w";
             categoryid = categoryEntityMouse.getCategoryId();
             tags = new ArrayList<>();
-            Hardware viperultimate = hardwareSessionBeanLocal.createNewHardware(new Hardware(warrantyDescription, technicalSpecification, manufacturingCountry, 
+            Hardware viperultimate = hardwareSessionBeanLocal.createNewHardware(new Hardware(warrantyDescription, technicalSpecification, manufacturingCountry,
                     name, description, price, averageRating, releaseDate, sales, headerImage, videoLink),
                     categoryid, tags, company2.getUserId());
-            
-
 
             Customer customer1 = customerSessionBeanlocal.createCustomer(new Customer("7654321",
                     "Singapore", "customer1@gmail.com", "Singapore", "customer1", "password"));
@@ -1013,9 +1014,6 @@ public class DataInitSessionBean {
             Customer customer5 = customerSessionBeanlocal.createCustomer(new Customer("765432103",
                     "Singapore", "customer5@gmail.com", "Singapore", "customer5", "password"));
 
-            
-
-
             name = "Fences";
             releaseDate = LocalDate.parse("2017-03-30", formatter);
             averageRating = 80;
@@ -1027,8 +1025,8 @@ public class DataInitSessionBean {
             categoryid = categoryEntityDesign.getCategoryId();
             tags = new ArrayList<>();
             tags.add(tagEntityPopular.getTagId());
-            OtherSoftware fences = otherSoftwareSessionBeanLocal.createNewOtherSoftware(new OtherSoftware(name, description, 
-                    computerRequirements, price, averageRating, releaseDate, sales, headerImage,videoLink),
+            OtherSoftware fences = otherSoftwareSessionBeanLocal.createNewOtherSoftware(new OtherSoftware(name, description,
+                    computerRequirements, price, averageRating, releaseDate, sales, headerImage, videoLink),
                     categoryid, tags, company1.getUserId());
 
             name = "Wallpaper Engine";
@@ -1042,8 +1040,8 @@ public class DataInitSessionBean {
             categoryid = categoryEntityDesign.getCategoryId();
             tags = new ArrayList<>();
             tags.add(tagEntityPopular.getTagId());
-            OtherSoftware wallpaperengine = otherSoftwareSessionBeanLocal.createNewOtherSoftware(new OtherSoftware(name, description, 
-                    computerRequirements, price, averageRating, releaseDate, sales, headerImage,videoLink),
+            OtherSoftware wallpaperengine = otherSoftwareSessionBeanLocal.createNewOtherSoftware(new OtherSoftware(name, description,
+                    computerRequirements, price, averageRating, releaseDate, sales, headerImage, videoLink),
                     categoryid, tags, company1.getUserId());
 
             name = "Plan V";
@@ -1057,8 +1055,8 @@ public class DataInitSessionBean {
             categoryid = categoryEntityVideoProduction.getCategoryId();
             tags = new ArrayList<>();
             tags.add(tagEntityUpcoming.getTagId());
-            OtherSoftware planV = otherSoftwareSessionBeanLocal.createNewOtherSoftware(new OtherSoftware(name, description, 
-                    computerRequirements, price, averageRating, releaseDate, sales, headerImage ,videoLink),
+            OtherSoftware planV = otherSoftwareSessionBeanLocal.createNewOtherSoftware(new OtherSoftware(name, description,
+                    computerRequirements, price, averageRating, releaseDate, sales, headerImage, videoLink),
                     categoryid, tags, company1.getUserId());
 
             name = "FaceRig";
@@ -1073,7 +1071,7 @@ public class DataInitSessionBean {
             categoryid = categoryEntityAnimationModeling.getCategoryId();
             tags = new ArrayList<>();
             tags.add(tagEntityPopular.getTagId());
-            OtherSoftware facerig = otherSoftwareSessionBeanLocal.createNewOtherSoftware(new OtherSoftware(name, description, computerRequirements, 
+            OtherSoftware facerig = otherSoftwareSessionBeanLocal.createNewOtherSoftware(new OtherSoftware(name, description, computerRequirements,
                     price, averageRating, releaseDate, sales, headerImage, videoLink),
                     categoryid, tags, company1.getUserId());
 
@@ -1088,10 +1086,10 @@ public class DataInitSessionBean {
             categoryid = categoryEntityDesign.getCategoryId();
             tags = new ArrayList<>();
             tags.add(tagEntityPopular.getTagId());
-            OtherSoftware aseprite = otherSoftwareSessionBeanLocal.createNewOtherSoftware(new OtherSoftware(name, description, 
-                    computerRequirements, price, averageRating, releaseDate, sales, headerImage,videoLink),
+            OtherSoftware aseprite = otherSoftwareSessionBeanLocal.createNewOtherSoftware(new OtherSoftware(name, description,
+                    computerRequirements, price, averageRating, releaseDate, sales, headerImage, videoLink),
                     categoryid, tags, company1.getUserId());
-            
+
             name = "PC building simulator";
             releaseDate = LocalDate.parse("2019-01-30", formatter);
             averageRating = 87;
@@ -1104,10 +1102,10 @@ public class DataInitSessionBean {
             categoryid = categoryEntityEducation.getCategoryId();
             tags = new ArrayList<>();
             tags.add(tagEntityPopular.getTagId());
-            OtherSoftware pcbuilding = otherSoftwareSessionBeanLocal.createNewOtherSoftware(new OtherSoftware(name, description, computerRequirements, 
+            OtherSoftware pcbuilding = otherSoftwareSessionBeanLocal.createNewOtherSoftware(new OtherSoftware(name, description, computerRequirements,
                     price, averageRating, releaseDate, sales, headerImage, videoLink),
                     categoryid, tags, company1.getUserId());
-            
+
             name = "GameGuru";
             releaseDate = LocalDate.parse("2015-05-20", formatter);
             averageRating = 87;
@@ -1120,10 +1118,10 @@ public class DataInitSessionBean {
             categoryid = categoryEntityGameDev.getCategoryId();
             tags = new ArrayList<>();
             tags.add(tagEntityPopular.getTagId());
-            OtherSoftware gameguru = otherSoftwareSessionBeanLocal.createNewOtherSoftware(new OtherSoftware(name, description, computerRequirements, 
+            OtherSoftware gameguru = otherSoftwareSessionBeanLocal.createNewOtherSoftware(new OtherSoftware(name, description, computerRequirements,
                     price, averageRating, releaseDate, sales, headerImage, videoLink),
                     categoryid, tags, company1.getUserId());
-            
+
             name = "GameMaker Studio 2";
             releaseDate = LocalDate.parse("2017-03-09", formatter);
             averageRating = 92;
@@ -1136,10 +1134,10 @@ public class DataInitSessionBean {
             categoryid = categoryEntityGameDev.getCategoryId();
             tags = new ArrayList<>();
             tags.add(tagEntityPopular.getTagId());
-            OtherSoftware gamemakerstudio = otherSoftwareSessionBeanLocal.createNewOtherSoftware(new OtherSoftware(name, description, computerRequirements, 
+            OtherSoftware gamemakerstudio = otherSoftwareSessionBeanLocal.createNewOtherSoftware(new OtherSoftware(name, description, computerRequirements,
                     price, averageRating, releaseDate, sales, headerImage, videoLink),
                     categoryid, tags, company1.getUserId());
-            
+
             name = "Soundpad";
             releaseDate = LocalDate.parse("2016-11-09", formatter);
             averageRating = 85;
@@ -1152,10 +1150,10 @@ public class DataInitSessionBean {
             categoryid = categoryEntityAudio.getCategoryId();
             tags = new ArrayList<>();
             tags.add(tagEntityPopular.getTagId());
-            OtherSoftware soundpad = otherSoftwareSessionBeanLocal.createNewOtherSoftware(new OtherSoftware(name, description, computerRequirements, 
+            OtherSoftware soundpad = otherSoftwareSessionBeanLocal.createNewOtherSoftware(new OtherSoftware(name, description, computerRequirements,
                     price, averageRating, releaseDate, sales, headerImage, videoLink),
                     categoryid, tags, company1.getUserId());
-            
+
             name = "openCanvas 7";
             releaseDate = LocalDate.parse("2017-09-21", formatter);
             averageRating = 84;
@@ -1168,10 +1166,10 @@ public class DataInitSessionBean {
             categoryid = categoryEntityPhotoEditing.getCategoryId();
             tags = new ArrayList<>();
             tags.add(tagEntityPopular.getTagId());
-            OtherSoftware opencanvas7 = otherSoftwareSessionBeanLocal.createNewOtherSoftware(new OtherSoftware(name, description, computerRequirements, 
+            OtherSoftware opencanvas7 = otherSoftwareSessionBeanLocal.createNewOtherSoftware(new OtherSoftware(name, description, computerRequirements,
                     price, averageRating, releaseDate, sales, headerImage, videoLink),
                     categoryid, tags, company1.getUserId());
-            
+
             name = "Stream Avatars";
             releaseDate = LocalDate.parse("2017-07-26", formatter);
             averageRating = 82;
@@ -1183,12 +1181,14 @@ public class DataInitSessionBean {
             categoryid = categoryEntityPhotoEditing.getCategoryId();
             tags = new ArrayList<>();
             tags.add(tagEntityPopular.getTagId());
-            OtherSoftware streamAvatars = otherSoftwareSessionBeanLocal.createNewOtherSoftware(new OtherSoftware(name, description, computerRequirements, 
-                    price, averageRating, releaseDate, sales, headerImage,videoLink),
+            OtherSoftware streamAvatars = otherSoftwareSessionBeanLocal.createNewOtherSoftware(new OtherSoftware(name, description, computerRequirements,
+                    price, averageRating, releaseDate, sales, headerImage, videoLink),
                     categoryid, tags, company1.getUserId());
-            
 
-         
+            SaleTransactionLineItem saleTransactionLineItem1 = new SaleTransactionLineItem(streamAvatars, 1, new BigDecimal("14.5"), new BigDecimal("14.5"));
+            List<SaleTransactionLineItem> saleTransactionLineItems = new ArrayList<>();
+            saleTransactionLineItems.add(saleTransactionLineItem1);
+            SaleTransaction saleTransaction = saleTransactionSessionBeanLocal.createNewSaleTransaction(customer1.getUserId(), new SaleTransaction(1, 1, BigDecimal.ONE, LocalDateTime.now(), saleTransactionLineItems, false));
 
             Promotion promo1 = promotionSessionBean.createPromotion(new Promotion("VALVE SALE",
                     "YAAAY ANOTHER SALLLLEE", (double) 10, (double) 0, LocalDateTime.now(),
@@ -1215,7 +1215,7 @@ public class DataInitSessionBean {
         } catch (SystemAdminUsernameExistException | UnknownPersistenceException | InputDataValidationException
                 | CreateNewCategoryException | CreateNewTagException | CreateNewProductException
                 | ProductSkuCodeExistException | CompanyNotFoundException
-                | CompanyUsernameExistException | CustomerUsernameExistException ex) {
+                | CompanyUsernameExistException | CustomerUsernameExistException | CreateNewSaleTransactionException | CustomerNotFoundException ex) {
             ex.printStackTrace();
         }
 

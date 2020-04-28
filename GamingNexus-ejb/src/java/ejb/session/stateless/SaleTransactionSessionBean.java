@@ -5,7 +5,6 @@
  */
 package ejb.session.stateless;
 
-
 import entity.Customer;
 import entity.Product;
 import entity.SaleTransaction;
@@ -21,6 +20,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import util.exception.CreateNewSaleTransactionException;
 import util.exception.CustomerNotFoundException;
+import util.exception.InvalidLoginCredentialException;
 import util.exception.SaleTransactionNotFoundException;
 
 /**
@@ -35,7 +35,6 @@ public class SaleTransactionSessionBean implements SaleTransactionSessionBeanLoc
 
     @EJB
     private CompanySessionBeanLocal companySessionBeanLocal;
-
 
     @PersistenceContext(unitName = "GamingNexus-ejbPU")
     private EntityManager em;
@@ -63,46 +62,52 @@ public class SaleTransactionSessionBean implements SaleTransactionSessionBeanLoc
             throw new CreateNewSaleTransactionException("Sale transaction information not provided");
         }
     }
-    
+
     @Override
-    public List<SaleTransaction> retrieveAllSaleTransactions()
-    {
+    public List<SaleTransaction> retrieveAllSaleTransactions() {
         Query query = em.createQuery("SELECT st FROM SaleTransaction st");
-        
+
         return query.getResultList();
     }
-    
-    
+
     @Override
-    public SaleTransaction retrieveSaleTransactionBySaleTransactionId(Long saleTransactionId) throws SaleTransactionNotFoundException
-    {
+    public SaleTransaction retrieveSaleTransactionBySaleTransactionId(Long saleTransactionId) throws SaleTransactionNotFoundException {
         SaleTransaction saleTransaction = em.find(SaleTransaction.class, saleTransactionId);
-        
-        if(saleTransaction != null)
-        {
+
+        if (saleTransaction != null) {
             saleTransaction.getSaleTransactionLineItems().size();
-            
+
             return saleTransaction;
-        }
-        else
-        {
+        } else {
             throw new SaleTransactionNotFoundException("Sale Transaction ID " + saleTransactionId + " does not exist!");
-        }                
+        }
     }
-    
-    
-    
-    public List<SaleTransaction> retrieveAllSaleTransactionsByCustomerId(Long customerId)
-    {
+
+    public List<SaleTransaction> retrieveAllSaleTransactionsByCustomerId(Long customerId) {
         Query query = em.createQuery("SELECT st FROM SaleTransaction st where st.customer.userId = :inCustomerId");
         query.setParameter("inCustomerId", customerId);
         return query.getResultList();
     }
-    
-   
-    
-    
-    
-    
+
+    public List<SaleTransaction> retrieveAllSaleTransactionByUsernameAndPassword(String username, String password) throws InvalidLoginCredentialException {
+
+        Customer customer = customerSessionBeanLocal.customerLogin(username, password);
+
+        if (customer != null) {
+            Query query = em.createQuery("SELECT st FROM SaleTransaction st where st.customer.username = :inCustomerUsername");
+
+            query.setParameter("inCustomerUsername", username);
+            
+            List<SaleTransaction> saleTransactions = query.getResultList();
+            
+            for (SaleTransaction saleTransaction : saleTransactions) {
+                saleTransaction.getSaleTransactionLineItems().size();
+            }
+            return saleTransactions;
+        } else {
+            throw new InvalidLoginCredentialException("Username or Password is wrong!");
+        }
+
+    }
 
 }
