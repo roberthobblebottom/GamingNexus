@@ -16,10 +16,8 @@ import entity.Promotion;
 import javax.inject.Named;
 import java.io.Serializable;
 import java.sql.Timestamp;
-import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -62,7 +60,7 @@ public class CompanyPromotionManagedBean implements Serializable {
 
     private Promotion newPromotion = null, promotionToBeUpdated = null;
     private Date today = null;
-    private Date startDateToBeUpdated=null,endDateToBeUpdated=null;
+    private Date startDateToBeUpdated = null, endDateToBeUpdated = null;
     private List<Date> newDateRange = null;
     private List<Promotion> promotions, filteredPromotions;
     private List<Product> products, filteredProducts, productsToBeUpdated, promotionsProductsToBeViewed;
@@ -108,18 +106,19 @@ public class CompanyPromotionManagedBean implements Serializable {
         newDateRange = new ArrayList<>();
     }
 
-    public void viewPromotionsProducts(ActionListener event){
-        
+    public void viewPromotionsProducts(ActionListener event) {
+
     }
-    
+
     public void doUpdatePromotion(ActionEvent event) {
         promotionToBeUpdated = (Promotion) event.getComponent().getAttributes().get("promotionToBeUpdatedFaceletAtribute");
+
         setProductsToBeUpdated(promotionToBeUpdated.getProducts());
-        Instant instantStartdate = this.promotionToBeUpdated.getStartDate().toInstant(ZoneOffset.UTC);
-        Date startDate = Date.from(instantStartdate);
-        setStartDateToBeUpdated(startDate);
-        setEndDateToBeUpdated(Timestamp.valueOf( promotionToBeUpdated.getEndDate()));
-        
+
+//        Instant instantStartdate = this.promotionToBeUpdated.getStartDate().toInstant(ZoneOffset.UTC);
+//        Date startDate = Date.from(instantStartdate);
+//        setStartDateToBeUpdated(startDate);
+//        setEndDateToBeUpdated(Timestamp.valueOf(this.promotionToBeUpdated.getEndDate()));
 //        ChronoLocalDateTime endPointer = promotionToBeUpdated.getEndDate();
 //        System.out.println("Start pointer: " + promotionToBeUpdated.getStartDate());
 //        System.out.println("End Pointer: " + promotionToBeUpdated.getEndDate());
@@ -131,10 +130,21 @@ public class CompanyPromotionManagedBean implements Serializable {
 //            Date date = Timestamp.valueOf(currentPointer);
 //            dateRangeToBeUpdated.add(date);
 //        }
-
     }
 
     public void updatePromotion(ActionEvent event) {
+        System.out.println("*****Entered updatePromotion method");
+        
+        if (this.startDateToBeUpdated != null) {
+            System.out.println("*****Entered startDate update block");
+            promotionToBeUpdated.setEndDate(new Timestamp(this.startDateToBeUpdated.getTime()).toLocalDateTime());
+        }
+        if (this.endDateToBeUpdated != null) {
+            System.out.println("*****Entered endDate update block");
+            promotionToBeUpdated.setEndDate(new Timestamp(this.endDateToBeUpdated.getTime()).toLocalDateTime());
+        }
+        promotionSessionBean.updatePromotion(promotionToBeUpdated, productsToBeUpdated);
+
         setProductsToBeUpdated(null);
         setStartDateToBeUpdated(null);
         setEndDateToBeUpdated(null);
@@ -345,7 +355,6 @@ public class CompanyPromotionManagedBean implements Serializable {
         this.newDateRange = newDateRange;
     }
 
-
     /**
      * @return the promotionToBeUpdated
      */
@@ -410,11 +419,11 @@ public class CompanyPromotionManagedBean implements Serializable {
     }
 
     /**
-     * @param promotionsProductsToBeViewed the promotionsProductsToBeViewed to set
+     * @param promotionsProductsToBeViewed the promotionsProductsToBeViewed to
+     * set
      */
     public void setPromotionsProductsToBeViewed(List<Product> promotionsProductsToBeViewed) {
         this.promotionsProductsToBeViewed = promotionsProductsToBeViewed;
     }
-
 
 };

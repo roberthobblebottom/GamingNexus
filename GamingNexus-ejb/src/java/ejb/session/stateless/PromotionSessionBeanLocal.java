@@ -5,6 +5,7 @@
  */
 package ejb.session.stateless;
 
+import entity.Product;
 import entity.Promotion;
 import java.util.List;
 import javax.ejb.Local;
@@ -24,5 +25,7 @@ public interface PromotionSessionBeanLocal {
     public Promotion retrievePromotionById(long promotionID);
 
     public List<Promotion> retrivePromotionsByCompanyID(long companyID) throws CompanyNotFoundException;
+
+    public void updatePromotion(Promotion promotion, List<Product> productsListToBeUpdated);
     
 }

@@ -89,16 +89,17 @@
                         </p:column>     
                     </p:row>
 
-                    
+
                     <p:row>
                         <p:column>
                             <p:outputLabel for="startDate" value="startDate" style="font-weight: bold;"/>               
                         </p:column>
                         <p:column>
+                            <p:outputLabel value="#{companyPromotionManagedBean.promotionToBeUpdated.startDate}"/>
+                            <br/>
                             <p:datePicker id="startDate" value="#{companyPromotionManagedBean.startDateToBeUpdated}" 
                                           showTime="true" 
                                           required="true" requiredMessage="start date is required" 
-                                          
                                           maxdate="#{companyPromotionManagedBean.endDateToBeUpdated}">
                                 <p:ajax update="startDateValidation " process="@this"/>
                             </p:datePicker>
@@ -108,11 +109,13 @@
                         </p:column>     
                     </p:row>
 
-                     <p:row>
+                    <p:row>
                         <p:column>
                             <p:outputLabel for="endDate" value="endDate" style="font-weight: bold;"/>               
                         </p:column>
                         <p:column>
+                            <p:outputLabel value="#{companyPromotionManagedBean.promotionToBeUpdated.endDate}"/>
+                            <br/>
                             <p:datePicker id="endDate" value="#{companyPromotionManagedBean.endDateToBeUpdated}" 
                                           showTime="true" 
                                           required="true" requiredMessage="start date is required" 
@@ -147,8 +150,8 @@
 
                     <p:row>
                         <p:column colspan="3">
-                            <p:commandButton type="reset" value="Clear" update="@form formAllPromotions:dataTableAllPromotions" />&nbsp;
-                            <p:commandButton  id="UpdatePromotionButton" value="Add" update="@form formAllPromotions:dataTableAllPromotions" 
+                            <p:commandButton  id="UpdatePromotionButton" value="Update" 
+                                              update="@form formAllPromotions:dataTableAllPromotions" 
                                               actionListener="#{companyPromotionManagedBean.updatePromotion}"    
                                               />
                         </p:column>

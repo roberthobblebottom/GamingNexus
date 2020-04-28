@@ -44,7 +44,6 @@
                             </p:dataList>
                         </p:column>
                         <p:column headerText="Actions">
-
                             <p:commandButton icon="ui-icon-document"   update="ccViewProductDetails:formViewProductDetails"
                                              oncomplete="PF('dialogViewProductDetails').show()">
                                 <f:setPropertyActionListener value="#{product}" 
@@ -52,21 +51,10 @@
                                                                        productToViewInDetails}"/>
                             </p:commandButton>
                         </p:column>
-
-
-
                     </p:dataTable>
-
                 </p:panelGrid>
-
-
-
-
             </p:dialog>
-
-
         </h:form>
-
     </cc:implementation>
 </html>
 

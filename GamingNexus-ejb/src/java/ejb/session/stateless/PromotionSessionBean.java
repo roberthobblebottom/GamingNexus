@@ -75,6 +75,24 @@ public class PromotionSessionBean implements PromotionSessionBeanLocal {
     }
 
     @Override
+    public void updatePromotion(Promotion promotion, List<Product> productsListToBeUpdated) {
+        Promotion promotionToBeUpdated = this.retrievePromotionById(promotion.getPromotionID());
+        if (productsListToBeUpdated != null && !productsListToBeUpdated.isEmpty()) {
+            productsListToBeUpdated.forEach(product -> {
+                promotionToBeUpdated.getProducts().add(product);
+            });
+
+            promotionToBeUpdated.setName(promotion.getName());
+            promotionToBeUpdated.setDescription(promotion.getDescription());
+            promotionToBeUpdated.setDollarDiscount(promotion.getDollarDiscount());
+            promotionToBeUpdated.setPercentageDiscount(promotion.getPercentageDiscount());
+            promotionToBeUpdated.setStartDate(promotion.getStartDate());
+            promotionToBeUpdated.setEndDate(promotion.getEndDate());
+
+        }
+    }
+
+    @Override
     public void deletePromotion(long promotionID) {
         Promotion promotionToBeDeleted = this.retrievePromotionById(promotionID);
         em.remove(promotionToBeDeleted);
