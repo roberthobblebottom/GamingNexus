@@ -6,6 +6,12 @@
 package ejb.session.stateless;
 
 import javax.ejb.Local;
+<<<<<<< Updated upstream
+=======
+import util.exception.CreateNewSaleTransactionException;
+import util.exception.CustomerNotFoundException;
+import util.exception.SaleTransactionNotFoundException;
+>>>>>>> Stashed changes
 
 /**
  *
@@ -14,4 +20,15 @@ import javax.ejb.Local;
 @Local
 public interface SaleTransactionSessionBeanLocal {
     
+<<<<<<< Updated upstream
 }
+=======
+    public List<SaleTransaction> retrieveAllSaleTransactionsByCustomerId(Long customerId);
+
+    public SaleTransaction retrieveSaleTransactionBySaleTransactionId(Long saleTransactionId) throws SaleTransactionNotFoundException;
+
+    public List<SaleTransaction> retrieveAllSaleTransactions();
+
+    public SaleTransaction createNewSaleTransaction(Long customerId, SaleTransaction newSaleTransaction) throws CustomerNotFoundException, CreateNewSaleTransactionException;
+}
+>>>>>>> Stashed changes

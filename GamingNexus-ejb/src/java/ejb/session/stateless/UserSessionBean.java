@@ -28,6 +28,7 @@ public class UserSessionBean implements UserSessionBeanLocal {
     private EntityManager em;
 
     
+    @Override
     public User retrieveUserByUsername(String username) throws UserNotFoundException {
         Query query = em.createQuery("SELECT s FROM User s WHERE s.username = :inUsername");
         query.setParameter("inUsername", username);

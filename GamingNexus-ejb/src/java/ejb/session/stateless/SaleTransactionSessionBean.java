@@ -5,6 +5,17 @@
  */
 package ejb.session.stateless;
 
+<<<<<<< Updated upstream
+=======
+import entity.Customer;
+import entity.Product;
+import entity.SaleTransaction;
+import entity.SaleTransactionLineItem;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+>>>>>>> Stashed changes
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -22,7 +33,50 @@ public class SaleTransactionSessionBean implements SaleTransactionSessionBeanLoc
 
     @EJB
     private CompanySessionBeanLocal companySessionBeanLocal;
+<<<<<<< Updated upstream
     
+=======
+
+    @PersistenceContext(unitName = "GamingNexus-ejbPU")
+    private EntityManager em;
+
+    public SaleTransactionSessionBean() {
+    }
+
+    @Override
+    public SaleTransaction createNewSaleTransaction(Long customerId, SaleTransaction newSaleTransaction) throws CustomerNotFoundException, CreateNewSaleTransactionException {
+        if (newSaleTransaction != null) {
+
+            Customer customer = customerSessionBeanLocal.retrieveCustomerById(customerId);
+            newSaleTransaction.setCustomer(customer);
+            customer.getSaleTransactions().add(newSaleTransaction);
+            em.persist(newSaleTransaction);
+
+            for (SaleTransactionLineItem saleTransactionLineItem : newSaleTransaction.getSaleTransactionLineItems()) {
+                
+                em.persist(saleTransactionLineItem);
+            }
+
+            em.flush();
+
+            return newSaleTransaction;
+
+        } else {
+            throw new CreateNewSaleTransactionException("Sale transaction information not provided");
+        }
+    }
+    
+    
+    
+    
+    @Override
+    public List<SaleTransaction> retrieveAllSaleTransactions()
+    {
+        Query query = em.createQuery("SELECT st FROM SaleTransaction st");
+        
+        return query.getResultList();
+    }
+>>>>>>> Stashed changes
     
     
     
