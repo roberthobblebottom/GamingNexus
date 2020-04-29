@@ -36,5 +36,9 @@ public interface CategorySessionBeanLocal {
     public void updateCategory(Category categoryEntity, Long parentCategoryId) throws InputDataValidationException, CategoryNotFoundException, UpdateCategoryException;
 
     public void deleteCategory(Long categoryId) throws CategoryNotFoundException, DeleteCategoryException;
+
+    public List<Category> retrieveAllSoftwareToolCategories();
+
+    public List<Category> retrieveAllHardwareCategories();
     
 }

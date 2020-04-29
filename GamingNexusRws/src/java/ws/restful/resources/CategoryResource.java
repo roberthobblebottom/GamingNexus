@@ -84,6 +84,73 @@ public class CategoryResource {
             return Response.status(Status.INTERNAL_SERVER_ERROR).entity(errorRsp).build();
         }
     }
+    
+    @Path("retrieveAllSoftwareToolCategories")
+    @GET
+    @Consumes(MediaType.TEXT_PLAIN)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response retrieveAllSoftwareToolCategories()
+    {
+        try
+        {
+           
+            List<Category> categoryEntities = categorySessionBean.retrieveAllSoftwareToolCategories();
+            
+            for(Category categoryEntity:categoryEntities)
+            {
+                if(categoryEntity.getParentCategory() != null)
+                {
+                    categoryEntity.getParentCategory().getSubCategories().clear();
+                }
+                
+                categoryEntity.getSubCategories().clear();
+                categoryEntity.getProducts().clear();
+            }
+            
+            return Response.status(Status.OK).entity(new RetrieveAllCategoriesRsp(categoryEntities)).build();
+        }
+
+        catch(Exception ex)
+        {
+            ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());
+            
+            return Response.status(Status.INTERNAL_SERVER_ERROR).entity(errorRsp).build();
+        }
+    }
+    
+    @Path("retrieveAllHardwareCategories")
+    @GET
+    @Consumes(MediaType.TEXT_PLAIN)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response retrieveAllHardwareCategories()
+    {
+        try
+        {
+           
+            List<Category> categoryEntities = categorySessionBean.retrieveAllHardwareCategories();
+            
+            for(Category categoryEntity:categoryEntities)
+            {
+                if(categoryEntity.getParentCategory() != null)
+                {
+                    categoryEntity.getParentCategory().getSubCategories().clear();
+                }
+                
+                categoryEntity.getSubCategories().clear();
+                categoryEntity.getProducts().clear();
+            }
+            
+            return Response.status(Status.OK).entity(new RetrieveAllCategoriesRsp(categoryEntities)).build();
+        }
+
+        catch(Exception ex)
+        {
+            ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());
+            
+            return Response.status(Status.INTERNAL_SERVER_ERROR).entity(errorRsp).build();
+        }
+    }
+    
 
     /**
      * PUT method for updating or creating an instance of CategoryResource

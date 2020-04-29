@@ -76,6 +76,33 @@ public class TagResource {
             return Response.status(Status.INTERNAL_SERVER_ERROR).entity(errorRsp).build();
         }
     }
+    
+    @Path("retrieveAllGameTags")
+    @GET
+    @Consumes(MediaType.TEXT_PLAIN)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response retrieveAllGameTags()
+    {
+        try
+        {
+            
+            List<Tag> tagEntities = tagSessionBeanLocal.retrieveAllGameTags();
+            
+            for(Tag tagEntity:tagEntities)
+            {                
+                tagEntity.getProducts().clear();
+            }
+            
+            return Response.status(Status.OK).entity(new RetrieveAllTagsRsp(tagEntities)).build();
+        }
+
+        catch(Exception ex)
+        {
+            ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());
+            
+            return Response.status(Status.INTERNAL_SERVER_ERROR).entity(errorRsp).build();
+        }
+    }
 
     /**
      * PUT method for updating or creating an instance of TagResource
