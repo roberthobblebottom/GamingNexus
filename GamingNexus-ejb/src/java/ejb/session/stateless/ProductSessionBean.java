@@ -5,6 +5,7 @@
  */
 package ejb.session.stateless;
 
+import com.sun.javafx.scene.control.skin.VirtualFlow;
 import entity.Game;
 import entity.Hardware;
 import entity.OtherSoftware;
@@ -56,6 +57,16 @@ public class ProductSessionBean implements ProductSessionBeanLocal {
         }
         assert false : "Product must always be a child entity";
         return null;
+    }
+    
+
+    @Override
+    public List<Product> retrieveProductByCategoryId(Long categoryId) {
+        Query query = em.createQuery("SELECT p FROM Product p WHERE p.category.categoryId = :inCategoryId");
+        query.setParameter("inCategoryId", categoryId);
+        List<Product> products = query.getResultList();
+        
+        return products;
     }
 
 //    @Override
