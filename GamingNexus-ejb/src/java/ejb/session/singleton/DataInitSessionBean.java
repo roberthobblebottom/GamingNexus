@@ -159,6 +159,7 @@ public class DataInitSessionBean {
             Tag tagEntityDiscount = tagSessionBeanLocal.createNewTagEntity(new Tag("Discount", false));
             Tag tagEntityNew = tagSessionBeanLocal.createNewTagEntity(new Tag("New", false));
             Tag tagEntityUpcoming = tagSessionBeanLocal.createNewTagEntity(new Tag("Upcoming", false));
+            Tag tagEntitySlider = tagSessionBeanLocal.createNewTagEntity(new Tag("Slider", false));
 
             Tag tagEntityAction = tagSessionBeanLocal.createNewTagEntity(new Tag("Action", true));
             Tag tagEntityAdventure = tagSessionBeanLocal.createNewTagEntity(new Tag("Adventure", true));
@@ -188,6 +189,9 @@ public class DataInitSessionBean {
                     "company4@gmail.com", "Singapore", "company4", "password"));
             Company company5 = companySessionBeanLocal.createNewCompany(new Company("123323", "Singapore",
                     "company5@gmail.com", "Singapore", "company5", "password"));
+            Company valve = companySessionBeanLocal.createNewCompany(new Company("425-889-9642", "PO BOX 1688 Bellevue, WA 98009",
+                    "https://help.steampowered.com", "USA", "valve", "password"));
+            List<Product> valveProducts = new ArrayList<>();
 
             List<Long> tags = new ArrayList<>();
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
@@ -210,7 +214,8 @@ public class DataInitSessionBean {
             Game cs = gameSessionBeanLocal.createNewGame(
                     new Game(parentAdvisory, headerImage, videoLink, name, description, computerRequirements,
                             price, averageRating, releaseDate, sales),
-                    categoryid, tags, company1.getUserId());
+                    categoryid, tags, valve.getUserId());
+            valveProducts.add(cs);
 
             name = "Portal";
             releaseDate = LocalDate.parse("2007-10-10", formatter);
@@ -229,7 +234,8 @@ public class DataInitSessionBean {
             Game portal = gameSessionBeanLocal.createNewGame(
                     new Game(parentAdvisory, headerImage, videoLink, name, description, computerRequirements,
                             price, averageRating, releaseDate, sales),
-                    categoryid, tags, company1.getUserId());
+                    categoryid, tags, valve.getUserId());
+            valveProducts.add(portal);
 
             name = "Dota 2";
             releaseDate = LocalDate.parse("2013-07-09", formatter);
@@ -249,7 +255,8 @@ public class DataInitSessionBean {
             Game dota2 = gameSessionBeanLocal.createNewGame(
                     new Game(parentAdvisory, headerImage, videoLink, name, description, computerRequirements,
                             price, averageRating, releaseDate, sales),
-                    categoryid, tags, company1.getUserId());
+                    categoryid, tags, valve.getUserId());
+            valveProducts.add(dota2);
 
             name = "Team Fortress 2";
             releaseDate = LocalDate.parse("2007-10-10", formatter);
@@ -268,7 +275,8 @@ public class DataInitSessionBean {
             Game teamFortress2 = gameSessionBeanLocal.createNewGame(
                     new Game(parentAdvisory, headerImage, videoLink, name, description, computerRequirements,
                             price, averageRating, releaseDate, sales),
-                    categoryid, tags, company1.getUserId());
+                    categoryid, tags, valve.getUserId());
+            valveProducts.add(teamFortress2);
 
             name = "Counter-Strike: Global Offensive";
             releaseDate = LocalDate.parse("2012-08-21", formatter);
@@ -283,12 +291,14 @@ public class DataInitSessionBean {
             categoryid = categoryEntitySoftwareGame.getCategoryId();
             tags = new ArrayList<>();
             tags.add(tagEntityPopular.getTagId());
+            tags.add(tagEntitySlider.getTagId());
             tags.add(tagEntityFPS.getTagId());
             tags.add(tagEntityMultiplayer.getTagId());
             Game csgo = gameSessionBeanLocal.createNewGame(
                     new Game(parentAdvisory, headerImage, videoLink, name, description, computerRequirements,
                             price, averageRating, releaseDate, sales),
-                    categoryid, tags, company1.getUserId());
+                    categoryid, tags, valve.getUserId());
+            valveProducts.add(csgo);
 
             name = "Portal 2";
             releaseDate = LocalDate.parse("2011-04-18", formatter);
@@ -307,7 +317,8 @@ public class DataInitSessionBean {
             Game portal2 = gameSessionBeanLocal.createNewGame(
                     new Game(parentAdvisory, headerImage, videoLink, name, description, computerRequirements,
                             price, averageRating, releaseDate, sales),
-                    categoryid, tags, company1.getUserId());
+                    categoryid, tags, valve.getUserId());
+            valveProducts.add(portal2);
 
             name = "Day of Defeat";
             releaseDate = LocalDate.parse("2003-05-01", formatter);
@@ -327,7 +338,8 @@ public class DataInitSessionBean {
             Game dayofdefeat = gameSessionBeanLocal.createNewGame(
                     new Game(parentAdvisory, headerImage, videoLink, name, description, computerRequirements,
                             price, averageRating, releaseDate, sales),
-                    categoryid, tags, company1.getUserId());
+                    categoryid, tags, valve.getUserId());
+            valveProducts.add(dayofdefeat);
 
             name = "Left 4 Dead";
             releaseDate = LocalDate.parse("2008-11-17", formatter);
@@ -348,7 +360,8 @@ public class DataInitSessionBean {
             Game left4dead = gameSessionBeanLocal.createNewGame(
                     new Game(parentAdvisory, headerImage, videoLink, name, description, computerRequirements,
                             price, averageRating, releaseDate, sales),
-                    categoryid, tags, company1.getUserId());
+                    categoryid, tags, valve.getUserId());
+            valveProducts.add(left4dead);
 
             name = "Left 4 Dead 2";
             releaseDate = LocalDate.parse("2009-11-16", formatter);
@@ -369,7 +382,8 @@ public class DataInitSessionBean {
             Game left4dead2 = gameSessionBeanLocal.createNewGame(
                     new Game(parentAdvisory, headerImage, videoLink, name, description, computerRequirements,
                             price, averageRating, releaseDate, sales),
-                    categoryid, tags, company1.getUserId());
+                    categoryid, tags, valve.getUserId());
+            valveProducts.add(left4dead2);
 
             name = "DOOM II: Hell on Earth";
             releaseDate = LocalDate.parse("2007-08-03", formatter);
@@ -423,6 +437,8 @@ public class DataInitSessionBean {
             categoryid = categoryEntitySoftwareGame.getCategoryId();
             videoLink = "https://steamcdn-a.akamaihd.net/steam/apps/256672695/movie480.webm?t=1476737061";
             tags = new ArrayList<>();
+            tags.add(tagEntityPopular.getTagId());
+            tags.add(tagEntitySlider.getTagId());
             tags.add(tagEntityStrategy.getTagId());
             tags.add(tagEntityMultiplayer.getTagId());
             tags.add(tagEntitySingleplayer.getTagId());
@@ -503,6 +519,8 @@ public class DataInitSessionBean {
             videoLink = "https://steamcdn-a.akamaihd.net/steam/apps/256703142/movie_max.mp4?t=1513275242";
             categoryid = categoryEntitySoftwareGame.getCategoryId();
             tags = new ArrayList<>();
+            tags.add(tagEntitySlider.getTagId());
+            tags.add(tagEntityPopular.getTagId());
             tags.add(tagEntityOpenworld.getTagId());
             tags.add(tagEntityAction.getTagId());
             Game gtaV = gameSessionBeanLocal.createNewGame(
@@ -548,7 +566,8 @@ public class DataInitSessionBean {
             Game halflife = gameSessionBeanLocal.createNewGame(
                     new Game(parentAdvisory, headerImage, videoLink, name, description, computerRequirements,
                             price, averageRating, releaseDate, sales),
-                    categoryid, tags, company1.getUserId());
+                    categoryid, tags, valve.getUserId());
+            valveProducts.add(halflife);
 
             name = "Half-Life 2";
             releaseDate = LocalDate.parse("2004-11-16", formatter);
@@ -568,7 +587,8 @@ public class DataInitSessionBean {
             Game halflife2 = gameSessionBeanLocal.createNewGame(
                     new Game(parentAdvisory, headerImage, videoLink, name, description, computerRequirements,
                             price, averageRating, releaseDate, sales),
-                    categoryid, tags, company1.getUserId());
+                    categoryid, tags, valve.getUserId());
+            valveProducts.add(halflife2);
 
             name = "Plants vs. Zombies: Game of the Year";
             releaseDate = LocalDate.parse("2009-05-06", formatter);
@@ -677,6 +697,7 @@ public class DataInitSessionBean {
             videoLink = "";
             categoryid = categoryEntitySoftwareGame.getCategoryId();
             tags = new ArrayList<>();
+            tags.add(tagEntitySlider.getTagId());
             tags.add(tagEntityAction.getTagId());
             tags.add(tagEntitySingleplayer.getTagId());
             tags.add(tagEntityOpenworld.getTagId());
@@ -923,6 +944,7 @@ public class DataInitSessionBean {
             computerRequirements = "Minimum:OS: Windows 7 64bitProcessor: Intel Core i3-2100 or AMD equivalentMemory: 6 GB RAMGraphics: NVIDIA GTX 650 2GB or AMD HD7770 2GBDirectX: Version 11Storage: 25 GB available space";
             categoryid = categoryEntitySoftwareGame.getCategoryId();
             tags = new ArrayList<>();
+            tags.add(tagEntitySlider.getTagId());
             tags.add(tagEntityAdventure.getTagId());
             tags.add(tagEntityAction.getTagId());
             tags.add(tagEntitySingleplayer.getTagId());
@@ -1227,14 +1249,17 @@ public class DataInitSessionBean {
                 ex.printStackTrace();
             }
 
-            List<Product> company1Products = company1.getProducts();
-            company1Products.add(csgo);
-            company1Products.add(portal);
-            company1Products.add(alienware15);
-            company1Products.add(fences);
-
-            company1.setProducts(company1Products);
+            List<Product> products = new ArrayList<>();
+            products.add(soccermanager2017);
+            products.add(civIV);
+            products.add(alienware15);
+            products.add(fences);
+            company1.setProducts(products);
             companySessionBeanLocal.updateCompany(company1);
+            
+            valve.setProducts(valveProducts);
+            companySessionBeanLocal.updateCompany(valve);
+    
 
         } catch (SystemAdminUsernameExistException | UnknownPersistenceException | InputDataValidationException
                 | CreateNewCategoryException | CreateNewTagException | CreateNewProductException

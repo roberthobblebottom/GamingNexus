@@ -5,8 +5,7 @@
  */
 package ejb.session.stateless;
 
-<<<<<<< Updated upstream
-=======
+
 import entity.Customer;
 import entity.Product;
 import entity.SaleTransaction;
@@ -15,7 +14,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
->>>>>>> Stashed changes
+
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -33,9 +32,6 @@ public class SaleTransactionSessionBean implements SaleTransactionSessionBeanLoc
 
     @EJB
     private CompanySessionBeanLocal companySessionBeanLocal;
-<<<<<<< Updated upstream
-    
-=======
 
     @PersistenceContext(unitName = "GamingNexus-ejbPU")
     private EntityManager em;
@@ -76,7 +72,7 @@ public class SaleTransactionSessionBean implements SaleTransactionSessionBeanLoc
         
         return query.getResultList();
     }
->>>>>>> Stashed changes
+
     
     
     

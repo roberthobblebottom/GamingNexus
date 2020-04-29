@@ -17,6 +17,14 @@ public interface ProductSessionBeanLocal {
 
     public Product retrieveProductById(Long productId);
 
+
     public void deleteProduct(Product product);
+
+    public void deleteProduct(Product productToBeDeleted) throws ProductNotFoundException;
+
+    public List<Product> searchProductsByName(String searchString);
+
+    public List<Product> retrieveProductByCategoryId(Long categoryId);
+
     
 }
