@@ -68,7 +68,8 @@ public class SaleTransaction implements Serializable {
     }
 
     
-    public SaleTransaction(Integer totalLineItem, Integer totalQuantity, BigDecimal totalAmount, LocalDateTime transactionDateTime, List<SaleTransactionLineItem> saleTransactionLineItems, Boolean voidRefund) {
+    public SaleTransaction(Integer totalLineItem, Integer totalQuantity, BigDecimal totalAmount, LocalDateTime transactionDateTime, 
+            List<SaleTransactionLineItem> saleTransactionLineItems, Boolean voidRefund) {
         this.totalLineItem = totalLineItem;
         this.totalQuantity = totalQuantity;
         this.totalAmount = totalAmount;

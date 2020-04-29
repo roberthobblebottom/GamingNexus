@@ -30,6 +30,7 @@ import entity.Tag;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.Month;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -116,13 +117,9 @@ public class DataInitSessionBean {
     private void initializeData() {
 
         try {
-            System.out.println("**************Entered initialize data   ");
-
-            SystemAdmin systemAdmin = new SystemAdmin("123456", "addr 1", "email@hotmail.com", "Singapore",
-                    "admin1", "password");
+            
+            SystemAdmin systemAdmin = new SystemAdmin("123456", "addr 1", "email@hotmail.com", "Singapore","admin1", "password");
             systemAdminSessionBeanLocal.createNewSystemAdmin(systemAdmin);
-            // systemAdminSessionBeanLocal.createNewSystemAdmin(new SystemAdmin("Default",
-            // "System Admin2", "admin2", "password"));
 
             Category categoryEntitySoftwareGame = categorySessionBeanLocal
                     .createNewCategoryEntity(new Category("SoftwareGame", "Game"), null);
@@ -183,17 +180,22 @@ public class DataInitSessionBean {
 
             Company company1 = companySessionBeanLocal.createNewCompany(new Company("123123", "Singapore",
                     "company1@gmail.com", "Singapore", "company1", "password"));
-            Company company2 = companySessionBeanLocal.createNewCompany(new Company("1231234", "Singapore",
-                    "company2@gmail.com", "Singapore", "company2", "password"));
-            Company company3 = companySessionBeanLocal.createNewCompany(new Company("123223", "Singapore",
-                    "company3@gmail.com", "Singapore", "company3", "password"));
-            Company company4 = companySessionBeanLocal.createNewCompany(new Company("1232234", "Singapore",
-                    "company4@gmail.com", "Singapore", "company4", "password"));
-            Company company5 = companySessionBeanLocal.createNewCompany(new Company("123323", "Singapore",
-                    "company5@gmail.com", "Singapore", "company5", "password"));
+            List<Product> company1Products = new ArrayList<>();
             Company valve = companySessionBeanLocal.createNewCompany(new Company("425-889-9642", "PO BOX 1688 Bellevue, WA 98009",
                     "https://help.steampowered.com", "USA", "valve", "password"));
             List<Product> valveProducts = new ArrayList<>();
+            Company activision = companySessionBeanLocal.createNewCompany(new Company("(310) 255-2000", "Santa Monica, California, United States",
+                    "https://support.activision.com/contactus", "USA", "Activision", "password"));
+            List<Product> activisionProducts = new ArrayList<>();
+            Company microprose = companySessionBeanLocal.createNewCompany(new Company("none", "Maryland, United States",
+                    "https://www.microprose.com/", "USA", "MicroProse", "password"));
+            List<Product> microproseProducts = new ArrayList<>();
+            Company rockstar = companySessionBeanLocal.createNewCompany(new Company("646-536-2842", "4 622, Broadway, New York, NY 10012, United States",
+                    "https://www.rockstargames.com/", "USA", "Rockstar", "password"));
+            List<Product> rockstarProducts = new ArrayList<>();
+            Company ubisoft = companySessionBeanLocal.createNewCompany(new Company("6408 3000", "Montreuil, France",
+                    "https://www.ubisoft.com/en-us/", "France", "Ubisoft", "password"));
+            List<Product> ubisoftProducts = new ArrayList<>();
 
             List<Long> tags = new ArrayList<>();
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
@@ -284,7 +286,7 @@ public class DataInitSessionBean {
             releaseDate = LocalDate.parse("2012-08-21", formatter);
             parentAdvisory = false;
             averageRating = 83;
-            sales = 25833156;
+            sales = 45833156;
             price = 15.00;
             description = "Counter-Strike: Global Offensive (CS: GO) will expand upon the team-based action gameplay that it pioneered when it was launched 14 years ago.CS: GO features new maps characters and weapons and delivers updated versions of the classic CS content (de_dust etc.). In addition CS: GO will introduce new gameplay modes matchmaking leader boards and more.Counter-Strike took the gaming industry by surprise when the unlikely MOD became the most played online PC action game in the world almost immediately after its release in August 1999 said Doug Lombardi at Valve. For the past 12 years it has continued to be one of the most-played games in the world headline competitive gaming tournaments and selling over 25 million units worldwide across the franchise. CS: GO promises to expand on CS award-winning gameplay and deliver it to gamers on the PC as well as the next gen consoles and the Mac.";
             headerImage = "http://cdn.akamai.steamstatic.com/steam/apps/730/header.jpg?t=1467065027";
@@ -405,6 +407,7 @@ public class DataInitSessionBean {
                     new Game(parentAdvisory, headerImage, videoLink, name, description, computerRequirements,
                             price, averageRating, releaseDate, sales),
                     categoryid, tags, company1.getUserId());
+            company1Products.add(doom2);
 
             name = "Prototype";
             releaseDate = LocalDate.parse("2009-06-10", formatter);
@@ -425,7 +428,8 @@ public class DataInitSessionBean {
             Game prototype = gameSessionBeanLocal.createNewGame(
                     new Game(parentAdvisory, headerImage, videoLink, name, description, computerRequirements,
                             price, averageRating, releaseDate, sales),
-                    categoryid, tags, company1.getUserId());
+                    categoryid, tags, activision.getUserId());
+            activisionProducts.add(prototype);
 
             name = "Sid Meier's Civilization VI";
             releaseDate = LocalDate.parse("2016-10-21", formatter);
@@ -447,7 +451,8 @@ public class DataInitSessionBean {
             Game civVI = gameSessionBeanLocal.createNewGame(
                     new Game(parentAdvisory, headerImage, videoLink, name, description, computerRequirements,
                             price, averageRating, releaseDate, sales),
-                    categoryid, tags, company1.getUserId());
+                    categoryid, tags, microprose.getUserId());
+            microproseProducts.add(civVI);
 
             name = "Sid Meier's Civilization V";
             releaseDate = LocalDate.parse("2010-09-21", formatter);
@@ -467,7 +472,8 @@ public class DataInitSessionBean {
             Game civV = gameSessionBeanLocal.createNewGame(
                     new Game(parentAdvisory, headerImage, videoLink, name, description, computerRequirements,
                             price, averageRating, releaseDate, sales),
-                    categoryid, tags, company1.getUserId());
+                    categoryid, tags, microprose.getUserId());
+            microproseProducts.add(civV);
 
             name = "Sid Meier's Civilization IV";
             releaseDate = LocalDate.parse("2005-10-25", formatter);
@@ -487,7 +493,8 @@ public class DataInitSessionBean {
             Game civIV = gameSessionBeanLocal.createNewGame(
                     new Game(parentAdvisory, headerImage, videoLink, name, description, computerRequirements,
                             price, averageRating, releaseDate, sales),
-                    categoryid, tags, company1.getUserId());
+                    categoryid, tags, microprose.getUserId());
+            microproseProducts.add(civIV);
 
             name = "Grand Theft Auto: Vice City";
             releaseDate = LocalDate.parse("2003-05-13", formatter);
@@ -507,7 +514,8 @@ public class DataInitSessionBean {
             Game gtavicecity = gameSessionBeanLocal.createNewGame(
                     new Game(parentAdvisory, headerImage, videoLink, name, description, computerRequirements,
                             price, averageRating, releaseDate, sales),
-                    categoryid, tags, company1.getUserId());
+                    categoryid, tags, rockstar.getUserId());
+            rockstarProducts.add(gtavicecity);
 
             name = "Grand Theft Auto V";
             releaseDate = LocalDate.parse("2015-04-13", formatter);
@@ -528,7 +536,8 @@ public class DataInitSessionBean {
             Game gtaV = gameSessionBeanLocal.createNewGame(
                     new Game(parentAdvisory, headerImage, videoLink, name, description, computerRequirements,
                             price, averageRating, releaseDate, sales),
-                    categoryid, tags, company1.getUserId());
+                    categoryid, tags, rockstar.getUserId());
+            rockstarProducts.add(gtaV);
 
             name = "Call of Duty: Black Ops III";
             releaseDate = LocalDate.parse("2015-10-05", formatter);
@@ -548,7 +557,8 @@ public class DataInitSessionBean {
             Game callofdutyblackops3 = gameSessionBeanLocal.createNewGame(
                     new Game(parentAdvisory, headerImage, videoLink, name, description, computerRequirements,
                             price, averageRating, releaseDate, sales),
-                    categoryid, tags, company1.getUserId());
+                    categoryid, tags, activision.getUserId());
+            activisionProducts.add(callofdutyblackops3);
 
             name = "Half-Life";
             releaseDate = LocalDate.parse("1998-11-08", formatter);
@@ -611,6 +621,7 @@ public class DataInitSessionBean {
                     new Game(parentAdvisory, headerImage, videoLink, name, description, computerRequirements,
                             price, averageRating, releaseDate, sales),
                     categoryid, tags, company1.getUserId());
+            company1Products.add(plantsvszombies);
 
             name = "Darksiders Warmastered Edition";
             releaseDate = LocalDate.parse("2016-11-29", formatter);
@@ -631,6 +642,7 @@ public class DataInitSessionBean {
             Game darksidersWarmasteredEdition = gameSessionBeanLocal.createNewGame(
                     new Game(parentAdvisory, headerImage, videoLink, name, description, computerRequirements, price, averageRating, releaseDate, sales),
                     categoryid, tags, company1.getUserId());
+            company1Products.add(darksidersWarmasteredEdition);
 
             name = "Killing Floor";
             releaseDate = LocalDate.parse("2009-05-14", formatter);
@@ -651,6 +663,7 @@ public class DataInitSessionBean {
             tags.add(tagEntityMultiplayer.getTagId());
             Game killingfloor = gameSessionBeanLocal.createNewGame(new Game(parentAdvisory, headerImage, videoLink, name, description, computerRequirements, price, averageRating, releaseDate, sales),
                     categoryid, tags, company1.getUserId());
+            company1Products.add(killingfloor);
 
             name = "RollerCoaster Tycoon 3: Platinum!";
             releaseDate = LocalDate.parse("2006-10-26", formatter);
@@ -668,6 +681,7 @@ public class DataInitSessionBean {
             tags.add(tagEntitySingleplayer.getTagId());
             Game rollercoaster = gameSessionBeanLocal.createNewGame(new Game(parentAdvisory, headerImage, videoLink, name, description, computerRequirements, price, averageRating, releaseDate, sales),
                     categoryid, tags, company1.getUserId());
+            company1Products.add(rollercoaster);
 
             name = "Garry's Mod";
             releaseDate = LocalDate.parse("2006-11-29", formatter);
@@ -686,6 +700,7 @@ public class DataInitSessionBean {
             tags.add(tagEntityMultiplayer.getTagId());
             Game garysmod = gameSessionBeanLocal.createNewGame(new Game(parentAdvisory, headerImage, videoLink, name, description, computerRequirements, price, averageRating, releaseDate, sales),
                     categoryid, tags, company1.getUserId());
+            company1Products.add(garysmod);
 
             name = "Watch Dogs 2";
             releaseDate = LocalDate.parse("2016-11-29", formatter);
@@ -704,7 +719,8 @@ public class DataInitSessionBean {
             tags.add(tagEntitySingleplayer.getTagId());
             tags.add(tagEntityOpenworld.getTagId());
             Game watchdogs2 = gameSessionBeanLocal.createNewGame(new Game(parentAdvisory, headerImage, videoLink, name, description, computerRequirements, price, averageRating, releaseDate, sales),
-                    categoryid, tags, company1.getUserId());
+                    categoryid, tags, ubisoft.getUserId());
+            ubisoftProducts.add(watchdogs2);
 
             name = "Call of Duty: Infinite Warfare";
             releaseDate = LocalDate.parse("2016-11-03", formatter);
@@ -722,7 +738,8 @@ public class DataInitSessionBean {
             tags.add(tagEntitySingleplayer.getTagId());
             tags.add(tagEntityOpenworld.getTagId());
             Game callofdutyinfinitewarfare = gameSessionBeanLocal.createNewGame(new Game(parentAdvisory, headerImage, videoLink, name, description, computerRequirements, price, averageRating, releaseDate, sales),
-                    categoryid, tags, company1.getUserId());
+                    categoryid, tags, activision.getUserId());
+            activisionProducts.add(callofdutyinfinitewarfare);
 
             name = "Project CARS - Pagani Edition";
             releaseDate = LocalDate.parse("2016-10-28", formatter);
@@ -733,6 +750,7 @@ public class DataInitSessionBean {
             description = "'Project CARS – Pagani Edition' Features the Pagani Huayra, Huayra BC, Zonda Cinque, Zonda R, and Zonda Revolucion, and three intricately modeled tracks — the Nürburgring and Nordschleife combo, Monza GP, and Azure Coast — along with two game modes, and full VR support on both Oculus Rift and HTC Vive, as well as support for 4K screens and traditional displays.";
             headerImage = "http://cdn.akamai.steamstatic.com/steam/apps/429180/header.jpg?t=1477731204";
             computerRequirements = "Minimum:OS: Windows Vista Windows 7 with latest Service Packs or laterProcessor: 2.66 GHz Intel Core 2 Quad Q8400 3.0 GHz AMD Phenom II X4 940Memory: 4 GB RAMGraphics: nVidia GTX 260 ATI Radeon HD 5770DirectX: Version 9.0Network: Broadband Internet connectionStorage: 25 GB available spaceSound Card: DirectX compatible sound card";
+            videoLink = "";
             categoryid = categoryEntitySoftwareGame.getCategoryId();
             tags = new ArrayList<>();
             tags.add(tagEntityRacing.getTagId());
@@ -740,6 +758,7 @@ public class DataInitSessionBean {
             tags.add(tagEntitySimulation.getTagId());
             Game projectcars = gameSessionBeanLocal.createNewGame(new Game(parentAdvisory, headerImage, videoLink, name, description, computerRequirements, price, averageRating, releaseDate, sales),
                     categoryid, tags, company1.getUserId());
+            company1Products.add(projectcars);
 
             name = "Soccer Manager 2017";
             releaseDate = LocalDate.parse("2016-09-16", formatter);
@@ -750,6 +769,7 @@ public class DataInitSessionBean {
             description = "Soccer Manager 2017 - Play for Free Compete for Real.The most diverse FREE 2 PLAY football management simulator in the world. Take on a top flight club and test your management skills against the best or help a struggling lower division team fight for glory.Soccer Manager 2017 FeaturesReactive 2D Live Match EnvironmentMonitor your teams performance during live games. React with different tactics and strategies and watch your team adapt to your decisions in real time.Play Anywhere EverywhereOur cloud-based technology allows you to save your game on any device and continue to play on another. No need to set up a different account for different devices take your team with you anywhere and play anytime.Soccer Manager 2017 contains the following new improvements and features:Updated leagues and teams for 2016/17 season.Updated domestic and continental competitions.New user interface.New facilities upgrade.Player Spotlight.Player manager and team awards.So dust off your tracksuit and get ready to start your new managerial career on Soccer Manager 2017.";
             headerImage = "http://cdn.akamai.steamstatic.com/steam/apps/510630/header.jpg?t=1474049541";
             computerRequirements = "Minimum:OS: Windows XP or LaterProcessor: 1 GHz or higherMemory: 1 GB RAMNetwork: Broadband Internet connectionStorage: 80 MB available space";
+            videoLink = "";
             categoryid = categoryEntitySoftwareGame.getCategoryId();
             tags = new ArrayList<>();
             tags.add(tagEntitySports.getTagId());
@@ -759,6 +779,7 @@ public class DataInitSessionBean {
             tags.add(tagEntityCasual.getTagId());
             Game soccermanager2017 = gameSessionBeanLocal.createNewGame(new Game(parentAdvisory, headerImage, videoLink, name, description, computerRequirements, price, averageRating, releaseDate, sales),
                     categoryid, tags, company1.getUserId());
+            company1Products.add(soccermanager2017);
 
             name = "Paladins";
             releaseDate = LocalDate.parse("2016-09-15", formatter);
@@ -769,6 +790,7 @@ public class DataInitSessionBean {
             description = "Join 25+ million players in Paladins, the free-to-play fantasy team-based shooter sensation. Wield guns and magic as a legendary Champion of the Realm, customizing your core set of abilities to play exactly how you want to play.";
             headerImage = "http://cdn.akamai.steamstatic.com/steam/apps/444090/header.jpg?t=1474591627";
             computerRequirements = "Minimum:OS: Windows XP SP2 Windows Vista or Windows 7Processor: Core 2 Duo 2.4 GHz or Althon X2 2.7 GHzMemory: 2 GB RAMGraphics: ATI or Nvidia graphics card with 512MB video ram or better and Shader Model 3.0+ support. (ATI Radeon 3870 or higher Nvidia GeForce 8800 GT or higher)Storage: 10 GB available spaceSound Card: DirectX compatible sound card";
+            videoLink = "";
             categoryid = categoryEntitySoftwareGame.getCategoryId();
             tags = new ArrayList<>();
             tags.add(tagEntityMultiplayer.getTagId());
@@ -777,6 +799,7 @@ public class DataInitSessionBean {
             tags.add(tagEntityMOBA.getTagId());
             Game paladins = gameSessionBeanLocal.createNewGame(new Game(parentAdvisory, headerImage, videoLink, name, description, computerRequirements, price, averageRating, releaseDate, sales),
                     categoryid, tags, company1.getUserId());
+            company1Products.add(paladins);
 
             name = "BioShock 2 Remastered";
             releaseDate = LocalDate.parse("2016-09-15", formatter);
@@ -787,6 +810,7 @@ public class DataInitSessionBean {
             description = "BioShock 2 provides players with the perfect blend of explosive first-person shooter combat and compelling award-winning storytelling. The halls of Rapture once again echo with sins of the past. Along the Atlantic coastline, a monster has been snatching little girls and bringing them back to the undersea city of Rapture. Players step into the boots of the most iconic denizen of Rapture, the Big Daddy, as they travel through the decrepit and beautiful fallen city, chasing an unseen foe in search of answers and their own survival.";
             headerImage = "http://cdn.akamai.steamstatic.com/steam/apps/409720/header.jpg?t=1473983496";
             computerRequirements = "Minimum:OS: Windows 7 Service Pack 1 64-bit. Platform Update for Windows 7 SP1 and Windows Server 2008 R2 SP1Processor: Intel E6750 Core 2 Duo 2.66 GHz / AMD Athlon X2 2.7 GHZMemory: 4 GB RAMGraphics: 2GB AMD Radeon HD 7770 / 2GB NVIDIA GeForce GTX 670DirectX: Version 11Storage: 25 GB available spaceSound Card: DirectX Compatible Sound Device";
+            videoLink = "";
             categoryid = categoryEntitySoftwareGame.getCategoryId();
             tags = new ArrayList<>();
             tags.add(tagEntitySingleplayer.getTagId());
@@ -796,6 +820,7 @@ public class DataInitSessionBean {
             tags.add(tagEntityAdventure.getTagId());
             Game bioshock2 = gameSessionBeanLocal.createNewGame(new Game(parentAdvisory, headerImage, videoLink, name, description, computerRequirements, price, averageRating, releaseDate, sales),
                     categoryid, tags, company1.getUserId());
+            company1Products.add(bioshock2);
 
             name = "NBA 2K17";
             releaseDate = LocalDate.parse("2016-09-20", formatter);
@@ -806,6 +831,7 @@ public class DataInitSessionBean {
             description = "Following the record-breaking launch of NBA 2K16, the NBA 2K franchise continues to stake its claim as the most authentic sports video game with NBA 2K17. As the franchise that “all sports video games should aspire to be” (GamesRadar), NBA 2K17 will take the game to new heights and continue to blur the lines between video game and reality.";
             headerImage = "http://cdn.akamai.steamstatic.com/steam/apps/385760/header.jpg?t=1474391274";
             computerRequirements = "Minimum:OS: Windows 7 64-bit Windows 8.1 64-bit or Windows 10 64-bitProcessor: Intel(r) Core(tm) i3-530 @ 2.93 GHz / AMD Phenom(tm) II X4 805 @ 2.50 GHz or betterMemory: 4 GB RAMGraphics: NVIDIA(r) GeForce(r) GT 430 1GB / ATI(r) Radeon(tm) HD 6450 1GB or betterDirectX: Version 11Storage: 70 GB available spaceSound Card: DirectX 9.0x compatibleAdditional Notes: Dual-analog gamepad";
+            videoLink = "";
             categoryid = categoryEntitySoftwareGame.getCategoryId();
             tags = new ArrayList<>();
             tags.add(tagEntitySingleplayer.getTagId());
@@ -814,6 +840,7 @@ public class DataInitSessionBean {
             tags.add(tagEntitySimulation.getTagId());
             Game nba2k17 = gameSessionBeanLocal.createNewGame(new Game(parentAdvisory, headerImage, videoLink, name, description, computerRequirements, price, averageRating, releaseDate, sales),
                     categoryid, tags, company1.getUserId());
+            company1Products.add(nba2k17);
 
             name = "The Elder Scrolls V: Skyrim Special Edition";
             releaseDate = LocalDate.parse("2016-10-28", formatter);
@@ -824,6 +851,7 @@ public class DataInitSessionBean {
             description = "Winner of more than 200 Game of the Year Awards, Skyrim Special Edition brings the epic fantasy to life in stunning detail. The Special Edition includes the critically acclaimed game and add-ons with all-new features like remastered art and effects, volumetric god rays, dynamic depth of field, screen-space reflections, and more. Skyrim Special Edition also brings the full power of mods to the PC and consoles. New quests, environments, characters, dialogue, armor, weapons and more – with Mods, there are no limits to what you can experience.";
             headerImage = "http://cdn.akamai.steamstatic.com/steam/apps/489830/header.jpg?t=1473436209";
             computerRequirements = "Minimum:OS: Windows 7 64-bit Windows 8.1 64-bit or Windows 10 64-bitProcessor: Intel i5-750/AMD Phenom II X4-945 Memory: 8 GB RAM Graphics: NVIDIA GTX 470 1GB /AMD HD 7870 2GB or better Storage: 12 GB available space";
+            videoLink = "";
             categoryid = categoryEntitySoftwareGame.getCategoryId();
             tags = new ArrayList<>();
             tags.add(tagEntitySingleplayer.getTagId());
@@ -832,6 +860,7 @@ public class DataInitSessionBean {
             tags.add(tagEntityRPG.getTagId());
             Game elderscrollsV = gameSessionBeanLocal.createNewGame(new Game(parentAdvisory, headerImage, videoLink, name, description, computerRequirements, price, averageRating, releaseDate, sales),
                     categoryid, tags, company1.getUserId());
+            company1Products.add(elderscrollsV);
 
             name = "Football Manager 2017";
             releaseDate = LocalDate.parse("2016-11-04", formatter);
@@ -842,6 +871,7 @@ public class DataInitSessionBean {
             description = "Take control of your favourite football team in Football Manager 2017 the most realistic and immersive football management game to date. Its the closest thing to doing the job for real!With over 2500 real clubs to manage and over 500000 real footballers and staff to sign Football Manager 2017 elevates you into a living breathing world of football management with you at the centre.  Youll have full control of transfers and decide who plays and who sits on the bench. Youre in complete control of tactics team-talks and pitch-side instructions and youll follow the match live with our acclaimed 3D match engine. Youll also deal with real football media solve player-happiness problems and the board will watch your every move.Fans who pre-purchase Football Manager 2017 on Steam will be rewarded with Football Manager Touch 2017 for free (on PC Mac or Linux) and as a thank you for pre-purchasing youll also get a range of free downloadable content for Touch including Board override No firing All job applications National management and 3 brand new challenges to play in the Challenge game mode. Touch is the more streamlined transfers and tactics way to manage and can be purchased separately as a standalone game.In addition youll also enjoy access to a fully-playable Beta version of the game which will be available roughly two weeks prior to the official release date. Single player careers started in this Beta version will continue in the full game.Loyal fans of the series can enjoy an exclusive Steam-only discount of five per cent off for every Football Manager game they own (PC Mac or Linux) dating back to Football Manager 2013. This means theres a maximum 20 per cent discount available to fans who own all of the last four versions.";
             headerImage = "http://cdn.akamai.steamstatic.com/steam/apps/482730/header.jpg?t=1473937693";
             computerRequirements = "Minimum:OS: Windows Vista (SP2) 7 (SP1) 8 8.1 10 (1607) - 64-bit or 32-bitProcessor: Intel Pentium 4 Intel Core AMD Athlon 2.2GHz+Memory: 2 GB RAMGraphics: NVIDIA  GeForce 8600M GT AMD/ATI Mobility Radeon HD 2400 Intel GMA X3100 256MB VRAMDirectX: Version 9.0cStorage: 3 GB available space";
+            videoLink = "";
             categoryid = categoryEntitySoftwareGame.getCategoryId();
             tags = new ArrayList<>();
             tags.add(tagEntitySingleplayer.getTagId());
@@ -849,6 +879,7 @@ public class DataInitSessionBean {
             tags.add(tagEntitySimulation.getTagId());
             Game footballmanager2017 = gameSessionBeanLocal.createNewGame(new Game(parentAdvisory, headerImage, videoLink, name, description, computerRequirements, price, averageRating, releaseDate, sales),
                     categoryid, tags, company1.getUserId());
+            company1Products.add(footballmanager2017);
 
             name = "Titan Quest Anniversary Edition";
             releaseDate = LocalDate.parse("2016-08-31", formatter);
@@ -859,6 +890,7 @@ public class DataInitSessionBean {
             description = "For its 10 year anniversary, Titan Quest will shine in new splendour. This Anniversary Edition combines both Titan Quest and Titan Quest Immortal Throne in one game, and has been given a massive overhaul for the ultimate ARPG experience.";
             headerImage = "http://cdn.akamai.steamstatic.com/steam/apps/475150/header.jpg?t=1473470071";
             computerRequirements = "Minimum:OS: Windows XP / Vista / 7 / 8 / 10 32 or 64 bitProcessor: 2.0 GHz CPUMemory: 1 GB RAMGraphics: 128 MB NVIDIA GeForce 6800 series or ATI Radeon X800 series or equivalentDirectX: Version 9.0cStorage: 5 GB available spaceSound Card: DirectX compatible";
+            videoLink = "";
             categoryid = categoryEntitySoftwareGame.getCategoryId();
             tags = new ArrayList<>();
             tags.add(tagEntitySingleplayer.getTagId());
@@ -867,6 +899,7 @@ public class DataInitSessionBean {
             tags.add(tagEntityRPG.getTagId());
             Game titanquest = gameSessionBeanLocal.createNewGame(new Game(parentAdvisory, headerImage, videoLink, name, description, computerRequirements, price, averageRating, releaseDate, sales),
                     categoryid, tags, company1.getUserId());
+            company1Products.add(titanquest);
 
             name = "H1Z1: King of the Kill";
             releaseDate = LocalDate.parse("2016-02-17", formatter);
@@ -877,12 +910,14 @@ public class DataInitSessionBean {
             description = "King of the Kill is a large-scale fight-to-the-death shooter where every moment counts. Drop into the high-intensity arena-style grudge match and activate your inner beast mode. Gear up fast throw together a game plan and well see if you have what it takes to be the last man standing. Rack up a kill streak or just add to the chaos - this is a spectacle and only one can be King of the Kill.";
             headerImage = "http://cdn.akamai.steamstatic.com/steam/apps/439700/header.jpg?t=1460503021";
             computerRequirements = "Minimum:OS: Windows 7 SP1 64 bitProcessor: Intel i3 Dual-Core with Hyper-Threading (required)Memory: 4 GB RAMGraphics: nVidia GeForce GTX 275 series or higherDirectX: Version 10Network: Broadband Internet connectionStorage: 20 GB available spaceSound Card: DirectX Compatible Sound Card";
+            videoLink = "";
             categoryid = categoryEntitySoftwareGame.getCategoryId();
             tags = new ArrayList<>();
             tags.add(tagEntityMultiplayer.getTagId());
             tags.add(tagEntityAction.getTagId());
             Game h1z1 = gameSessionBeanLocal.createNewGame(new Game(parentAdvisory, headerImage, videoLink, name, description, computerRequirements, price, averageRating, releaseDate, sales),
                     categoryid, tags, company1.getUserId());
+            company1Products.add(h1z1);
 
             name = "BlackShot: Mercenary Warfare FPS";
             releaseDate = LocalDate.parse("2016-05-31", formatter);
@@ -893,12 +928,14 @@ public class DataInitSessionBean {
             description = "BlackShotBlackShot is a free-to-play first-person shooter set in a post-apocalyptic world.Join other mercenaries in brutal team combat multiple game modes and experience in-depth customization to create your perfect warrior!StoryThe old world ended on the fourth of December 2033.In the preceding decade advances in human cloning had led to the development of the ultimate weapon; the expendable clone soldier the Mercenary.Nations began expanding their borders aggressively seeking more resources in order to expand their clone armies. The entire world soon became embroiled in global conflict. BlackShot is one the worlds elite mercenary groups. You are a newly contracted Mercenary. Will you rise through the ranks to become elite?Multiply Game ModesRunning Man Mode (RM)Team Death Match (TDM)Team Flag Match (TFM)Search & Destroy (SD)Protect the Commander (PC)Unlimited Battle Arena (UBA)Bunker Defense (BD)Mercenary Level & Rank SystemRise from lowly Recruit all the way up to Commander-in-ChiefReceive Weapons Gear and Tactics at every level!Gear SystemEnhance your mercenary with Gear to make them better stronger faster!Receive stat bonuses or increase your weapon load.Tactical SlotsAdd depth to your character customization by assigning weapons expertise.Unlock more slots as you gain ranks and create a deadly mercenary!Clan System & Dedicated Clan ServersCreate your own or join an existing clan customize your emblem and dominate!Clan rankings and Clan servers for team matches.WeaponsMassive array of weapons such as AR BR Snipers SMG Shotguns and many more.7 Mastery categories and multiple ranks that unlock unique weaponry!";
             headerImage = "http://cdn.akamai.steamstatic.com/steam/apps/433350/header.jpg?t=1471036012";
             computerRequirements = "Minimum:OS: Windows XP / 2000 / Vista / 7/ 8 /10Processor: Pentium 4 2.0GhzMemory: 1 GB RAMGraphics: GeForce 6800 GT / RADEON X800 GTDirectX: Version 9.0cNetwork: Broadband Internet connectionStorage: 2 GB available space";
+            videoLink = "";
             categoryid = categoryEntitySoftwareGame.getCategoryId();
             tags = new ArrayList<>();
             tags.add(tagEntityMultiplayer.getTagId());
             tags.add(tagEntityFPS.getTagId());
             Game blackshot = gameSessionBeanLocal.createNewGame(new Game(parentAdvisory, headerImage, videoLink, name, description, computerRequirements, price, averageRating, releaseDate, sales),
                     categoryid, tags, company1.getUserId());
+            company1Products.add(blackshot);
 
             name = "ARK: Survival Of The Fittest";
             releaseDate = LocalDate.parse("2016-03-15", formatter);
@@ -909,6 +946,7 @@ public class DataInitSessionBean {
             description = "Welcome to ARK: Survival of the Fittest, the first ever M.O.S.A. - a Multiplayer Online Survival Arena - that Studio Wildcard designed for the burgeoning wild west of eSports. A spin-off from the most popular open-world Early Access game on Steam ARK: Survival Evolved, ARK: Survival of the Fittest (SotF) pits up to 72 combatants in an action-packed struggle for survival where players are ultimately pushed into an epic final showdown where only one “Tribe” will make it out alive.";
             headerImage = "http://cdn.akamai.steamstatic.com/steam/apps/407530/header.jpg?t=1471325195";
             computerRequirements = "Minimum:OS: 64-Bit Windows 7 Service Pack 1 or Windows 8/10Processor: 2 GHz Dual-Core 64-bit CPUMemory: 4000 MB RAMGraphics: GTX 500 or Above DirectX10 Compatible GPU with 2 GB or More Video RAMDirectX: Version 10Storage: 37000 MB available space";
+            videoLink = "";
             categoryid = categoryEntitySoftwareGame.getCategoryId();
             tags = new ArrayList<>();
             tags.add(tagEntityMultiplayer.getTagId());
@@ -917,6 +955,7 @@ public class DataInitSessionBean {
             tags.add(tagEntityAdventure.getTagId());
             Game arksurvivalofthefittest = gameSessionBeanLocal.createNewGame(new Game(parentAdvisory, headerImage, videoLink, name, description, computerRequirements, price, averageRating, releaseDate, sales),
                     categoryid, tags, company1.getUserId());
+            company1Products.add(arksurvivalofthefittest);
 
             name = "Undertale";
             releaseDate = LocalDate.parse("2015-09-15", formatter);
@@ -927,6 +966,7 @@ public class DataInitSessionBean {
             description = "Welcome to UNDERTALE. In this RPG, you control a human who falls underground into the world of monsters. Now you must find your way out... or stay trapped forever.";
             headerImage = "http://cdn.akamai.steamstatic.com/steam/apps/391540/header.jpg?t=1468759045";
             computerRequirements = "Minimum:OS: Windows XP Vista 7 8 or 10Memory: 2 GB RAMGraphics: 128MBStorage: 200 MB available space";
+            videoLink = "";
             categoryid = categoryEntitySoftwareGame.getCategoryId();
             tags = new ArrayList<>();
             tags.add(tagEntityFunny.getTagId());
@@ -934,6 +974,7 @@ public class DataInitSessionBean {
             tags.add(tagEntitySingleplayer.getTagId());
             Game undertale = gameSessionBeanLocal.createNewGame(new Game(parentAdvisory, headerImage, videoLink, name, description, computerRequirements, price, averageRating, releaseDate, sales),
                     categoryid, tags, company1.getUserId());
+            company1Products.add(undertale);
 
             name = "Rise of the Tomb Raider";
             releaseDate = LocalDate.parse("2016-01-18", formatter);
@@ -944,6 +985,7 @@ public class DataInitSessionBean {
             description = "After uncovering an ancient mystery Lara must explore the most treacherous and remote regions of Siberia to find the secret of immortality before a ruthless organization known as Trinity. Lara must use her wits and survival skills form new alliances and ultimately embrace her destiny as the Tomb Raider. Experience high-octane action moments conquer beautifully hostile environments engage in brutal guerilla combat and explore awe-inspiring deadly tombs in the evolution of survival action. In Rise of the Tomb Raider Lara becomes more than a survivor as she embarks on her first Tomb Raiding expedition.Key Features:Laras Journey - Lara uncovers an ancient mystery that places her in the cross-hairs of a ruthless organization known as Trinity. As she races to find the secret before Trinity the trail leads to a myth about the Lost City of Kitezh. Lara knows she must reach the Lost City and its hidden secrets before Trinity. With that she sets out for Siberia on her first Tomb Raiding expedition.Woman vs. Wild - In Rise of the Tomb Raider Lara battles with not only enemies from around the world but the world itself. Hunt animals to craft weapons and scavenge for rare resources in densely populated ecosystems. Youll encounter beautifully hostile environments full of treacherous conditions and unstable landscapes that will require Lara to push her limits to the very edge. Guerilla Combat - Use the environment to your advantage scale trees and dive underwater to avoid or takedown enemies configure Laras gear weapons and ammo to suit your play style from stealth to guns blazing craft explosives on the fly to sow chaos and wield Laras signature combat bows and climbing axe. Return to Tomb Raiding - Tombs are back and theyre bigger and better than ever. In Rise of the Tomb Raider youll explore huge awe-inspiring ancient spaces littered with deadly traps solve dramatic environmental puzzles and decipher ancient texts to reveal crypts as you take on a world filled with secrets to discover.";
             headerImage = "http://cdn.akamai.steamstatic.com/steam/apps/391220/header.jpg?t=1473961644";
             computerRequirements = "Minimum:OS: Windows 7 64bitProcessor: Intel Core i3-2100 or AMD equivalentMemory: 6 GB RAMGraphics: NVIDIA GTX 650 2GB or AMD HD7770 2GBDirectX: Version 11Storage: 25 GB available space";
+            videoLink = "";
             categoryid = categoryEntitySoftwareGame.getCategoryId();
             tags = new ArrayList<>();
             tags.add(tagEntitySlider.getTagId());
@@ -952,7 +994,28 @@ public class DataInitSessionBean {
             tags.add(tagEntitySingleplayer.getTagId());
             Game riseofthetombraider = gameSessionBeanLocal.createNewGame(new Game(parentAdvisory, headerImage, videoLink, name, description, computerRequirements, price, averageRating, releaseDate, sales),
                     categoryid, tags, company1.getUserId());
+            company1Products.add(riseofthetombraider);
+            
+            name = "BUILD: Ultimate Sandbox Building Game";
+            releaseDate = LocalDate.parse("2019-08-31", formatter);
+            parentAdvisory = false;
+            averageRating = 90;
+            sales = 3286398;
+            price = 14.50;
+            description = "Have you ever wanted to just build your own little fantasy world, a farm, some kind of castle, or just an epic fantasy city, without worrying about managing your economy, maintaining the happiness of your people, or gaining enough XP to unlock a building? BUILD is the game for you! Build & design your own fantasy world using over 600+ items, in this relaxing sandbox building game. No missions, no objectives, no timers. Just stress-free building, and good vibes. Stack, connect, or overlap objects to create unique combinations. Build whatever you like, whenever you like, however you like. The possibilities are endless!";
+            headerImage = "https://steamcdn-a.akamaihd.net/steam/apps/1077530/header.jpg?t=1588083088";
+            computerRequirements = "Minimum:OS: Windows 7 64bit Processor: Intel Core i3 or similar";
+            videoLink = "";
+            categoryid = categoryEntitySoftwareGame.getCategoryId();
+            tags = new ArrayList<>();
+            tags.add(tagEntitySimulation.getTagId());
+            tags.add(tagEntityCasual.getTagId());
+            tags.add(tagEntitySingleplayer.getTagId());
+            Game build = gameSessionBeanLocal.createNewGame(new Game(parentAdvisory, headerImage, videoLink, name, description, computerRequirements, price, averageRating, releaseDate, sales),
+                    categoryid, tags, company1.getUserId());
+            company1Products.add(build);
 
+            //Useless tag lists
             List<Long> tagIdsPopular = new ArrayList<>();
             tagIdsPopular.add(tagEntityPopular.getTagId());
 
@@ -974,6 +1037,7 @@ public class DataInitSessionBean {
 
             List<Long> tagIdsEmpty = new ArrayList<>();
 
+            //Hardware
             name = "Alienware 15";
             String warrantyDescription = "1 Year";
             String technicalSpecification = "";
@@ -988,8 +1052,9 @@ public class DataInitSessionBean {
             categoryid = categoryEntityLaptop.getCategoryId();
             tags = new ArrayList<>();
             Hardware alienware15 = hardwareSessionBeanLocal.createNewHardware(new Hardware(warrantyDescription, technicalSpecification, manufacturingCountry,
-                    name, description, price, averageRating, releaseDate, sales, headerImage, videoLink),
-                    categoryid, tags, company2.getUserId());
+                    name, description, price, averageRating, releaseDate, sales, headerImage, videoLink,20000),
+                    categoryid, tags, company1.getUserId());
+            company1Products.add(alienware15);
 
             name = "Alienware 17";
             warrantyDescription = "1 Year";
@@ -1000,13 +1065,14 @@ public class DataInitSessionBean {
             sales = 58748;
             price = 3999.00;
             description = "Alienware’s thinnest 17 inch laptop ever. With optional hyper-efficient 8-phase voltage regulation, Cryo-Tech cooling v3.0 & new Legend industrial design.";
-            headerImage = "https://i.dell.com/is/image/DellContent//content/dam/global-site-design/product_images/dell_client_products/notebooks/alienware_notebooks/alienware_m15_r2/pdp/laptops-aw-alienware-m15-r2-nt-pdp-mod-hero.jpg?fmt=jpg&wid=570&hei=400";
+            headerImage = "https://i.dell.com/is/image/DellContent//content/dam/global-site-design/product_images/dell_client_products/notebooks/alienware_notebooks/alienware_17_r5_non_touch/spi/ng/notebook-alienware-17-r5-campaign-hero-504x350-ng.psd?fmt=png-alpha&wid=570&hei=400";
             videoLink = "https://r3---sn-npoeen76.googlevideo.com/videoplayback?expire=1587580127&ei=fzigXrL1NIn0yQXEyb9I&ip=95.85.80.135&id=o-AAdaSi6A_EjrDBOF7yKu5vqsKL8peT4Br8ITgXF9qbQf&itag=22&source=youtube&requiressl=yes&vprv=1&mime=video%2Fmp4&ratebypass=yes&dur=47.484&lmt=1545221324245390&fvip=14&fexp=23882513&c=WEB&txp=2311222&sparams=expire%2Cei%2Cip%2Cid%2Citag%2Csource%2Crequiressl%2Cvprv%2Cmime%2Cratebypass%2Cdur%2Clmt&sig=AJpPlLswRQIhAK0rjZWS07OkNc3n-QgfEsoHrPeWsg1M-2n7VvTqTVM2AiAvjFywoDbV-Ocb3vc1G2e7fpi6kTkK3_p6yA722eanGQ%3D%3D&rm=sn-ug5onuxaxjvh-n8vz7r,sn-n8vrz7e&req_id=12ba22083e72a3ee&ipbypass=yes&redirect_counter=3&cm2rm=sn-npozs7s&cms_redirect=yes&mh=O2&mip=137.132.119.2&mm=34&mn=sn-npoeen76&ms=ltu&mt=1587558503&mv=m&mvi=2&pl=17&lsparams=ipbypass,mh,mip,mm,mn,ms,mv,mvi,pl&lsig=ALrAebAwRAIgLCDEL6VSVVbLA63A9bxnRZ3Loqg2EiirNcmgQlfGqx4CIDJZ_Lx3eU6ed-yg35b0lukdWevYvFNGaqgUBid-1Od_";
             categoryid = categoryEntityLaptop.getCategoryId();
             tags = new ArrayList<>();
             Hardware alienware17 = hardwareSessionBeanLocal.createNewHardware(new Hardware(warrantyDescription, technicalSpecification, manufacturingCountry,
-                    name, description, price, averageRating, releaseDate, sales, headerImage, videoLink),
-                    categoryid, tags, company2.getUserId());
+                    name, description, price, averageRating, releaseDate, sales, headerImage, videoLink,20000),
+                    categoryid, tags, company1.getUserId());
+            company1Products.add(alienware17);
 
             name = "Razer Viper Ultimate Mouse";
             warrantyDescription = "2 Years";
@@ -1014,7 +1080,7 @@ public class DataInitSessionBean {
             manufacturingCountry = "China";
             releaseDate = LocalDate.parse("2019-12-02", formatter);
             averageRating = 90;
-            sales = 158748;
+            sales = 358748;
             price = 199.00;
             description = "Razer's high speed wireless gaming mouse";
             headerImage = "https://i.ytimg.com/vi/96G5y_znKr0/maxresdefault.jpg";
@@ -1022,9 +1088,65 @@ public class DataInitSessionBean {
             categoryid = categoryEntityMouse.getCategoryId();
             tags = new ArrayList<>();
             Hardware viperultimate = hardwareSessionBeanLocal.createNewHardware(new Hardware(warrantyDescription, technicalSpecification, manufacturingCountry,
-                    name, description, price, averageRating, releaseDate, sales, headerImage, videoLink),
-                    categoryid, tags, company2.getUserId());
+                    name, description, price, averageRating, releaseDate, sales, headerImage, videoLink,50000),
+                    categoryid, tags, company1.getUserId());
+            company1Products.add(viperultimate);
+            
+            name = "Razer Huntsman Elite";
+            warrantyDescription = "2 Years";
+            technicalSpecification = "";
+            manufacturingCountry = "China";
+            releaseDate = LocalDate.parse("2018-06-02", formatter);
+            averageRating = 91;
+            sales = 68448;
+            price = 339.90;
+            description = "Razer's best selling gaming keyboard";
+            headerImage = "https://assets2.razerzone.com/images/og-image/razer-huntsman-elite-OGimage-1200x630.jpg";
+            videoLink = "https://r1---sn-25glen7l.googlevideo.com/videoplayback?expire=1588218338&ei=gvWpXpnnH9mP1gLl3rKoCg&ip=83.171.253.36&id=o-AJJNl1oj4mnyprjaJUyKSC1Dfn1u-8XcLymjooqtePJ-&itag=22&source=youtube&requiressl=yes&vprv=1&mime=video%2Fmp4&ratebypass=yes&dur=43.142&lmt=1542305278979237&fvip=6&c=WEB&txp=5531432&sparams=expire%2Cei%2Cip%2Cid%2Citag%2Csource%2Crequiressl%2Cvprv%2Cmime%2Cratebypass%2Cdur%2Clmt&sig=AJpPlLswRgIhANQtEBTpJRiOS1LoL5fnsTrz4XUp2etL_yBu8hRc4EWQAiEAh0NW9Xva-07wv1eyoLzVplqqCzfbAPN4JTwgwlLc-aE%3D&redirect_counter=1&rm=sn-5hndy7d&req_id=f63cc86293eaa3ee&cms_redirect=yes&ipbypass=yes&mh=Hw&mip=137.132.119.2&mm=31&mn=sn-25glen7l&ms=au&mt=1588196337&mv=D&mvi=5&pl=0&lsparams=ipbypass,mh,mip,mm,mn,ms,mv,mvi,pl&lsig=ALrAebAwRAIgQKKIOFGfViykB0ofQpmmROJTQdgw1glGADVfadlm4EkCIDsEYLOPyj18yk1PbC-6QcROs-5aXU9W4Ih214xtZH80&ir=1&rr=12";
+            categoryid = categoryEntityKeyboard.getCategoryId();
+            tags = new ArrayList<>();
+            Hardware huntsmanelite = hardwareSessionBeanLocal.createNewHardware(new Hardware(warrantyDescription, technicalSpecification, manufacturingCountry,
+                    name, description, price, averageRating, releaseDate, sales, headerImage, videoLink,50000),
+                    categoryid, tags, company1.getUserId());
+            company1Products.add(huntsmanelite);
+            
+            name = "ROG Swift PG27UQ Gaming Monitor";
+            warrantyDescription = "2 Years";
+            technicalSpecification = "";
+            manufacturingCountry = "US";
+            releaseDate = LocalDate.parse("2019-06-02", formatter);
+            averageRating = 91;
+            sales = 258448;
+            price = 1999.00;
+            description = "Asus 27 inch 4K UHD 144Hz Gaming Monitor";
+            headerImage = "https://dlcdnimgs.asus.com/websites/global/products/fRoiTmXJNO2QtbzD/images/hero.jpg";
+            videoLink = "https://r3---sn-npoeen7y.googlevideo.com/videoplayback?expire=1588218729&ei=CfepXsXZM4aj1gLf6qCQDA&ip=83.171.253.36&id=o-ALpb2Pxf2aCURbcqLv2KVPtCdHKSxzPxxu8dl0bQ_OwO&itag=22&source=youtube&requiressl=yes&vprv=1&mime=video%2Fmp4&ratebypass=yes&dur=40.402&lmt=1527242326367280&fvip=3&c=WEB&sparams=expire%2Cei%2Cip%2Cid%2Citag%2Csource%2Crequiressl%2Cvprv%2Cmime%2Cratebypass%2Cdur%2Clmt&sig=AJpPlLswRgIhAI7mWkT6G6xlKhtc5prFSh7uiDLsg0lourpoDt0OqS7iAiEA6o4He-x14A2nXRMERGCsQZT1OHdmo13hrSQy65oh9GY%3D&redirect_counter=1&cm2rm=sn-5hneer7s&req_id=a3123fae2b7da3ee&cms_redirect=yes&mh=Wi&mip=137.132.119.2&mm=34&mn=sn-npoeen7y&ms=ltu&mt=1588196832&mv=u&mvi=2&pl=17&lsparams=mh,mip,mm,mn,ms,mv,mvi,pl&lsig=ALrAebAwRQIhAM6HQD2JFaaZb04y2rFdli_T_5Hu3AW9jkId2YD_sgL5AiBrL0a-ChSG6VUDTjrmkGHPINDZgEJT4tMN_4yt6O1T9A%3D%3D";
+            categoryid = categoryEntityMonitor.getCategoryId();
+            tags = new ArrayList<>();
+            Hardware rogpg27UQ = hardwareSessionBeanLocal.createNewHardware(new Hardware(warrantyDescription, technicalSpecification, manufacturingCountry,
+                    name, description, price, averageRating, releaseDate, sales, headerImage, videoLink,50000),
+                    categoryid, tags, company1.getUserId());
+            company1Products.add(rogpg27UQ);
+            
+            name = "GEFORCE RTX 2080 Ti";
+            warrantyDescription = "2 Years";
+            technicalSpecification = "";
+            manufacturingCountry = "US";
+            releaseDate = LocalDate.parse("2019-09-20", formatter);
+            averageRating = 91;
+            sales = 168448;
+            price = 999.00;
+            description = "Nvidia Highest Performance Graphics Card";
+            headerImage = "https://images.hothardware.com/contentimages/newsitem/49936/content/GeForce_RTX_2080_Ti.jpg";
+            videoLink = "https://r1---sn-npoeenez.googlevideo.com/videoplayback?expire=1588219117&ei=jfipXoSoGJHR1gLwxJWQBw&ip=83.171.253.36&id=o-ABZArSNbz55wqJ78Z4wIQ72kNImETl5arrUlpIW3qFVC&itag=22&source=youtube&requiressl=yes&vprv=1&mime=video%2Fmp4&ratebypass=yes&dur=57.515&lmt=1534790890195841&fvip=1&fexp=23882513&c=WEB&sparams=expire%2Cei%2Cip%2Cid%2Citag%2Csource%2Crequiressl%2Cvprv%2Cmime%2Cratebypass%2Cdur%2Clmt&sig=AJpPlLswRQIhALjdfCc-HUD2gWjAOdyOHUJsOwk1IYhm31TiyORIhVm_AiAS-80XN7H6d5XC8gNUtrrrpfIzE2Pw9c1vKYIQ7VTOsw%3D%3D&redirect_counter=1&cm2rm=sn-5hnee67e&req_id=83c8f33d49b3a3ee&cms_redirect=yes&mh=Ph&mip=137.132.119.2&mm=34&mn=sn-npoeenez&ms=ltu&mt=1588197219&mv=u&mvi=0&pl=17&lsparams=mh,mip,mm,mn,ms,mv,mvi,pl&lsig=ALrAebAwRgIhAKHxAymK9Qsf3HvgxrmyZHNFi_ALuCdapfLwAjwusTa8AiEA0_rfqNK8nZfZf0X6YxLEzujRcCxUTrkLAKPSuiF4El0%3D";
+            categoryid = categoryEntityGraphicscard.getCategoryId();
+            tags = new ArrayList<>();
+            Hardware rtx2080 = hardwareSessionBeanLocal.createNewHardware(new Hardware(warrantyDescription, technicalSpecification, manufacturingCountry,
+                    name, description, price, averageRating, releaseDate, sales, headerImage, videoLink,50000),
+                    categoryid, tags, company1.getUserId());
+            company1Products.add(rtx2080);
 
+            //Customer
             Customer customer1 = customerSessionBeanlocal.createCustomer(new Customer("7654321",
                     "Singapore", "customer1@gmail.com", "Singapore", "customer1", "password"));
             Customer customer2 = customerSessionBeanlocal.createCustomer(new Customer("76543210",
@@ -1036,6 +1158,8 @@ public class DataInitSessionBean {
             Customer customer5 = customerSessionBeanlocal.createCustomer(new Customer("765432103",
                     "Singapore", "customer5@gmail.com", "Singapore", "customer5", "password"));
 
+            
+            //Software
             name = "Fences";
             releaseDate = LocalDate.parse("2017-03-30", formatter);
             averageRating = 80;
@@ -1044,12 +1168,14 @@ public class DataInitSessionBean {
             description = "Take control of your cluttered desktop and make way for a clean creative workspace with Fences, the perfect Windows organizational solution. Fences has a little something for everyone: it collects your icons, files, and folders in shaded areas that can be hidden with a simple double-click, and even creates desktop pages you can swipe through for easy sorting.";
             headerImage = "https://steamcdn-a.akamaihd.net/steam/apps/607380/header.jpg?t=1572968167";
             computerRequirements = "Minimum:OS: Windows 10 / 8 / 7. Additional Notes: Administrator privileges are required for initial install. Windows 10 Creator's Update Multi-monitor DPI settings are not supported in this build. This feature will be supported when Creator's Update officially launches.";
+            videoLink = "";
             categoryid = categoryEntityDesign.getCategoryId();
             tags = new ArrayList<>();
             tags.add(tagEntityPopular.getTagId());
             OtherSoftware fences = otherSoftwareSessionBeanLocal.createNewOtherSoftware(new OtherSoftware(name, description,
                     computerRequirements, price, averageRating, releaseDate, sales, headerImage, videoLink),
                     categoryid, tags, company1.getUserId());
+            company1Products.add(fences);
 
             name = "Wallpaper Engine";
             releaseDate = LocalDate.parse("2018-11-17", formatter);
@@ -1059,12 +1185,14 @@ public class DataInitSessionBean {
             description = "Wallpaper Engine enables you to use live wallpapers on your Windows desktop. Various types of animated wallpapers are supported, including 3D and 2D animations, websites, videos and even certain applications. Choose an existing wallpaper or create your own and share it on the Steam Workshop!";
             headerImage = "https://steamcdn-a.akamaihd.net/steam/apps/431960/header.jpg?t=1581697699";
             computerRequirements = "Minimum:OS: Windows 7 (with Aero), 8.1, 10. Processor: 1.66 GHz Intel i5 or equivalent.";
+            videoLink = "";
             categoryid = categoryEntityDesign.getCategoryId();
             tags = new ArrayList<>();
             tags.add(tagEntityPopular.getTagId());
             OtherSoftware wallpaperengine = otherSoftwareSessionBeanLocal.createNewOtherSoftware(new OtherSoftware(name, description,
                     computerRequirements, price, averageRating, releaseDate, sales, headerImage, videoLink),
                     categoryid, tags, company1.getUserId());
+            company1Products.add(wallpaperengine);
 
             name = "Plan V";
             releaseDate = LocalDate.parse("2020-04-22", formatter);
@@ -1074,12 +1202,14 @@ public class DataInitSessionBean {
             description = "From hobbyists to production professionals, Plan V is a virtual visualisation software. Plan V gives the user a sense of scale and immersion previously unattainable with traditional pre-visualisation tools. The software has been developed for Windows desktop platforms, with a Mac application coming soon.";
             headerImage = "https://steamcdn-a.akamaihd.net/steam/apps/1259150/header.jpg?t=1587549692";
             computerRequirements = "Minimum:OS: Windows 10 64 bit. Processor: i5. Memory: 8 GB RAM. Graphics: Nvidia 970";
+            videoLink = "";
             categoryid = categoryEntityVideoProduction.getCategoryId();
             tags = new ArrayList<>();
             tags.add(tagEntityUpcoming.getTagId());
             OtherSoftware planV = otherSoftwareSessionBeanLocal.createNewOtherSoftware(new OtherSoftware(name, description,
                     computerRequirements, price, averageRating, releaseDate, sales, headerImage, videoLink),
                     categoryid, tags, company1.getUserId());
+            company1Products.add(planV);
 
             name = "FaceRig";
             releaseDate = LocalDate.parse("2015-07-07", formatter);
@@ -1096,6 +1226,7 @@ public class DataInitSessionBean {
             OtherSoftware facerig = otherSoftwareSessionBeanLocal.createNewOtherSoftware(new OtherSoftware(name, description, computerRequirements,
                     price, averageRating, releaseDate, sales, headerImage, videoLink),
                     categoryid, tags, company1.getUserId());
+            company1Products.add(facerig);
 
             name = "Aseprite";
             releaseDate = LocalDate.parse("2016-02-22", formatter);
@@ -1105,12 +1236,14 @@ public class DataInitSessionBean {
             description = "Aseprite is a pixel art tool that lets you create 2D animations for videogames.";
             headerImage = "https://steamcdn-a.akamaihd.net/steam/apps/431730/header.jpg?t=1548704961";
             computerRequirements = "Windows Vista, 7, 8, or 10. Memory: 128 MB RAM. Storage: 40 MB available space";
+            videoLink = "";
             categoryid = categoryEntityDesign.getCategoryId();
             tags = new ArrayList<>();
             tags.add(tagEntityPopular.getTagId());
             OtherSoftware aseprite = otherSoftwareSessionBeanLocal.createNewOtherSoftware(new OtherSoftware(name, description,
                     computerRequirements, price, averageRating, releaseDate, sales, headerImage, videoLink),
                     categoryid, tags, company1.getUserId());
+            company1Products.add(aseprite);
 
             name = "PC building simulator";
             releaseDate = LocalDate.parse("2019-01-30", formatter);
@@ -1127,6 +1260,7 @@ public class DataInitSessionBean {
             OtherSoftware pcbuilding = otherSoftwareSessionBeanLocal.createNewOtherSoftware(new OtherSoftware(name, description, computerRequirements,
                     price, averageRating, releaseDate, sales, headerImage, videoLink),
                     categoryid, tags, company1.getUserId());
+            company1Products.add(pcbuilding);
 
             name = "GameGuru";
             releaseDate = LocalDate.parse("2015-05-20", formatter);
@@ -1143,6 +1277,7 @@ public class DataInitSessionBean {
             OtherSoftware gameguru = otherSoftwareSessionBeanLocal.createNewOtherSoftware(new OtherSoftware(name, description, computerRequirements,
                     price, averageRating, releaseDate, sales, headerImage, videoLink),
                     categoryid, tags, company1.getUserId());
+            company1Products.add(gameguru);
 
             name = "GameMaker Studio 2";
             releaseDate = LocalDate.parse("2017-03-09", formatter);
@@ -1159,6 +1294,7 @@ public class DataInitSessionBean {
             OtherSoftware gamemakerstudio = otherSoftwareSessionBeanLocal.createNewOtherSoftware(new OtherSoftware(name, description, computerRequirements,
                     price, averageRating, releaseDate, sales, headerImage, videoLink),
                     categoryid, tags, company1.getUserId());
+            company1Products.add(gamemakerstudio);
 
             name = "Soundpad";
             releaseDate = LocalDate.parse("2016-11-09", formatter);
@@ -1175,6 +1311,7 @@ public class DataInitSessionBean {
             OtherSoftware soundpad = otherSoftwareSessionBeanLocal.createNewOtherSoftware(new OtherSoftware(name, description, computerRequirements,
                     price, averageRating, releaseDate, sales, headerImage, videoLink),
                     categoryid, tags, company1.getUserId());
+            company1Products.add(soundpad);
 
             name = "openCanvas 7";
             releaseDate = LocalDate.parse("2017-09-21", formatter);
@@ -1191,6 +1328,7 @@ public class DataInitSessionBean {
             OtherSoftware opencanvas7 = otherSoftwareSessionBeanLocal.createNewOtherSoftware(new OtherSoftware(name, description, computerRequirements,
                     price, averageRating, releaseDate, sales, headerImage, videoLink),
                     categoryid, tags, company1.getUserId());
+            company1Products.add(opencanvas7);
 
             name = "Stream Avatars";
             releaseDate = LocalDate.parse("2017-07-26", formatter);
@@ -1200,42 +1338,104 @@ public class DataInitSessionBean {
             description = "Stream Avatars is an interactive overlay for live broadcasters on Twitch, Mixer, and Youtube. Your viewers can knock each other off the screen with punches, bombs, or a duel show match where the winner takes all!";
             headerImage = "https://steamcdn-a.akamaihd.net/steam/apps/665300/header.jpg?t=1576402488";
             computerRequirements = "OS: Windows 7 or higher. Processor: x86 compatible processor supporting SSE2. Memory: 500 MB RAM. Graphics: NVIDIA GeForce GT220 or equivalent.";
+            videoLink = "";
             categoryid = categoryEntityPhotoEditing.getCategoryId();
             tags = new ArrayList<>();
             tags.add(tagEntityPopular.getTagId());
             OtherSoftware streamAvatars = otherSoftwareSessionBeanLocal.createNewOtherSoftware(new OtherSoftware(name, description, computerRequirements,
                     price, averageRating, releaseDate, sales, headerImage, videoLink),
                     categoryid, tags, company1.getUserId());
+            company1Products.add(streamAvatars);
 
-            SaleTransactionLineItem saleTransactionLineItem1 = new SaleTransactionLineItem(streamAvatars, 1, new BigDecimal("14.5"), new BigDecimal("14.5"));
+            //SaleTransaction
             List<SaleTransactionLineItem> saleTransactionLineItems = new ArrayList<>();
-            saleTransactionLineItems.add(saleTransactionLineItem1);
-            Long newSaleTransactionId = saleTransactionSessionBeanLocal.createNewSaleTransaction(customer1.getUserId(), new SaleTransaction(1, 1, BigDecimal.ONE, LocalDateTime.now(), saleTransactionLineItems, false));
+            
+            
+            SaleTransactionLineItem saleTransactionLineItem = new SaleTransactionLineItem(streamAvatars, 1, new BigDecimal("14.50"), 
+                    new BigDecimal("14.50"));
+            saleTransactionLineItems.add(saleTransactionLineItem);
+            Long newSaleTransactionId = saleTransactionSessionBeanLocal.createNewSaleTransaction(customer1.getUserId(), 
+                    new SaleTransaction(1, 1, new BigDecimal("14.50"), LocalDateTime.of(2020,Month.MARCH,3,6,30,40), saleTransactionLineItems, false));
+            
+            
+            saleTransactionLineItems = new ArrayList<>();
+            saleTransactionLineItem = new SaleTransactionLineItem(portal, 1, new BigDecimal("10.00"), 
+                    new BigDecimal("10.00"));
+            saleTransactionLineItems.add(saleTransactionLineItem);
+            saleTransactionLineItem = new SaleTransactionLineItem(dota2, 1, new BigDecimal("0.00"), 
+                    new BigDecimal("0.00"));
+            saleTransactionLineItems.add(saleTransactionLineItem);
+            saleTransactionLineItem = new SaleTransactionLineItem(civVI, 1, new BigDecimal("74.90"), 
+                    new BigDecimal("74.90"));
+            saleTransactionLineItems.add(saleTransactionLineItem);
+            newSaleTransactionId = saleTransactionSessionBeanLocal.createNewSaleTransaction(customer1.getUserId(), 
+                    new SaleTransaction(3, 3, new BigDecimal("84.90"), LocalDateTime.of(2020,Month.MARCH,3,23,8,42), saleTransactionLineItems, false));
 
+            
+            saleTransactionLineItems = new ArrayList<>();
+            saleTransactionLineItem = new SaleTransactionLineItem(gtaV, 1, new BigDecimal("40.00"), 
+                    new BigDecimal("40.00"));
+            saleTransactionLineItems.add(saleTransactionLineItem);
+            Long newSaleTransactionId3 = saleTransactionSessionBeanLocal.createNewSaleTransaction(customer1.getUserId(), 
+                    new SaleTransaction(1, 1, new BigDecimal("40.00"), LocalDateTime.of(2020,Month.MARCH,23,17,30,50), saleTransactionLineItems, false));
+            
+            saleTransactionLineItems = new ArrayList<>();
+            saleTransactionLineItem = new SaleTransactionLineItem(gtaV, 1, new BigDecimal("40.00"), 
+                    new BigDecimal("40.00"));
+            saleTransactionLineItems.add(saleTransactionLineItem);
+            newSaleTransactionId = saleTransactionSessionBeanLocal.createNewSaleTransaction(customer1.getUserId(), 
+                    new SaleTransaction(1, 1, new BigDecimal("40.00"), LocalDateTime.of(2020,Month.MARCH,3,1,38,48), saleTransactionLineItems, false));
+            
+            saleTransactionLineItems = new ArrayList<>();
+            saleTransactionLineItem = new SaleTransactionLineItem(watchdogs2, 2, new BigDecimal("70.00"), 
+                    new BigDecimal("140.00"));
+            saleTransactionLineItems.add(saleTransactionLineItem);
+            newSaleTransactionId = saleTransactionSessionBeanLocal.createNewSaleTransaction(customer1.getUserId(), 
+                    new SaleTransaction(1, 2, new BigDecimal("140.00"), LocalDateTime.of(2020,Month.MARCH,13,10,17,40), saleTransactionLineItems, false));
+            
+            saleTransactionLineItems = new ArrayList<>();
+            saleTransactionLineItem = new SaleTransactionLineItem(watchdogs2, 1, new BigDecimal("76.90"), 
+                    new BigDecimal("76.90"));
+            saleTransactionLineItems.add(saleTransactionLineItem);
+            saleTransactionLineItem = new SaleTransactionLineItem(nba2k17, 2, new BigDecimal("19.99"), 
+                    new BigDecimal("39.98"));
+            saleTransactionLineItems.add(saleTransactionLineItem);
+            saleTransactionLineItem = new SaleTransactionLineItem(elderscrollsV, 3, new BigDecimal("53.99"), 
+                    new BigDecimal("161.97"));
+            saleTransactionLineItems.add(saleTransactionLineItem);
+            newSaleTransactionId = saleTransactionSessionBeanLocal.createNewSaleTransaction(customer1.getUserId(), 
+                    new SaleTransaction(3, 6, new BigDecimal("278.85"), LocalDateTime.of(2020,Month.MARCH,4,8,24,40), saleTransactionLineItems, false));
+            
+            //Promotion
             Promotion promo1 = promotionSessionBean.createPromotion(new Promotion("VALVE SALE",
                     "YAAAY ANOTHER SALLLLEE", (double) 10, (double) 0, LocalDateTime.now(),
                     LocalDateTime.now().plusDays(10), new ArrayList<>(Arrays.asList(csgo))));
 
-            csgo.getPromotions().add(promo1);
+            killingfloor.getPromotions().add(promo1);
             try {
-                gameSessionBeanLocal.updateGame(csgo, csgo.getCategory().getCategoryId(),
-                        tagIdsPopularDiscount);
-            } catch (CategoryNotFoundException | ProductNotFoundException | TagNotFoundException
-                    | UpdateProductException ex) {
+                tags = new ArrayList<>();
+                tags.add(tagEntityZombies.getTagId());
+                tags.add(tagEntityFPS.getTagId());
+                tags.add(tagEntityHorror.getTagId());
+                tags.add(tagEntitySingleplayer.getTagId());
+                tags.add(tagEntityMultiplayer.getTagId());
+                tags.add(tagEntityDiscount.getTagId());
+                gameSessionBeanLocal.updateGame(killingfloor, killingfloor.getCategory().getCategoryId(), tags);
+            } catch (CategoryNotFoundException | ProductNotFoundException | TagNotFoundException | UpdateProductException ex) {
                 ex.printStackTrace();
             }
 
-            List<Product> products = new ArrayList<>();
-            products.add(soccermanager2017);
-            products.add(civIV);
-            products.add(alienware15);
-            products.add(fences);
-            company1.setProducts(products);
+            //Company set products
+            company1.setProducts(company1Products);
             companySessionBeanLocal.updateCompany(company1);
-            
             valve.setProducts(valveProducts);
             companySessionBeanLocal.updateCompany(valve);
-    
+            activision.setProducts(activisionProducts);
+            companySessionBeanLocal.updateCompany(activision);
+            microprose.setProducts(microproseProducts);
+            companySessionBeanLocal.updateCompany(microprose);
+            rockstar.setProducts(rockstarProducts);
+            companySessionBeanLocal.updateCompany(rockstar);
 
         } catch (SystemAdminUsernameExistException | UnknownPersistenceException | InputDataValidationException
                 | CreateNewCategoryException | CreateNewTagException | CreateNewProductException

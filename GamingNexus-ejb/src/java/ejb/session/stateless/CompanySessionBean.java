@@ -101,6 +101,7 @@ public class CompanySessionBean implements CompanySessionBeanLocal {
         }
     }
 
+    @Override
     public void updateCompany(Company company) throws CompanyNotFoundException {
         if (company != null && company.getUserId() != null) {
 
@@ -109,6 +110,7 @@ public class CompanySessionBean implements CompanySessionBeanLocal {
             companyToUpdate.setAddress(company.getAddress());
             companyToUpdate.setPhoneNumber(company.getPhoneNumber());
             companyToUpdate.setEmail(company.getEmail());
+            companyToUpdate.setProducts(company.getProducts());
         } else {
             throw new CompanyNotFoundException("Company ID not provided for SystemAdmin to be updated");
         }
