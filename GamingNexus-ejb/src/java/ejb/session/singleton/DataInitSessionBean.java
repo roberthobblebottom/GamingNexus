@@ -1188,7 +1188,7 @@ public class DataInitSessionBean {
             SaleTransactionLineItem saleTransactionLineItem1 = new SaleTransactionLineItem(streamAvatars, 1, new BigDecimal("14.5"), new BigDecimal("14.5"));
             List<SaleTransactionLineItem> saleTransactionLineItems = new ArrayList<>();
             saleTransactionLineItems.add(saleTransactionLineItem1);
-            SaleTransaction saleTransaction = saleTransactionSessionBeanLocal.createNewSaleTransaction(customer1.getUserId(), new SaleTransaction(1, 1, BigDecimal.ONE, LocalDateTime.now(), saleTransactionLineItems, false));
+             saleTransactionSessionBeanLocal.createNewSaleTransaction(customer1.getUserId(), new SaleTransaction(1, 1, BigDecimal.ONE, LocalDateTime.now(), saleTransactionLineItems, false));
 
             Promotion promo1 = promotionSessionBean.createPromotion(new Promotion("VALVE SALE",
                     "YAAAY ANOTHER SALLLLEE", (double) 10, (double) 0, LocalDateTime.now(),

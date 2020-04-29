@@ -87,6 +87,24 @@
                         </p:column>     
                     </p:row>
 
+                      <p:row>
+                        <p:column>
+                            <p:outputLabel for="releaseDate" value="releaseDate" style="font-weight: bold;"/>               
+                        </p:column>
+                        <p:column>
+                            <p:datePicker id="releaseDate" value="#{companyProductManagedBean.newOtherSoftware.releaseDate}" 
+                                          showTime="true" 
+                                          required="true" requiredMessage="release date is required">
+                                <p:ajax update="releaseDateValidation " process="@this"/>
+                            </p:datePicker>
+                        </p:column>
+                        <p:column>
+                            <p:messages id="releaseDateValidation" for ="releaseDate" />
+                        </p:column>     
+                    </p:row>
+                    
+                    
+                    
                     <p:row>
                         <p:column>
                             <p:outputLabel for="tag" value="tag" style="font-weight: bold;"/>               

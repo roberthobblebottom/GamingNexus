@@ -60,7 +60,7 @@
                         <p:column>
                             <p:inputTextarea id = "computerRequirements" rows="5" cols="110" counter="display2" maxlength="1000" 
                                              counterTemplate="{0} characters remaining." autoResize="true" 
-                                             value="#{companyProductManagedBean.newOtherSoftware.computerRequirements}" />
+                                             value="#{companyProductManagedBean.viewProductManagedBean.productToViewInDetails.computerRequirements}" />
                             <br />
                             <h:outputText id="display2" />   
                         </p:column>
@@ -88,6 +88,24 @@
 
                         </p:column>
                     </p:row>
+                     <p:row>
+                        <p:column>
+                            <p:outputLabel for="releaseDate" value="releaseDate" style="font-weight: bold;"/>               
+                        </p:column>
+                        <p:column>
+                            <p:datePicker id="releaseDate"
+                                          value="#{companyProductManagedBean.releaseDateToBeUpdated}" 
+                                          showTime="true" 
+                                          required="true" requiredMessage="release date is required">
+                                <p:ajax update="releaseDateValidation " process="@this"/>
+                            </p:datePicker>
+                        </p:column>
+                        <p:column>
+                            <p:messages id="releaseDateValidation" for ="releaseDate" />
+                        </p:column>     
+                    </p:row>
+                    
+                    
 
                     <p:row>
                         <p:column>

@@ -16,8 +16,10 @@ import entity.Promotion;
 import javax.inject.Named;
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -115,10 +117,10 @@ public class CompanyPromotionManagedBean implements Serializable {
 
         setProductsToBeUpdated(promotionToBeUpdated.getProducts());
 
-//        Instant instantStartdate = this.promotionToBeUpdated.getStartDate().toInstant(ZoneOffset.UTC);
-//        Date startDate = Date.from(instantStartdate);
-//        setStartDateToBeUpdated(startDate);
-//        setEndDateToBeUpdated(Timestamp.valueOf(this.promotionToBeUpdated.getEndDate()));
+        Instant instantStartdate = this.promotionToBeUpdated.getStartDate().toInstant(ZoneOffset.UTC);
+        Date startDate = Date.from(instantStartdate);
+        setStartDateToBeUpdated(startDate);
+        setEndDateToBeUpdated(Timestamp.valueOf(this.promotionToBeUpdated.getEndDate()));
 //        ChronoLocalDateTime endPointer = promotionToBeUpdated.getEndDate();
 //        System.out.println("Start pointer: " + promotionToBeUpdated.getStartDate());
 //        System.out.println("End Pointer: " + promotionToBeUpdated.getEndDate());

@@ -69,10 +69,13 @@
                         </p:commandButton>
                         <p:commandButton icon="ui-icon-pencil"  
                                          update="ccUpdateProduct:formUpdateProduct " 
-                                         oncomplete="PF('dialogUpdateProduct').show()">
+                                         oncomplete="PF('dialogUpdateProduct').show()"
+                                         actionListener="#{companyProductManagedBean.doUpdateProduct}">
+                            <f:attribute name="productToBeUpdated" value="#{product}"/>
                             <f:setPropertyActionListener value="#{product}" 
                                                          target="#{companyProductManagedBean.viewProductManagedBean.
                                                                    productToViewInDetails}"/>
+                            
                         </p:commandButton>
                         <p:commandButton icon="ui-icon-document"   update="ccViewProductDetail:formViewProductDetails"
                                          oncomplete="PF('dialogViewProductDetails').show()">

@@ -41,7 +41,8 @@ import util.exception.SystemAdminUsernameExistException;
 import util.exception.TagNotFoundException;
 import util.exception.UnknownPersistenceException;
 import util.exception.UpdateProductException;
-
+import java.sql.Date;
+import java.time.LocalDate;
 /**
  *
  * @author root
@@ -70,7 +71,7 @@ public class CompanyProductManagedBean implements Serializable {
 
     @Inject
     private ViewProductManagedBean viewProductManagedBean;
-    
+
     private Game newGame, gameToBeUpdated, gameToViewInDetails = null;
     private Product productToViewInDetails, selectedProductToUpdate;
     private Hardware newHardware, hardwareToViewInDetails = null;
@@ -81,7 +82,7 @@ public class CompanyProductManagedBean implements Serializable {
     private Company company;
     private Long categoryIdUpdate;
     private List<Long> tagIdsUpdate;
-
+private Date releaseDateToBeUpdated;
     public CompanyProductManagedBean() {
         newGame = new Game();
         gameToBeUpdated = new Game();
@@ -182,16 +183,15 @@ public class CompanyProductManagedBean implements Serializable {
 
     }
 //
-//    public void doUpdateProduct(ActionEvent event) {
-//        // setSelectedProductToUpdate((Product)event.getComponent().getAttributes().get("productEntityToUpdate"));
+
+    public void doUpdateProduct(ActionEvent event) {
+        // setSelectedProductToUpdate((Product)event.getComponent().getAttributes().get("productEntityToUpdate"));
 //
-//        setCategoryIdUpdate(viewProductManagedBean.getProductToViewInDetails().getCategory().getCategoryId());
-//        setTagIdsUpdate(new ArrayList<>());
-//
-//        for (Tag tag : selectedProductToUpdate.getTags()) {
-//            getTagIdsUpdate().add(tag.getTagId());
-//        }
-//    }
+        Product productToBeUpdated = (Product) event.getComponent().getAttributes().get("productToBeUpdated");
+        this.viewProductManagedBean.setProductToViewInDetails(productToBeUpdated);
+        this.releaseDateToBeUpdated =Date.valueOf( this.viewProductManagedBean.getProductToViewInDetails().getReleaseDate());
+        System.out.println("**************doUpdateProduct Debug, realisedDateToBeUpdated: " + this.releaseDateToBeUpdated);
+    }
 
     public void updateProduct(ActionEvent event) {
 
@@ -534,4 +534,19 @@ public class CompanyProductManagedBean implements Serializable {
         this.tagIdsUpdate = tagIdsUpdate;
     }
 
+    /**
+     * @return the releaseDateToBeUpdated
+     */
+    public Date getReleaseDateToBeUpdated() {
+        return releaseDateToBeUpdated;
+    }
+
+    /**
+     * @param releaseDateToBeUpdated the releaseDateToBeUpdated to set
+     */
+    public void setReleaseDateToBeUpdated(Date releaseDateToBeUpdated) {
+        this.releaseDateToBeUpdated = releaseDateToBeUpdated;
+    }
+
+   
 }
