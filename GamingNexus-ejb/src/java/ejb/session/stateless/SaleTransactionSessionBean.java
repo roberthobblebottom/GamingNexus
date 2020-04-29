@@ -70,6 +70,10 @@ public class SaleTransactionSessionBean implements SaleTransactionSessionBeanLoc
         return query.getResultList();
     }
 
+    
+    
+    
+
     @Override
     public SaleTransaction retrieveSaleTransactionBySaleTransactionId(Long saleTransactionId) throws SaleTransactionNotFoundException {
         SaleTransaction saleTransaction = em.find(SaleTransaction.class, saleTransactionId);
