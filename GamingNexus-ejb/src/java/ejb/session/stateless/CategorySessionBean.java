@@ -101,6 +101,28 @@ public class CategorySessionBean implements CategorySessionBeanLocal {
 
         return leafCategoryEntities;
     }
+    
+    @Override
+    public List<Category> retrieveAllSoftwareToolCategories() {
+        Query query = em.createQuery("SELECT c FROM Category c WHERE c.parentCategory.name = 'SoftwareTool' ORDER BY c.name ASC");
+        List<Category> leafCategoryEntities = query.getResultList();
+
+        for (Category leafCategoryEntity : leafCategoryEntities) {
+            leafCategoryEntity.getProducts().size();
+        }
+        return leafCategoryEntities;
+    }
+    
+    @Override
+    public List<Category> retrieveAllHardwareCategories() {
+        Query query = em.createQuery("SELECT c FROM Category c WHERE c.parentCategory.name = 'Hardware' ORDER BY c.name ASC");
+        List<Category> leafCategoryEntities = query.getResultList();
+
+        for (Category leafCategoryEntity : leafCategoryEntities) {
+            leafCategoryEntity.getProducts().size();
+        }
+        return leafCategoryEntities;
+    }
 
     @Override
     public List<Category> retrieveAllCategoriesWithoutProduct() {
