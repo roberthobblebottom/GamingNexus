@@ -6,13 +6,11 @@
 package entity;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 /**
  *
@@ -22,10 +20,10 @@ import javax.validation.constraints.Size;
 public class Game extends Product implements Serializable {
 
     
-    @Size(min = 1, max = 5)
-    private String parentAdvisory;
+    private Boolean parentAdvisory;
     private List<String> gamePicturesURLs;
     private List<String> gameTrailersURLS;
+    
 
 
     @OneToMany(mappedBy = "game")
@@ -35,32 +33,14 @@ public class Game extends Product implements Serializable {
         super();
         gameAccounts = new ArrayList<>();
     }
-
-    public Game(String name, String description, String computerRequirements, double price, double averageRating) {
-        super(name, description, computerRequirements, price, averageRating);
-        gameAccounts = new ArrayList<>();
-    }
-
-    public Game(String parentAdvisory, List<String> gamePicturesURLs, List<String> gameTrailersURLS, String name, String description, String computerRequirements, double price, double averageRating) {
-        super(name, description, computerRequirements, price, averageRating);
-        this.parentAdvisory = parentAdvisory;
-        this.gamePicturesURLs = gamePicturesURLs;
-        this.gameTrailersURLS = gameTrailersURLS;
-    }
-
-    /**
-     * @return the parentAdvisory
-     */
-    public String getParentAdvisory() {
-        return parentAdvisory;
-    }
-
-    /**
-     * @param parentAdvisory the parentAdvisory to set
-     */
-    public void setParentAdvisory(String parentAdvisory) {
+    
+    public Game(Boolean parentAdvisory, String headerImage, String videoLink, String name, String description, String computerRequirements, double price, 
+            double averageRating, LocalDate releaseDate, long sales) {
+        
+        super(name, description, computerRequirements, price, averageRating, releaseDate, sales, headerImage, videoLink);
         this.parentAdvisory = parentAdvisory;
     }
+
 
     /**
      * @return the gamePicturesURLs
@@ -104,18 +84,22 @@ public class Game extends Product implements Serializable {
         this.gameAccounts = gameAccounts;
     }
 
+
+
     /**
-     * @return the forums
+     * @return the parentAdvisory
      */
-    public List<Forum> getForums() {
-        return forums;
+    public Boolean getParentAdvisory() {
+        return parentAdvisory;
     }
 
     /**
-     * @param forums the forums to set
+     * @param parentAdvisory the parentAdvisory to set
      */
-    public void setForums(List<Forum> forums) {
-        this.forums = forums;
+    public void setParentAdvisory(Boolean parentAdvisory) {
+        this.parentAdvisory = parentAdvisory;
     }
+
+
 
 }

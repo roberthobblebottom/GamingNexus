@@ -5,7 +5,14 @@
  */
 package ejb.session.stateless;
 
+import entity.SaleTransaction;
+import java.util.List;
 import javax.ejb.Local;
+import util.exception.CreateNewSaleTransactionException;
+import util.exception.CustomerNotFoundException;
+import util.exception.InvalidLoginCredentialException;
+import util.exception.SaleTransactionNotFoundException;
+
 
 /**
  *
@@ -14,4 +21,16 @@ import javax.ejb.Local;
 @Local
 public interface SaleTransactionSessionBeanLocal {
     
+
+    public List<SaleTransaction> retrieveAllSaleTransactionsByCustomerId(Long customerId);
+
+    public SaleTransaction retrieveSaleTransactionBySaleTransactionId(Long saleTransactionId) throws SaleTransactionNotFoundException;
+
+    public List<SaleTransaction> retrieveAllSaleTransactions();
+
+
+    public SaleTransaction createNewSaleTransaction(Long customerId, SaleTransaction newSaleTransaction) throws CustomerNotFoundException, CreateNewSaleTransactionException;
+
+    public List<SaleTransaction> retrieveAllSaleTransactionByUsernameAndPassword(String username, String password) throws InvalidLoginCredentialException;
 }
+

@@ -27,5 +27,6 @@ public interface PromotionSessionBeanLocal {
     public List<Promotion> retrivePromotionsByCompanyID(long companyID) throws CompanyNotFoundException;
 
     public void updatePromotion(Promotion promotion, List<Product> productsListToBeUpdated);
+    public List<Promotion> retrieveAllPromotions();
     
 }

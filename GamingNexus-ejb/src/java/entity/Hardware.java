@@ -6,11 +6,11 @@
 package entity;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 /**
@@ -22,11 +22,11 @@ import javax.validation.constraints.Size;
 public class Hardware extends Product implements Serializable {
 
     @Size(min = 0, max = 5000)
-    private String warrentyDescription;
+    private String warrantyDescription;
     @Size(min = 0, max = 5000)
     private String technicalspecification;
     @Size(min = 0, max = 100)
-    private String manufactoringCountry;
+    private String manufacturingCountry;
     
     
     @OneToMany(mappedBy = "hardware")
@@ -37,28 +37,15 @@ public class Hardware extends Product implements Serializable {
         deliverables = new ArrayList<>();
     }
 
-    public Hardware(String warrentyDescription, String technicalspecification, String manufactoringCountry, String name, String description, String computerRequirements, double price, double averageRating) {
-        super(name, description, computerRequirements, price, averageRating);
-        this.warrentyDescription = warrentyDescription;
+    public Hardware(String warrantyDescription, String technicalspecification, String manufacturingCountry, String name, String description, 
+            double price, double averageRating, LocalDate releaseDate, long sales, String headerImage, String videoLink) {
+        
+        super(name, description, price, averageRating, releaseDate, sales, headerImage, videoLink);
+        this.warrantyDescription = warrantyDescription;
         this.technicalspecification = technicalspecification;
-        this.manufactoringCountry = manufactoringCountry;
+        this.manufacturingCountry = manufacturingCountry;
     }
-
     
-    /**
-     * @return the warrentyDescription
-     */
-    public String getWarrentyDescription() {
-        return warrentyDescription;
-    }
-
-    /**
-     * @param warrentyDescription the warrentyDescription to set
-     */
-    public void setWarrentyDescription(String warrentyDescription) {
-        this.warrentyDescription = warrentyDescription;
-    }
-
     /**
      * @return the technicalspecification
      */
@@ -73,19 +60,7 @@ public class Hardware extends Product implements Serializable {
         this.technicalspecification = technicalspecification;
     }
 
-    /**
-     * @return the manufactoringCountry
-     */
-    public String getManufactoringCountry() {
-        return manufactoringCountry;
-    }
 
-    /**
-     * @param manufactoringCountry the manufactoringCountry to set
-     */
-    public void setManufactoringCountry(String manufactoringCountry) {
-        this.manufactoringCountry = manufactoringCountry;
-    }
 
     /**
      * @return the deliverables
@@ -99,6 +74,34 @@ public class Hardware extends Product implements Serializable {
      */
     public void setDeliverables(List<Deliverables> deliverables) {
         this.deliverables = deliverables;
+    }
+
+    /**
+     * @return the warrantyDescription
+     */
+    public String getWarrantyDescription() {
+        return warrantyDescription;
+    }
+
+    /**
+     * @param warrantyDescription the warrantyDescription to set
+     */
+    public void setWarrantyDescription(String warrantyDescription) {
+        this.warrantyDescription = warrantyDescription;
+    }
+
+    /**
+     * @return the manufacturingCountry
+     */
+    public String getManufacturingCountry() {
+        return manufacturingCountry;
+    }
+
+    /**
+     * @param manufacturingCountry the manufacturingCountry to set
+     */
+    public void setManufacturingCountry(String manufacturingCountry) {
+        this.manufacturingCountry = manufacturingCountry;
     }
 
 }

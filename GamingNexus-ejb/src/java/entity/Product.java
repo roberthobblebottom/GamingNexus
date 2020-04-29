@@ -6,19 +6,21 @@
 package entity;
 
 import java.io.Serializable;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
-import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
@@ -36,58 +38,88 @@ public abstract class Product implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    protected Long productId;
+    private Long productId;
     @NotNull
     @Size(min = 1, max = 100)
-    protected String name;
+    private String name;
     @NotNull
-    @Size(min = 0, max = 5000)
-    protected String description;
+    //@Size(min = 0, max = 5000)
+    @Lob
+    @Column
+    private String description;
     //@NotNull
-    @Size(min = 0, max = 5000)
-    protected String computerRequirements;
+    //@Size(min = 0, max = 5000)
+    @Lob
+    @Column
+    private String computerRequirements;
     @NotNull
-    @Digits(integer = 1000000000, fraction = 2)
-    protected double price;
-    @Digits(integer = 1, fraction = 2)
-    @Min(0)
-    @Max(5)
+    //@Digits(integer = 1000000000, fraction = 2)
+    private double price;
+    //@Digits(integer = 1, fraction = 2)
+    //@Min(0)
+    //@Max(100)
     @NotNull
-    protected double averageRating;
+    private double averageRating;
+    
+    private LocalDate releaseDate;
+    
+    private long sales;
+
+    @Lob
+    @Column
+    private String headerImage;
+    @Lob
+    @Column
+    private String videoLink;
 
     @ManyToOne(optional = false)
-    protected Company company;
+    private Company company;
     @ManyToOne(optional = false)
-    protected Category category;
+    private Category category;
     @ManyToMany(mappedBy = "products")
-    protected List<Tag> tags;   
+    private List<Tag> tags;   
     @ManyToMany(mappedBy = "products")
-    protected List<Promotion> promotions;
+    private List<Promotion> promotions;
     @OneToMany(mappedBy = "product")
-    protected List<Rating> ratings;
+    private List<Rating> ratings;
     @OneToMany(mappedBy = "product")
-    private List<CartItem> cartItems;
+    private List<OwnedItem> ownedItems;
     @OneToMany(mappedBy = "product")
-    protected List<OwnedItem> ownedItems;
-    @OneToMany(mappedBy = "product")
-    protected List<Forum> forums;
+    private List<Forum> forums;
 
     public Product() {
         tags = new ArrayList<>();
         ratings = new ArrayList<>();
-        cartItems = new ArrayList<>();
         ownedItems = new ArrayList<>();
         forums = new ArrayList<>();
     }
 
-    public Product(String name, String description, String computerRequirements, double price, double averageRating) {
+    //for software games and products with videolink
+    public Product(String name, String description, String computerRequirements, double price, double averageRating, LocalDate releaseDate, long sales, String headerImage, String videoLink) {
         this();
         this.name = name;
         this.description = description;
         this.computerRequirements = computerRequirements;
         this.price = price;
         this.averageRating = averageRating;
+        this.releaseDate = releaseDate;
+        this.sales = sales;
+        this.headerImage = headerImage;
+        this.videoLink = videoLink;
     }
+    // for hardware
+    public Product(String name, String description, double price, double averageRating, LocalDate releaseDate, long sales, String headerImage, String videoLink) {
+        this();
+        this.name = name;
+        this.description = description;
+        this.price = price;
+        this.averageRating = averageRating;
+        this.releaseDate = releaseDate;
+        this.sales = sales;
+        this.headerImage = headerImage;
+        this.videoLink = videoLink;
+    }
+    
 
     public void addTag(Tag tagEntity) {
         if (tagEntity != null) {
@@ -318,14 +350,70 @@ public abstract class Product implements Serializable {
         }
     }
 
-    public List<CartItem> getCartItems() {
-        return cartItems;
+    public List<Forum> getForums() {
+        return forums;
     }
 
-    public void setCartItems(List<CartItem> cartItems) {
-        this.cartItems = cartItems;
+    public void setForums(List<Forum> forums) {
+        this.forums = forums;
     }
 
+    /**
+     * @return the sales
+     */
+    public long getSales() {
+        return sales;
+    }
 
+    /**
+     * @param sales the sales to set
+     */
+    public void setSales(long sales) {
+        this.sales = sales;
+    }
+
+    /**
+     * @return the releaseDate
+     */
+    public LocalDate getReleaseDate() {
+        return releaseDate;
+    }
+
+    /**
+     * @param releaseDate the releaseDate to set
+     */
+    public void setReleaseDate(LocalDate releaseDate) {
+        this.releaseDate = releaseDate;
+    }
+
+    /**
+     * @return the headerImage
+     */
+    public String getHeaderImage() {
+        return headerImage;
+    }
+
+    /**
+     * @param headerImage the headerImage to set
+     */
+    public void setHeaderImage(String headerImage) {
+        this.headerImage = headerImage;
+    }
+
+    /**
+     * @return the videoLink
+     */
+    public String getVideoLink() {
+        return videoLink;
+    }
+
+    /**
+     * @param videoLink the videoLink to set
+     */
+    public void setVideoLink(String videoLink) {
+        this.videoLink = videoLink;
+    }
+
+    
 
 }

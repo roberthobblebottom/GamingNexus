@@ -31,8 +31,8 @@ public class Company extends User implements Serializable {
     }
 
     
-    public Company(String phoneNumber, String address, String email, String country, String username, String password, String profilePictureURL, LocalDateTime lastOnline) {
-        super(phoneNumber, address, email, country, username, password, profilePictureURL, lastOnline);
+    public Company(String phoneNumber, String address, String email, String country, String username, String password) {
+        super(phoneNumber, address, email, country, username, password);
         products = new ArrayList<>();
         chats = new ArrayList<>();
     }

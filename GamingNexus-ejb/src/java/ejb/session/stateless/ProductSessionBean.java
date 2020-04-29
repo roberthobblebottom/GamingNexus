@@ -9,14 +9,19 @@ import entity.Game;
 import entity.Hardware;
 import entity.OtherSoftware;
 import entity.Product;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
- * @author root
+ * @author yangxi
  */
 @Stateless
 public class ProductSessionBean implements ProductSessionBeanLocal {
@@ -48,10 +53,11 @@ public class ProductSessionBean implements ProductSessionBeanLocal {
             OtherSoftware retrivedOtherSoftware = (OtherSoftware) em.find(OtherSoftware.class, productId);
             this.lazyLoadOtherSoftware(retrivedOtherSoftware);
             return retrivedOtherSoftware;
-        } 
+        }
         assert false : "Product must always be a child entity";
         return null;
     }
+
 //    @Override
 //    public List<Tag> retrievedTagsByProduct(Long productID){
 //     Product retrievedProduct = em.find(Product.class, productID);
@@ -59,6 +65,79 @@ public class ProductSessionBean implements ProductSessionBeanLocal {
 //     return retrievedProduct.get;
 //             
 //    }
+    @Override
+    public List<Product> searchProductsByName(String searchString) {
+        Query query = em.createQuery("SELECT p FROM Product p WHERE p.name LIKE :inSearchString ORDER BY p.averageRating ASC");
+        query.setParameter("inSearchString", "%" + searchString + "%");
+        List<Product> productEntities = query.getResultList();
+
+        for (Product product : productEntities) {
+            if (product instanceof Game) {
+
+                this.lazyLoadGame((Game)product);
+
+            } else if (product instanceof Hardware) {
+
+                this.lazyLoadHardware((Hardware)product);
+
+            } else if (product instanceof OtherSoftware) {
+
+                this.lazyLoadOtherSoftware((OtherSoftware)product);
+
+            }
+        }
+
+        return productEntities;
+    }
+
+    public List<Product> filterProductsByTags(List<Long> tagIds, String condition) {
+        List<Product> productEntities = new ArrayList<>();
+
+        if (tagIds == null || tagIds.isEmpty() || (!condition.equals("AND") && !condition.equals("OR"))) {
+            return productEntities;
+        } else {
+            if (condition.equals("OR")) {
+                Query query = em.createQuery("SELECT DISTINCT pe FROM ProductEntity pe, IN (pe.tagEntities) te WHERE te.tagId IN :inTagIds ORDER BY pe.productId");
+                query.setParameter("inTagIds", tagIds);
+                productEntities = query.getResultList();
+            } else // AND
+            {
+                String selectClause = "SELECT pe FROM ProductEntity pe";
+                String whereClause = "";
+                Boolean firstTag = true;
+                Integer tagCount = 1;
+
+                for (Long tagId : tagIds) {
+                    selectClause += ", IN (pe.tagEntities) te" + tagCount;
+
+                    if (firstTag) {
+                        whereClause = "WHERE te1.tagId = " + tagId;
+                        firstTag = false;
+                    } else {
+                        whereClause += " AND te" + tagCount + ".tagId = " + tagId;
+                    }
+
+                    tagCount++;
+                }
+
+                String jpql = selectClause + " " + whereClause + " ORDER BY pe.productId";
+                Query query = em.createQuery(jpql);
+                productEntities = query.getResultList();
+            }
+
+            for (Product productEntity : productEntities) {
+                productEntity.getCategory();
+                productEntity.getTags().size();
+            }
+
+            Collections.sort(productEntities, new Comparator<Product>() {
+                public int compare(Product pe1, Product pe2) {
+                    return pe1.getProductId().compareTo(pe2.getProductId());
+                }
+            });
+            return productEntities;
+        }
+    }
 
     @Override
     public void deleteProduct(Product productToBeDeleted) {
@@ -84,28 +163,28 @@ public class ProductSessionBean implements ProductSessionBeanLocal {
 
     public void lazyLoadGame(Game game) {
         game.getTags().size();
-        game.getCartItems().size();
+        game.getPromotions().size();
+        game.getRatings().size();
         game.getOwnedItems().size();
         game.getPromotions().size();
         game.getRatings().size();
-        game.getRatings().size();
+        game.getGameAccounts().size();
     }
 
     public void lazyLoadOtherSoftware(OtherSoftware otherSoftware) {
         otherSoftware.getTags().size();
-        otherSoftware.getCartItems().size();
-        otherSoftware.getOwnedItems().size();
         otherSoftware.getPromotions().size();
         otherSoftware.getRatings().size();
+        otherSoftware.getOwnedItems().size();
+        otherSoftware.getPromotions().size();
         otherSoftware.getRatings().size();
     }
 
     public void lazyLoadHardware(Hardware hardware) {
         hardware.getTags().size();
-        hardware.getCartItems().size();
         hardware.getOwnedItems().size();
         hardware.getPromotions().size();
         hardware.getRatings().size();
-        hardware.getRatings().size();
+        hardware.getDeliverables().size();
     }
 }

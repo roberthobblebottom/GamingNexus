@@ -18,7 +18,7 @@
 
         <h:form id="formAddNewHardware">
 
-            <p:dialog id="dialogAddNewHardware" widgetVar="dialogAddNewHardware" header="Add New Hardware" closable="true">
+            <p:dialog id="dialogAddNewHardware" widgetVar="dialogAddNewHardware" header="Add New Hardware" closable="true" appendTo = "@(body)">
 
                 <p:messages id="messagesAddNewGame" redisplay="false" />
 
@@ -140,20 +140,20 @@
 
                     <p:row >
                         <p:column>
-                            <h:outputText value="Manufactoring Country" 
+                            <h:outputText value="Manufacturing Country" 
                                           />
                         </p:column>
                         <p:column >
-                            <p:inputText id="manufactoringCountry" 
-                                         value="#{companyProductManagedBean.newHardware.manufactoringCountry}" >
+                            <p:inputText id="manufacturingCountry" 
+                                         value="#{companyProductManagedBean.newHardware.manufacturingCountry}" >
                                 <f:validateLength maximum="100">
-                                    <p:ajax event="keyup" update="manufactoringValidation" process="@this"/> 
+                                    <p:ajax event="keyup" update="manufacturingValidation" process="@this"/> 
 
                                 </f:validateLength>
                             </p:inputText>
                         </p:column>
                         <p:column>
-                            <p:message id="manufactoringValidation" for="manufactoringCountry"/>
+                            <p:message id="manufacturingValidation" for="manufacturingCountry"/>
                         </p:column>
                     </p:row> 
 
@@ -181,21 +181,21 @@
 
                     <p:row >
                         <p:column>
-                            <h:outputText value="Warrenty Description" 
+                            <h:outputText value="Warranty Description" 
                                           />
                         </p:column>
                         <p:column >
-                            <p:inputTextarea  id="warrentyDescription" rows="5" cols="30" counter="WarrentDescriptionAddDisplay" 
+                            <p:inputTextarea  id="warrantyDescription" rows="5" cols="30" counter="WarrantDescriptionAddDisplay" 
                                               maxlength="1000" counterTemplate="{0} characters remaining." autoResize="true" 
-                                              value="#{companyProductManagedBean.newHardware.warrentyDescription}" >
-                                <p:ajax event="keyup" update="warrentyDescriptionValidation" process="@this"/> 
+                                              value="#{companyProductManagedBean.newHardware.warrantyDescription}" >
+                                <p:ajax event="keyup" update="warrantyDescriptionValidation" process="@this"/> 
 
                             </p:inputTextarea>
                             <br/>
-                            <h:outputText id="WarrentDescriptionAddDisplay" />
+                            <h:outputText id="WarrantDescriptionAddDisplay" />
                         </p:column>
                         <p:column>
-                            <p:message id="warrentyDescriptionValidation" for="warrentyDescription"/>
+                            <p:message id="warrantyDescriptionValidation" for="warrantyDescription"/>
                         </p:column>
                     </p:row> 
 

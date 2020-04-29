@@ -6,7 +6,9 @@
 package ejb.session.stateless;
 
 import entity.Product;
+import java.util.List;
 import javax.ejb.Local;
+import util.exception.ProductNotFoundException;
 
 /**
  *
@@ -15,8 +17,10 @@ import javax.ejb.Local;
 @Local
 public interface ProductSessionBeanLocal {
 
-    public Product retrieveProductById(Long productId);
+    public Product retrieveProductById(Long productId) throws ProductNotFoundException;
 
-    public void deleteProduct(Product product);
+    public void deleteProduct(Product productToBeDeleted) throws ProductNotFoundException;
+
+    public List<Product> searchProductsByName(String searchString);
     
 }

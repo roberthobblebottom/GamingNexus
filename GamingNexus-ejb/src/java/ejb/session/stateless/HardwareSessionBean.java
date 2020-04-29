@@ -56,7 +56,8 @@ public class HardwareSessionBean implements HardwareSessionBeanLocal {
     public HardwareSessionBean() {
     }
 
-    public Hardware createNewHardware(Hardware newHardware, Long categoryId, List<Long> tagIds, Long CompanyId) throws ProductSkuCodeExistException, UnknownPersistenceException, InputDataValidationException, CreateNewProductException, CompanyNotFoundException {
+    @Override
+    public Hardware createNewHardware(Hardware newHardware, Long categoryId, List<Long> tagIds, Long companyId) throws ProductSkuCodeExistException, UnknownPersistenceException, InputDataValidationException, CreateNewProductException, CompanyNotFoundException {
         try {
             if (categoryId == null) {
                 throw new CreateNewProductException("The new product must be associated a leaf category");
@@ -67,10 +68,10 @@ public class HardwareSessionBean implements HardwareSessionBeanLocal {
                 throw new CreateNewProductException("Selected category for the new product is not a leaf category");
             }
 
-            if (CompanyId == null) {
+            if (companyId == null) {
                 throw new CreateNewProductException("The new product must be associated a company");
             }
-            Company company = companySessionBeanLocal.retrieveCompanyById(categoryId);
+            Company company = companySessionBeanLocal.retrieveCompanyById(companyId);
 
             em.persist(newHardware);
             newHardware.setCategory(category);
@@ -104,8 +105,7 @@ public class HardwareSessionBean implements HardwareSessionBeanLocal {
         List<Hardware> hardwares = query.getResultList();
 
         for (Hardware hardware : hardwares) {
-            hardware.getCategory();
-            hardware.getTags().size();
+            lazyLoadHardware(hardware);
         }
 
         return hardwares;
@@ -117,8 +117,7 @@ public class HardwareSessionBean implements HardwareSessionBeanLocal {
         List<Hardware> hardwares = query.getResultList();
 
         for (Hardware hardware : hardwares) {
-            hardware.getCategory();
-            hardware.getTags().size();
+            lazyLoadHardware(hardware);
         }
 
         return hardwares;
@@ -244,16 +243,15 @@ public class HardwareSessionBean implements HardwareSessionBeanLocal {
             hardwareToUpdate.setPrice(hardware.getPrice());
             hardwareToUpdate.setCompany(hardware.getCompany());
             hardwareToUpdate.setAverageRating((hardware.getAverageRating()));
-            hardwareToUpdate.setCartItems(hardware.getCartItems());
             hardwareToUpdate.setDeliverables(hardware.getDeliverables());
-            hardwareToUpdate.setManufactoringCountry(hardware.getManufactoringCountry());
+            hardwareToUpdate.setManufacturingCountry(hardware.getManufacturingCountry());
             hardwareToUpdate.setOwnedItems(hardware.getOwnedItems());
             hardwareToUpdate.setOwnedItems(hardware.getOwnedItems());
             hardwareToUpdate.setPromotions(hardware.getPromotions());
             hardwareToUpdate.setRatings(hardware.getRatings());
             hardwareToUpdate.setTags(hardware.getTags());
             hardwareToUpdate.setTechnicalspecification(hardware.getTechnicalspecification());
-            hardwareToUpdate.setWarrentyDescription(hardware.getWarrentyDescription());
+            hardwareToUpdate.setWarrantyDescription(hardware.getWarrantyDescription());
 
         } else {
             throw new ProductNotFoundException("Product ID not provided for product to be updated");
@@ -285,5 +283,16 @@ public class HardwareSessionBean implements HardwareSessionBeanLocal {
 
             return productEntities;
         }
+    }
+    
+    public void lazyLoadHardware(Hardware hardware) {
+        hardware.getCompany();
+        hardware.getCategory();
+        hardware.getTags().size();
+        hardware.getPromotions().size();
+        hardware.getRatings().size();
+        hardware.getOwnedItems().size();
+        hardware.getForums().size();
+        hardware.getDeliverables().size();
     }
 }
