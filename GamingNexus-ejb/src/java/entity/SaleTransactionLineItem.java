@@ -21,7 +21,7 @@ import javax.validation.constraints.NotNull;
 
 /**
  *
- * @author Yang Xi
+ * @author Jin Yichen
  */
 @Entity
 public class SaleTransactionLineItem implements Serializable {

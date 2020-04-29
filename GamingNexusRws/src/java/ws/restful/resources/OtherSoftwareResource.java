@@ -61,22 +61,22 @@ public class OtherSoftwareResource {
      public Response RetrieveAllOtherSoftware() {
         try {
         List<OtherSoftware> allOtherSoftware = otherSoftwareSessionBean.retrieveAllOtherSoftwares();
-        for (OtherSoftware otehrSoftware : allOtherSoftware) {
-                if (otehrSoftware.getCategory().getParentCategory() != null) {
-                    otehrSoftware.getCategory().getParentCategory().getSubCategories().clear();
+        for (OtherSoftware otherSoftware : allOtherSoftware) {
+                if (otherSoftware.getCategory().getParentCategory() != null) {
+                    otherSoftware.getCategory().getParentCategory().getSubCategories().clear();
                 }
-                otehrSoftware.getCategory().getProducts().clear();
-                for (Tag tagEntity : otehrSoftware.getTags()) {
+                otherSoftware.getCategory().getProducts().clear();
+                for (Tag tagEntity : otherSoftware.getTags()) {
                     tagEntity.getProducts().clear();
                 }
-                for (Promotion promotion : otehrSoftware.getPromotions()) {
+                for (Promotion promotion : otherSoftware.getPromotions()) {
                     promotion.getProducts().clear();
                 }
-                otehrSoftware.getCompany().getProducts().clear();
-                for (Rating rating : otehrSoftware.getRatings()) {
+                otherSoftware.getCompany().getProducts().clear();
+                for (Rating rating : otherSoftware.getRatings()) {
                     rating.setProduct(null);
                 }
-                for (Forum forum : otehrSoftware.getForums()) {
+                for (Forum forum : otherSoftware.getForums()) {
                     forum.setProduct(null);
                 }
             }

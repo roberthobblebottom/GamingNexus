@@ -9,9 +9,18 @@ import ejb.session.stateless.CustomerSessionBeanLocal;
 import ejb.session.stateless.ProductSessionBeanLocal;
 import ejb.session.stateless.SaleTransactionSessionBeanLocal;
 import entity.Customer;
+import entity.Deliverables;
+import entity.Forum;
+import entity.Game;
+import entity.GameAccount;
+import entity.Hardware;
+import entity.OtherSoftware;
 import entity.Product;
+import entity.Promotion;
+import entity.Rating;
 import entity.SaleTransaction;
 import entity.SaleTransactionLineItem;
+import entity.Tag;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -84,14 +93,79 @@ public class SaleTransactionResource {
             List<SaleTransaction> saleTransactions = saleTransactionSessionBean.retrieveAllSaleTransactionByUsernameAndPassword(username, password);
 
             for (SaleTransaction saleTransaction : saleTransactions) {
-                
+
                 saleTransaction.getCustomer().getSaleTransactions().clear();
-                
-                for(SaleTransactionLineItem saleTransactionLineItem : saleTransaction.getSaleTransactionLineItems()) {
-                    saleTransactionLineItem.setProduct(null);
+
+                for (SaleTransactionLineItem saleTransactionLineItem : saleTransaction.getSaleTransactionLineItems()) {
+
+                    Product item = saleTransactionLineItem.getProduct();
+                    if (item instanceof Game) {
+                        Game game = (Game) item;
+                        if (game.getCategory().getParentCategory() != null) {
+                            game.getCategory().getParentCategory().getSubCategories().clear();
+                        }
+                        game.getCategory().getProducts().clear();
+                        for (Tag tagEntity : game.getTags()) {
+                            tagEntity.getProducts().clear();
+                        }
+                        for (Promotion promotion : game.getPromotions()) {
+                            promotion.getProducts().clear();
+                        }
+                        game.getCompany().getProducts().clear();
+                        for (Rating rating : game.getRatings()) {
+                            rating.setProduct(null);
+                        }
+                        for (Forum forum : game.getForums()) {
+                            forum.setProduct(null);
+                        }
+                        for (GameAccount gameAccount : game.getGameAccounts()) {
+                            gameAccount.setGame(null);
+                        }
+                    } else if (item instanceof Hardware) {
+                        Hardware hardware = (Hardware) item;
+                        if (hardware.getCategory().getParentCategory() != null) {
+                            hardware.getCategory().getParentCategory().getSubCategories().clear();
+                        }
+                        hardware.getCategory().getProducts().clear();
+                        for (Tag tagEntity : hardware.getTags()) {
+                            tagEntity.getProducts().clear();
+                        }
+                        for (Promotion promotion : hardware.getPromotions()) {
+                            promotion.getProducts().clear();
+                        }
+                        hardware.getCompany().getProducts().clear();
+                        for (Rating rating : hardware.getRatings()) {
+                            rating.setProduct(null);
+                        }
+                        for (Forum forum : hardware.getForums()) {
+                            forum.setProduct(null);
+                        }
+                        for (Deliverables deliverables : hardware.getDeliverables()) {
+                            deliverables.setHardware(null);
+                        }
+                    } else {
+                        OtherSoftware otherSoftware = (OtherSoftware) item;
+                        if (otherSoftware.getCategory().getParentCategory() != null) {
+                            otherSoftware.getCategory().getParentCategory().getSubCategories().clear();
+                        }
+                        otherSoftware.getCategory().getProducts().clear();
+                        for (Tag tagEntity : otherSoftware.getTags()) {
+                            tagEntity.getProducts().clear();
+                        }
+                        for (Promotion promotion : otherSoftware.getPromotions()) {
+                            promotion.getProducts().clear();
+                        }
+                        otherSoftware.getCompany().getProducts().clear();
+                        for (Rating rating : otherSoftware.getRatings()) {
+                            rating.setProduct(null);
+                        }
+                        for (Forum forum : otherSoftware.getForums()) {
+                            forum.setProduct(null);
+                        }
+                    }
                 }
             }
-            
+
             return Response.status(Response.Status.OK).entity(new RetrieveAllSaleTransactionByUsernameAndPasswordRsp(saleTransactions)).build();
 
         } catch (Exception ex) {
