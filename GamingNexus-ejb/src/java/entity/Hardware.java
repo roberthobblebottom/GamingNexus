@@ -28,6 +28,8 @@ public class Hardware extends Product implements Serializable {
     @Size(min = 0, max = 100)
     private String manufacturingCountry;
     
+    private int stock;
+    
     
     @OneToMany(mappedBy = "hardware")
     private List<Deliverables> deliverables;
@@ -38,12 +40,13 @@ public class Hardware extends Product implements Serializable {
     }
 
     public Hardware(String warrantyDescription, String technicalspecification, String manufacturingCountry, String name, String description, 
-            double price, double averageRating, LocalDate releaseDate, long sales, String headerImage, String videoLink) {
+            double price, double averageRating, LocalDate releaseDate, long sales, String headerImage, String videoLink, int stock) {
         
         super(name, description, price, averageRating, releaseDate, sales, headerImage, videoLink);
         this.warrantyDescription = warrantyDescription;
         this.technicalspecification = technicalspecification;
         this.manufacturingCountry = manufacturingCountry;
+        this.stock = stock;
     }
     
     /**
@@ -102,6 +105,20 @@ public class Hardware extends Product implements Serializable {
      */
     public void setManufacturingCountry(String manufacturingCountry) {
         this.manufacturingCountry = manufacturingCountry;
+    }
+
+    /**
+     * @return the stock
+     */
+    public int getStock() {
+        return stock;
+    }
+
+    /**
+     * @param stock the stock to set
+     */
+    public void setStock(int stock) {
+        this.stock = stock;
     }
 
 }

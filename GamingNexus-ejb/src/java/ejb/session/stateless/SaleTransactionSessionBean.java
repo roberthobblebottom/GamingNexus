@@ -42,6 +42,7 @@ public class SaleTransactionSessionBean implements SaleTransactionSessionBeanLoc
     public SaleTransactionSessionBean() {
     }
 
+    @Override
     public Long createNewSaleTransaction(Long customerId, SaleTransaction newSaleTransaction) throws CustomerNotFoundException, CreateNewSaleTransactionException {
         if (newSaleTransaction != null) {
 
