@@ -42,7 +42,8 @@ import util.exception.TagNotFoundException;
 import util.exception.UnknownPersistenceException;
 import util.exception.UpdateProductException;
 import java.sql.Date;
-import java.time.LocalDate;
+import java.sql.Timestamp;
+
 /**
  *
  * @author root
@@ -82,7 +83,8 @@ public class CompanyProductManagedBean implements Serializable {
     private Company company;
     private Long categoryIdUpdate;
     private List<Long> tagIdsUpdate;
-private Date releaseDateToBeUpdated;
+    private Date releaseDateToBeUpdated;
+
     public CompanyProductManagedBean() {
         newGame = new Game();
         gameToBeUpdated = new Game();
@@ -120,7 +122,11 @@ private Date releaseDateToBeUpdated;
                     newGame.getTags().forEach(tag -> {
                         tagIds.add(tag.getTagId());
                     });
-                    Game game = gameSessionBean.createNewGame(newGame, newGame.getCategory().getCategoryId(), tagIds, getCompany().getUserId());
+
+//                    if (newGame.getParentAdvisory()) {
+//                        Game 
+//                    }
+                   Game game = gameSessionBean.createNewGame(newGame, newGame.getCategory().getCategoryId(), tagIds, getCompany().getUserId());
                     products.add((Product) game);
 
                     FacesContext.getCurrentInstance().addMessage(null,
@@ -189,14 +195,14 @@ private Date releaseDateToBeUpdated;
 //
         Product productToBeUpdated = (Product) event.getComponent().getAttributes().get("productToBeUpdated");
         this.viewProductManagedBean.setProductToViewInDetails(productToBeUpdated);
-        this.releaseDateToBeUpdated =Date.valueOf( this.viewProductManagedBean.getProductToViewInDetails().getReleaseDate());
+        this.releaseDateToBeUpdated = Date.valueOf(this.viewProductManagedBean.getProductToViewInDetails().getReleaseDate());
         System.out.println("**************doUpdateProduct Debug, realisedDateToBeUpdated: " + this.releaseDateToBeUpdated);
     }
 
     public void updateProduct(ActionEvent event) {
 
         Product productToBeUpdated = viewProductManagedBean.getProductToViewInDetails();
-
+        productToBeUpdated.setReleaseDate(new Date(this.releaseDateToBeUpdated.getTime()).toLocalDate());
         Hardware hardwareEntityFragment = viewProductManagedBean.getHardwareToViewInDetails();
         OtherSoftware otherSoftwareEntityFragment = viewProductManagedBean.getOtherSoftwareToViewInDetails();
         Game gameEntityFragment = viewProductManagedBean.getGameToViewInDetails();
@@ -548,5 +554,4 @@ private Date releaseDateToBeUpdated;
         this.releaseDateToBeUpdated = releaseDateToBeUpdated;
     }
 
-   
 }

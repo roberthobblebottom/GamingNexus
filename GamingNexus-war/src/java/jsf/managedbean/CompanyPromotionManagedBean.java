@@ -84,9 +84,7 @@ public class CompanyPromotionManagedBean implements Serializable {
         setProducts(getCompany().getProducts());
         try {
             promotions = promotionSessionBean.retrivePromotionsByCompanyID(company.getUserId());
-
             System.out.println("********** promotions: " + promotions.size());
-
         } catch (CompanyNotFoundException ex) {
 
         }

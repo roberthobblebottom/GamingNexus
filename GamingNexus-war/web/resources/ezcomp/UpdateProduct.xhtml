@@ -45,11 +45,11 @@
                             <h:outputText value="Description" />
                         </p:column>
                         <p:column>
-                            <p:inputTextarea id = "descriptionUpdate" rows="7" cols="150" counter="displayUpdate" 
-                                             maxlength="1000" counterTemplate="{0} characters remaining." autoResize="true" 
+                            <p:inputTextarea id = "descriptionUpdate" rows="7" cols="100" counter="description"  counterTemplate="{0} characters remaining."
+                                             autoResize="true" maxlength="1000" 
                                              value="#{companyProductManagedBean.viewProductManagedBean.productToViewInDetails.description}" />
                             <br/>
-                            <h:outputText id="displayUpdate" />   
+                            <h:outputText id="description" />   
                         </p:column>
                     </p:row>
 
@@ -58,14 +58,14 @@
                             <p:outputLabel for="computerRequirements" value="Computer Requirements" style="font-weight: bold;"/>               
                         </p:column>
                         <p:column>
-                            <p:inputTextarea id = "computerRequirements" rows="5" cols="110" counter="display2" maxlength="1000" 
+                            <p:inputTextarea id = "computerRequirements" rows="5" cols="100" counter="lettersLeft" maxlength="1000" 
                                              counterTemplate="{0} characters remaining." autoResize="true" 
                                              value="#{companyProductManagedBean.viewProductManagedBean.productToViewInDetails.computerRequirements}" />
                             <br />
-                            <h:outputText id="display2" />   
+                            <h:outputText id="lettersLeft" />   
                         </p:column>
                         <p:column>
-                            <p:messages for ="computerRequirements" />
+                            <p:messages for ="computerRequirement" />
                         </p:column>     
                     </p:row>
 
@@ -233,7 +233,7 @@
                                           />
                         </p:column>
                         <p:column >
-                            <p:inputTextarea id = "technicalSpecification" rows="5" cols="30" counter="technicalSpecificationDisplay" 
+                            <p:inputTextarea id = "technicalSpecification" rows="5" cols="100" counter="technicalSpecificationDisplay" 
                                              maxlength="1000" counterTemplate="{0} characters remaining." autoResize="true" 
                                              value="#{companyProductManagedBean.viewProductManagedBean.hardwareToViewInDetails.technicalspecification}" />
                             <br/>
@@ -252,7 +252,7 @@
                                           />
                         </p:column>
                         <p:column >
-                            <p:inputTextarea id = "warrantyDescription" rows="5" cols="30" counter="WarrantDescriptionDisplay" 
+                            <p:inputTextarea id = "warrantyDescription" rows="5" cols="100" counter="WarrantDescriptionDisplay" 
                                              maxlength="1000" counterTemplate="{0} characters remaining." autoResize="true" 
                                              value="#{companyProductManagedBean.viewProductManagedBean.hardwareToViewInDetails.warrantyDescription}" />
                             <br/>

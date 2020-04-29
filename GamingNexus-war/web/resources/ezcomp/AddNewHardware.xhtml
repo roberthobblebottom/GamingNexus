@@ -49,7 +49,7 @@
                             <p:outputLabel for="description" value="description" style="font-weight: bold;"/>               
                         </p:column>
                         <p:column>
-                            <p:inputTextarea id = "description" rows="5" cols="30" counter="display" 
+                            <p:inputTextarea id = "description" rows="5" cols="100" counter="display" 
                                              maxlength="1000" counterTemplate="{0} characters remaining." autoResize="true" 
                                              value="#{companyProductManagedBean.newHardware.description}" >
                                 <p:ajax event="keyup" update="nameValidation" process="@this"/> 
@@ -67,7 +67,7 @@
                             <p:outputLabel for="computerRequirements" value="Computer Requirements" style="font-weight: bold;"/>               
                         </p:column>
                         <p:column>
-                            <p:inputTextarea id = "computerRequirements" rows="5" cols="30" counter="display2" maxlength="1000" 
+                            <p:inputTextarea id = "computerRequirements" rows="5" cols="100" counter="display2" maxlength="1000" 
                                              counterTemplate="{0} characters remaining." autoResize="true" 
                                              value="#{companyProductManagedBean.newHardware.computerRequirements}" >
                                 <p:ajax event="keyup" update="computerRequirementsValidation" process="@this"/> 
@@ -181,7 +181,7 @@
                                           />
                         </p:column>
                         <p:column >
-                            <p:inputTextarea  id="techicalSpecification" rows="5" cols="30" counter="technicalSpecificationAddDisplay" 
+                            <p:inputTextarea  id="techicalSpecification" rows="5" cols="100" counter="technicalSpecificationAddDisplay" 
                                               maxlength="1000" counterTemplate="{0} characters remaining." autoResize="true" 
                                               value="#{companyProductManagedBean.newHardware.technicalspecification}" >
                                 <p:ajax event="keyup" update="technicalSpecificaitonValidation" process="@this"/> 
@@ -203,7 +203,7 @@
                                           />
                         </p:column>
                         <p:column >
-                            <p:inputTextarea  id="warrantyDescription" rows="5" cols="30" counter="WarrantDescriptionAddDisplay" 
+                            <p:inputTextarea  id="warrantyDescription" rows="5" cols="100" counter="WarrantDescriptionAddDisplay" 
                                               maxlength="1000" counterTemplate="{0} characters remaining." autoResize="true" 
                                               value="#{companyProductManagedBean.newHardware.warrantyDescription}" >
                                 <p:ajax event="keyup" update="warrantyDescriptionValidation" process="@this"/> 
