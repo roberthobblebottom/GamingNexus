@@ -36,6 +36,7 @@ public class CustomerSessionBean implements CustomerSessionBeanLocal {
     public CustomerSessionBean() {
     }
 
+    @Override
     public Customer createCustomer(Customer newCustomer) throws UnknownPersistenceException, CustomerUsernameExistException {
         try {
             em.persist(newCustomer);
@@ -55,6 +56,7 @@ public class CustomerSessionBean implements CustomerSessionBeanLocal {
         }
     }
 
+    @Override
     public List<Customer> retrieveAllCustomers() {
         Query query = em.createQuery("SELECT c FROM Customer c");
 
