@@ -7,6 +7,7 @@ package entity;
 
 import java.io.Serializable;
 import java.sql.Date;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Entity;
@@ -29,6 +30,10 @@ public class Customer extends User implements Serializable {
     private String securityQuestion;
     @Size(min = 5, max = 100)
     private String securityAnswer;
+    
+    private LocalDate birthday;
+    
+    private String gender;
     
     @OneToMany(mappedBy = "customer")
     private List<OwnedItem> ownedItems;
@@ -57,8 +62,10 @@ public class Customer extends User implements Serializable {
         saleTransactions = new ArrayList<>();
     }
 
-    public Customer(String phoneNumber, String address, String email, String country, String username, String password) {
+    public Customer(String phoneNumber, String address, String email, String country, String username, String password, LocalDate birthday, String gender) {
         super(phoneNumber, address, email, country, username, password);
+        this.birthday = birthday;
+        this.gender = gender;
         ownedItems = new ArrayList<>();
         ratings = new ArrayList<>();
         otherCustomers = new ArrayList<>();
@@ -69,7 +76,8 @@ public class Customer extends User implements Serializable {
     }
 
     
-    public Customer(String currentGamePlaying, Date unbanDate, String securityQuestion, String securityAnswer, String phoneNumber, String address, String email, String country, String username, String password) {
+    public Customer(String currentGamePlaying, Date unbanDate, String securityQuestion, String securityAnswer, String phoneNumber, 
+            String address, String email, String country, String username, String password) {
         super(phoneNumber, address, email, country, username, password);
         this.currentGamePlaying = currentGamePlaying;
         this.unbanDate = unbanDate;
@@ -241,5 +249,33 @@ public class Customer extends User implements Serializable {
 
     public void setSaleTransactions(List<SaleTransaction> saleTransactions) {
         this.saleTransactions = saleTransactions;
+    }
+
+    /**
+     * @return the birthday
+     */
+    public LocalDate getBirthday() {
+        return birthday;
+    }
+
+    /**
+     * @param birthday the birthday to set
+     */
+    public void setBirthday(LocalDate birthday) {
+        this.birthday = birthday;
+    }
+
+    /**
+     * @return the gender
+     */
+    public String getGender() {
+        return gender;
+    }
+
+    /**
+     * @param gender the gender to set
+     */
+    public void setGender(String gender) {
+        this.gender = gender;
     }
 }
