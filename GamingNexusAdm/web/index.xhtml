@@ -3,9 +3,23 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui">
+    <style>
+        ::placeholder {
+            color: white;
+            opacity: 1; /* Firefox */
+        }
+
+        :-ms-input-placeholder { /* Internet Explorer 10-11 */
+            color: white;
+        }
+
+        ::-ms-input-placeholder { /* Microsoft Edge */
+            color: white;
+        }
+    </style>
 
     <h:head>
-        <title>SystemAdmin Login</title>
+        <title>SystemAdmin</title>
         <h:outputStylesheet library="css" name="style.css"  />
     </h:head>
     <h:body>
@@ -24,64 +38,99 @@
                 </div>
 
                 <p:commandButton type="submit" class="btn" value="Login" process="@form" update="@form" actionListener="#{systemAdminLoginManagedBean.login(event)}"/>
-                <p:commandButton type="submit" class="btn"  value="Rerister" oncomplete="PF('dialogRegistration').show()" />
+                <!--                <p:commandButton type="submit" class="btn" id="register" value="Rerister" oncomplete="PF('dialogRegistration').show()" />-->
 
             </div>
 
         </h:form>
 
-        <p:dialog id="dialogRegistration" widgetVar="dialogRegistration" header="Registration" closable="ture" >
+        <p:dialog id="dialogRegistration" widgetVar="dialogRegistration" header="Registration"  >
 
             <h:form id="formRegistration">
 
                 <p:panelGrid>
 
+                    <p:messages id="messagesCreateNewSystemAdmin" redisplay="false" />
+
+
                     <p:row>
                         <p:column>
-                            <p:outputLabel for="username" value="Username: " style="font-weight: bold;" />      
+                            <p:outputLabel for="username" value="Username" style="font-weight: bold;"/>               
                         </p:column>
                         <p:column>
-                            <p:inputText id="username" value="#{systemAdminRegisterManagedBean.newSystemAdmin.username}" required="true" requiredMessage="Username is required" />
+                            <p:inputText id="username" value="#{systemAdminManagementManagedBean.newSystemAdmin.username}" placeholder="Username" required="true" requiredMessage="Username is required" />
                         </p:column>
+                        <p:column>
+                            <p:messages for ="username" />
+                        </p:column>     
                     </p:row>
+
                     <p:row>
                         <p:column>
-                            <p:outputLabel for="phonenumber" value="Phone Number: " style="font-weight: bold;" />      
+                            <p:outputLabel for="password" value="Password" style="font-weight: bold;"/>               
                         </p:column>
                         <p:column>
-                            <p:inputText id="phonenumber" value="#{systemAdminRegisterManagedBean.newSystemAdmin.phoneNumber}" required="true" requiredMessage="Phone Number is required"/>
+                            <p:inputText id="password" value="#{systemAdminManagementManagedBean.newSystemAdmin.password}" placeholder="Password" required="true" requiredMessage="Password is required" />
                         </p:column>
+                        <p:column>
+                            <p:messages for ="password" />
+                        </p:column>     
                     </p:row>
+
                     <p:row>
                         <p:column>
-                            <p:outputLabel for="email" value="Email: " style="font-weight: bold;" />      
+                            <p:outputLabel for="phoneNumber" value="phoneNumber" style="font-weight: bold;"/>               
                         </p:column>
                         <p:column>
-                            <p:inputText id="email" value="#{systemAdminRegisterManagedBean.newSystemAdmin.email}" required="true" requiredMessage="Email is required"/>
+                            <p:inputText id="phoneNumber" value="#{systemAdminManagementManagedBean.newSystemAdmin.phoneNumber}" placeholder="phoneNumber" />
                         </p:column>
+                        <p:column>
+                            <p:messages for ="phoneNumber" />
+                        </p:column>     
                     </p:row>
+
                     <p:row>
                         <p:column>
-                            <p:outputLabel for="country" value="Country " style="font-weight: bold;" />      
+                            <p:outputLabel for="address" value="address" style="font-weight: bold;"/>               
                         </p:column>
                         <p:column>
-                            <p:inputText id="country" value="#{systemAdminRegisterManagedBean.newSystemAdmin.country}" required="true" requiredMessage="Country is required"/>
+                            <p:inputText id="address" value="#{systemAdminManagementManagedBean.newSystemAdmin.address}" placeholder="address" />
                         </p:column>
+                        <p:column>
+                            <p:messages for ="address" />
+                        </p:column>     
                     </p:row>
+
                     <p:row>
                         <p:column>
-                            <p:outputLabel for="password" value="Password " style="font-weight: bold;" />      
+                            <p:outputLabel for="email" value="email" style="font-weight: bold;"/>               
                         </p:column>
                         <p:column>
-                            <p:inputText id="password" value="#{systemAdminRegisterManagedBean.newSystemAdmin.password}" required="true" requiredMessage="Password is required"/>
+                            <p:inputText id="email" value="#{systemAdminManagementManagedBean.newSystemAdmin.email}" placeholder="email" />
                         </p:column>
+                        <p:column>
+                            <p:messages for ="email" />
+                        </p:column>     
                     </p:row>
+
+                    <p:row>
+                        <p:column>
+                            <p:outputLabel for="country" value="country" style="font-weight: bold;"/>               
+                        </p:column>
+                        <p:column>
+                            <p:inputText id="country" value="#{systemAdminManagementManagedBean.newSystemAdmin.country}" placeholder="country" />
+                        </p:column>
+                        <p:column>
+                            <p:messages for ="country" />
+                        </p:column>     
+                    </p:row>
+
                 </p:panelGrid>
                 <div style="text-align: center; margin-top: 20px">
                     <p:commandButton type="reset" value="Clear" />&nbsp;
-                    <p:commandButton value="Register" actionListener="#{customerRegisterManagedBean.createNewCustomer}" oncomplete="PF('dialogRegistration').hide();" />
-                </div>
+                    <p:commandButton  value="Register"  actionListener="#{systemAdminManagementManagedBean.createNewSystemAdmin}" oncomplete="PF('dialogRegistration').hide();" />
 
+                </div>
             </h:form>
 
         </p:dialog>
