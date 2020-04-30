@@ -59,6 +59,20 @@ public class ProductSessionBean implements ProductSessionBeanLocal {
         return null;
     }
     
+    @Override
+    public List<Product> retrieveAllProducts()
+    {
+        Query query = em.createQuery("SELECT p FROM Product p ORDER BY p.productId");        
+        List<Product> productEntities = query.getResultList();
+        
+        for(Product productEntity:productEntities)
+        {
+            productEntity.getCategory();
+            productEntity.getTags().size();
+        }
+        
+        return productEntities;
+    }
 
     @Override
     public List<Product> retrieveProductByCategoryId(Long categoryId) {

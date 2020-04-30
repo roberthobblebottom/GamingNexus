@@ -18,6 +18,8 @@ import util.exception.ProductNotFoundException;
 public interface ProductSessionBeanLocal {
 
     public Product retrieveProductById(Long productId) throws ProductNotFoundException;
+    
+    public List<Product> retrieveAllProducts();
 
     public void deleteProduct(Product product);
 

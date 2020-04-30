@@ -42,7 +42,7 @@ public class SystemAdminLoginManagedBean {
             FacesContext.getCurrentInstance().getExternalContext().getSession(true);
             FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("isLogin", true);
             FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("currentSystemAdmin", currentSystemAdmin);
-            FacesContext.getCurrentInstance().getExternalContext().redirect(FacesContext.getCurrentInstance().getExternalContext().getRequestContextPath() + "/systemAdminOpeartion/home.xhtml?id=" + currentSystemAdmin.getUserId());
+            FacesContext.getCurrentInstance().getExternalContext().redirect(FacesContext.getCurrentInstance().getExternalContext().getRequestContextPath() + "/home.xhtml?id=" + currentSystemAdmin.getUserId());
         }
         catch(InvalidLoginCredentialException ex)
         {
