@@ -182,6 +182,7 @@ public abstract class User implements Serializable {
         } else {
             this.password = null;
         }
+        System.out.println(this.salt);
     }
 
     /**

@@ -25,7 +25,7 @@ import util.security.CryptographicHelper;
 
 /**
  *
- * @author chenli
+ * @author jin yichen
  */
 @Stateless
 public class CustomerSessionBean implements CustomerSessionBeanLocal {
