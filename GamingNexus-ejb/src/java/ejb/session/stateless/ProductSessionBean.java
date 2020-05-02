@@ -6,19 +6,28 @@
 package ejb.session.stateless;
 
 import com.sun.javafx.scene.control.skin.VirtualFlow;
+import entity.Category;
 import entity.Game;
 import entity.Hardware;
 import entity.OtherSoftware;
 import entity.Product;
+import entity.Tag;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Set;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.validation.ConstraintViolation;
+import util.exception.CategoryNotFoundException;
+import util.exception.InputDataValidationException;
+import util.exception.ProductNotFoundException;
+import util.exception.TagNotFoundException;
+import util.exception.UpdateProductException;
 
 /**
  *
@@ -27,6 +36,14 @@ import javax.persistence.Query;
 @Stateless
 public class ProductSessionBean implements ProductSessionBeanLocal {
 
+    @EJB(name = "TagSessionBeanLocal")
+    private TagSessionBeanLocal tagSessionBeanLocal;
+
+    @EJB(name = "CategorySessionBeanLocal")
+    private CategorySessionBeanLocal categorySessionBeanLocal;
+    
+    
+        
     @EJB
     private OtherSoftwareSessionBeanLocal otherSoftwareSessionBean;
 
@@ -58,19 +75,17 @@ public class ProductSessionBean implements ProductSessionBeanLocal {
         assert false : "Product must always be a child entity";
         return null;
     }
-    
+
     @Override
-    public List<Product> retrieveAllProducts()
-    {
-        Query query = em.createQuery("SELECT p FROM Product p ORDER BY p.productId");        
+    public List<Product> retrieveAllProducts() {
+        Query query = em.createQuery("SELECT p FROM Product p ORDER BY p.productId");
         List<Product> productEntities = query.getResultList();
-        
-        for(Product productEntity:productEntities)
-        {
+
+        for (Product productEntity : productEntities) {
             productEntity.getCategory();
             productEntity.getTags().size();
         }
-        
+
         return productEntities;
     }
 
@@ -79,7 +94,7 @@ public class ProductSessionBean implements ProductSessionBeanLocal {
         Query query = em.createQuery("SELECT p FROM Product p WHERE p.category.categoryId = :inCategoryId");
         query.setParameter("inCategoryId", categoryId);
         List<Product> products = query.getResultList();
-        
+
         return products;
     }
 
@@ -99,15 +114,15 @@ public class ProductSessionBean implements ProductSessionBeanLocal {
         for (Product product : productEntities) {
             if (product instanceof Game) {
 
-                this.lazyLoadGame((Game)product);
+                this.lazyLoadGame((Game) product);
 
             } else if (product instanceof Hardware) {
 
-                this.lazyLoadHardware((Hardware)product);
+                this.lazyLoadHardware((Hardware) product);
 
             } else if (product instanceof OtherSoftware) {
 
-                this.lazyLoadOtherSoftware((OtherSoftware)product);
+                this.lazyLoadOtherSoftware((OtherSoftware) product);
 
             }
         }
@@ -161,6 +176,47 @@ public class ProductSessionBean implements ProductSessionBeanLocal {
                 }
             });
             return productEntities;
+        }
+    }
+
+    @Override
+    public void updateProduct(Product product, Long categoryId, List<Long> tagIds) throws ProductNotFoundException, CategoryNotFoundException, TagNotFoundException, UpdateProductException {
+        if (product != null && product.getProductId() != null) {
+
+            Product productToUpdate = retrieveProductById(product.getProductId());
+
+            if (categoryId != null && (!productToUpdate.getCategory().getCategoryId().equals(categoryId))) {
+                Category categoryToUpdate = categorySessionBeanLocal.retrieveCategoryByCategoryId(categoryId);
+
+                if (!categoryToUpdate.getSubCategories().isEmpty()) {
+                    throw new UpdateProductException("Selected category for the new product is not a leaf category");
+                }
+
+                productToUpdate.setCategory(categoryToUpdate);
+            }
+            
+            if(tagIds != null)
+            {
+                for (Tag tag : productToUpdate.getNormalTags()) {
+                    tag.getProducts().remove(productToUpdate);
+                }
+                
+                productToUpdate.getTags().clear();
+
+                for (Long tagId : tagIds) {
+                    Tag tag = tagSessionBeanLocal.retrieveTagByTagId(tagId);
+                    productToUpdate.addTag(tag);
+                }
+            } else {
+                for (Tag tag : productToUpdate.getNormalTags()) {
+                    tag.getProducts().remove(productToUpdate);
+                }
+                productToUpdate.getTags().clear();
+            }
+
+
+        } else {
+            throw new ProductNotFoundException("Product ID not provided for product to be updated");
         }
     }
 

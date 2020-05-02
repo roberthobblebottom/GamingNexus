@@ -104,16 +104,16 @@ public class CustomerSessionBean implements CustomerSessionBeanLocal {
 
     @Override
     public void updateCustomer(Customer customer) throws CustomerNotFoundException {
-        if (customer != null && customer.getUserId() != null) {
+        if (customer != null && customer.getUsername()!= null) {
 
-            Customer customerToUpdate = retrieveCustomerById(customer.getUserId());
+            Customer customerToUpdate = retrieveCustomerByUsername(customer.getUsername());
             
             customerToUpdate.setAddress(customer.getAddress());
             customerToUpdate.setPhoneNumber(customer.getPhoneNumber());
             customerToUpdate.setEmail(customer.getEmail());
             customerToUpdate.setCountry(customer.getCountry());
-            customerToUpdate.setProfilePictureURL(customer.getProfilePictureURL());
-            customerToUpdate.setPassword(CryptographicHelper.getInstance().byteArrayToHexString(CryptographicHelper.getInstance().doMD5Hashing(customer.getPassword() + customerToUpdate.getSalt())));
+            customerToUpdate.setBirthday(customer.getBirthday());
+            customerToUpdate.setGender(customer.getGender());
             
         } else {
             throw new CustomerNotFoundException("Customer Not Found");
