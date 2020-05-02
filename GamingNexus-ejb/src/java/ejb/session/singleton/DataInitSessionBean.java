@@ -1368,7 +1368,7 @@ public class DataInitSessionBean {
                     new BigDecimal("74.90"));
             saleTransactionLineItems.add(saleTransactionLineItem);
             newSaleTransactionId = saleTransactionSessionBeanLocal.createNewSaleTransaction(customer1.getUserId(), 
-                    new SaleTransaction(3, 3, new BigDecimal("84.90"), LocalDateTime.of(2020,Month.MARCH,3,23,8,42), saleTransactionLineItems, false));
+                    new SaleTransaction(3, 3, new BigDecimal("84.90"), LocalDateTime.of(2020,Month.APRIL,3,23,8,42), saleTransactionLineItems, false));
 
             
             saleTransactionLineItems = new ArrayList<>();
@@ -1376,7 +1376,7 @@ public class DataInitSessionBean {
                     new BigDecimal("40.00"));
             saleTransactionLineItems.add(saleTransactionLineItem);
             Long newSaleTransactionId3 = saleTransactionSessionBeanLocal.createNewSaleTransaction(customer1.getUserId(), 
-                    new SaleTransaction(1, 1, new BigDecimal("40.00"), LocalDateTime.of(2020,Month.MARCH,23,17,30,50), saleTransactionLineItems, false));
+                    new SaleTransaction(1, 1, new BigDecimal("40.00"), LocalDateTime.of(2020,Month.FEBRUARY,23,17,30,50), saleTransactionLineItems, false));
             
             saleTransactionLineItems = new ArrayList<>();
             saleTransactionLineItem = new SaleTransactionLineItem(gtaV, 1, new BigDecimal("40.00"), 

@@ -6,6 +6,9 @@
 package ejb.session.stateless;
 
 import entity.SaleTransaction;
+import java.math.BigDecimal;
+import java.time.YearMonth;
+import java.util.HashMap;
 import java.util.List;
 import javax.ejb.Local;
 import util.exception.CreateNewSaleTransactionException;
@@ -32,5 +35,7 @@ public interface SaleTransactionSessionBeanLocal {
     public Long createNewSaleTransaction(Long customerId, SaleTransaction newSaleTransaction) throws CustomerNotFoundException, CreateNewSaleTransactionException;
 
     public List<SaleTransaction> retrieveAllSaleTransactionByUsernameAndPassword(String username, String password) throws InvalidLoginCredentialException;
+
+    public HashMap<YearMonth, BigDecimal> calculateRevenueByMonth();
 }
 

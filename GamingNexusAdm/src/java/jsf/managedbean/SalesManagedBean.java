@@ -8,6 +8,10 @@ package jsf.managedbean;
 import ejb.session.stateless.SaleTransactionSessionBeanLocal;
 import entity.SaleTransaction;
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.time.YearMonth;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -29,6 +33,8 @@ public class SalesManagedBean {
 
     private List<SaleTransaction> saleTransactions;
     private SaleTransaction saleTransactionToView;
+    private HashMap<YearMonth, BigDecimal> revenueByMonth;
+    private List<YearMonth> keyList;
     
     /**
      * Creates a new instance of SalesManagedBean
@@ -40,6 +46,8 @@ public class SalesManagedBean {
     public void postConstruct(){
         saleTransactions = saleTransactionSessionBeanLocal.retrieveAllSaleTransactions();
         saleTransactionToView = new SaleTransaction();
+        revenueByMonth = saleTransactionSessionBeanLocal.calculateRevenueByMonth();
+        setKeyList(new ArrayList<YearMonth>(revenueByMonth.keySet()));
     }
     
     public void viewSaleTransactionDetails(ActionEvent event) throws IOException
@@ -80,6 +88,34 @@ public class SalesManagedBean {
      */
     public void setSaleTransactionToView(SaleTransaction saleTransactionToView) {
         this.saleTransactionToView = saleTransactionToView;
+    }
+
+    /**
+     * @return the revenueByMonth
+     */
+    public HashMap<YearMonth, BigDecimal> getRevenueByMonth() {
+        return revenueByMonth;
+    }
+
+    /**
+     * @param revenueByMonth the revenueByMonth to set
+     */
+    public void setRevenueByMonth(HashMap<YearMonth, BigDecimal> revenueByMonth) {
+        this.revenueByMonth = revenueByMonth;
+    }
+
+    /**
+     * @return the keyList
+     */
+    public List<YearMonth> getKeyList() {
+        return keyList;
+    }
+
+    /**
+     * @param keyList the keyList to set
+     */
+    public void setKeyList(List<YearMonth> keyList) {
+        this.keyList = keyList;
     }
     
 }
