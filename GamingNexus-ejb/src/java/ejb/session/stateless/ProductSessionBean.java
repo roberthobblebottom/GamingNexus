@@ -201,7 +201,7 @@ public class ProductSessionBean implements ProductSessionBeanLocal {
                     tag.getProducts().remove(productToUpdate);
                 }
                 
-                productToUpdate.getTags().clear();
+                productToUpdate.clearNormalTags();
 
                 for (Long tagId : tagIds) {
                     Tag tag = tagSessionBeanLocal.retrieveTagByTagId(tagId);
@@ -211,7 +211,10 @@ public class ProductSessionBean implements ProductSessionBeanLocal {
                 for (Tag tag : productToUpdate.getNormalTags()) {
                     tag.getProducts().remove(productToUpdate);
                 }
-                productToUpdate.getTags().clear();
+                
+                productToUpdate.clearNormalTags();
+                
+                
             }
 
 
