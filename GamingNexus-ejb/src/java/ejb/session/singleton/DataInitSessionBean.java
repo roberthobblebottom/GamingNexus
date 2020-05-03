@@ -120,12 +120,24 @@ public class DataInitSessionBean {
             
             SystemAdmin systemAdmin = new SystemAdmin("123456", "addr 1", "email@hotmail.com", "Singapore","admin1", "password");
             systemAdminSessionBeanLocal.createNewSystemAdmin(systemAdmin);
+            
+                        //Customer
+            Customer customer1 = customerSessionBeanlocal.createCustomer(new Customer("7654321",
+                    "Singapore", "customer1@gmail.com", "Singapore", "customer1", "password", "2003-09-20", "male"));
+            Customer customer2 = customerSessionBeanlocal.createCustomer(new Customer("76543210",
+                    "Singapore", "customer2@gmail.com", "Singapore", "customer2", "password", "1995-04-12", "male"));
+            Customer customer3 = customerSessionBeanlocal.createCustomer(new Customer("765432101",
+                    "Singapore", "customer3@gmail.com", "Singapore", "customer3", "password", "1997-11-11", "female"));
+            Customer customer4 = customerSessionBeanlocal.createCustomer(new Customer("765432102",
+                    "Singapore", "customer4@gmail.com", "Singapore", "customer4", "password", "2004-07-20", "female"));
+            Customer customer5 = customerSessionBeanlocal.createCustomer(new Customer("765432103",
+                    "Singapore", "customer5@gmail.com", "Singapore", "customer5", "password", "2007-06-20", "female"));
 
             Category categoryEntitySoftwareGame = categorySessionBeanLocal
-                    .createNewCategoryEntity(new Category("SoftwareGame", "Game"), null);
+                    .createNewCategoryEntity(new Category("Game", "Game"), null);
 
             Category categoryEntitySoftwareTool = categorySessionBeanLocal
-                    .createNewCategoryEntity(new Category("SoftwareTool", "SoftwareTool"), null);
+                    .createNewCategoryEntity(new Category("Software", "Software"), null);
             Category categoryEntityAnimationModeling = categorySessionBeanLocal
                     .createNewCategoryEntity(new Category("Animation & Modeling", "Animation & Modeling"), categoryEntitySoftwareTool.getCategoryId());
             Category categoryEntityAudio = categorySessionBeanLocal
@@ -1146,19 +1158,6 @@ public class DataInitSessionBean {
                     categoryid, tags, company1.getUserId());
             company1Products.add(rtx2080);
 
-            //Customer
-            Customer customer1 = customerSessionBeanlocal.createCustomer(new Customer("7654321",
-                    "Singapore", "customer1@gmail.com", "Singapore", "customer1", "password", LocalDate.parse("2003-09-20", formatter), "male"));
-            Customer customer2 = customerSessionBeanlocal.createCustomer(new Customer("76543210",
-                    "Singapore", "customer2@gmail.com", "Singapore", "customer2", "password", LocalDate.parse("1995-04-12", formatter), "male"));
-            Customer customer3 = customerSessionBeanlocal.createCustomer(new Customer("765432101",
-                    "Singapore", "customer3@gmail.com", "Singapore", "customer3", "password", LocalDate.parse("1997-11-11", formatter), "female"));
-            Customer customer4 = customerSessionBeanlocal.createCustomer(new Customer("765432102",
-                    "Singapore", "customer4@gmail.com", "Singapore", "customer4", "password", LocalDate.parse("2004-07-20", formatter), "female"));
-            Customer customer5 = customerSessionBeanlocal.createCustomer(new Customer("765432103",
-                    "Singapore", "customer5@gmail.com", "Singapore", "customer5", "password", LocalDate.parse("2007-06-20", formatter), "female"));
-
-            
             //Software
             name = "Fences";
             releaseDate = LocalDate.parse("2017-03-30", formatter);

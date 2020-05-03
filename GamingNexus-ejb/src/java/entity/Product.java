@@ -278,6 +278,24 @@ public abstract class Product implements Serializable {
     public void setTags(List<Tag> tags) {
         this.tags = tags;
     }
+    
+    public List<Tag> getNormalTags() {
+        List<Tag> normalTags = new ArrayList<>();
+        for(Tag tag: tags) {
+            if(tag.isIsGameTag() == false) {
+                normalTags.add(tag);
+            }
+        }
+        return normalTags;      
+    }
+    
+    public void clearNormalTags() {
+        for(Tag tag: tags) {
+            if(tag.isIsGameTag() == false) {
+                this.tags.remove(tag);
+            }
+        }
+    }
 
     /**
      * @return the promotions

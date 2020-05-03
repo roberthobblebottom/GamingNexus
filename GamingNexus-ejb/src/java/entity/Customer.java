@@ -8,6 +8,7 @@ package entity;
 import java.io.Serializable;
 import java.sql.Date;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Entity;
@@ -24,17 +25,17 @@ public class Customer extends User implements Serializable {
     @Size(min = 1, max = 100)
     private String currentGamePlaying;
     private boolean isBanned = false;
-   // @Future
+    // @Future
     private Date unbanDate;
     @Size(min = 5, max = 100)
     private String securityQuestion;
     @Size(min = 5, max = 100)
     private String securityAnswer;
-    
+
     private LocalDate birthday;
-    
+
     private String gender;
-    
+
     @OneToMany(mappedBy = "customer")
     private List<OwnedItem> ownedItems;
     @OneToMany(mappedBy = "customer")
@@ -47,7 +48,7 @@ public class Customer extends User implements Serializable {
     private List<Chat> chats;
     @OneToMany(mappedBy = "customer")
     private List<Deliverables> listOfDeliverables;
-    
+
     @OneToMany(mappedBy = "customer")
     private List<SaleTransaction> saleTransactions;
 
@@ -58,25 +59,25 @@ public class Customer extends User implements Serializable {
         otherCustomers = new ArrayList<>();
         gameAccounts = new ArrayList<>();
         chats = new ArrayList<>();
-        listOfDeliverables = new ArrayList<>();   
+        listOfDeliverables = new ArrayList<>();
         saleTransactions = new ArrayList<>();
     }
 
-    public Customer(String phoneNumber, String address, String email, String country, String username, String password, LocalDate birthday, String gender) {
+    public Customer(String phoneNumber, String address, String email, String country, String username, String password, String birthday, String gender) {
         super(phoneNumber, address, email, country, username, password);
-        this.birthday = birthday;
+
+        this.birthday = LocalDate.parse(birthday);
         this.gender = gender;
         ownedItems = new ArrayList<>();
         ratings = new ArrayList<>();
         otherCustomers = new ArrayList<>();
         gameAccounts = new ArrayList<>();
         chats = new ArrayList<>();
-        listOfDeliverables = new ArrayList<>(); 
+        listOfDeliverables = new ArrayList<>();
         saleTransactions = new ArrayList<>();
     }
 
-    
-    public Customer(String currentGamePlaying, Date unbanDate, String securityQuestion, String securityAnswer, String phoneNumber, 
+    public Customer(String currentGamePlaying, Date unbanDate, String securityQuestion, String securityAnswer, String phoneNumber,
             String address, String email, String country, String username, String password) {
         super(phoneNumber, address, email, country, username, password);
         this.currentGamePlaying = currentGamePlaying;
@@ -85,10 +86,6 @@ public class Customer extends User implements Serializable {
         this.securityAnswer = securityAnswer;
     }
 
-    
- 
-
- 
     /**
      * @return the currentGamePlaying
      */

@@ -63,7 +63,9 @@ public class CustomerResource {
             Customer customer = lookupCustomerSessionBeanLocal().customerLogin(username, password);
 
             System.out.println("********** CustomerResource.customerLogin(): customer " + customer.getUsername() + " login remotely via web service");
+            customer.getChats().clear();
             customer.getSaleTransactions().clear();
+            customer.getListOfDeliverables().clear();
             CustomerLoginRsp customerLoginRsp = new CustomerLoginRsp(customer);
             return Response.status(Status.OK).entity(customerLoginRsp).build();
         } catch (InvalidLoginCredentialException ex) {

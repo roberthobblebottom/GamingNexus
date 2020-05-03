@@ -33,6 +33,8 @@ public interface TagSessionBeanLocal {
     public void deleteTag(Long tagId) throws TagNotFoundException, DeleteTagException;
 
     public List<Tag> retrieveAllGameTags();
+    
+    public List<Tag> retrieveAllNormalTags();
 
     
 }

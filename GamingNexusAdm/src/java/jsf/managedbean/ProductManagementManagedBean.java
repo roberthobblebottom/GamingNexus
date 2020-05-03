@@ -54,8 +54,10 @@ public class ProductManagementManagedBean implements Serializable{
     private List<Long> tagIdsNew;
     private List<Category> categoryEntities;
     private List<Tag> tagEntities;    
+    private List<Tag> normalTagEntities;
     
     private Product selectedProductEntityToUpdate;
+    private Product productEntityToView;
     private Long categoryIdUpdate;
     private List<Long> tagIdsUpdate;
   
@@ -71,6 +73,7 @@ public class ProductManagementManagedBean implements Serializable{
         productEntities = productSessionBeanLocal.retrieveAllProducts();
         categoryEntities = categorySessionBeanLocal.retrieveAllLeafCategories();
         tagEntities = tagSessionBeanLocal.retrieveAllTags();
+        normalTagEntities = tagSessionBeanLocal.retrieveAllNormalTags();
     }
     
     
@@ -80,6 +83,54 @@ public class ProductManagementManagedBean implements Serializable{
         Long productIdToView = (Long)event.getComponent().getAttributes().get("productId");
         FacesContext.getCurrentInstance().getExternalContext().getFlash().put("productIdToView", productIdToView);
         FacesContext.getCurrentInstance().getExternalContext().redirect("viewProductDetails.xhtml");
+    }
+    
+    
+    public void doUpdateProduct(ActionEvent event)
+    {
+        selectedProductEntityToUpdate = (Product)event.getComponent().getAttributes().get("productEntityToUpdate");
+        
+        categoryIdUpdate = selectedProductEntityToUpdate.getCategory().getCategoryId();
+        tagIdsUpdate = new ArrayList<>();
+
+        for(Tag tag: selectedProductEntityToUpdate.getNormalTags())
+        {
+            tagIdsUpdate.add(tag.getTagId());
+        }
+    }
+    
+    
+
+    
+    
+    public void updateProduct(ActionEvent event)
+    {        
+
+        try
+        {
+            productSessionBeanLocal.
+                    updateProduct(selectedProductEntityToUpdate, selectedProductEntityToUpdate.getCategory().getCategoryId(), tagIdsUpdate);
+                             
+            selectedProductEntityToUpdate.clearNormalTags();
+            
+            for(Tag te: normalTagEntities)
+            {
+                if(tagIdsUpdate.contains(te.getTagId()))
+                {
+                    selectedProductEntityToUpdate.getTags().add(te);
+                }                
+            }
+
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Product updated successfully", null));
+        }
+        catch(ProductNotFoundException ex)
+        {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "An error has occurred while updating product: " + ex.getMessage(), null));
+        }
+        catch(Exception ex)
+        {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "An unexpected error has occurred: " + ex.getMessage(), null));
+        }
     }
     
     
@@ -163,5 +214,23 @@ public class ProductManagementManagedBean implements Serializable{
     public void setTagIdsUpdate(List<Long> tagIdsUpdate) {
         this.tagIdsUpdate = tagIdsUpdate;
     } 
+
+    public Product getProductEntityToView() {
+        return productEntityToView;
+    }
+
+    public void setProductEntityToView(Product productEntityToView) {
+        this.productEntityToView = productEntityToView;
+    }
+
+    public List<Tag> getNormalTagEntities() {
+        return normalTagEntities;
+    }
+
+    public void setNormalTagEntities(List<Tag> normalTagEntities) {
+        this.normalTagEntities = normalTagEntities;
+    }
+
+
     
 }
