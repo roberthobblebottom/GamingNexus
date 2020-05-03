@@ -60,7 +60,7 @@
                     </p:column>
 
                     <p:column headerText="Action" >
-                        <p:commandButton update="formViewSaleTransaction" oncomplete="PF('dialogViewSaleTransaction').show()" icon="ui-icon-document" title="View">
+                        <p:commandButton update="formViewSaleTransaction" oncomplete="PF('dialogViewSaleTransaction').show()" icon="pi pi-eye" title="View">
                             <f:setPropertyActionListener value="#{saleTransaction}" target="#{salesManagedBean.saleTransactionToView}" />
                         </p:commandButton>       
                     </p:column>

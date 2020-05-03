@@ -8,7 +8,7 @@
                 xmlns:p="http://primefaces.org/ui">
 
     <ui:define name="content">
-
+        
         <ez:Breadcrumb pageName="productManagement" />
 
         <div>
@@ -63,10 +63,10 @@
 
 
                     <p:column headerText="Action" >
-                        <p:commandButton update="formViewProduct" oncomplete="PF('dialogViewProduct').show()" icon="ui-icon-document" title="View">
+                        <p:commandButton update="formViewProduct" oncomplete="PF('dialogViewProduct').show()"  icon="pi pi-eye" title="View">
                             <f:setPropertyActionListener value="#{productEntity}" target="#{productManagementManagedBean.productEntityToView}" />
                         </p:commandButton>       
-                        <p:commandButton actionListener="#{productManagementManagedBean.doUpdateProduct}" update="formUpdateProduct" oncomplete="PF('dialogUpdateProduct').show()" icon="ui-icon-pencil" title="Update">
+                        <p:commandButton actionListener="#{productManagementManagedBean.doUpdateProduct}" update="formUpdateProduct" oncomplete="PF('dialogUpdateProduct').show()" icon="pi pi-cog" title="Update">
                             <f:attribute name="productEntityToUpdate" value="#{productEntity}" />
                         </p:commandButton>
                     </p:column>

@@ -8,6 +8,7 @@ package jsf.managedbean;
 import ejb.session.stateless.SaleTransactionSessionBeanLocal;
 import entity.SaleTransaction;
 import java.io.IOException;
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.YearMonth;
 import java.util.ArrayList;
@@ -19,14 +20,15 @@ import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
+import javax.faces.view.ViewScoped;
 
 /**
  *
  * @author 63216
  */
 @Named(value = "salesManagedBean")
-@RequestScoped
-public class SalesManagedBean {
+@ViewScoped
+public class SalesManagedBean implements Serializable{
 
     @EJB(name = "SaleTransactionSessionBeanLocal")
     private SaleTransactionSessionBeanLocal saleTransactionSessionBeanLocal;
@@ -56,11 +58,6 @@ public class SalesManagedBean {
         FacesContext.getCurrentInstance().getExternalContext().getFlash().put("saleTransactionIdToView", saleTransactionIdToView);
         FacesContext.getCurrentInstance().getExternalContext().redirect("viewSaleTransactionDetails.xhtml");
     }
-    
-    
-    
-    
-    
     
     /**
      * @return the saleTransactions

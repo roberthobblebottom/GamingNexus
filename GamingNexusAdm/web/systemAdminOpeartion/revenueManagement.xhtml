@@ -19,19 +19,23 @@
 
                 <h:dataTable value="#{salesManagedBean.keyList}" var="key"> 
                     <h:column> 
-                        Date: #{key}
+                        Month: #{key}
                     </h:column> 
                     <h:column> 
                         Revenue: #{salesManagedBean.revenueByMonth[key]}
                     </h:column> 
                 </h:dataTable>
-                
+
             </h:form>
-<!--
-            <c:forEach items="#{salesManagedBean.revenueByMonth}" var="entry">
-                <li>Date: #{entry.key}, Revenue: #{entry.value}</li>
-            </c:forEach>
--->
+
+            <br></br>
+            <p:chart type="line" model="#{revenueLineChart.lineModel}" style="height:600px; width: 1400px"/>
+
+            <!--
+                        <c:forEach items="#{salesManagedBean.revenueByMonth}" var="entry">
+                            <li>Date: #{entry.key}, Revenue: #{entry.value}</li>
+                        </c:forEach>
+            -->
         </div>
 
     </ui:define>
