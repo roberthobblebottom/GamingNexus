@@ -104,7 +104,7 @@ public class CategorySessionBean implements CategorySessionBeanLocal {
     
     @Override
     public List<Category> retrieveAllSoftwareToolCategories() {
-        Query query = em.createQuery("SELECT c FROM Category c WHERE c.parentCategory.name = 'SoftwareTool' ORDER BY c.name ASC");
+        Query query = em.createQuery("SELECT c FROM Category c WHERE c.parentCategory.name = 'Software' ORDER BY c.name ASC");
         List<Category> leafCategoryEntities = query.getResultList();
 
         for (Category leafCategoryEntity : leafCategoryEntities) {
