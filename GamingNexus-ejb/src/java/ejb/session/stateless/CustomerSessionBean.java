@@ -5,7 +5,6 @@
  */
 package ejb.session.stateless;
 
-import entity.Company;
 import entity.Customer;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -15,17 +14,15 @@ import javax.persistence.NonUniqueResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceException;
 import javax.persistence.Query;
-import util.exception.CompanyNotFoundException;
 import util.exception.CustomerNotFoundException;
 import util.exception.CustomerUsernameExistException;
 import util.exception.InvalidLoginCredentialException;
 import util.exception.UnknownPersistenceException;
-import util.exception.UpdateCustomerException;
 import util.security.CryptographicHelper;
 
 /**
  *
- * @author chenli
+ * @author jin yichen
  */
 @Stateless
 public class CustomerSessionBean implements CustomerSessionBeanLocal {

@@ -22,12 +22,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
-import util.exception.CreateNewProductException;
-import util.exception.DeleteProductException;
-import util.exception.InputDataValidationException;
 import util.exception.ProductNotFoundException;
-import util.exception.ProductSkuCodeExistException;
-import util.exception.UnknownPersistenceException;
 
 /**
  *

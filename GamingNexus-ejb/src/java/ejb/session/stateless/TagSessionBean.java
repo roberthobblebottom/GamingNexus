@@ -103,9 +103,9 @@ public class TagSessionBean implements TagSessionBeanLocal {
         if (tagEntity.getTagId() != null) {
             Tag tag = retrieveTagByTagId(tagEntity.getTagId());
 
-            Query query = em.createQuery("SELECT t FROM Tag t WHERE t.tagName = :inName AND t.tagID <> :inTagID");
+            Query query = em.createQuery("SELECT t FROM Tag t WHERE t.tagName = :inName AND t.tagId <> :inTagId");
             query.setParameter("inName", tag.getTagName());
-            query.setParameter("inTagID", tag.getTagId());
+            query.setParameter("inTagId", tag.getTagId());
 
             if (!query.getResultList().isEmpty()) {
                 throw new UpdateTagException("The name of the tag to be updated is duplicated");

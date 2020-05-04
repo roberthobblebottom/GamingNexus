@@ -5,7 +5,6 @@
  */
 package ejb.session.stateless;
 
-import com.sun.javafx.scene.control.skin.VirtualFlow;
 import entity.Category;
 import entity.Game;
 import entity.Hardware;
@@ -16,22 +15,19 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Set;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-import javax.validation.ConstraintViolation;
 import util.exception.CategoryNotFoundException;
-import util.exception.InputDataValidationException;
 import util.exception.ProductNotFoundException;
 import util.exception.TagNotFoundException;
 import util.exception.UpdateProductException;
 
 /**
  *
- * @author yangxi
+ * @author yangxi 
  */
 @Stateless
 public class ProductSessionBean implements ProductSessionBeanLocal {

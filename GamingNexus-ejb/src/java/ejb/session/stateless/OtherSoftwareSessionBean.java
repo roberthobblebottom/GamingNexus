@@ -20,7 +20,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceException;
 import javax.persistence.Query;
-import util.exception.CategoryNotFoundException;
+import util.exception.CategoryNotFoundException; 
 import util.exception.CompanyNotFoundException;
 import util.exception.CreateNewProductException;
 import util.exception.InputDataValidationException;

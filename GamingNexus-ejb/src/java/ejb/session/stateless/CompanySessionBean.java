@@ -18,7 +18,6 @@ import util.exception.CompanyNotFoundException;
 import util.exception.UnknownPersistenceException;
 import util.exception.CompanyUsernameExistException;
 import util.exception.InvalidLoginCredentialException;
-import util.exception.SystemAdminNotFoundException;
 import util.security.CryptographicHelper;
 
 /**

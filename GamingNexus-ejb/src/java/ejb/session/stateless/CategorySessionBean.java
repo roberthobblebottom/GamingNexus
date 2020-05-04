@@ -5,6 +5,7 @@
  */
 package ejb.session.stateless;
 
+
 import entity.Category;
 import java.util.List;
 import javax.ejb.Stateless;

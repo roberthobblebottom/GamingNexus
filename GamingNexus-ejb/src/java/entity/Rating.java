@@ -11,9 +11,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
@@ -23,7 +21,7 @@ import javax.validation.constraints.Size;
 
 /**
  *
- * @author root
+ * @author jin yichen
  */
 @Entity
 public class Rating implements Serializable {
@@ -31,7 +29,7 @@ public class Rating implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long ratingID;
+    private Long ratingId;
     @NotNull
     @Min(0)
     @Max(5)
@@ -62,29 +60,29 @@ public class Rating implements Serializable {
         this.customer = customer;
     }
 
-    public Long getRatingID() {
-        return ratingID;
+    public Long getRatingId() {
+        return ratingId;
     }
 
-    public void setRatingID(Long ratingID) {
-        this.ratingID = ratingID;
+    public void setRatingId(Long ratingId) {
+        this.ratingId = ratingId;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (ratingID != null ? ratingID.hashCode() : 0);
+        hash += (ratingId != null ? ratingId.hashCode() : 0);
         return hash;
     }
 
     @Override
     public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the ratingID fields are not set
+        // TODO: Warning - this method won't work in the case the ratingId fields are not set
         if (!(object instanceof Rating)) {
             return false;
         }
         Rating other = (Rating) object;
-        if ((this.ratingID == null && other.ratingID != null) || (this.ratingID != null && !this.ratingID.equals(other.ratingID))) {
+        if ((this.ratingId == null && other.ratingId != null) || (this.ratingId != null && !this.ratingId.equals(other.ratingId))) {
             return false;
         }
         return true;
@@ -92,7 +90,7 @@ public class Rating implements Serializable {
 
     @Override
     public String toString() {
-        return "ejb.entity.Rating[ id=" + ratingID + " ]";
+        return "ejb.entity.Rating[ id=" + ratingId + " ]";
     }
 
     /**

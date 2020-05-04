@@ -7,7 +7,6 @@ package ejb.session.stateless;
 
 import entity.Category;
 import entity.Company;
-import entity.Game;
 import entity.Hardware;
 import entity.Product;
 import entity.Tag;

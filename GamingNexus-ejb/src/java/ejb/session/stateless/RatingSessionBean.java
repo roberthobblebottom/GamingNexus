@@ -91,7 +91,7 @@ public class RatingSessionBean implements RatingSessionBeanLocal {
     public void updateRating(Rating rating) throws RatingNotFoundException {
         if (rating != null && rating.getCustomer()!= null) {
 
-            Rating ratingToUpdate = retrieveRatingByRatingId(rating.getRatingID());
+            Rating ratingToUpdate = retrieveRatingByRatingId(rating.getRatingId());
             
             ratingToUpdate.setRating(rating.getRating());
             ratingToUpdate.setReview(rating.getReview());
