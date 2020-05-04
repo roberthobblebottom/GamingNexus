@@ -410,7 +410,7 @@ public class DataInitSessionBean {
             parentAdvisory = false;
             averageRating = 81;
             sales = 645334;
-            price = 81.00;
+            price = 40.00;
             description = "The little spirit Ori is no stranger to peril, but when a fateful flight puts the owlet Ku in harm’s way, it will take more than bravery to bring a family back together, heal a broken land, and discover Ori’s true destiny. From the creators of the acclaimed action-platformer Ori and the Blind Forest comes the highly anticipated sequel.";
             headerImage = "https://steamcdn-a.akamaihd.net/steam/apps/1057090/header.jpg?t=1585866525";
             computerRequirements = "Minimum:OS: Windows 7 64bit Processor: Intel Core i3 or similar";
@@ -629,7 +629,7 @@ public class DataInitSessionBean {
             parentAdvisory = false;
             averageRating = 79;
             sales = 7621102;
-            price = 5.25;
+            price = 5.00;
             description = "Enlist in an intense brand of Axis vs. Allied teamplay set in the WWII European Theatre of Operations. Players assume the role of light/assault/heavy infantry sniper or machine-gunner class each with a unique arsenal of historical weaponry at their disposal. Missions are based on key historical operations. And as war rages players must work together with their squad to accomplish a variety of mission-specific objectives.";
             headerImage = "http://cdn.akamai.steamstatic.com/steam/apps/30/header.jpg?t=1447350812";
             computerRequirements = "Minimum: 500 mhz processor 96mb ram 16mb video card Windows XP Mouse Keyboard Internet ConnectionRecommended: 800 mhz processor 128mb ram 32mb+ video card Windows XP Mouse Keyboard Internet Connection";
@@ -781,7 +781,7 @@ public class DataInitSessionBean {
             parentAdvisory = true;
             averageRating = 90;
             sales = 1378660;
-            price = 59.99;
+            price = 60.00;
             description = "Treyarch developer of the two most-played games in Call of Duty(r) history returns with Call of Duty(r): Black Ops III. For the first time with three-years of development the revered award-winning studio has created its first title for next-gen hardware in the critically acclaimed Black Ops series. Welcome to Call of Duty: Black Ops 3 a dark twisted future where a new breed of Black Ops soldier emerges and the lines are blurred between our own humanity and the technology we created to stay ahead in a world where cutting-edge military robotics define warfare. Call of Duty: Black Ops 3 combines three unique game modes: Campaign Multiplayer and Zombies providing fans with the deepest and most ambitious Call of Duty ever. The Campaign has been designed as a co-op game that can be played with up to 4 players online or as a solo cinematic thrill-ride. Multiplayer will be the franchises deepest most rewarding and most engaging to date with new ways to rank up customize and gear up for battle. And Zombies delivers an all-new mind-blowing experience with its own dedicated narrative. Call of Duty: Black Ops 3 can be played entirely online and for the first time each of the offerings has its own unique player XP and progression systems. The title ushers in an unprecedented level of innovation including jaw-dropping environments never before experienced weaponry and abilities and the introduction of a new improved fluid movement system. All of this is brought to life by advanced technology custom crafted for this title including new AI and animation systems and graphics that redefine the standards Call of Duty fans have come to expect from the critically-acclaimed series with cutting edge lighting systems and visual effects.INTRODUCING A NEW ERA OF BLACK OPS:Call of Duty: Black Ops 3 deploys its players into a future where bio-technology has enabled a new breed of Black Ops soldier. Players are now always on and always connected to the intelligence grid and their fellow operatives during battle. In a world more divided than ever this elite squad consists of men and women who have enhanced their combat capabilities to fight faster stronger and smarter. Every soldier has to make difficult decisions and visit dark places in this engaging gritty narrative.A CALL OF DUTY CAMPAIGN UNLIKE ANYTHING BEFORE IT:Treyarch elevates the Call of Duty social gaming experience by delivering a campaign with the ability to play cooperatively with up to four players online using the same battle-tested network infrastructure and social systems that support its world-class Multiplayer and Zombies game modes. Designed for co-op and re-playability players encounter all the epic cinematic gameplay moments Call of Duty is known for delivering as well as new open-area arena-style gameplay elements designed to allow players to approach the game with a different strategy each time they play. And now every player is completely customizable: from weapons and loadouts to abilities and outfits all with full progression systems and a personalized armory to show off accomplishments providing a constantly-evolving campaign experience.PREPARE FOR A LEVELED-UP MULTIPLAYER:With Black Ops 3 Treyarch premieres a new momentum-based chained-movement system allowing players to fluidly move through the environment with finesse using controlled thrust jumps slides and mantling abilities in a multitude of combinations all while maintaining complete control over your weapon at all times. Maps are designed from the ground-up for the new movement system allowing players to be successful with traditional movement as well as advanced tactics and maneuvers. Black Ops 3 multiplayer also introduces the new Specialist character system which allows players to rank up and master each specific characters battle-hardened capabilities and weapons. With this addition to Traditional and Weapons XP progressions systems Black Ops 3 multiplayer gives players three different ways to rank up.FIGHT THE UNDEAD IN AN ALL-NEW HORROR STORY:No Treyarch title would be complete without its signature Zombies offering - a full-game experience with its own distinct storyline right out of the box. Black Ops 3 Zombies is the most immersive and ambitious Call of Duty Zombies to date with a full XP-based progression system for players that adds depth and re-playability to the engaging gameplay Zombies fans have come to expect.Call of Duty: Black Ops 3 delivers the ultimate 3-games-in-1 experience.";
             headerImage = "http://cdn.akamai.steamstatic.com/steam/apps/311210/header.jpg?t=1473725004";
             computerRequirements = "Minimum:OS: Windows 7 64-Bit / Windows 8 64-Bit / Windows 8.1 64-BitProcessor: Intel(r) Core(tm) i3-530 @ 2.93 GHz / AMD Phenom(tm) II X4 810 @ 2.60 GHzMemory: 6 GB RAMGraphics: NVIDIA(r) GeForce(r) GTX 470 @ 1GB / ATI(r) Radeon(tm) HD 6970 @ 1GBDirectX: Version 11Network: Broadband Internet connectionStorage: 60 GB available spaceSound Card: DirectX Compatible";
@@ -865,7 +865,7 @@ public class DataInitSessionBean {
             parentAdvisory = false;
             averageRating = 87;
             sales = 2548378;
-            price = 19.99;
+            price = 20.00;
             description = "Deceived by the forces of evil into prematurely bringing about the end of the world, War – the first Horseman of the Apocalypse – stands accused of breaking the sacred law by inciting a war between Heaven and Hell.";
             headerImage = "http://cdn.akamai.steamstatic.com/steam/apps/462780/header.jpg?t=1481150698";
             computerRequirements = "Minimum:OS: Windows 7 Windows 8 Windows 10Processor: Intel or AMD Dual Core CPUMemory: 4 GB RAMGraphics: DirectX 10 Feature Level AMD or NVIDIA Card with 1 GB VRAMDirectX: Version 11Storage: 36 GB available space";
@@ -886,7 +886,7 @@ public class DataInitSessionBean {
             parentAdvisory = true;
             averageRating = 72;
             sales = 3496958;
-            price = 19.99;
+            price = 20.00;
             description = "Killing Floor is a Co-op Survival Horror FPS set in the devastated cities and countryside of England after a series of cloning experiments for the military goes horribly wrong. You and your friends are members of the military dropped into these locations with a simple mission: Survive long enough to cleanse the area of the failed experiments!Cooperative gameplay for up to six players against multiple waves of specimensPersistent Perks system allowing players to convert their in-game achievements into permanent improvements to their characters skills and abilities.";
             headerImage = "http://cdn.akamai.steamstatic.com/steam/apps/1250/header.jpg?t=1464640213";
             computerRequirements = "Minimum:OS: Windows XP/Vista Processor: 1.2 GHZ or Equivalent Memory: 1 GB RAM Graphics: 64 MB DX9 Compliant Hard Drive: 2 GB free hard drive space Sound: DX 8.1 Compatible Audio";
@@ -907,7 +907,7 @@ public class DataInitSessionBean {
             parentAdvisory = false;
             averageRating = 81;
             sales = 799182;
-            price = 19.99;
+            price = 20.00;
             description = "Rollercoaster Tycoon 3 Platinum combines the excitement of rollercoasters with the fun of great strategy sim. RCT3 Platinum combines the roller coaster theme park fun of the Roller Coaster Tycoon 3 with included expansion packs Soaked! and Wild! Now enjoy more options than ever. Build your own water slide or create your own safari with real animals. Watch guest reactions to your ultimate theme park!";
             headerImage = "http://cdn.akamai.steamstatic.com/steam/apps/2700/header.jpg?t=1473276734";
             computerRequirements = "Minimum: Supported OS: Windows 2000/XPProcessor: Pentium(r) III 733 MHz or compatible (Pentium(r) 4 1.2 GHz or compatible recommended)Memory: 128 MB RAM; 256 MB for XP (256 MB; 384 MB for XP recommended)Graphics: Any ATI Radeon(tm) or GeForce(tm) 2 with 32MB or higher; or other video card with 32MB and hardware T&L (ATI Radeon(tm) 64 MB SDR or GeForce(tm) 2 Pro or other video card with 64 MB or more memory and hardware T&L recommended)*DirectX Version: DirectX(r) version 9 (included) or higherSound: Windows(r) 2000/XP-compatible 16-bit sound card*Hard Drive: 600 MB free* Indicates device should be compatible with DirectX(r) version 9.0b or higher.";
@@ -925,7 +925,7 @@ public class DataInitSessionBean {
             parentAdvisory = false;
             averageRating = 90;
             sales = 12790674;
-            price = 19.99;
+            price = 20.00;
             description = "Garrys Mod is a physics sandbox. There arent any predefined aims or goals. We give you the tools and leave you to play.You spawn objects and weld them together to create your own contraptions - whether thats a car a rocket a catapult or something that doesnt have a name yet - thats up to you. You can do it offline or join the thousands of players who play online each day. If youre not too great at construction - dont worry! You can place a variety of characters in silly positions.";
             headerImage = "http://cdn.akamai.steamstatic.com/steam/apps/4000/header.jpg?t=1469897414";
             computerRequirements = "Minimum:OS: Windows(r) Vista/XPProcessor: 1.8 GHz ProcessorMemory: 2 GB RAMGraphics: DirectX(r) 9 level Graphics Card (Requires support for SSE)DirectX: Version 9.0cNetwork: Broadband Internet connectionStorage: 5 GB available spaceSound Card: DirectX(r) 9 compatibleAdditional Notes: Mouse Keyboard Monitor";
@@ -1025,7 +1025,7 @@ public class DataInitSessionBean {
             parentAdvisory = true;
             averageRating = 79;
             sales = 3219325;
-            price = 19.99;
+            price = 20.00;
             description = "BioShock 2 provides players with the perfect blend of explosive first-person shooter combat and compelling award-winning storytelling. The halls of Rapture once again echo with sins of the past. Along the Atlantic coastline, a monster has been snatching little girls and bringing them back to the undersea city of Rapture. Players step into the boots of the most iconic denizen of Rapture, the Big Daddy, as they travel through the decrepit and beautiful fallen city, chasing an unseen foe in search of answers and their own survival.";
             headerImage = "http://cdn.akamai.steamstatic.com/steam/apps/409720/header.jpg?t=1473983496";
             computerRequirements = "Minimum:OS: Windows 7 Service Pack 1 64-bit. Platform Update for Windows 7 SP1 and Windows Server 2008 R2 SP1Processor: Intel E6750 Core 2 Duo 2.66 GHz / AMD Athlon X2 2.7 GHZMemory: 4 GB RAMGraphics: 2GB AMD Radeon HD 7770 / 2GB NVIDIA GeForce GTX 670DirectX: Version 11Storage: 25 GB available spaceSound Card: DirectX Compatible Sound Device";
@@ -1046,7 +1046,7 @@ public class DataInitSessionBean {
             parentAdvisory = false;
             averageRating = 90;
             sales = 153165;
-            price = 19.99;
+            price = 20.00;
             description = "Following the record-breaking launch of NBA 2K16, the NBA 2K franchise continues to stake its claim as the most authentic sports video game with NBA 2K17. As the franchise that “all sports video games should aspire to be” (GamesRadar), NBA 2K17 will take the game to new heights and continue to blur the lines between video game and reality.";
             headerImage = "http://cdn.akamai.steamstatic.com/steam/apps/385760/header.jpg?t=1474391274";
             computerRequirements = "Minimum:OS: Windows 7 64-bit Windows 8.1 64-bit or Windows 10 64-bitProcessor: Intel(r) Core(tm) i3-530 @ 2.93 GHz / AMD Phenom(tm) II X4 805 @ 2.50 GHz or betterMemory: 4 GB RAMGraphics: NVIDIA(r) GeForce(r) GT 430 1GB / ATI(r) Radeon(tm) HD 6450 1GB or betterDirectX: Version 11Storage: 70 GB available spaceSound Card: DirectX 9.0x compatibleAdditional Notes: Dual-analog gamepad";
@@ -1066,7 +1066,7 @@ public class DataInitSessionBean {
             parentAdvisory = false;
             averageRating = 74;
             sales = 5791198;
-            price = 49.99;
+            price = 50.00;
             description = "Take control of your favourite football team in Football Manager 2017 the most realistic and immersive football management game to date. Its the closest thing to doing the job for real!With over 2500 real clubs to manage and over 500000 real footballers and staff to sign Football Manager 2017 elevates you into a living breathing world of football management with you at the centre.  Youll have full control of transfers and decide who plays and who sits on the bench. Youre in complete control of tactics team-talks and pitch-side instructions and youll follow the match live with our acclaimed 3D match engine. Youll also deal with real football media solve player-happiness problems and the board will watch your every move.Fans who pre-purchase Football Manager 2017 on Steam will be rewarded with Football Manager Touch 2017 for free (on PC Mac or Linux) and as a thank you for pre-purchasing youll also get a range of free downloadable content for Touch including Board override No firing All job applications National management and 3 brand new challenges to play in the Challenge game mode. Touch is the more streamlined transfers and tactics way to manage and can be purchased separately as a standalone game.In addition youll also enjoy access to a fully-playable Beta version of the game which will be available roughly two weeks prior to the official release date. Single player careers started in this Beta version will continue in the full game.Loyal fans of the series can enjoy an exclusive Steam-only discount of five per cent off for every Football Manager game they own (PC Mac or Linux) dating back to Football Manager 2013. This means theres a maximum 20 per cent discount available to fans who own all of the last four versions.";
             headerImage = "http://cdn.akamai.steamstatic.com/steam/apps/482730/header.jpg?t=1473937693";
             computerRequirements = "Minimum:OS: Windows Vista (SP2) 7 (SP1) 8 8.1 10 (1607) - 64-bit or 32-bitProcessor: Intel Pentium 4 Intel Core AMD Athlon 2.2GHz+Memory: 2 GB RAMGraphics: NVIDIA  GeForce 8600M GT AMD/ATI Mobility Radeon HD 2400 Intel GMA X3100 256MB VRAMDirectX: Version 9.0cStorage: 3 GB available space";
@@ -1180,7 +1180,7 @@ public class DataInitSessionBean {
             parentAdvisory = true;
             averageRating = 86;
             sales = 1186398;
-            price = 59.99;
+            price = 60.00;
             description = "After uncovering an ancient mystery Lara must explore the most treacherous and remote regions of Siberia to find the secret of immortality before a ruthless organization known as Trinity. Lara must use her wits and survival skills form new alliances and ultimately embrace her destiny as the Tomb Raider. Experience high-octane action moments conquer beautifully hostile environments engage in brutal guerilla combat and explore awe-inspiring deadly tombs in the evolution of survival action. In Rise of the Tomb Raider Lara becomes more than a survivor as she embarks on her first Tomb Raiding expedition.Key Features:Laras Journey - Lara uncovers an ancient mystery that places her in the cross-hairs of a ruthless organization known as Trinity. As she races to find the secret before Trinity the trail leads to a myth about the Lost City of Kitezh. Lara knows she must reach the Lost City and its hidden secrets before Trinity. With that she sets out for Siberia on her first Tomb Raiding expedition.Woman vs. Wild - In Rise of the Tomb Raider Lara battles with not only enemies from around the world but the world itself. Hunt animals to craft weapons and scavenge for rare resources in densely populated ecosystems. Youll encounter beautifully hostile environments full of treacherous conditions and unstable landscapes that will require Lara to push her limits to the very edge. Guerilla Combat - Use the environment to your advantage scale trees and dive underwater to avoid or takedown enemies configure Laras gear weapons and ammo to suit your play style from stealth to guns blazing craft explosives on the fly to sow chaos and wield Laras signature combat bows and climbing axe. Return to Tomb Raiding - Tombs are back and theyre bigger and better than ever. In Rise of the Tomb Raider youll explore huge awe-inspiring ancient spaces littered with deadly traps solve dramatic environmental puzzles and decipher ancient texts to reveal crypts as you take on a world filled with secrets to discover.";
             headerImage = "http://cdn.akamai.steamstatic.com/steam/apps/391220/header.jpg?t=1473961644";
             computerRequirements = "Minimum:OS: Windows 7 64bitProcessor: Intel Core i3-2100 or AMD equivalentMemory: 6 GB RAMGraphics: NVIDIA GTX 650 2GB or AMD HD7770 2GBDirectX: Version 11Storage: 25 GB available space";
@@ -1486,7 +1486,7 @@ public class DataInitSessionBean {
             releaseDate = LocalDate.parse("2016-11-09", formatter);
             averageRating = 85;
             sales = 729680;
-            price = 5.25;
+            price = 5.00;
             description = "Play sounds in voice chats in high digital quality. You probably heard of soundboard, where people put sounds together like the popular Duke Nukem sounds. With Soundpad you can play them not only to yourself, but also to others.";
             headerImage = "https://steamcdn-a.akamaihd.net/steam/apps/629520/header.jpg?t=1577013777";
             computerRequirements = "Windows 7 or higher. Intel or AMD with 1 GHz or faster. Memory: 2 GB RAM. Graphics: NVIDIA GeForce GT220 or equivalent.";
@@ -1541,7 +1541,7 @@ public class DataInitSessionBean {
                     new BigDecimal("14.50"));
             saleTransactionLineItems.add(saleTransactionLineItem);
             Long newSaleTransactionId = saleTransactionSessionBeanLocal.createNewSaleTransaction(customer1.getUserId(), 
-                    new SaleTransaction(1, 1, new BigDecimal("14.50"), LocalDateTime.of(2020,Month.MARCH,3,6,30,40), saleTransactionLineItems, false));
+                    new SaleTransaction(1, 1, new BigDecimal("14.50"), LocalDateTime.of(2020,Month.FEBRUARY,3,6,30,40), saleTransactionLineItems, false));
             
             
             saleTransactionLineItems = new ArrayList<>();
@@ -1555,7 +1555,7 @@ public class DataInitSessionBean {
                     new BigDecimal("74.90"));
             saleTransactionLineItems.add(saleTransactionLineItem);
             newSaleTransactionId = saleTransactionSessionBeanLocal.createNewSaleTransaction(customer1.getUserId(), 
-                    new SaleTransaction(3, 3, new BigDecimal("84.90"), LocalDateTime.of(2020,Month.APRIL,3,23,8,42), saleTransactionLineItems, false));
+                    new SaleTransaction(3, 3, new BigDecimal("84.90"), LocalDateTime.of(2020,Month.FEBRUARY,3,23,8,42), saleTransactionLineItems, false));
 
             
             saleTransactionLineItems = new ArrayList<>();
@@ -1569,28 +1569,68 @@ public class DataInitSessionBean {
             saleTransactionLineItem = new SaleTransactionLineItem(gtaV, 1, new BigDecimal("40.00"), 
                     new BigDecimal("40.00"));
             saleTransactionLineItems.add(saleTransactionLineItem);
-            newSaleTransactionId = saleTransactionSessionBeanLocal.createNewSaleTransaction(customer1.getUserId(), 
+            newSaleTransactionId = saleTransactionSessionBeanLocal.createNewSaleTransaction(customer2.getUserId(), 
                     new SaleTransaction(1, 1, new BigDecimal("40.00"), LocalDateTime.of(2020,Month.MARCH,3,1,38,48), saleTransactionLineItems, false));
             
             saleTransactionLineItems = new ArrayList<>();
             saleTransactionLineItem = new SaleTransactionLineItem(watchdogs2, 2, new BigDecimal("70.00"), 
                     new BigDecimal("140.00"));
             saleTransactionLineItems.add(saleTransactionLineItem);
-            newSaleTransactionId = saleTransactionSessionBeanLocal.createNewSaleTransaction(customer1.getUserId(), 
+            newSaleTransactionId = saleTransactionSessionBeanLocal.createNewSaleTransaction(customer2.getUserId(), 
                     new SaleTransaction(1, 2, new BigDecimal("140.00"), LocalDateTime.of(2020,Month.MARCH,13,10,17,40), saleTransactionLineItems, false));
+            
+            saleTransactionLineItems = new ArrayList<>();
+            saleTransactionLineItem = new SaleTransactionLineItem(watchdogs2, 2, new BigDecimal("70.00"), 
+                    new BigDecimal("140.00"));
+            saleTransactionLineItems.add(saleTransactionLineItem);
+            newSaleTransactionId = saleTransactionSessionBeanLocal.createNewSaleTransaction(customer3.getUserId(), 
+                    new SaleTransaction(1, 2, new BigDecimal("140.00"), LocalDateTime.of(2020,Month.MARCH,13,10,17,40), saleTransactionLineItems, false));
+            
+            saleTransactionLineItems = new ArrayList<>();
+            saleTransactionLineItem = new SaleTransactionLineItem(gtaV, 1, new BigDecimal("40.00"), 
+                    new BigDecimal("40.00"));
+            saleTransactionLineItems.add(saleTransactionLineItem);
+            newSaleTransactionId = saleTransactionSessionBeanLocal.createNewSaleTransaction(customer1.getUserId(), 
+                    new SaleTransaction(1, 1, new BigDecimal("40.00"), LocalDateTime.of(2020,Month.APRIL,3,1,38,48), saleTransactionLineItems, false));
             
             saleTransactionLineItems = new ArrayList<>();
             saleTransactionLineItem = new SaleTransactionLineItem(watchdogs2, 1, new BigDecimal("76.90"), 
                     new BigDecimal("76.90"));
             saleTransactionLineItems.add(saleTransactionLineItem);
-            saleTransactionLineItem = new SaleTransactionLineItem(nba2k17, 2, new BigDecimal("19.99"), 
-                    new BigDecimal("39.98"));
+            saleTransactionLineItem = new SaleTransactionLineItem(nba2k17, 2, new BigDecimal("20.00"), 
+                    new BigDecimal("40.00"));
             saleTransactionLineItems.add(saleTransactionLineItem);
-            saleTransactionLineItem = new SaleTransactionLineItem(elderscrollsV, 3, new BigDecimal("53.99"), 
-                    new BigDecimal("161.97"));
+            saleTransactionLineItem = new SaleTransactionLineItem(elderscrollsV, 3, new BigDecimal("54.00"), 
+                    new BigDecimal("162.00"));
             saleTransactionLineItems.add(saleTransactionLineItem);
             newSaleTransactionId = saleTransactionSessionBeanLocal.createNewSaleTransaction(customer1.getUserId(), 
-                    new SaleTransaction(3, 6, new BigDecimal("278.85"), LocalDateTime.of(2020,Month.MARCH,4,8,24,40), saleTransactionLineItems, false));
+                    new SaleTransaction(3, 6, new BigDecimal("278.9"), LocalDateTime.of(2020,Month.APRIL,4,8,24,40), saleTransactionLineItems, false));
+            
+            saleTransactionLineItems = new ArrayList<>();
+            saleTransactionLineItem = new SaleTransactionLineItem(watchdogs2, 1, new BigDecimal("76.90"), 
+                    new BigDecimal("76.90"));
+            saleTransactionLineItems.add(saleTransactionLineItem);
+            saleTransactionLineItem = new SaleTransactionLineItem(nba2k17, 2, new BigDecimal("20.00"), 
+                    new BigDecimal("40.00"));
+            saleTransactionLineItems.add(saleTransactionLineItem);
+            saleTransactionLineItem = new SaleTransactionLineItem(elderscrollsV, 3, new BigDecimal("54.00"), 
+                    new BigDecimal("162.00"));
+            saleTransactionLineItems.add(saleTransactionLineItem);
+            newSaleTransactionId = saleTransactionSessionBeanLocal.createNewSaleTransaction(customer2.getUserId(), 
+                    new SaleTransaction(3, 6, new BigDecimal("278.9"), LocalDateTime.of(2020,Month.APRIL,4,8,24,40), saleTransactionLineItems, false));
+            
+            saleTransactionLineItems = new ArrayList<>();
+            saleTransactionLineItem = new SaleTransactionLineItem(watchdogs2, 1, new BigDecimal("76.90"), 
+                    new BigDecimal("76.90"));
+            saleTransactionLineItems.add(saleTransactionLineItem);
+            saleTransactionLineItem = new SaleTransactionLineItem(nba2k17, 2, new BigDecimal("20.00"), 
+                    new BigDecimal("40.00"));
+            saleTransactionLineItems.add(saleTransactionLineItem);
+            saleTransactionLineItem = new SaleTransactionLineItem(elderscrollsV, 3, new BigDecimal("54.00"), 
+                    new BigDecimal("162.00"));
+            saleTransactionLineItems.add(saleTransactionLineItem);
+            newSaleTransactionId = saleTransactionSessionBeanLocal.createNewSaleTransaction(customer3.getUserId(), 
+                    new SaleTransaction(3, 6, new BigDecimal("278.9"), LocalDateTime.of(2020,Month.APRIL,4,8,24,40), saleTransactionLineItems, false));
             
             //Promotion
             Promotion promo1 = promotionSessionBean.createPromotion(new Promotion("VALVE SALE",

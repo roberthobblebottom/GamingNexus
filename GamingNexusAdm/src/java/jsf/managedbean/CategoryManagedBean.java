@@ -27,13 +27,14 @@ import util.exception.UnknownPersistenceException;
  */
 @Named(value = "categoryManagedBean")
 @ViewScoped
-public class CategoryManagedBean implements Serializable{
+public class CategoryManagedBean implements Serializable {
 
     @EJB(name = "CategorySessionBeanLocal")
     private CategorySessionBeanLocal categorySessionBeanLocal;
 
     private List<Category> categories;
     private Category newCategory;
+    private Long parentCategoryId;
 
     /**
      * Creates a new instance of CategoryManagedBean
@@ -45,15 +46,19 @@ public class CategoryManagedBean implements Serializable{
     @PostConstruct
     public void postConstruct() {
         categories = categorySessionBeanLocal.retrieveAllCategories();
-        
+
     }
-    
+
     public void createNewCategory(ActionEvent event) throws CategoryExistException, CreateNewCategoryException, InputDataValidationException {
         System.out.println("************Entered createNewCategory Method");
-        Category category = categorySessionBeanLocal.createNewCategoryEntity(getNewCategory(), getNewCategory().getParentCategory().getCategoryId());
-        categories.add(category);
-        setNewCategory(new Category());
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "New Category created successfully (Category ID: " + category.getCategoryId() + ")", null));
+        try {
+            Category category = categorySessionBeanLocal.createNewCategoryEntity(newCategory, parentCategoryId);
+            categories.add(category);
+            setNewCategory(new Category());
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "New Category created successfully (Category ID: " + category.getCategoryId() + ")", null));
+        } catch (CreateNewCategoryException ex) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "An error has occurred while creating the new category: " + ex.getMessage(), null));
+        }
     }
 
     /**
@@ -83,8 +88,19 @@ public class CategoryManagedBean implements Serializable{
     public void setNewCategory(Category newCategory) {
         this.newCategory = newCategory;
     }
-    
-    
-    
-}
 
+    /**
+     * @return the parentCategoryId
+     */
+    public Long getParentCategoryId() {
+        return parentCategoryId;
+    }
+
+    /**
+     * @param parentCategoryId the parentCategoryId to set
+     */
+    public void setParentCategoryId(Long parentCategoryId) {
+        this.parentCategoryId = parentCategoryId;
+    }
+
+}

@@ -102,9 +102,9 @@
                             <p:outputLabel for="parentCategory" value="parentCategory" style="font-weight: bold;"/>               
                         </p:column>
                         <p:column>
-                            <p:selectOneMenu id="parentCategory">
-                                <f:selectItem itemValue="#{null}" itemLabel="[Select One]" noSelectionOption="true" />
-                                <f:selectItems value="#{categoryManagedBean.categories}" var="category" itemValue="#{category.name}" itemLabel="#{category.name}" />
+                            <p:selectOneMenu id="parentCategory" value="#{categoryManagedBean.parentCategoryId}">
+                                <f:selectItem itemValue="#{null}" itemLabel="[Select One or None]" noSelectionOption="true" />
+                                <f:selectItems value="#{categoryManagedBean.categories}" var="category" itemValue="#{category.categoryId}" itemLabel="#{category.name}" />
                             </p:selectOneMenu>
                         </p:column>
                         <p:column>
