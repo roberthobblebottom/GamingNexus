@@ -33,7 +33,7 @@ public class CompanySessionBean implements CompanySessionBeanLocal {
     public CompanySessionBean() {
 
     }
-
+    
     @Override
     public Company createNewCompany(Company newCompany) throws UnknownPersistenceException, CompanyUsernameExistException {
         try {

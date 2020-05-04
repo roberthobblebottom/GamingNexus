@@ -124,6 +124,7 @@ public class ProductManagementManagedBean implements Serializable{
         }
         catch(Exception ex)
         {
+            ex.printStackTrace();
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "An unexpected error has occurred: " + ex.getMessage(), null));
         }
     }

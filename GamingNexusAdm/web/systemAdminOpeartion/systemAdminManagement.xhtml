@@ -10,10 +10,10 @@
                 xmlns:ez="http://xmlns.jcp.org/jsf/composite/ezcomp">
 
     <ui:define name="content">
-
+        
         <h:form>
             <p:menubar>
-                <p:menuitem value="Create" onclick="PF('dialogCreateNewSystemAdmin').show()" icon="fa fa-plus" />
+                 <p:menuitem value="Create" onclick="PF('dialogCreateNewSystemAdmin').show()" icon="pi pi-user-plus" />
 
             </p:menubar>
             <br/>
@@ -58,18 +58,18 @@
 
                 <p:column headerText="Action">       
 
-                    <p:commandButton update="ccViewSystemAdmin:formViewSystemAdmin" oncomplete="PF('dialogViewSystemAdmin').show()" icon="ui-icon-document" title="View">
+                    <p:commandButton update="ccViewSystemAdmin:formViewSystemAdmin" oncomplete="PF('dialogViewSystemAdmin').show()" icon="pi pi-info-circle" title="View"> 
                         <f:setPropertyActionListener value="#{systemAdmin}" target="#{systemAdminManagementManagedBean.viewSystemAdminManagedBean.systemAdminToView}" />
                     </p:commandButton>
 
-                    <p:commandButton icon="ui-icon-trash" actionListener="#{systemAdminManagementManagedBean.deleteSystemAdmin}" update="formAllSystemAdmins:dataTableAllSystemAdmins" style="margin-left: 30px; margin-right: 30px;">
+                    <p:commandButton icon="pi pi-trash" actionListener="#{systemAdminManagementManagedBean.deleteSystemAdmin}" update="formAllSystemAdmins:dataTableAllSystemAdmins" style="margin-left: 30px; margin-right: 30px;">
                         <f:attribute name="systemAdminToDelete" value="#{systemAdmin}" />
                         <p:confirm header="Confirmation" message="Are you sure you want to delete #{systemAdmin.username}?" icon="ui-icon-alert" />
                     </p:commandButton>
 
                     <p:commandButton actionListener="#{systemAdminManagementManagedBean.doUpdateSystemAdmin}" rendered="#{sessionScope.currentSystemAdmin.username eq systemAdmin.username}"  
                                      update="formUpdateSystemAdmin" 
-                                     oncomplete="PF('dialogUpdateSystemAdmin').show()" icon="ui-icon-pencil" title="Update">
+                                     oncomplete="PF('dialogUpdateSystemAdmin').show()" icon="pi pi-cog" title="Update">
                         <f:attribute name="systemAdminToUpdate" value="#{systemAdmin}" />
                     </p:commandButton>
 

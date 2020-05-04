@@ -5,13 +5,14 @@
  */
 package ejb.session.stateless;
 
+import com.sun.org.apache.xerces.internal.impl.dv.xs.YearMonthDV;
 import entity.Customer;
-import entity.Product;
 import entity.SaleTransaction;
 import entity.SaleTransactionLineItem;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
+import java.time.YearMonth;
+import java.util.HashMap;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -88,12 +89,14 @@ public class SaleTransactionSessionBean implements SaleTransactionSessionBeanLoc
         }
     }
 
+    @Override
     public List<SaleTransaction> retrieveAllSaleTransactionsByCustomerId(Long customerId) {
         Query query = em.createQuery("SELECT st FROM SaleTransaction st where st.customer.userId = :inCustomerId");
         query.setParameter("inCustomerId", customerId);
         return query.getResultList();
     }
 
+    @Override
     public List<SaleTransaction> retrieveAllSaleTransactionByUsernameAndPassword(String username, String password) throws InvalidLoginCredentialException {
 
         Customer customer = customerSessionBeanLocal.customerLogin(username, password);
@@ -114,5 +117,23 @@ public class SaleTransactionSessionBean implements SaleTransactionSessionBeanLoc
         }
 
     }
-
+    
+    @Override
+    public HashMap<YearMonth,BigDecimal> calculateRevenueByMonth(){
+        HashMap<YearMonth,BigDecimal> hm = new HashMap<>();
+        List<SaleTransaction> saleTransactions = retrieveAllSaleTransactions();
+        for(SaleTransaction s : saleTransactions){
+            int year = s.getTransactionDateTime().getYear();
+            int month = s.getTransactionDateTime().getMonthValue();
+            YearMonth yearMonth = YearMonth.of(year,month);
+            if(hm.containsKey(yearMonth)){
+                BigDecimal oldRevenue = hm.get(yearMonth);
+                BigDecimal newRevenue = oldRevenue.add(s.getTotalAmount());
+                hm.replace(yearMonth, oldRevenue, newRevenue);
+            } else {
+                hm.put(yearMonth, s.getTotalAmount());
+            }
+        }
+        return hm;
+    }
 }

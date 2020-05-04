@@ -286,11 +286,23 @@ public abstract class Product implements Serializable {
     }
     
     public void clearNormalTags() {
-        for(Tag tag: tags) {
-            if(tag.isIsGameTag() == false) {
-                this.tags.remove(tag);
+        
+        ArrayList<Tag> tagsToRemove = new ArrayList<>();
+        
+        for(int i = 0; i <tags.size(); i++)
+        {
+            if(tags.get(i).isIsGameTag() == false) {
+                tagsToRemove.add(tags.get(i));
             }
         }
+        
+        tags.removeAll(tagsToRemove);
+        
+//        for(Tag tag: tags) {
+//            if(tag.isIsGameTag() == false) {
+//                this.tags.remove(tag);
+//            }
+//        }
     }
 
     /**
