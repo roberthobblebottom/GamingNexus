@@ -224,7 +224,6 @@ public class DataInitSessionBean {
             String videoLink = "";
             Long categoryid = categoryEntitySoftwareGame.getCategoryId();
             tags = new ArrayList<>();
-            tags.add(tagEntityPopular.getTagId());
             tags.add(tagEntityFPS.getTagId());
             tags.add(tagEntitySingleplayer.getTagId());
             Game cs = gameSessionBeanLocal.createNewGame(
@@ -232,6 +231,298 @@ public class DataInitSessionBean {
                             price, averageRating, releaseDate, sales),
                     categoryid, tags, valve.getUserId());
             valveProducts.add(cs);
+            
+            
+            //Slider list
+            name = "Sid Meier's Civilization VI";
+            releaseDate = LocalDate.parse("2016-10-21", formatter);
+            parentAdvisory = false;
+            averageRating = 88;
+            sales = 1363057;
+            price = 74.90;
+            description = "Civilization VI offers new ways to engage with your world: cities now physically expand across the map, active research in technology and culture unlocks new potential, and competing leaders will pursue their own agendas based on their historical traits as you race for one of five ways to achieve victory in the game.";
+            headerImage = "http://cdn.akamai.steamstatic.com/steam/apps/289070/header.jpg?t=1477354938";
+            computerRequirements = "Minimum:OS: Windows 7x64 / Windows 8.1x64 / Windows 10x64Processor: Intel Core i3 2.5 Ghz or AMD Phenom II 2.6 Ghz or greaterMemory: 4 GB RAMGraphics: 1 GB & AMD 5570 or nVidia 450DirectX: Version 11Storage: 12 GB available spaceSound Card: DirectX Compatible Sound Device";
+            categoryid = categoryEntitySoftwareGame.getCategoryId();
+            videoLink = "https://steamcdn-a.akamaihd.net/steam/apps/256672695/movie480.webm?t=1476737061";
+            tags = new ArrayList<>();
+            tags.add(tagEntitySlider.getTagId());
+            tags.add(tagEntityStrategy.getTagId());
+            tags.add(tagEntityMultiplayer.getTagId());
+            tags.add(tagEntitySingleplayer.getTagId());
+            Game civVI = gameSessionBeanLocal.createNewGame(
+                    new Game(parentAdvisory, headerImage, videoLink, name, description, computerRequirements,
+                            price, averageRating, releaseDate, sales),
+                    categoryid, tags, microprose.getUserId());
+            microproseProducts.add(civVI);
+            
+            
+            name = "Grand Theft Auto V";
+            releaseDate = LocalDate.parse("2015-04-13", formatter);
+            parentAdvisory = true;
+            averageRating = 96;
+            sales = 5886074;
+            price = 40.00;
+            description = "When a young street hustler a retired bank robber and a terrifying psychopath find themselves entangled with some of the most frightening and deranged elements of the criminal underworld the U.S. government and the entertainment industry they must pull off a series of dangerous heists to survive in a ruthless city in which they can trust nobody least of all each other. Grand Theft Auto V for PC offers players the option to explore the award-winning world of Los Santos and Blaine County in resolutions of up to 4k and beyond as well as the chance to experience the game running at 60 frames per second.  The game offers players a huge range of PC-specific customization options including over 25 separate configurable settings for texture quality shaders tessellation anti-aliasing and more as well as support and extensive customization for mouse and keyboard controls. Additional options include a population density slider to control car and pedestrian traffic as well as dual and triple monitor support 3D compatibility and plug-and-play controller support.   Grand Theft Auto V for PC also includes Grand Theft Auto Online with support for 30 players and two spectators. Grand Theft Auto Online for PC will include all existing gameplay upgrades and Rockstar-created content released since the launch of Grand Theft Auto Online including Heists and Adversary modes. The PC version of Grand Theft Auto V and Grand Theft Auto Online features First Person Mode giving players the chance to explore the incredibly detailed world of Los Santos and Blaine County in an entirely new way. Grand Theft Auto V for PC also brings the debut of the Rockstar Editor a powerful suite of creative tools to quickly and easily capture edit and share game footage from within Grand Theft Auto V and Grand Theft Auto Online. The Rockstar Editors Director Mode allows players the ability to stage their own scenes using prominent story characters pedestrians and even animals to bring their vision to life. Along with advanced camera manipulation and editing effects including fast and slow motion and an array of camera filters players can add their own music using songs from GTAV radio stations or dynamically control the intensity of the games score. Completed videos can be uploaded directly from the Rockstar Editor to YouTube and the Rockstar Games Social Club for easy sharing.   Soundtrack artists The Alchemist and Oh No return as hosts of the new radio station The Lab FM. The station features new and exclusive music from the production duo based on and inspired by the games original soundtrack. Collaborating guest artists include Earl Sweatshirt Freddie Gibbs Little Dragon Killer Mike Sam Herring from Future Islands and more. Players can also discover Los Santos and Blaine County while enjoying their own music through Self Radio a new radio station that will host player-created custom soundtracks. Existing players on PlayStation(r)3 PlayStation(r)4 Xbox 360 and Xbox One are able to transfer their Grand Theft Auto Online characters and progression to PC.  For more information please visit rockstargames.com/gtaonline/charactertransfer.";
+            headerImage = "http://cdn.akamai.steamstatic.com/steam/apps/271590/header.jpg?t=1470324156";
+            computerRequirements = "Minimum:OS: Windows 8.1 64 Bit Windows 8 64 Bit Windows 7 64 Bit Service Pack 1 Windows Vista 64 Bit Service Pack 2* (*NVIDIA video card recommended if running Vista OS)Processor: Intel Core 2 Quad CPU Q6600 @ 2.40GHz (4 CPUs) / AMD Phenom 9850 Quad-Core Processor (4 CPUs) @ 2.5GHzMemory: 4 GB RAMGraphics: NVIDIA 9800 GT 1GB / AMD HD 4870 1GB (DX 10 10.1 11)Storage: 65 GB available spaceSound Card: 100% DirectX 10 compatibleAdditional Notes: Over time downloadable content and programming changes will change the system requirements for this game.  Please refer to your hardware manufacturer and www.rockstargames.com/support for current compatibility information. Some system components such as mobile chipsets integrated and AGP graphics cards may be incompatible. Unlisted specifications may not be supported by publisher.     Other requirements:  Installation and online play requires log-in to Rockstar Games Social Club (13+) network; internet connection required for activation online play and periodic entitlement verification; software installations required including Rockstar Games Social Club platform DirectX  Chromium and Microsoft Visual C++ 2008 sp1 Redistributable Package and authentication software that recognizes certain hardware attributes for entitlement digital rights management system and other support purposes.     SINGLE USE SERIAL CODE REGISTRATION VIA INTERNET REQUIRED; REGISTRATION IS LIMITED TO ONE ROCKSTAR GAMES SOCIAL CLUB ACCOUNT (13+) PER SERIAL CODE; ONLY ONE PC LOG-IN ALLOWED PER SOCIAL CLUB ACCOUNT AT ANY TIME; SERIAL CODE(S) ARE NON-TRANSFERABLE ONCE USED; SOCIAL CLUB ACCOUNTS ARE NON-TRANSFERABLE.  Partner Requirements:  Please check the terms of service of this site before purchasing this software.";
+            videoLink = "https://steamcdn-a.akamaihd.net/steam/apps/256703142/movie_max.mp4?t=1513275242";
+            categoryid = categoryEntitySoftwareGame.getCategoryId();
+            tags = new ArrayList<>();
+            tags.add(tagEntitySlider.getTagId());
+            tags.add(tagEntityOpenworld.getTagId());
+            tags.add(tagEntityAction.getTagId());
+            Game gtaV = gameSessionBeanLocal.createNewGame(
+                    new Game(parentAdvisory, headerImage, videoLink, name, description, computerRequirements,
+                            price, averageRating, releaseDate, sales),
+                    categoryid, tags, rockstar.getUserId());
+            rockstarProducts.add(gtaV);
+            
+            name = "Watch Dogs 2";
+            releaseDate = LocalDate.parse("2016-11-29", formatter);
+            parentAdvisory = true;
+            averageRating = 86;
+            sales = 147605;
+            price = 70.00;
+            description = "Play as Marcus Holloway, a brilliant young hacker living in the birthplace of the tech revolution, the San Francisco Bay Area. Team up with Dedsec, a notorious group of hackers, to execute the biggest hack in history; take down ctOS 2.0, an invasive operating system being used by criminal masterminds to monitor and manipulate citizens on a massive scale.";
+            headerImage = "http://cdn.akamai.steamstatic.com/steam/apps/447040/header.jpg?t=1481044335";
+            computerRequirements = "Minimum:OS: Windows 7 SP1 Windows 8.1 Windows 10 (64bit versions only)Processor: Intel Core i5 2400s @ 2.5 GHz AMD FX 6120 @ 3.5 GHz or betterMemory: 6 GB RAMGraphics: NVIDIA GeForce GTX 660 with 2 GB VRAM or AMD Radeon HD 7870 with 2 GB VRAM or better - See supported List*Network: Broadband Internet connectionStorage: 50 GB available spaceSound Card: DirectX compatible using the latest driversAdditional Notes: Periphericals: Microsoft Xbox One Controller DUALSHOCK(r) 4 Controller Windows-compatible keyboard mouse optional controller / Multiplayer: 256 kbps or faster broadband connection / Note: This product supports 64-bit operating systems only. Laptop versions of these cards may work but are not officially supported. For the most up-to-date requirement listings please visit the FAQ on our support website at support.ubi.com.  High speed internet access and a valid Ubisoft account are required to activate the game after installation to authenticate your system and continue gameplay after any re-activation access online features play online or unlock exclusive content.";
+            videoLink = "";
+            categoryid = categoryEntitySoftwareGame.getCategoryId();
+            tags = new ArrayList<>();
+            tags.add(tagEntitySlider.getTagId());
+            tags.add(tagEntityAction.getTagId());
+            tags.add(tagEntitySingleplayer.getTagId());
+            tags.add(tagEntityOpenworld.getTagId());
+            Game watchdogs2 = gameSessionBeanLocal.createNewGame(new Game(parentAdvisory, headerImage, videoLink, name, description, computerRequirements, price, averageRating, releaseDate, sales),
+                    categoryid, tags, ubisoft.getUserId());
+            ubisoftProducts.add(watchdogs2);
+            
+            name = "NBA 2K20";
+            releaseDate = LocalDate.parse("2019-09-05", formatter);
+            parentAdvisory = false;
+            averageRating = 74;
+            sales = 492271;
+            price = 81.90;
+            description = "NBA 2K has evolved into much more than a basketball simulation. 2K continues to redefine what’s possible in sports gaming with NBA 2K20, featuring best in class graphics & gameplay, ground breaking game modes, and unparalleled player control and customization. Plus, with its immersive open-world Neighborhood, NBA 2K20 is a platform for gamers and ballers to come together and create what’s next in basketball culture.";
+            headerImage = "https://steamcdn-a.akamaihd.net/steam/apps/1089350/header.jpg?t=1573674198";
+            computerRequirements = "OS: Windows 7 64-bit, Windows 8.1 64-bit or Windows 10 64-bit";
+            videoLink = "";
+            categoryid = categoryEntitySoftwareGame.getCategoryId();
+            tags = new ArrayList<>();
+            tags.add(tagEntitySlider.getTagId());
+            tags.add(tagEntitySports.getTagId());
+            tags.add(tagEntitySimulation.getTagId());
+            tags.add(tagEntityMultiplayer.getTagId());
+            Game nba2k20 = gameSessionBeanLocal.createNewGame(
+                    new Game(parentAdvisory, headerImage, videoLink, name, description, computerRequirements,
+                            price, averageRating, releaseDate, sales),
+                    categoryid, tags, activision.getUserId());
+            activisionProducts.add(nba2k20);
+                    
+            name = "Prototype";
+            releaseDate = LocalDate.parse("2009-06-10", formatter);
+            parentAdvisory = true;
+            averageRating = 79;
+            sales = 482271;
+            price = 20.00;
+            description = "You are the Prototype Alex Mercer a man without memory armed with amazing shape-shifting abilities hunting your way to the heart of the conspiracy which created you; making those responsible pay.                    Fast & Deadly Shape-Shifting Combat: Reconfigure your body to the situation at hand. From Claws to Blades to Hammers to Whips choose the right weapon for the situation. Change to a shield or armor for defense or use advanced sensory powers (thermal vision infected vision) to track your enemies                    Over-the-Top Locomotion & Agility: Seamlessly and fluidly bound from building to building run up walls bounce off cars and everything in your path. Adaptive parkour lets you move freely through the open-world environments of New York City.                    Unique Disguising Abilities: Consume anyone at anytime take on their appearances and assume their memories and special abilities.                    Deep Conspiracy-Driven Storyline: Wake up with no memory of the past...just mysterious powers and a link to a town in Idaho. Delve into the mysteries of your origin the true nature of your power and your part in a conspiracy 40 years in the making.";
+            headerImage = "http://cdn.akamai.steamstatic.com/steam/apps/10150/header.jpg?t=1464729751";
+            computerRequirements = "OS: Windows(r) XP (with Service Pack 3) or Windows Vista(r)                    Processor: Intel(r) Core(tm)2 Duo 2.6 GHz or AMD Athlon(tm) 64 X2 4000+ or better                    Memory: Vista 2 GB RAM / XP 1 GB RAM                    Graphics: All NVIDIA(r) GeForce(r) 7800 GT 256 MB and better chipsets. All ATI Radeon(tm) X1800 256 MB and better chipsets                    DirectX(r): Microsoft DirectX 9.0c                    Hard Drive: 8GB of free hard drive space                    Sound: DirectX(r) 9.0c compliant sound card";
+            videoLink = "";
+            categoryid = categoryEntitySoftwareGame.getCategoryId();
+            tags = new ArrayList<>();
+            tags.add(tagEntitySlider.getTagId());
+            tags.add(tagEntityAction.getTagId());
+            tags.add(tagEntityAdventure.getTagId());
+            tags.add(tagEntityOpenworld.getTagId());
+            tags.add(tagEntitySingleplayer.getTagId());
+            Game prototype = gameSessionBeanLocal.createNewGame(
+                    new Game(parentAdvisory, headerImage, videoLink, name, description, computerRequirements,
+                            price, averageRating, releaseDate, sales),
+                    categoryid, tags, activision.getUserId());
+            activisionProducts.add(prototype);
+            
+            
+            //Popular list
+            name = "PLAYERUNKNOWN'S BATTLEGROUNDS";
+            releaseDate = LocalDate.parse("2017-12-21", formatter);
+            parentAdvisory = false;
+            averageRating = 86;
+            sales = 23033334;
+            price = 35.00;
+            description = "PLAYERUNKNOWN'S BATTLEGROUNDS is a battle royale shooter that pits 100 players against each other in a struggle for survival. Gather supplies and outwit your opponents to become the last person standing.";
+            headerImage = "https://steamcdn-a.akamaihd.net/steam/apps/578080/header.jpg?t=1587582005";
+            computerRequirements = "Minimum:OS: Windows 7 64bit Processor: Intel Core i3 or similar";
+            videoLink = "";
+            categoryid = categoryEntitySoftwareGame.getCategoryId();
+            tags = new ArrayList<>();
+            tags.add(tagEntityPopular.getTagId());
+            tags.add(tagEntityFPS.getTagId());
+            tags.add(tagEntityMultiplayer.getTagId());
+            Game pubg = gameSessionBeanLocal.createNewGame(new Game(parentAdvisory, headerImage, videoLink, name, description, computerRequirements, price, averageRating, releaseDate, sales),
+                    categoryid, tags, company1.getUserId());
+            company1Products.add(pubg);
+            
+            name = "Assassin's Creed Unity";
+            releaseDate = LocalDate.parse("2014-11-13", formatter);
+            parentAdvisory = false;
+            averageRating = 86;
+            sales = 3033334;
+            price = 35.00;
+            description = "Assassin’s Creed Unity is an action/adventure game set in the city of Paris during one of its darkest hours, the French Revolution. Take ownership of the story by customising Arno's equipement to make the experience unique to you, both visually and mechanically. In addition to an epic single-player experience, Assassin’s Creed Unity delivers the excitement of playing with up to three friends through online cooperative gameplay in specific missions. Throughout the game, take part in one of the most pivotal moments of French history in a compelling storyline and a breath-taking playground that brought you the city of lights of today.";
+            headerImage = "https://steamcdn-a.akamaihd.net/steam/apps/289650/header.jpg?t=1575045099";
+            computerRequirements = "Minimum:OS: Windows 7 64bit Processor: Intel Core i3 or similar";
+            videoLink = "";
+            categoryid = categoryEntitySoftwareGame.getCategoryId();
+            tags = new ArrayList<>();
+            tags.add(tagEntityPopular.getTagId());
+            tags.add(tagEntityAction.getTagId());
+            tags.add(tagEntityAdventure.getTagId());
+            tags.add(tagEntitySingleplayer.getTagId());
+            Game unity = gameSessionBeanLocal.createNewGame(new Game(parentAdvisory, headerImage, videoLink, name, description, computerRequirements, price, averageRating, releaseDate, sales),
+                    categoryid, tags, ubisoft.getUserId());
+            ubisoftProducts.add(unity);
+            
+            name = "Borderlands 3";
+            releaseDate = LocalDate.parse("2020-03-13", formatter);
+            parentAdvisory = false;
+            averageRating = 81;
+            sales = 645334;
+            price = 81.00;
+            description = "The original shooter-looter returns, packing bazillions of guns and a mayhem-fueled adventure! Blast through new worlds & enemies and save your home from the most ruthless cult leaders in the galaxy.";
+            headerImage = "https://steamcdn-a.akamaihd.net/steam/apps/397540/header.jpg?t=1587675179";
+            computerRequirements = "Minimum:OS: Windows 7 64bit Processor: Intel Core i3 or similar";
+            videoLink = "";
+            categoryid = categoryEntitySoftwareGame.getCategoryId();
+            tags = new ArrayList<>();
+            tags.add(tagEntityPopular.getTagId());
+            tags.add(tagEntityNew.getTagId());
+            tags.add(tagEntityAction.getTagId());
+            tags.add(tagEntityRPG.getTagId());
+            tags.add(tagEntityMultiplayer.getTagId());
+            Game borderland = gameSessionBeanLocal.createNewGame(new Game(parentAdvisory, headerImage, videoLink, name, description, computerRequirements, price, averageRating, releaseDate, sales),
+                    categoryid, tags, company1.getUserId());
+            company1Products.add(borderland);
+            
+            name = "Ori and the Will of the Wisps";
+            releaseDate = LocalDate.parse("2020-03-13", formatter);
+            parentAdvisory = false;
+            averageRating = 81;
+            sales = 645334;
+            price = 81.00;
+            description = "The little spirit Ori is no stranger to peril, but when a fateful flight puts the owlet Ku in harm’s way, it will take more than bravery to bring a family back together, heal a broken land, and discover Ori’s true destiny. From the creators of the acclaimed action-platformer Ori and the Blind Forest comes the highly anticipated sequel.";
+            headerImage = "https://steamcdn-a.akamaihd.net/steam/apps/1057090/header.jpg?t=1585866525";
+            computerRequirements = "Minimum:OS: Windows 7 64bit Processor: Intel Core i3 or similar";
+            videoLink = "";
+            categoryid = categoryEntitySoftwareGame.getCategoryId();
+            tags = new ArrayList<>();
+            tags.add(tagEntityPopular.getTagId());
+            tags.add(tagEntityNew.getTagId());
+            tags.add(tagEntityAction.getTagId());
+            tags.add(tagEntitySingleplayer.getTagId());
+            Game ori2 = gameSessionBeanLocal.createNewGame(new Game(parentAdvisory, headerImage, videoLink, name, description, computerRequirements, price, averageRating, releaseDate, sales),
+                    categoryid, tags, company1.getUserId());
+            company1Products.add(ori2);
+            
+            name = "The Elder Scrolls V: Skyrim Special Edition";
+            releaseDate = LocalDate.parse("2016-10-28", formatter);
+            parentAdvisory = false;
+            averageRating = 74;
+            sales = 5791198;
+            price = 53.90;
+            description = "Winner of more than 200 Game of the Year Awards, Skyrim Special Edition brings the epic fantasy to life in stunning detail. The Special Edition includes the critically acclaimed game and add-ons with all-new features like remastered art and effects, volumetric god rays, dynamic depth of field, screen-space reflections, and more. Skyrim Special Edition also brings the full power of mods to the PC and consoles. New quests, environments, characters, dialogue, armor, weapons and more – with Mods, there are no limits to what you can experience.";
+            headerImage = "http://cdn.akamai.steamstatic.com/steam/apps/489830/header.jpg?t=1473436209";
+            computerRequirements = "Minimum:OS: Windows 7 64-bit Windows 8.1 64-bit or Windows 10 64-bitProcessor: Intel i5-750/AMD Phenom II X4-945 Memory: 8 GB RAM Graphics: NVIDIA GTX 470 1GB /AMD HD 7870 2GB or better Storage: 12 GB available space";
+            videoLink = "";
+            categoryid = categoryEntitySoftwareGame.getCategoryId();
+            tags = new ArrayList<>();
+            tags.add(tagEntityPopular.getTagId());
+            tags.add(tagEntitySingleplayer.getTagId());
+            tags.add(tagEntityOpenworld.getTagId());
+            tags.add(tagEntityAdventure.getTagId());
+            tags.add(tagEntityRPG.getTagId());
+            Game elderscrollsV = gameSessionBeanLocal.createNewGame(new Game(parentAdvisory, headerImage, videoLink, name, description, computerRequirements, price, averageRating, releaseDate, sales),
+                    categoryid, tags, company1.getUserId());
+            company1Products.add(elderscrollsV);
+            
+            name = "Need For Speed: Hot Pursuit";
+            releaseDate = LocalDate.parse("2010-11-28", formatter);
+            parentAdvisory = false;
+            averageRating = 86;
+            sales = 2791199;
+            price = 26.90;
+            description = "Need for Speed Hot Pursuit launches you into a new open-world landscape behind the wheel of the world's fastest and most beautiful cars. From Criterion, the award-winning studio behind the Burnout series, Hot Pursuit will redefine racing games for a whole new generation.";
+            headerImage = "https://steamcdn-a.akamaihd.net/steam/apps/47870/header.jpg?t=1588270654";
+            computerRequirements = "Minimum:OS: Windows 7 64-bit Windows 8.1 64-bit or Windows 10 64-bitProcessor: Intel i5-750/AMD Phenom II X4-945 Memory: 8 GB RAM Graphics: NVIDIA GTX 470 1GB /AMD HD 7870 2GB or better Storage: 12 GB available space";
+            videoLink = "";
+            categoryid = categoryEntitySoftwareGame.getCategoryId();
+            tags = new ArrayList<>();
+            tags.add(tagEntityPopular.getTagId());
+            tags.add(tagEntitySingleplayer.getTagId());
+            tags.add(tagEntityRacing.getTagId());
+            Game needforspeed = gameSessionBeanLocal.createNewGame(new Game(parentAdvisory, headerImage, videoLink, name, description, computerRequirements, price, averageRating, releaseDate, sales),
+                    categoryid, tags, company1.getUserId());
+            company1Products.add(needforspeed);
+            
+            name = "Overcooked! 2";
+            releaseDate = LocalDate.parse("2018-08-08", formatter);
+            parentAdvisory = false;
+            averageRating = 80;
+            sales = 5791199;
+            price = 22.00;
+            description = "Overcooked returns with a brand-new helping of chaotic cooking action! Journey back to the Onion Kingdom and assemble your team of chefs in classic couch co-op or online play for up to four players. Hold onto your aprons … it’s time to save the world (again!)";
+            headerImage = "https://steamcdn-a.akamaihd.net/steam/apps/728880/header.jpg?t=1587489613";
+            computerRequirements = "Minimum:OS: Windows 7 64-bit Windows 8.1 64-bit or Windows 10 64-bitProcessor: Intel i5-750/AMD Phenom II X4-945 Memory: 8 GB RAM Graphics: NVIDIA GTX 470 1GB /AMD HD 7870 2GB or better Storage: 12 GB available space";
+            videoLink = "";
+            categoryid = categoryEntitySoftwareGame.getCategoryId();
+            tags = new ArrayList<>();
+            tags.add(tagEntityPopular.getTagId());
+            tags.add(tagEntityMultiplayer.getTagId());
+            tags.add(tagEntityCasual.getTagId());
+            Game overcook = gameSessionBeanLocal.createNewGame(new Game(parentAdvisory, headerImage, videoLink, name, description, computerRequirements, price, averageRating, releaseDate, sales),
+                    categoryid, tags, company1.getUserId());
+            company1Products.add(overcook);
+            
+            name = "The Crew 2";
+            releaseDate = LocalDate.parse("2018-06-29", formatter);
+            parentAdvisory = false;
+            averageRating = 80;
+            sales = 3491199;
+            price = 58.00;
+            description = "The newest iteration in the revolutionary franchise, The Crew® 2 captures the thrill of the American motorsports spirit in one of the most exhilarating open worlds ever created. Welcome to Motornation, a huge, varied, action-packed, and beautiful playground built for motorsports throughout the entire US of A. Enjoy unrestrained exploration on ground, sea, and sky. From coast to coast, street and pro racers, off-road explorers, and freestylers gather and compete in all kinds of disciplines. Join them in high-octane contests and share every glorious moment with the world.";
+            headerImage = "https://steamcdn-a.akamaihd.net/steam/apps/646910/header.jpg?t=1586868345";
+            computerRequirements = "Minimum:OS: Windows 7 64-bit Windows 8.1 64-bit or Windows 10 64-bitProcessor: Intel i5-750/AMD Phenom II X4-945 Memory: 8 GB RAM Graphics: NVIDIA GTX 470 1GB /AMD HD 7870 2GB or better Storage: 12 GB available space";
+            videoLink = "";
+            categoryid = categoryEntitySoftwareGame.getCategoryId();
+            tags = new ArrayList<>();
+            tags.add(tagEntityPopular.getTagId());
+            tags.add(tagEntitySingleplayer.getTagId());
+            tags.add(tagEntityMultiplayer.getTagId());
+            tags.add(tagEntityRacing.getTagId());
+            tags.add(tagEntityOpenworld.getTagId());
+            Game crew2 = gameSessionBeanLocal.createNewGame(new Game(parentAdvisory, headerImage, videoLink, name, description, computerRequirements, price, averageRating, releaseDate, sales),
+                    categoryid, tags, ubisoft.getUserId());
+            ubisoftProducts.add(crew2);
+            
+            name = "Kingdom Rush Frontiers";
+            releaseDate = LocalDate.parse("2016-07-25", formatter);
+            parentAdvisory = false;
+            averageRating = 82;
+            sales = 491199;
+            price = 10.00;
+            description = "Bigger and badder than ever before, Kingdom Rush: Frontiers is a whole new level of the furiously fast, enchantingly charming gameplay that made the original title an award-winning hit. Command your troops through an epic (mis)adventure as you defend exotic lands from dragons, man-eating plants, and ghastly denizens of the underworld -all with flashy new towers, levels, heroes, and more goodies to help you crush your foes to a pulp.";
+            headerImage = "https://steamcdn-a.akamaihd.net/steam/apps/458710/header.jpg?t=1560522460";
+            computerRequirements = "Minimum:OS: Windows 7 64-bit Windows 8.1 64-bit or Windows 10 64-bitProcessor: Intel i5-750/AMD Phenom II X4-945 Memory: 8 GB RAM Graphics: NVIDIA GTX 470 1GB /AMD HD 7870 2GB or better Storage: 12 GB available space";
+            videoLink = "";
+            categoryid = categoryEntitySoftwareGame.getCategoryId();
+            tags = new ArrayList<>();
+            tags.add(tagEntityPopular.getTagId());
+            tags.add(tagEntitySingleplayer.getTagId());
+            tags.add(tagEntityStrategy.getTagId());
+            Game kingdomrush = gameSessionBeanLocal.createNewGame(new Game(parentAdvisory, headerImage, videoLink, name, description, computerRequirements, price, averageRating, releaseDate, sales),
+                    categoryid, tags, company1.getUserId());
+            company1Products.add(kingdomrush);
 
             name = "Portal";
             releaseDate = LocalDate.parse("2007-10-10", formatter);
@@ -265,7 +556,6 @@ public class DataInitSessionBean {
             videoLink = "https://steamcdn-a.akamaihd.net/steam/apps/256692017/movie480_vp9.webm?t=1586312838";
             categoryid = categoryEntitySoftwareGame.getCategoryId();
             tags = new ArrayList<>();
-            tags.add(tagEntityPopular.getTagId());
             tags.add(tagEntityMultiplayer.getTagId());
             tags.add(tagEntityMOBA.getTagId());
             Game dota2 = gameSessionBeanLocal.createNewGame(
@@ -306,8 +596,6 @@ public class DataInitSessionBean {
             videoLink = "https://steamcdn-a.akamaihd.net/steam/apps/81958/movie_max.webm?t=1554409259";
             categoryid = categoryEntitySoftwareGame.getCategoryId();
             tags = new ArrayList<>();
-            tags.add(tagEntityPopular.getTagId());
-            tags.add(tagEntitySlider.getTagId());
             tags.add(tagEntityFPS.getTagId());
             tags.add(tagEntityMultiplayer.getTagId());
             Game csgo = gameSessionBeanLocal.createNewGame(
@@ -421,50 +709,8 @@ public class DataInitSessionBean {
                     categoryid, tags, company1.getUserId());
             company1Products.add(doom2);
 
-            name = "Prototype";
-            releaseDate = LocalDate.parse("2009-06-10", formatter);
-            parentAdvisory = true;
-            averageRating = 79;
-            sales = 482271;
-            price = 20.00;
-            description = "You are the Prototype Alex Mercer a man without memory armed with amazing shape-shifting abilities hunting your way to the heart of the conspiracy which created you; making those responsible pay.                    Fast & Deadly Shape-Shifting Combat: Reconfigure your body to the situation at hand. From Claws to Blades to Hammers to Whips choose the right weapon for the situation. Change to a shield or armor for defense or use advanced sensory powers (thermal vision infected vision) to track your enemies                    Over-the-Top Locomotion & Agility: Seamlessly and fluidly bound from building to building run up walls bounce off cars and everything in your path. Adaptive parkour lets you move freely through the open-world environments of New York City.                    Unique Disguising Abilities: Consume anyone at anytime take on their appearances and assume their memories and special abilities.                    Deep Conspiracy-Driven Storyline: Wake up with no memory of the past...just mysterious powers and a link to a town in Idaho. Delve into the mysteries of your origin the true nature of your power and your part in a conspiracy 40 years in the making.";
-            headerImage = "http://cdn.akamai.steamstatic.com/steam/apps/10150/header.jpg?t=1464729751";
-            computerRequirements = "OS: Windows(r) XP (with Service Pack 3) or Windows Vista(r)                    Processor: Intel(r) Core(tm)2 Duo 2.6 GHz or AMD Athlon(tm) 64 X2 4000+ or better                    Memory: Vista 2 GB RAM / XP 1 GB RAM                    Graphics: All NVIDIA(r) GeForce(r) 7800 GT 256 MB and better chipsets. All ATI Radeon(tm) X1800 256 MB and better chipsets                    DirectX(r): Microsoft DirectX 9.0c                    Hard Drive: 8GB of free hard drive space                    Sound: DirectX(r) 9.0c compliant sound card";
-            videoLink = "";
-            categoryid = categoryEntitySoftwareGame.getCategoryId();
-            tags = new ArrayList<>();
-            tags.add(tagEntityAction.getTagId());
-            tags.add(tagEntityAdventure.getTagId());
-            tags.add(tagEntityOpenworld.getTagId());
-            tags.add(tagEntitySingleplayer.getTagId());
-            Game prototype = gameSessionBeanLocal.createNewGame(
-                    new Game(parentAdvisory, headerImage, videoLink, name, description, computerRequirements,
-                            price, averageRating, releaseDate, sales),
-                    categoryid, tags, activision.getUserId());
-            activisionProducts.add(prototype);
 
-            name = "Sid Meier's Civilization VI";
-            releaseDate = LocalDate.parse("2016-10-21", formatter);
-            parentAdvisory = false;
-            averageRating = 88;
-            sales = 1363057;
-            price = 74.90;
-            description = "Civilization VI offers new ways to engage with your world: cities now physically expand across the map, active research in technology and culture unlocks new potential, and competing leaders will pursue their own agendas based on their historical traits as you race for one of five ways to achieve victory in the game.";
-            headerImage = "http://cdn.akamai.steamstatic.com/steam/apps/289070/header.jpg?t=1477354938";
-            computerRequirements = "Minimum:OS: Windows 7x64 / Windows 8.1x64 / Windows 10x64Processor: Intel Core i3 2.5 Ghz or AMD Phenom II 2.6 Ghz or greaterMemory: 4 GB RAMGraphics: 1 GB & AMD 5570 or nVidia 450DirectX: Version 11Storage: 12 GB available spaceSound Card: DirectX Compatible Sound Device";
-            categoryid = categoryEntitySoftwareGame.getCategoryId();
-            videoLink = "https://steamcdn-a.akamaihd.net/steam/apps/256672695/movie480.webm?t=1476737061";
-            tags = new ArrayList<>();
-            tags.add(tagEntityPopular.getTagId());
-            tags.add(tagEntitySlider.getTagId());
-            tags.add(tagEntityStrategy.getTagId());
-            tags.add(tagEntityMultiplayer.getTagId());
-            tags.add(tagEntitySingleplayer.getTagId());
-            Game civVI = gameSessionBeanLocal.createNewGame(
-                    new Game(parentAdvisory, headerImage, videoLink, name, description, computerRequirements,
-                            price, averageRating, releaseDate, sales),
-                    categoryid, tags, microprose.getUserId());
-            microproseProducts.add(civVI);
+            
 
             name = "Sid Meier's Civilization V";
             releaseDate = LocalDate.parse("2010-09-21", formatter);
@@ -529,27 +775,6 @@ public class DataInitSessionBean {
                     categoryid, tags, rockstar.getUserId());
             rockstarProducts.add(gtavicecity);
 
-            name = "Grand Theft Auto V";
-            releaseDate = LocalDate.parse("2015-04-13", formatter);
-            parentAdvisory = true;
-            averageRating = 96;
-            sales = 5886074;
-            price = 40.00;
-            description = "When a young street hustler a retired bank robber and a terrifying psychopath find themselves entangled with some of the most frightening and deranged elements of the criminal underworld the U.S. government and the entertainment industry they must pull off a series of dangerous heists to survive in a ruthless city in which they can trust nobody least of all each other. Grand Theft Auto V for PC offers players the option to explore the award-winning world of Los Santos and Blaine County in resolutions of up to 4k and beyond as well as the chance to experience the game running at 60 frames per second.  The game offers players a huge range of PC-specific customization options including over 25 separate configurable settings for texture quality shaders tessellation anti-aliasing and more as well as support and extensive customization for mouse and keyboard controls. Additional options include a population density slider to control car and pedestrian traffic as well as dual and triple monitor support 3D compatibility and plug-and-play controller support.   Grand Theft Auto V for PC also includes Grand Theft Auto Online with support for 30 players and two spectators. Grand Theft Auto Online for PC will include all existing gameplay upgrades and Rockstar-created content released since the launch of Grand Theft Auto Online including Heists and Adversary modes. The PC version of Grand Theft Auto V and Grand Theft Auto Online features First Person Mode giving players the chance to explore the incredibly detailed world of Los Santos and Blaine County in an entirely new way. Grand Theft Auto V for PC also brings the debut of the Rockstar Editor a powerful suite of creative tools to quickly and easily capture edit and share game footage from within Grand Theft Auto V and Grand Theft Auto Online. The Rockstar Editors Director Mode allows players the ability to stage their own scenes using prominent story characters pedestrians and even animals to bring their vision to life. Along with advanced camera manipulation and editing effects including fast and slow motion and an array of camera filters players can add their own music using songs from GTAV radio stations or dynamically control the intensity of the games score. Completed videos can be uploaded directly from the Rockstar Editor to YouTube and the Rockstar Games Social Club for easy sharing.   Soundtrack artists The Alchemist and Oh No return as hosts of the new radio station The Lab FM. The station features new and exclusive music from the production duo based on and inspired by the games original soundtrack. Collaborating guest artists include Earl Sweatshirt Freddie Gibbs Little Dragon Killer Mike Sam Herring from Future Islands and more. Players can also discover Los Santos and Blaine County while enjoying their own music through Self Radio a new radio station that will host player-created custom soundtracks. Existing players on PlayStation(r)3 PlayStation(r)4 Xbox 360 and Xbox One are able to transfer their Grand Theft Auto Online characters and progression to PC.  For more information please visit rockstargames.com/gtaonline/charactertransfer.";
-            headerImage = "http://cdn.akamai.steamstatic.com/steam/apps/271590/header.jpg?t=1470324156";
-            computerRequirements = "Minimum:OS: Windows 8.1 64 Bit Windows 8 64 Bit Windows 7 64 Bit Service Pack 1 Windows Vista 64 Bit Service Pack 2* (*NVIDIA video card recommended if running Vista OS)Processor: Intel Core 2 Quad CPU Q6600 @ 2.40GHz (4 CPUs) / AMD Phenom 9850 Quad-Core Processor (4 CPUs) @ 2.5GHzMemory: 4 GB RAMGraphics: NVIDIA 9800 GT 1GB / AMD HD 4870 1GB (DX 10 10.1 11)Storage: 65 GB available spaceSound Card: 100% DirectX 10 compatibleAdditional Notes: Over time downloadable content and programming changes will change the system requirements for this game.  Please refer to your hardware manufacturer and www.rockstargames.com/support for current compatibility information. Some system components such as mobile chipsets integrated and AGP graphics cards may be incompatible. Unlisted specifications may not be supported by publisher.     Other requirements:  Installation and online play requires log-in to Rockstar Games Social Club (13+) network; internet connection required for activation online play and periodic entitlement verification; software installations required including Rockstar Games Social Club platform DirectX  Chromium and Microsoft Visual C++ 2008 sp1 Redistributable Package and authentication software that recognizes certain hardware attributes for entitlement digital rights management system and other support purposes.     SINGLE USE SERIAL CODE REGISTRATION VIA INTERNET REQUIRED; REGISTRATION IS LIMITED TO ONE ROCKSTAR GAMES SOCIAL CLUB ACCOUNT (13+) PER SERIAL CODE; ONLY ONE PC LOG-IN ALLOWED PER SOCIAL CLUB ACCOUNT AT ANY TIME; SERIAL CODE(S) ARE NON-TRANSFERABLE ONCE USED; SOCIAL CLUB ACCOUNTS ARE NON-TRANSFERABLE.  Partner Requirements:  Please check the terms of service of this site before purchasing this software.";
-            videoLink = "https://steamcdn-a.akamaihd.net/steam/apps/256703142/movie_max.mp4?t=1513275242";
-            categoryid = categoryEntitySoftwareGame.getCategoryId();
-            tags = new ArrayList<>();
-            tags.add(tagEntitySlider.getTagId());
-            tags.add(tagEntityPopular.getTagId());
-            tags.add(tagEntityOpenworld.getTagId());
-            tags.add(tagEntityAction.getTagId());
-            Game gtaV = gameSessionBeanLocal.createNewGame(
-                    new Game(parentAdvisory, headerImage, videoLink, name, description, computerRequirements,
-                            price, averageRating, releaseDate, sales),
-                    categoryid, tags, rockstar.getUserId());
-            rockstarProducts.add(gtaV);
 
             name = "Call of Duty: Black Ops III";
             releaseDate = LocalDate.parse("2015-10-05", formatter);
@@ -714,25 +939,7 @@ public class DataInitSessionBean {
                     categoryid, tags, company1.getUserId());
             company1Products.add(garysmod);
 
-            name = "Watch Dogs 2";
-            releaseDate = LocalDate.parse("2016-11-29", formatter);
-            parentAdvisory = true;
-            averageRating = 86;
-            sales = 147605;
-            price = 70.00;
-            description = "Play as Marcus Holloway, a brilliant young hacker living in the birthplace of the tech revolution, the San Francisco Bay Area. Team up with Dedsec, a notorious group of hackers, to execute the biggest hack in history; take down ctOS 2.0, an invasive operating system being used by criminal masterminds to monitor and manipulate citizens on a massive scale.";
-            headerImage = "http://cdn.akamai.steamstatic.com/steam/apps/447040/header.jpg?t=1481044335";
-            computerRequirements = "Minimum:OS: Windows 7 SP1 Windows 8.1 Windows 10 (64bit versions only)Processor: Intel Core i5 2400s @ 2.5 GHz AMD FX 6120 @ 3.5 GHz or betterMemory: 6 GB RAMGraphics: NVIDIA GeForce GTX 660 with 2 GB VRAM or AMD Radeon HD 7870 with 2 GB VRAM or better - See supported List*Network: Broadband Internet connectionStorage: 50 GB available spaceSound Card: DirectX compatible using the latest driversAdditional Notes: Periphericals: Microsoft Xbox One Controller DUALSHOCK(r) 4 Controller Windows-compatible keyboard mouse optional controller / Multiplayer: 256 kbps or faster broadband connection / Note: This product supports 64-bit operating systems only. Laptop versions of these cards may work but are not officially supported. For the most up-to-date requirement listings please visit the FAQ on our support website at support.ubi.com.  High speed internet access and a valid Ubisoft account are required to activate the game after installation to authenticate your system and continue gameplay after any re-activation access online features play online or unlock exclusive content.";
-            videoLink = "";
-            categoryid = categoryEntitySoftwareGame.getCategoryId();
-            tags = new ArrayList<>();
-            tags.add(tagEntitySlider.getTagId());
-            tags.add(tagEntityAction.getTagId());
-            tags.add(tagEntitySingleplayer.getTagId());
-            tags.add(tagEntityOpenworld.getTagId());
-            Game watchdogs2 = gameSessionBeanLocal.createNewGame(new Game(parentAdvisory, headerImage, videoLink, name, description, computerRequirements, price, averageRating, releaseDate, sales),
-                    categoryid, tags, ubisoft.getUserId());
-            ubisoftProducts.add(watchdogs2);
+            
 
             name = "Call of Duty: Infinite Warfare";
             releaseDate = LocalDate.parse("2016-11-03", formatter);
@@ -853,26 +1060,6 @@ public class DataInitSessionBean {
             Game nba2k17 = gameSessionBeanLocal.createNewGame(new Game(parentAdvisory, headerImage, videoLink, name, description, computerRequirements, price, averageRating, releaseDate, sales),
                     categoryid, tags, company1.getUserId());
             company1Products.add(nba2k17);
-
-            name = "The Elder Scrolls V: Skyrim Special Edition";
-            releaseDate = LocalDate.parse("2016-10-28", formatter);
-            parentAdvisory = false;
-            averageRating = 74;
-            sales = 5791198;
-            price = 53.99;
-            description = "Winner of more than 200 Game of the Year Awards, Skyrim Special Edition brings the epic fantasy to life in stunning detail. The Special Edition includes the critically acclaimed game and add-ons with all-new features like remastered art and effects, volumetric god rays, dynamic depth of field, screen-space reflections, and more. Skyrim Special Edition also brings the full power of mods to the PC and consoles. New quests, environments, characters, dialogue, armor, weapons and more – with Mods, there are no limits to what you can experience.";
-            headerImage = "http://cdn.akamai.steamstatic.com/steam/apps/489830/header.jpg?t=1473436209";
-            computerRequirements = "Minimum:OS: Windows 7 64-bit Windows 8.1 64-bit or Windows 10 64-bitProcessor: Intel i5-750/AMD Phenom II X4-945 Memory: 8 GB RAM Graphics: NVIDIA GTX 470 1GB /AMD HD 7870 2GB or better Storage: 12 GB available space";
-            videoLink = "";
-            categoryid = categoryEntitySoftwareGame.getCategoryId();
-            tags = new ArrayList<>();
-            tags.add(tagEntitySingleplayer.getTagId());
-            tags.add(tagEntityOpenworld.getTagId());
-            tags.add(tagEntityAdventure.getTagId());
-            tags.add(tagEntityRPG.getTagId());
-            Game elderscrollsV = gameSessionBeanLocal.createNewGame(new Game(parentAdvisory, headerImage, videoLink, name, description, computerRequirements, price, averageRating, releaseDate, sales),
-                    categoryid, tags, company1.getUserId());
-            company1Products.add(elderscrollsV);
 
             name = "Football Manager 2017";
             releaseDate = LocalDate.parse("2016-11-04", formatter);
@@ -1000,7 +1187,7 @@ public class DataInitSessionBean {
             videoLink = "";
             categoryid = categoryEntitySoftwareGame.getCategoryId();
             tags = new ArrayList<>();
-            tags.add(tagEntitySlider.getTagId());
+            tags.add(tagEntityPopular.getTagId());
             tags.add(tagEntityAdventure.getTagId());
             tags.add(tagEntityAction.getTagId());
             tags.add(tagEntitySingleplayer.getTagId());
