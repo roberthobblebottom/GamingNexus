@@ -10,10 +10,10 @@
                 xmlns:ez="http://xmlns.jcp.org/jsf/composite/ezcomp">
 
     <ui:define name="content">
-        
+
         <h:form>
             <p:menubar>
-                 <p:menuitem value="Create" onclick="PF('dialogCreateNewSystemAdmin').show()" icon="pi pi-user-plus" />
+                <p:menuitem value="Create" onclick="PF('dialogCreateNewSystemAdmin').show()" icon="pi pi-user-plus" />
 
             </p:menubar>
             <br/>
@@ -278,7 +278,8 @@
                             <p:outputLabel for="password" value="Password " />
                         </p:column>
                         <p:column>
-                            <p:inputText id="password" value="#{systemAdminManagementManagedBean.selectedSystemAdminToUpdate.password}" placeholder="password" />
+                            <p:inputText id="password"  value="#{systemAdminManagementManagedBean.updatedPassword}" placeholder="password" />
+
                         </p:column>
                         <p:column>
                             <p:message for="password" />
