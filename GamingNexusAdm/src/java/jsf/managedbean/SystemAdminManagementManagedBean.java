@@ -12,6 +12,7 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.inject.Named;
@@ -35,6 +36,8 @@ public class SystemAdminManagementManagedBean implements Serializable {
     private List<SystemAdmin> systemAdmins;
     private List<SystemAdmin> filteredSystemAdmins;
 
+    private String updatedPassword;
+    
     @Inject
     private ViewSystemAdminManagedBean viewSystemAdminManagedBean;
 
@@ -42,6 +45,8 @@ public class SystemAdminManagementManagedBean implements Serializable {
 
     private SystemAdmin newSystemAdmin;
     private SystemAdmin selectedSystemAdminToUpdate;
+    
+    private SystemAdmin currentSystemAdmin;
 
     public SystemAdminManagementManagedBean() {
         newSystemAdmin = new SystemAdmin();
@@ -88,8 +93,10 @@ public class SystemAdminManagementManagedBean implements Serializable {
     public void updateSystemAdmin(ActionEvent event) {
 
         try {
+            selectedSystemAdminToUpdate.setUpdatedPassword(updatedPassword);
+            
             systemAdminSessionBeanLocal.updateSystemAdmin(selectedSystemAdminToUpdate);
-
+            setSelectedSystemAdminToUpdate(new SystemAdmin());
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "System Admin updated successfully", null));
         } catch (SystemAdminNotFoundException ex) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "An error has occurred while updating system admin: " + ex.getMessage(), null));
@@ -190,5 +197,13 @@ public class SystemAdminManagementManagedBean implements Serializable {
 
     public void setViewSystemAdminManagedBean(ViewSystemAdminManagedBean viewSystemAdminManagedBean) {
         this.viewSystemAdminManagedBean = viewSystemAdminManagedBean;
+    }
+
+    public String getUpdatedPassword() {
+        return updatedPassword;
+    }
+
+    public void setUpdatedPassword(String updatedPassword) {
+        this.updatedPassword = updatedPassword;
     }
 }

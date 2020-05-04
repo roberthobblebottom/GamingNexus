@@ -49,9 +49,13 @@ public abstract class User implements Serializable {
     @Column(columnDefinition = "CHAR(32) NOT NULL")
     @NotNull
     @Size(min = 6)
-    private String password;
+    protected String password;
     @Column(columnDefinition = "CHAR(32) NOT NULL")
     private String salt;
+    @Column(columnDefinition = "CHAR(32)")
+    @Size(min = 6)
+    private String updatedPassword;
+    
     protected String profilePictureURL;//https://stackoverflow.com/questions/29208007/what-is-the-data-type-for-images-in-java
     protected LocalDateTime lastOnline;
 
@@ -230,6 +234,14 @@ public abstract class User implements Serializable {
 
     public void setSalt(String salt) {
         this.salt = salt;
+    }
+
+    public String getUpdatedPassword() {
+        return updatedPassword;
+    }
+
+    public void setUpdatedPassword(String updatedPassword) {
+        this.password = updatedPassword;
     }
 
 }

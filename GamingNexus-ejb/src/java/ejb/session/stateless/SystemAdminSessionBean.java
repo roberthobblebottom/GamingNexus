@@ -106,15 +106,15 @@ public class SystemAdminSessionBean implements SystemAdminSessionBeanLocal {
 //        {
 
         SystemAdmin systemAdminToUpdate = retrieveSystemAdminById(systemAdmin.getUserId());
-        
+
         systemAdminToUpdate.setAddress(systemAdmin.getAddress());
         systemAdminToUpdate.setCountry(systemAdmin.getCountry());
         systemAdminToUpdate.setEmail(systemAdmin.getEmail());
         systemAdminToUpdate.setLastOnline(systemAdmin.getLastOnline());
-        
-        changePassword(systemAdmin.getPassword(),systemAdminToUpdate);
-        systemAdminToUpdate.setPhoneNumber(systemAdmin.getPhoneNumber());
-        systemAdminToUpdate.setProfilePictureURL(systemAdmin.getProfilePictureURL());
+
+        if (systemAdmin.getPassword().length() != 32) {
+            systemAdminToUpdate.setUpdatedPassword(CryptographicHelper.getInstance().byteArrayToHexString(CryptographicHelper.getInstance().doMD5Hashing(systemAdmin.getPassword() + systemAdminToUpdate.getSalt())));
+        }
 //            }
 //        else
 //        {
@@ -125,9 +125,9 @@ public class SystemAdminSessionBean implements SystemAdminSessionBeanLocal {
     public void changePassword(String password, SystemAdmin systemAdminToUpdate) {
         String salt = systemAdminToUpdate.getSalt();
         System.out.println("This sysadmin to update" + systemAdminToUpdate.getUsername() + "'s salt is " + systemAdminToUpdate.getSalt());
-        
+
     }
-    
+
     @Override
     public void deleteSystemAdmin(Long systemAdminId) throws SystemAdminNotFoundException {
         SystemAdmin systemAdminToRemove = retrieveSystemAdminById(systemAdminId);

@@ -19,7 +19,7 @@ import util.security.CryptographicHelper;
 
 /**
  *
- * @author root
+ * @author Jin yichen
  */
 @Stateless
 public class UserSessionBean implements UserSessionBeanLocal {
@@ -42,6 +42,7 @@ public class UserSessionBean implements UserSessionBeanLocal {
     
     
    
+    @Override
     public User userLogin(String username, String password) throws InvalidLoginCredentialException {
         try {
             User user = retrieveUserByUsername(username);

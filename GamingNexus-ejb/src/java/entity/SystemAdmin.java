@@ -14,7 +14,7 @@ import javax.persistence.Entity;
  * @author Jin Yichen
  */
 @Entity
-public class SystemAdmin  extends User implements Serializable{
+public class SystemAdmin extends User implements Serializable {
 
     public SystemAdmin() {
     }
@@ -23,5 +23,4 @@ public class SystemAdmin  extends User implements Serializable{
         super(phoneNumber, address, email, country, username, password);
     }
 
-        
 }
