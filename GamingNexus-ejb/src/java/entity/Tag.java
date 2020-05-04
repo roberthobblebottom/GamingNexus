@@ -18,7 +18,7 @@ import javax.validation.constraints.Size;
 
 /**
  *
- * @author root
+ * @author jin yichen
  */
 @Entity
 public class Tag implements Serializable {

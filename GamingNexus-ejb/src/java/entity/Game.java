@@ -14,7 +14,7 @@ import javax.persistence.OneToMany;
 
 /**
  *
- * @author root
+ * @author jin yichen
  */
 @Entity
 public class Game extends Product implements Serializable {

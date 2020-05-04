@@ -17,7 +17,7 @@ import javax.validation.constraints.Size;
 
 /**
  *
- * @author jinyichen
+ * @author jinyichen 
  */
 @Entity
 public class Customer extends User implements Serializable {
