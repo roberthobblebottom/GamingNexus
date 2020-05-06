@@ -224,12 +224,11 @@ public class CompanyProductManagedBean implements Serializable {
         }
 
     }
-//
 
     public void doUpdateProduct(ActionEvent event) {
-        // setSelectedProductToUpdate((Product)event.getComponent().getAttributes().get("productEntityToUpdate"));
-//
         Product productToBeUpdated = (Product) event.getComponent().getAttributes().get("productToBeUpdated");
+        
+        System.out.println("*********doUpdateProduct productToBeUpdated name: "+productToBeUpdated.getName());
         this.viewProductManagedBean.setProductToViewInDetails(productToBeUpdated);
         this.releaseDateToBeUpdated = this.convertToDateViaInstant(this.viewProductManagedBean.getProductToViewInDetails().getReleaseDate());
     }

@@ -39,12 +39,6 @@ public class Game extends Product implements Serializable {
         this.parentAdvisory = parentAdvisory;
     }
 
-  
-
-   
-    
-   
-
 
     /**
      * @return the gameAccounts

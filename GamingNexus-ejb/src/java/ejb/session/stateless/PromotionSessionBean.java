@@ -125,12 +125,7 @@ public class PromotionSessionBean implements PromotionSessionBeanLocal {
             retrievedPromotions.addAll(product.getPromotions());
         });
         System.out.println("Company : " + company.getUsername());
-        companyProducts.forEach(product -> {
-            System.out.println("Product name: " + product.getName());
-        });
-        retrievedPromotions.forEach(promotion -> {
-            System.out.println("Promotion Name: " + promotion.getName());
-        });
+       
         return new ArrayList<>(retrievedPromotions);
     }
 

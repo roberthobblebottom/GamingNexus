@@ -1,14 +1,20 @@
-    /*
+/*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
 package entity;
 
+import ejb.session.stateless.TagSessionBeanLocal;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -56,10 +62,8 @@ public abstract class Product implements Serializable {
     //@Max(100)
     @NotNull
     private double averageRating;
-    
+
     private LocalDate releaseDate;
-    
-    
 
     @Lob
     @Column
@@ -73,7 +77,7 @@ public abstract class Product implements Serializable {
     @ManyToOne(optional = false)
     private Category category;
     @ManyToMany(mappedBy = "products")
-    private List<Tag> tags;   
+    private List<Tag> tags;
     @ManyToMany(mappedBy = "products")
     private List<Promotion> promotions;
     @OneToMany(mappedBy = "product")
@@ -93,8 +97,8 @@ public abstract class Product implements Serializable {
         forums = new ArrayList<>();
     }
 
-    public Product(String name, String description, String computerRequirements, double price, double averageRating, 
-            LocalDate releaseDate,  List<String> pictureURLs, List<String> videoURLs, Company company, Category category, List<Tag> tags) {
+    public Product(String name, String description, String computerRequirements, double price, double averageRating,
+            LocalDate releaseDate, List<String> pictureURLs, List<String> videoURLs, Company company, Category category, List<Tag> tags) {
         this.name = name;
         this.description = description;
         this.computerRequirements = computerRequirements;
@@ -105,14 +109,15 @@ public abstract class Product implements Serializable {
         this.videoURLs = videoURLs;
         this.company = company;
         this.category = category;
+        tags.forEach(tag -> {
+            if (!tag.getProducts().contains(this)) {
+                tag.getProducts().add(this);
+            }
+        }
+        );
         this.tags = tags;
-      
-        
-    }
 
-    
-  
-    
+    }
 
     public void addTag(Tag tagEntity) {
         if (tagEntity != null) {
@@ -351,7 +356,6 @@ public abstract class Product implements Serializable {
         this.forums = forums;
     }
 
-
     /**
      * @return the releaseDate
      */
@@ -365,9 +369,6 @@ public abstract class Product implements Serializable {
     public void setReleaseDate(LocalDate releaseDate) {
         this.releaseDate = releaseDate;
     }
-
-
-  
 
     /**
      * @return the pictureURLs
@@ -396,7 +397,5 @@ public abstract class Product implements Serializable {
     public void setVideoURLs(List<String> videoURLs) {
         this.videoURLs = videoURLs;
     }
-
-    
 
 }
