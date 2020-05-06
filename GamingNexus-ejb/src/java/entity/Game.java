@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
+import util.enumeration.ParentAdvisory;
 
 /**
  *
@@ -20,10 +21,7 @@ import javax.persistence.OneToMany;
 public class Game extends Product implements Serializable {
 
     
-    private Boolean parentAdvisory;
-    private List<String> gamePicturesURLs;
-    private List<String> gameTrailersURLS;
-    
+    private ParentAdvisory parentAdvisory;
 
 
     @OneToMany(mappedBy = "game")
@@ -33,42 +31,20 @@ public class Game extends Product implements Serializable {
         super();
         gameAccounts = new ArrayList<>();
     }
-    
-    public Game(Boolean parentAdvisory, String headerImage, String videoLink, String name, String description, String computerRequirements, double price, 
-            double averageRating, LocalDate releaseDate, long sales) {
-        
-        super(name, description, computerRequirements, price, averageRating, releaseDate, sales, headerImage, videoLink);
+
+    public Game(ParentAdvisory parentAdvisory, String name, String description, String computerRequirements, 
+            double price, double averageRating, LocalDate releaseDate, 
+            List<String> pictureURLs, List<String> videoURLs, Company company, Category category, List<Tag> tags) {
+        super(name, description, computerRequirements, price, averageRating, releaseDate,  pictureURLs, videoURLs, company, category, tags);
         this.parentAdvisory = parentAdvisory;
     }
 
+  
 
-    /**
-     * @return the gamePicturesURLs
-     */
-    public List<String> getGamePicturesURLs() {
-        return gamePicturesURLs;
-    }
+   
+    
+   
 
-    /**
-     * @param gamePicturesURLs the gamePicturesURLs to set
-     */
-    public void setGamePicturesURLs(List<String> gamePicturesURLs) {
-        this.gamePicturesURLs = gamePicturesURLs;
-    }
-
-    /**
-     * @return the gameTrailersURLS
-     */
-    public List<String> getGameTrailersURLS() {
-        return gameTrailersURLS;
-    }
-
-    /**
-     * @param gameTrailersURLS the gameTrailersURLS to set
-     */
-    public void setGameTrailersURLS(List<String> gameTrailersURLS) {
-        this.gameTrailersURLS = gameTrailersURLS;
-    }
 
     /**
      * @return the gameAccounts
@@ -89,14 +65,14 @@ public class Game extends Product implements Serializable {
     /**
      * @return the parentAdvisory
      */
-    public Boolean getParentAdvisory() {
+    public ParentAdvisory getParentAdvisory() {
         return parentAdvisory;
     }
 
     /**
      * @param parentAdvisory the parentAdvisory to set
      */
-    public void setParentAdvisory(Boolean parentAdvisory) {
+    public void setParentAdvisory(ParentAdvisory parentAdvisory) {
         this.parentAdvisory = parentAdvisory;
     }
 

@@ -34,5 +34,7 @@ public interface OtherSoftwareSessionBeanLocal {
     public OtherSoftware retrieveOtherSoftwareById(Long productId) throws ProductNotFoundException;
 
     public void updateOtherSoftware(OtherSoftware otherSoftware, Long categoryId, List<Long> tagIds) throws ProductNotFoundException, CategoryNotFoundException, TagNotFoundException, UpdateProductException, InputDataValidationException;
+
+    public OtherSoftware createNewOtherSoftware(OtherSoftware newOtherSoftware) throws ProductSkuCodeExistException, UnknownPersistenceException, InputDataValidationException, CreateNewProductException, CompanyNotFoundException;
     
 }

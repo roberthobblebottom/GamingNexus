@@ -6,8 +6,8 @@
 package entity;
 
 import java.io.Serializable;
-import java.sql.Date;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -17,9 +17,7 @@ import javax.persistence.ManyToMany;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.Future;
 import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
 
 /**
@@ -52,10 +50,11 @@ public class Promotion implements Serializable {
     @Future
     private LocalDateTime endDate;
     
-    @ManyToMany
+    @ManyToMany 
     private List<Product> products;
 
     public Promotion() {
+        products = new ArrayList<>();
     }
 
     public Promotion(String name, String description, double percentageDiscount, double dollarDiscount, LocalDateTime startDate, LocalDateTime endDate, List<Product> products) {

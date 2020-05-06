@@ -57,6 +57,13 @@ public class HardwareSessionBean implements HardwareSessionBeanLocal {
     }
 
     @Override
+    public Hardware createNewHardware(Hardware newHardware) throws ProductSkuCodeExistException, UnknownPersistenceException, InputDataValidationException, CreateNewProductException, CompanyNotFoundException {
+        em.persist(newHardware);
+        em.flush();
+        return newHardware;
+    }
+
+    @Override
     public Hardware createNewHardware(Hardware newHardware, Long categoryId, List<Long> tagIds, Long companyId) throws ProductSkuCodeExistException, UnknownPersistenceException, InputDataValidationException, CreateNewProductException, CompanyNotFoundException {
         try {
             if (categoryId == null) {
@@ -252,7 +259,8 @@ public class HardwareSessionBean implements HardwareSessionBeanLocal {
             hardwareToUpdate.setTags(hardware.getTags());
             hardwareToUpdate.setTechnicalspecification(hardware.getTechnicalspecification());
             hardwareToUpdate.setWarrantyDescription(hardware.getWarrantyDescription());
-
+            hardwareToUpdate.setPictureURLs(hardware.getPictureURLs());
+            hardwareToUpdate.setVideoURLs(hardware.getVideoURLs());
         } else {
             throw new ProductNotFoundException("Product ID not provided for product to be updated");
         }
@@ -284,7 +292,7 @@ public class HardwareSessionBean implements HardwareSessionBeanLocal {
             return productEntities;
         }
     }
-    
+
     public void lazyLoadHardware(Hardware hardware) {
         hardware.getCompany();
         hardware.getCategory();

@@ -37,14 +37,22 @@ public class Hardware extends Product implements Serializable {
         deliverables = new ArrayList<>();
     }
 
-    public Hardware(String warrantyDescription, String technicalspecification, String manufacturingCountry, String name, String description, 
-            double price, double averageRating, LocalDate releaseDate, long sales, String headerImage, String videoLink) {
-        
-        super(name, description, price, averageRating, releaseDate, sales, headerImage, videoLink);
+    public Hardware(String warrantyDescription, String technicalspecification,
+            String manufacturingCountry, String name, String description, 
+            String computerRequirements, double price, double averageRating,
+            LocalDate releaseDate,  List<String> pictureURLs, 
+            List<String> videoURLs, Company company, Category category, List<Tag> tags) {
+        super(name, description, computerRequirements, price, averageRating, releaseDate, pictureURLs, videoURLs, company, category, tags);
         this.warrantyDescription = warrantyDescription;
         this.technicalspecification = technicalspecification;
         this.manufacturingCountry = manufacturingCountry;
     }
+
+   
+
+
+
+   
     
     /**
      * @return the technicalspecification

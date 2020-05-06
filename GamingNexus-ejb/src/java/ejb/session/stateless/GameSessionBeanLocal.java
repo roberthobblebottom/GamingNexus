@@ -9,6 +9,7 @@ import entity.Game;
 import entity.Product;
 import java.util.List;
 import javax.ejb.Local;
+import util.enumeration.ParentAdvisory;
 import util.exception.CategoryNotFoundException;
 import util.exception.CompanyNotFoundException;
 import util.exception.CreateNewProductException;
@@ -38,7 +39,7 @@ public interface GameSessionBeanLocal {
 
     public Game retrieveGamebyId(Long gameId) throws ProductNotFoundException;
 
-    public Game createNewGame(Game newGame, Long categoryId, List<Long> tagIds, Long CompanyId, boolean parentAdvisory, String headerImage) throws ProductSkuCodeExistException, UnknownPersistenceException, InputDataValidationException, CreateNewProductException, CompanyNotFoundException;
+    public Game createNewGame(Game newGame);
 
     
 }

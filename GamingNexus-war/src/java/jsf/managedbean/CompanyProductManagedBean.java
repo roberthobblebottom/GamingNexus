@@ -84,7 +84,7 @@ public class CompanyProductManagedBean implements Serializable {
     private Long categoryIdUpdate;
     private List<Long> tagIdsUpdate;
     private Date releaseDateToBeUpdated;
-
+private List<Product> listOfProducts;
     public CompanyProductManagedBean() {
         newGame = new Game();
         gameToBeUpdated = new Game();
@@ -203,6 +203,7 @@ public class CompanyProductManagedBean implements Serializable {
 
         Product productToBeUpdated = viewProductManagedBean.getProductToViewInDetails();
         productToBeUpdated.setReleaseDate(new Date(this.releaseDateToBeUpdated.getTime()).toLocalDate());
+        
         Hardware hardwareEntityFragment = viewProductManagedBean.getHardwareToViewInDetails();
         OtherSoftware otherSoftwareEntityFragment = viewProductManagedBean.getOtherSoftwareToViewInDetails();
         Game gameEntityFragment = viewProductManagedBean.getGameToViewInDetails();

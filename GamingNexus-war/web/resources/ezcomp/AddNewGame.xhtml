@@ -17,7 +17,7 @@
     <cc:implementation>
 
         <h:form id="formAddNewGame">
-            <p:dialog id="dialogAddNewGame" widgetVar="dialogAddNewGame" header="Add New Game" closable="true" appendTo = "@(body)">
+            <p:dialog id="dialogAddNewGame" widgetVar="dialogAddNewGame" header="Add New Game" closable="true" >
                 <p:messages id="messagesAddNewGame" redisplay="false" />
                 <p:panelGrid >
                     <p:row>
@@ -131,6 +131,7 @@
                             <p:selectOneMenu id="category" style="width:125px" value="#{companyProductManagedBean.newGame.category}" 
                                              converter="omnifaces.SelectItemsConverter" required="true" 
                                              requiredMessage="Category selection is required">
+                                <f:selectItem itemLabel="Select a Category" itemValue=""/>
                                 <f:selectItems  value="#{companyProductManagedBean.categories}" 
                                                 var="category" itemLabel="#{category.name}" 
                                                 itemValue="#{category}">

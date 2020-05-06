@@ -7,7 +7,6 @@ package entity;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Column;
@@ -21,9 +20,6 @@ import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.validation.constraints.Digits;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -63,14 +59,14 @@ public abstract class Product implements Serializable {
     
     private LocalDate releaseDate;
     
-    private long sales;
+    
 
     @Lob
     @Column
-    private String headerImage;
+    private List<String> pictureURLs;
     @Lob
     @Column
-    private String videoLink;
+    private List<String> videoURLs;
 
     @ManyToOne(optional = false)
     private Company company;
@@ -88,37 +84,34 @@ public abstract class Product implements Serializable {
     private List<Forum> forums;
 
     public Product() {
+        pictureURLs = new ArrayList<>();
+        videoURLs = new ArrayList<>();
         tags = new ArrayList<>();
+        promotions = new ArrayList<>();
         ratings = new ArrayList<>();
         ownedItems = new ArrayList<>();
         forums = new ArrayList<>();
     }
 
-    //for software games and products with videolink
-    public Product(String name, String description, String computerRequirements, double price, double averageRating, LocalDate releaseDate, long sales, String headerImage, String videoLink) {
-        this();
+    public Product(String name, String description, String computerRequirements, double price, double averageRating, 
+            LocalDate releaseDate,  List<String> pictureURLs, List<String> videoURLs, Company company, Category category, List<Tag> tags) {
         this.name = name;
         this.description = description;
         this.computerRequirements = computerRequirements;
         this.price = price;
         this.averageRating = averageRating;
         this.releaseDate = releaseDate;
-        this.sales = sales;
-        this.headerImage = headerImage;
-        this.videoLink = videoLink;
+        this.pictureURLs = pictureURLs;
+        this.videoURLs = videoURLs;
+        this.company = company;
+        this.category = category;
+        this.tags = tags;
+      
+        
     }
-    // for hardware
-    public Product(String name, String description, double price, double averageRating, LocalDate releaseDate, long sales, String headerImage, String videoLink) {
-        this();
-        this.name = name;
-        this.description = description;
-        this.price = price;
-        this.averageRating = averageRating;
-        this.releaseDate = releaseDate;
-        this.sales = sales;
-        this.headerImage = headerImage;
-        this.videoLink = videoLink;
-    }
+
+    
+  
     
 
     public void addTag(Tag tagEntity) {
@@ -358,19 +351,6 @@ public abstract class Product implements Serializable {
         this.forums = forums;
     }
 
-    /**
-     * @return the sales
-     */
-    public long getSales() {
-        return sales;
-    }
-
-    /**
-     * @param sales the sales to set
-     */
-    public void setSales(long sales) {
-        this.sales = sales;
-    }
 
     /**
      * @return the releaseDate
@@ -386,32 +366,35 @@ public abstract class Product implements Serializable {
         this.releaseDate = releaseDate;
     }
 
+
+  
+
     /**
-     * @return the headerImage
+     * @return the pictureURLs
      */
-    public String getHeaderImage() {
-        return headerImage;
+    public List<String> getPictureURLs() {
+        return pictureURLs;
     }
 
     /**
-     * @param headerImage the headerImage to set
+     * @param pictureURLs the pictureURLs to set
      */
-    public void setHeaderImage(String headerImage) {
-        this.headerImage = headerImage;
+    public void setPictureURLs(List<String> pictureURLs) {
+        this.pictureURLs = pictureURLs;
     }
 
     /**
-     * @return the videoLink
+     * @return the videoURLs
      */
-    public String getVideoLink() {
-        return videoLink;
+    public List<String> getVideoURLs() {
+        return videoURLs;
     }
 
     /**
-     * @param videoLink the videoLink to set
+     * @param videoURLs the videoURLs to set
      */
-    public void setVideoLink(String videoLink) {
-        this.videoLink = videoLink;
+    public void setVideoURLs(List<String> videoURLs) {
+        this.videoURLs = videoURLs;
     }
 
     

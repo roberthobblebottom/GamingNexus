@@ -37,5 +37,7 @@ public interface HardwareSessionBeanLocal {
     public Hardware retrieveHardwareById(Long hardwareId) throws ProductNotFoundException;
 
     public void updateHardware(Hardware hardware, Long categoryId, List<Long> tagIds) throws ProductNotFoundException, CategoryNotFoundException, TagNotFoundException, UpdateProductException, InputDataValidationException;
+
+    public Hardware createNewHardware(Hardware newHardware) throws ProductSkuCodeExistException, UnknownPersistenceException, InputDataValidationException, CreateNewProductException, CompanyNotFoundException;
     
 }

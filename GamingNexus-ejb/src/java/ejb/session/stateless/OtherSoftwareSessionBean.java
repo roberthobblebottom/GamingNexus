@@ -36,25 +36,33 @@ import util.exception.UpdateProductException;
  */
 @Stateless
 public class OtherSoftwareSessionBean implements OtherSoftwareSessionBeanLocal {
-
+    
     @EJB
     private SaleTransactionSessionBeanLocal saleTransactionSessionBeanLocal;
-
+    
     @EJB
     private CompanySessionBeanLocal companySessionBeanLocal;
-
+    
     @EJB(name = "TagSessionBeanLocal")
     private TagSessionBeanLocal tagSessionBeanLocal;
-
+    
     @EJB(name = "CategorySessionBeanLocal")
     private CategorySessionBeanLocal categorySessionBeanLocal;
-
+    
     @PersistenceContext(unitName = "GamingNexus-ejbPU")
     private EntityManager em;
-
+    
     public OtherSoftwareSessionBean() {
     }
-
+    
+      @Override
+    public OtherSoftware createNewOtherSoftware(OtherSoftware newOtherSoftware) throws ProductSkuCodeExistException, UnknownPersistenceException, InputDataValidationException, CreateNewProductException, CompanyNotFoundException {
+    em.persist(newOtherSoftware);
+    em.flush();
+    return newOtherSoftware;
+    }
+    
+    
     @Override
     public OtherSoftware createNewOtherSoftware(OtherSoftware newOtherSoftware, Long categoryId, List<Long> tagIds, Long companyId) throws ProductSkuCodeExistException, UnknownPersistenceException, InputDataValidationException, CreateNewProductException, CompanyNotFoundException {
         try {
@@ -62,20 +70,20 @@ public class OtherSoftwareSessionBean implements OtherSoftwareSessionBeanLocal {
                 throw new CreateNewProductException("The new product must be associated a leaf category");
             }
             Category category = categorySessionBeanLocal.retrieveCategoryByCategoryId(categoryId);
-
+            
             if (!category.getSubCategories().isEmpty()) {
                 throw new CreateNewProductException("Selected category for the new product is not a leaf category");
             }
-
+            
             if (companyId == null) {
                 throw new CreateNewProductException("The new product must be associated a company");
             }
             Company company = companySessionBeanLocal.retrieveCompanyById(companyId);
-
+            
             em.persist(newOtherSoftware);
             newOtherSoftware.setCategory(category);
             newOtherSoftware.setCompany(company);
-
+            
             if (tagIds != null && (!tagIds.isEmpty())) {
                 for (Long tagId : tagIds) {
                     Tag tag = tagSessionBeanLocal.retrieveTagByTagId(tagId);
@@ -98,36 +106,36 @@ public class OtherSoftwareSessionBean implements OtherSoftwareSessionBeanLocal {
             throw new CreateNewProductException("An error has occurred while creating the new product: " + ex.getMessage());
         }
     }
-
+    
     @Override
     public List<OtherSoftware> retrieveAllOtherSoftwares() {
         Query query = em.createQuery("SELECT o FROM OtherSoftware o ORDER BY o.averageRating");
         List<OtherSoftware> otherSoftwares = query.getResultList();
-
+        
         for (OtherSoftware otherSoftware : otherSoftwares) {
             lazyLoadOtherSoftware(otherSoftware);
         }
-
+        
         return otherSoftwares;
     }
-
+    
     @Override
     public List<OtherSoftware> searchOtherSoftwaresByName(String searchString) {
         Query query = em.createQuery("SELECT o FROM OtherSoftware o WHERE o.name LIKE :inSearchString");
         query.setParameter("inSearchString", "%" + searchString + "%");
         List<OtherSoftware> otherSoftwares = query.getResultList();
-
+        
         for (OtherSoftware otherSoftware : otherSoftwares) {
             lazyLoadOtherSoftware(otherSoftware);
         }
-
+        
         return otherSoftwares;
     }
-
+    
     public List<Product> filterProductsByCategory(Long categoryId) throws CategoryNotFoundException {
         List<Product> productEntities = new ArrayList<>();
         Category categoryEntity = categorySessionBeanLocal.retrieveCategoryByCategoryId(categoryId);
-
+        
         if (categoryEntity.getSubCategories().isEmpty()) {
             productEntities = categoryEntity.getProducts();
         } else {
@@ -135,24 +143,24 @@ public class OtherSoftwareSessionBean implements OtherSoftwareSessionBeanLocal {
                 productEntities.addAll(addSubCategoryProducts(subCategoryEntity));
             }
         }
-
+        
         for (Product productEntity : productEntities) {
             productEntity.getCategory();
             productEntity.getTags().size();
         }
-
+        
         Collections.sort(productEntities, new Comparator<Product>() {
             public int compare(Product pe1, Product pe2) {
                 return pe1.getProductId().compareTo(pe2.getProductId());
             }
         });
-
+        
         return productEntities;
     }
-
+    
     public List<Product> filterProductsByTags(List<Long> tagIds, String condition) {
         List<Product> productEntities = new ArrayList<>();
-
+        
         if (tagIds == null || tagIds.isEmpty() || (!condition.equals("AND") && !condition.equals("OR"))) {
             return productEntities;
         } else {
@@ -166,66 +174,66 @@ public class OtherSoftwareSessionBean implements OtherSoftwareSessionBeanLocal {
                 String whereClause = "";
                 Boolean firstTag = true;
                 Integer tagCount = 1;
-
+                
                 for (Long tagId : tagIds) {
                     selectClause += ", IN (pe.tagEntities) te" + tagCount;
-
+                    
                     if (firstTag) {
                         whereClause = "WHERE te1.tagId = " + tagId;
                         firstTag = false;
                     } else {
                         whereClause += " AND te" + tagCount + ".tagId = " + tagId;
                     }
-
+                    
                     tagCount++;
                 }
-
+                
                 String jpql = selectClause + " " + whereClause + " ORDER BY pe.skuCode ASC";
                 Query query = em.createQuery(jpql);
                 productEntities = query.getResultList();
             }
-
+            
             for (Product productEntity : productEntities) {
                 productEntity.getCategory();
                 productEntity.getTags().size();
             }
-
+            
             Collections.sort(productEntities, new Comparator<Product>() {
                 public int compare(Product pe1, Product pe2) {
                     return pe1.getProductId().compareTo(pe2.getProductId());
                 }
             });
-
+            
             return productEntities;
         }
     }
-
+    
     @Override
     public OtherSoftware retrieveOtherSoftwareById(Long productId) throws ProductNotFoundException {
         OtherSoftware otherSoftware = em.find(OtherSoftware.class, productId);
-
+        
         if (otherSoftware != null) {
             otherSoftware.getCategory();
             otherSoftware.getTags().size();
-
+            
             return otherSoftware;
         } else {
             throw new ProductNotFoundException("Product ID " + productId + " does not exist!");
         }
     }
-
+    
     @Override
     public void updateOtherSoftware(OtherSoftware otherSoftware, Long categoryId, List<Long> tagIds) throws ProductNotFoundException, CategoryNotFoundException, TagNotFoundException, UpdateProductException, InputDataValidationException {
         if (otherSoftware != null && otherSoftware.getProductId() != null) {
             Product otherSoftwareEntityToUpdate = this.retrieveOtherSoftwareById(otherSoftware.getProductId());
-
+            
             if (categoryId != null && (!otherSoftwareEntityToUpdate.getCategory().getCategoryId().equals(categoryId))) {
                 Category categoryEntityToUpdate = categorySessionBeanLocal.retrieveCategoryByCategoryId(categoryId);
-
+                
                 if (!categoryEntityToUpdate.getSubCategories().isEmpty()) {
                     throw new UpdateProductException("Selected category for the new product is not a leaf category");
                 }
-
+                
                 otherSoftwareEntityToUpdate.setCategory(categoryEntityToUpdate);
             }
             if (tagIds != null && !tagIds.isEmpty()) {
@@ -248,7 +256,8 @@ public class OtherSoftwareSessionBean implements OtherSoftwareSessionBeanLocal {
             otherSoftwareEntityToUpdate.setPromotions(otherSoftware.getPromotions());
             otherSoftwareEntityToUpdate.setRatings(otherSoftware.getRatings());
             otherSoftwareEntityToUpdate.setTags(otherSoftware.getTags());
-
+            otherSoftwareEntityToUpdate.setPictureURLs(otherSoftware.getPictureURLs());
+            otherSoftwareEntityToUpdate.setVideoURLs(otherSoftware.getVideoURLs());
         } else {
             throw new ProductNotFoundException("Product ID not provided for product to be updated");
         }
@@ -269,18 +278,18 @@ public class OtherSoftwareSessionBean implements OtherSoftwareSessionBeanLocal {
      */
     private List<Product> addSubCategoryProducts(Category categoryEntity) {
         List<Product> productEntities = new ArrayList<>();
-
+        
         if (categoryEntity.getSubCategories().isEmpty()) {
             return categoryEntity.getProducts();
         } else {
             for (Category subCategoryEntity : categoryEntity.getSubCategories()) {
                 productEntities.addAll(addSubCategoryProducts(subCategoryEntity));
             }
-
+            
             return productEntities;
         }
     }
-
+    
     public void lazyLoadOtherSoftware(OtherSoftware otherSoftware) {
         otherSoftware.getCompany();
         otherSoftware.getCategory();
@@ -289,6 +298,6 @@ public class OtherSoftwareSessionBean implements OtherSoftwareSessionBeanLocal {
         otherSoftware.getRatings().size();
         otherSoftware.getOwnedItems().size();
         otherSoftware.getForums().size();
-
+        
     }
 }

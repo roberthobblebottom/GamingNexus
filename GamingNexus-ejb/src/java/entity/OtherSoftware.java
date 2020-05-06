@@ -7,11 +7,8 @@ package entity;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 
 /**
  *
@@ -24,10 +21,14 @@ public class OtherSoftware extends Product implements Serializable {
     public OtherSoftware() {
         super();
     }
-    
-    public OtherSoftware(String name, String description, String computerRequirements, double price, double averageRating, LocalDate releaseDate, long sales, String headerImage, String videoLink) {
-        super(name, description, computerRequirements, price, averageRating, releaseDate, sales, headerImage, videoLink);
+
+    public OtherSoftware(String name, String description, String computerRequirements, double price, double averageRating, LocalDate releaseDate, List<String> pictureURLs, List<String> videoURLs, Company company, Category category, List<Tag> tags) {
+        super(name, description, computerRequirements, price, averageRating, releaseDate, pictureURLs, videoURLs, company, category, tags);
     }
+
+    
+    
+   
    
     
 }

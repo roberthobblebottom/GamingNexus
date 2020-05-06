@@ -42,6 +42,34 @@ import util.exception.CompanyNotFoundException;
 @ViewScoped
 public class CompanyPromotionManagedBean implements Serializable {
 
+    /**
+     * @return the newStartDate
+     */
+    public Date getNewStartDate() {
+        return newStartDate;
+    }
+
+    /**
+     * @param newStartDate the newStartDate to set
+     */
+    public void setNewStartDate(Date newStartDate) {
+        this.newStartDate = newStartDate;
+    }
+
+    /**
+     * @return the newEndDate
+     */
+    public Date getNewEndDate() {
+        return newEndDate;
+    }
+
+    /**
+     * @param newEndDate the newEndDate to set
+     */
+    public void setNewEndDate(Date newEndDate) {
+        this.newEndDate = newEndDate;
+    }
+
     @EJB
     private OtherSoftwareSessionBeanLocal otherSoftwareSessionBean;
 
@@ -62,17 +90,22 @@ public class CompanyPromotionManagedBean implements Serializable {
 
     private Promotion newPromotion = null, promotionToBeUpdated = null;
     private Date today = null;
-    private Date startDateToBeUpdated = null, endDateToBeUpdated = null;
-    private List<Date> newDateRange = null;
+    private Date startDateToBeUpdated = null, endDateToBeUpdated = null, newStartDate = null, newEndDate = null;
     private List<Promotion> promotions, filteredPromotions;
     private List<Product> products, filteredProducts, productsToBeUpdated, promotionsProductsToBeViewed;
+    private List<Long> listOfProductIds;
     private Company company;
 
     public CompanyPromotionManagedBean() {
         newPromotion = new Promotion();
+        
+        startDateToBeUpdated = new Date();
+        endDateToBeUpdated = new Date();
+        newStartDate = new Date();
+        newEndDate = new Date();
         today = Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant());
-        newDateRange = new ArrayList<>();
         promotionsProductsToBeViewed = new ArrayList<>();
+        listOfProductIds = new ArrayList<>();
     }
 
     @PostConstruct
@@ -94,16 +127,28 @@ public class CompanyPromotionManagedBean implements Serializable {
     }
 
     public void createNewPromotion(ActionEvent event) {
-        newPromotion.setStartDate(newDateRange.get(0).toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime());
-        newPromotion.setEndDate(newDateRange.get(newDateRange.size() - 1).toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime());
-        Promotion promotion = promotionSessionBean.createPromotion(newPromotion);
+//        newPromotion.setStartDate(newDateRange.get(0).toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime());
+//        newPromotion.setEndDate(newDateRange.get(newDateRange.size() - 1).toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime());
+        System.out.println("******newEndDate: " + newEndDate);
+        System.out.println("******newStartDate: " + newStartDate);
+
+        newPromotion.setStartDate(new Timestamp(this.newStartDate.getTime()).toLocalDateTime());
+        newPromotion.setEndDate(new Timestamp(this.newEndDate.getTime()).toLocalDateTime());
+    //    System.out.println("******newEndDate: " + newEndDate);
+
+        System.out.println("******endDate: " + newPromotion.getEndDate());
+        System.out.println("******name: " + newPromotion.getName());
+        System.out.println("******description: " + newPromotion.getDescription());
+        System.out.println("******listOfProductIds: " + listOfProductIds);
+
+        Promotion promotion = promotionSessionBean.createPromotion(newPromotion, listOfProductIds);
         promotions.add(promotion);
 
         FacesContext.getCurrentInstance().addMessage(null,
                 new FacesMessage(FacesMessage.SEVERITY_INFO, "New Game " + newPromotion.getName() + " added successfully "
                         + "(ID: " + newPromotion.getPromotionID() + ")", null));
         newPromotion = new Promotion();
-        newDateRange = new ArrayList<>();
+
     }
 
     public void viewPromotionsProducts(ActionListener event) {
@@ -134,14 +179,14 @@ public class CompanyPromotionManagedBean implements Serializable {
 
     public void updatePromotion(ActionEvent event) {
         System.out.println("*****Entered updatePromotion method");
-        
-        if (this.startDateToBeUpdated != null) {
+
+        if (this.getStartDateToBeUpdated() != null) {
             System.out.println("*****Entered startDate update block");
-            promotionToBeUpdated.setEndDate(new Timestamp(this.startDateToBeUpdated.getTime()).toLocalDateTime());
+            promotionToBeUpdated.setEndDate(new Timestamp(this.getStartDateToBeUpdated().getTime()).toLocalDateTime());
         }
-        if (this.endDateToBeUpdated != null) {
+        if (this.getEndDateToBeUpdated() != null) {
             System.out.println("*****Entered endDate update block");
-            promotionToBeUpdated.setEndDate(new Timestamp(this.endDateToBeUpdated.getTime()).toLocalDateTime());
+            promotionToBeUpdated.setEndDate(new Timestamp(this.getEndDateToBeUpdated().getTime()).toLocalDateTime());
         }
         promotionSessionBean.updatePromotion(promotionToBeUpdated, productsToBeUpdated);
 
@@ -156,7 +201,7 @@ public class CompanyPromotionManagedBean implements Serializable {
         promotionSessionBean.deletePromotion(promotionToBeDeleted.getPromotionID());
         promotions.remove(promotionToBeDeleted);
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
-                "Prmotion deleted successfully. ID: " + promotionToBeDeleted.getPromotionID(), null));
+                "Promotion deleted successfully. ID: " + promotionToBeDeleted.getPromotionID(), null));
     }
 
     /**
@@ -342,20 +387,6 @@ public class CompanyPromotionManagedBean implements Serializable {
     }
 
     /**
-     * @return the newDateRange
-     */
-    public List<Date> getNewDateRange() {
-        return newDateRange;
-    }
-
-    /**
-     * @param newDateRange the newDateRange to set
-     */
-    public void setNewDateRange(List<Date> newDateRange) {
-        this.newDateRange = newDateRange;
-    }
-
-    /**
      * @return the promotionToBeUpdated
      */
     public Promotion getPromotionToBeUpdated() {
@@ -424,6 +455,20 @@ public class CompanyPromotionManagedBean implements Serializable {
      */
     public void setPromotionsProductsToBeViewed(List<Product> promotionsProductsToBeViewed) {
         this.promotionsProductsToBeViewed = promotionsProductsToBeViewed;
+    }
+
+    /**
+     * @return the listOfProductIds
+     */
+    public List<Long> getListOfProductIds() {
+        return listOfProductIds;
+    }
+
+    /**
+     * @param listOfProductIds the listOfProductIds to set
+     */
+    public void setListOfProductIds(List<Long> listOfProductIds) {
+        this.listOfProductIds = listOfProductIds;
     }
 
 };

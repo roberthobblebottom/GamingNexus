@@ -18,7 +18,6 @@ import util.exception.CompanyNotFoundException;
 @Local
 public interface PromotionSessionBeanLocal {
 
-    public Promotion createPromotion(Promotion promotion);
 
     public void deletePromotion(long promotionID);
 
@@ -28,5 +27,9 @@ public interface PromotionSessionBeanLocal {
 
     public void updatePromotion(Promotion promotion, List<Product> productsListToBeUpdated);
     public List<Promotion> retrieveAllPromotions();
+
+    public Promotion createPromotion(Promotion promotion, List<Long> listProductIDs);
+
+    public Promotion createPromotion(Promotion promotion);
     
 }

@@ -17,7 +17,12 @@
     <cc:implementation>
 
         <h:form id="formAddNewPromotion">
-            <p:dialog id="dialogAddNewPromotion" widgetVar="dialogAddNewPromotion" header="Add New Promotion" closable="true" appendTo = "@(body)">
+            <p:dialog id="dialogAddNewPromotion" widgetVar="dialogAddNewPromotion" 
+                      header="Add New Promotion" closable="true">
+
+
+                #{companyPromotionManagedBean}
+
                 <p:messages id="messagesAddNewPromotion" redisplay="false" />
                 <p:panelGrid >
                     <p:row>
@@ -25,12 +30,9 @@
                             <p:outputLabel for="name" value="name" style="font-weight: bold;"/>               
                         </p:column>
                         <p:column>
-                            <p:inputText id="name" value="#{companyPromotionManagedBean.newPromotion.name}" placeholder="name" 
+                            <p:inputText id="name" value="#{companyPromotionManagedBean.newPromotion.name}"
                                          required="true" requiredMessage="Name is required" >
-                                <f:validateLength minimum="1" maximum="100">
-                                    <p:ajax event="keyup" update="nameValidation" process="@this"/> 
 
-                                </f:validateLength>
                             </p:inputText>
                         </p:column>
                         <p:column>
@@ -91,25 +93,37 @@
 
                     <p:row>
                         <p:column>
-                            <p:outputLabel for="rangeDate" value="rangeDate" style="font-weight: bold;"/>               
+                            <p:outputLabel for="startDate" value="start Date" style="font-weight: bold;"/>               
                         </p:column>
                         <p:column>
-                            <p:datePicker id="rangeDate" value="#{companyPromotionManagedBean.newDateRange}" 
-                                          showTime="true" pattern="dd.MM.yyyy"
-                                          required="true" requiredMessage="the range of date is required" 
-                                          selectionMode="range"
-                                          mindate="#{companyPromotionManagedBean.today}">
-                                <p:ajax update="rangeDateValidation " process="@this"/>
-                             
-                            </p:datePicker>
-                                
+                            <p:datePicker id="startDate" value="#{companyPromotionManagedBean.newStartDate}" 
+                                          selectionMode="single"
+                                          required="true" requiredMessage="the startdate is required" >
+                                <p:ajax update="startDateValidation " process="@this"/>
+
+                            </p:datePicker>                                
                         </p:column>
                         <p:column>
-                            <p:messages id="rangeDateValidation" for ="rangeDate" />
+                            <p:messages id="startDateValidation" for ="startDate" />
                         </p:column>     
                     </p:row>
 
-                
+
+                    <p:row>
+                        <p:column>
+                            <p:outputLabel for="endDate" value="endDate" style="font-weight: bold;"/>               
+                        </p:column>
+                        <p:column>
+                            <p:datePicker id="endDate" value="#{companyPromotionManagedBean.newEndDate}" 
+                                          required="true" requiredMessage="end date is required"
+                                          selectionMode="single">
+                                <p:ajax update="endDateValidation " process="@this"/>
+                            </p:datePicker>
+                        </p:column>
+                        <p:column>
+                            <p:messages id="endDateValidation" for ="endDate" />
+                        </p:column>     
+                    </p:row>
 
 
                     <p:row>
@@ -118,10 +132,10 @@
                         </p:column>
                         <p:column>
                             <p:selectCheckboxMenu id="products"  label="products" 
-                                                  value="#{companyPromotionManagedBean.newPromotion.products}" 
+                                                  value="#{companyPromotionManagedBean.listOfProductIds}" 
                                                   filter="true" filterMatchMode="startsWith" panelStyle="width:250px">
                                 <f:selectItems  value="#{companyPromotionManagedBean.company.products}"
-                                                var="product" itemLabel="#{product.name}" itemValue="#{product}">
+                                                var="product" itemLabel="#{product.name}" itemValue="#{product.productId}">
                                 </f:selectItems>
                             </p:selectCheckboxMenu>
                         </p:column>
@@ -133,7 +147,7 @@
                     <p:row>
                         <p:column colspan="3">
                             <p:commandButton type="reset" value="Clear" update="@form formAllPromotions:dataTableAllPromotions" />&nbsp;
-                            <p:commandButton  id="AddPromotionButton" value="Add" update="@form formAllPromotions:dataTableAllPromotions" 
+                            <p:commandButton  id="AddPromotionButton" value="Add" process="@form" update="@form formAllPromotions:dataTableAllPromotions" 
                                               actionListener="#{companyPromotionManagedBean.createNewPromotion}"    
                                               />
                         </p:column>
