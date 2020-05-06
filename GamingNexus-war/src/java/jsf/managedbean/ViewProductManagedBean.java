@@ -49,22 +49,30 @@ public class ViewProductManagedBean implements Serializable {
      * @param productToViewInDetails the productToViewInDetails to set
      */
     public void setProductToViewInDetails(Product productToViewInDetails) {
-     
+
         if (productToViewInDetails instanceof Game) {
+            System.out.println("**********setProductToViewInDetails game if block");
+
             setGameToViewInDetails((Game) productToViewInDetails);
             setHardwareToViewInDetails(null);
             setOtherSoftwareToViewInDetails(null);
         } else if (productToViewInDetails instanceof Hardware) {
+            System.out.println("**********setProductToViewInDetails hardware if block");
+
             setHardwareToViewInDetails((Hardware) productToViewInDetails);
             setGameToViewInDetails(null);
             setOtherSoftwareToViewInDetails(null);
 
         } else if (productToViewInDetails instanceof OtherSoftware) {
+            System.out.println("**********setProductToViewInDetails othersoftware if block");
+
             setOtherSoftwareToViewInDetails((OtherSoftware) productToViewInDetails);
             setHardwareToViewInDetails(null);
             setGameToViewInDetails(null);
 
         }
+
+        System.out.println("Product Id " + productToViewInDetails.getProductId());
         this.productToViewInDetails = productToViewInDetails;
     }
 

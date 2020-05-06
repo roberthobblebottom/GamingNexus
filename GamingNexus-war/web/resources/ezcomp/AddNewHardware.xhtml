@@ -18,7 +18,7 @@
 
         <h:form id="formAddNewHardware">
 
-            <p:dialog id="dialogAddNewHardware" widgetVar="dialogAddNewHardware" header="Add New Hardware" closable="true" appendTo = "@(body)">
+            <p:dialog id="dialogAddNewHardware" widgetVar="dialogAddNewHardware" header="Add New Hardware" closable="true">
 
                 <p:messages id="messagesAddNewGame" redisplay="false" />
 
@@ -104,8 +104,8 @@
                             <p:outputLabel for="releaseDate" value="releaseDate" style="font-weight: bold;"/>               
                         </p:column>
                         <p:column>
-                            <p:datePicker id="releaseDate" value="#{companyProductManagedBean.newHardware.releaseDate}" 
-                                          showTime="true" 
+                            <p:datePicker id="releaseDate" value="#{companyProductManagedBean.newReleaseDate}" 
+                                          selectionMode="single"
                                           required="true" requiredMessage="release date is required">
                                 <p:ajax update="releaseDateValidation " process="@this"/>
                             </p:datePicker>
@@ -142,8 +142,8 @@
                                              converter="omnifaces.SelectItemsConverter" required="true" 
                                              requiredMessage="Category selection is required">
                                 <p:ajax event="keyup" update="categoryValidation" process="@this"/> 
-
-                                <f:selectItems  value="#{companyProductManagedBean.categories}" 
+                                <f:selectItem itemLabel="Select a Category" itemValue=""/>
+                                <f:selectItems  value="#{companyProductManagedBean.listOfAllCategories}" 
                                                 var="category" itemLabel="#{category.name}" 
                                                 itemValue="#{category}">
                                 </f:selectItems>
@@ -216,7 +216,24 @@
                             <p:message id="warrantyDescriptionValidation" for="warrantyDescription"/>
                         </p:column>
                     </p:row> 
-
+       <p:row >
+                        <p:column>
+                            <h:outputText value="Promotions" />
+                        </p:column>
+                        <p:column >
+                            <p:selectCheckboxMenu id="Promotions"  value="#{companyProductManagedBean.newHardware.promotions}" 
+                                                  converter="omnifaces.SelectItemsConverter" label="Select Promotions" >
+                                <f:selectItems  value="#{companyProductManagedBean.listOfAllCompanyPromotions}" 
+                                                var="promotion" itemLabel="#{promotion.name}" 
+                                                itemValue="#{promotion}">
+                                </f:selectItems>
+                            </p:selectCheckboxMenu>                         
+                        </p:column>
+                        <p:column>
+                            <p:message for="Promotions"/>
+                        </p:column>
+                    </p:row> 
+                
 
 
                     <p:row>

@@ -28,7 +28,7 @@
 
                 <p:messages id="messages" redisplay="false" closable="true" />
 
-                <p:dataTable id="dataTableAllProducts" widgetVar="dataTableAllProducts" value="#{companyProductManagedBean.products}" 
+                <p:dataTable id="dataTableAllProducts" widgetVar="dataTableAllProducts" value="#{companyProductManagedBean.listOfAllCompanysProducts}" 
                              var="product" rowKey="#{product.userId}" rowIndexVar="row"
                              rows="10" paginator="true" paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} 
                              {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowsPerPageTemplate="10,20,50">             
@@ -57,9 +57,7 @@
                             #{tag.tagName}  
                         </p:dataList>
                     </p:column>
-                    <p:column headerText="Forum link">
-                        <h:outputText value="not implemented" />
-                    </p:column>
+                  
 
                     <p:column headerText="Action" >
                         <p:commandButton icon="ui-icon-trash"  update="formAllProducts:dataTableAllProducts " 
@@ -72,8 +70,6 @@
                                          oncomplete="PF('dialogUpdateProduct').show()"
                                          actionListener="#{companyProductManagedBean.doUpdateProduct}">
                             <f:attribute name="productToBeUpdated" value="#{product}"/>
-                            
-                            
                         </p:commandButton>
                         <p:commandButton icon="ui-icon-document"   update="ccViewProductDetail:formViewProductDetails"
                                          oncomplete="PF('dialogViewProductDetails').show()">

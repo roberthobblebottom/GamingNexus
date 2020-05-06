@@ -125,7 +125,7 @@
                                              value="#{companyProductManagedBean.viewProductManagedBean.productToViewInDetails.category}" 
                                              converter="omnifaces.SelectItemsConverter" required="true" 
                                              requiredMessage="Category selection is required">
-                                <f:selectItems  value="#{companyProductManagedBean.categories}" 
+                                <f:selectItems  value="#{companyProductManagedBean.listOfAllCategories}" 
                                                 var="category" 
                                                 itemLabel="#{category.name}" 
                                                 itemValue="#{category}">

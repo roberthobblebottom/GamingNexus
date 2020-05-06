@@ -97,33 +97,8 @@
                             </p:dataList>
                         </p:column>
                     </p:row>
-                    <p:row>
-                        <p:column>
-                            <h:outputText value="Forum" />
-                        </p:column>
-                        <p:column headerText="Forum link">
-                            <h:outputText value="not implemented" />
-                        </p:column>
-                    </p:row>
-
-                    <p:row rendered="#{companyProductManagedBean.viewProductManagedBean.gameToViewInDetails != null}">
-                        <p:column>
-                            <h:outputText value="Game Pictures" />
-                        </p:column>
-                        <p:column >
-                            <h:outputText value="#{companyProductManagedBean.viewProductManagedBean.gameToViewInDetails.gamePicturesURLs}" />
-                        </p:column>
-                    </p:row> 
-
-                    <p:row rendered="#{companyProductManagedBean.viewProductManagedBean.gameToViewInDetails != null}">
-                        <p:column>
-                            <h:outputText value="Game Videos" />
-                        </p:column>
-                        <p:column >
-                            <h:outputText value="#{companyProductManagedBean.viewProductManagedBean.gameToViewInDetails.gameTrailersURLS}" />
-                        </p:column>
-                    </p:row> 
-
+           
+      
                     <p:row rendered="#{companyProductManagedBean.viewProductManagedBean.gameToViewInDetails != null}">
                         <p:column>
                             <h:outputText value="Parent Advisory" 
@@ -141,7 +116,7 @@
                                           />
                         </p:column>
                         <p:column >
-                            <h:outputText value="#{companyProductManagedBean.viewProductManagedBean.hardwareToViewInDetails.manufactoringCountry}" />
+                            <h:outputText value="#{companyProductManagedBean.viewProductManagedBean.hardwareToViewInDetails.manufacturingCountry}" />
                         </p:column>
                     </p:row> 
 
@@ -162,7 +137,7 @@
                                           />
                         </p:column>
                         <p:column >
-                            #{companyProductManagedBean.viewProductManagedBean.hardwareToViewInDetails.warrentyDescription}
+                            #{companyProductManagedBean.viewProductManagedBean.hardwareToViewInDetails.warrantyDescription}
                         </p:column>
                     </p:row> 
                 </p:panelGrid>

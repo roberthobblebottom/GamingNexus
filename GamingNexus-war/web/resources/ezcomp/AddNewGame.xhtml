@@ -70,9 +70,9 @@
                         </p:column>     
                     </p:row>
 
-                   
-                    
-                    
+
+
+
                     <p:row>
                         <p:column>
                             <p:outputLabel for="price" value="price" style="font-weight: bold;"/>               
@@ -90,13 +90,13 @@
                         </p:column>     
                     </p:row>
 
-                      <p:row>
+                    <p:row>
                         <p:column>
                             <p:outputLabel for="releaseDate" value="releaseDate" style="font-weight: bold;"/>               
                         </p:column>
                         <p:column>
-                            <p:datePicker id="releaseDate" value="#{companyProductManagedBean.newGame.releaseDate}" 
-                                          showTime="true" 
+                            <p:datePicker id="releaseDate" value="#{companyProductManagedBean.newReleaseDate}" 
+                                          selectionMode="single"
                                           required="true" requiredMessage="release date is required">
                                 <p:ajax update="releaseDateValidation " process="@this"/>
                             </p:datePicker>
@@ -105,9 +105,9 @@
                             <p:messages id="releaseDateValidation" for ="releaseDate" />
                         </p:column>     
                     </p:row>
-                    
-                    
-                    
+
+
+
                     <p:row>
                         <p:column>
                             <p:outputLabel for="tag" value="tag" style="font-weight: bold;"/>               
@@ -132,7 +132,7 @@
                                              converter="omnifaces.SelectItemsConverter" required="true" 
                                              requiredMessage="Category selection is required">
                                 <f:selectItem itemLabel="Select a Category" itemValue=""/>
-                                <f:selectItems  value="#{companyProductManagedBean.categories}" 
+                                <f:selectItems  value="#{companyProductManagedBean.listOfAllCategories}" 
                                                 var="category" itemLabel="#{category.name}" 
                                                 itemValue="#{category}">
                                 </f:selectItems>
@@ -148,12 +148,12 @@
                         </p:column>
                         <p:column>
                             <p:selectOneMenu id="parentAdvisory" style="width:125px"
-                                             value="#{companyProductManagedBean.newGame.name}" 
-                                             required="true" requiredMessage="Parent Advisory is required">
-                                <f:selectItem  itemValue="G" itemLabel="G"/>
-                                <f:selectItem itemValue="Teen" itemLabel="Teen"/>
-                                <f:selectItem itemValue="R" itemLabel="R"/>
 
+                                             value="#{companyProductManagedBean.newGame.parentAdvisory}" 
+                                             >
+                                <f:selectItem itemLabel="Select a parent advisory" itemValue=""/>
+
+                                <f:selectItems value="#{companyProductManagedBean.allPossibleAdvisories}" />
                             </p:selectOneMenu>                             
                         </p:column>
                         <p:column>
@@ -161,31 +161,42 @@
                         </p:column>     
                     </p:row>
 
-
-
                     <p:row >
                         <p:column>
-                            <h:outputText value="Game Pictures" />
+                            <h:outputText value="Promotions" />
                         </p:column>
                         <p:column >
-                            <p:inputText id="gamePicturesURLs" value="#{companyProductManagedBean.newGame.gamePicturesURLs}" />
+                            <p:selectCheckboxMenu id="Promotions"  value="#{companyProductManagedBean.newGame.promotions}" 
+                                                  converter="omnifaces.SelectItemsConverter" label="Select Promotions" >
+                                <f:selectItems  value="#{companyProductManagedBean.listOfAllCompanyPromotions}" 
+                                                var="promotion" itemLabel="#{promotion.name}" 
+                                                itemValue="#{promotion}">
+                                </f:selectItems>
+                            </p:selectCheckboxMenu>                         
                         </p:column>
                         <p:column>
-                            <p:message for="gamePicturesURLs"/>
+                            <p:message for="Promotions"/>
                         </p:column>
                     </p:row> 
 
-                    <p:row >
+                    <p:row>
                         <p:column>
-                            <h:outputText value="Game Videos" />
+                            <h:outputText value="Pictures" />
                         </p:column>
                         <p:column >
-                            <p:inputText id="gameTrailersURLs" value="#{companyProductManagedBean.newGame.gameTrailersURLS}" />
+
+                            <p:fileUpload id="PicturesURLs"
+                                fileUploadListener="#{companyProductManagedBean.uploadPhoto}"
+                                          mode="advance" skinSimple="true" multiple="true" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" dragDropSupport="false"
+                                          update="pictuereUrlsMessage" sizeLimit="10000000000" fileLimit="5"/>
                         </p:column>
                         <p:column>
-                            <p:message for="gameTrailersURLs"/>
+                            <p:message for="PicturesURLs" id="pictuereUrlsMessage"/>
                         </p:column>
                     </p:row> 
+
+
+                    
 
 
                     <p:row>

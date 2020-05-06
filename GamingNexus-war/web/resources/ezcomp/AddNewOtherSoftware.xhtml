@@ -18,7 +18,7 @@
 
         <h:form id="formAddNewOtherSoftware">
 
-            <p:dialog id="dialogAddNewSoftware" widgetVar="dialogAddNewSoftware" header="Add New Software (other than game)" closable="true" appendTo = "@(body)">
+            <p:dialog id="dialogAddNewSoftware" widgetVar="dialogAddNewSoftware" header="Add New Software (other than game)" closable="true" >
 
                 <p:messages id="messagesAddNewGame" redisplay="false" />
                 <p:panelGrid>
@@ -87,13 +87,14 @@
                         </p:column>     
                     </p:row>
 
-                      <p:row>
+                    <p:row>
                         <p:column>
                             <p:outputLabel for="releaseDate" value="releaseDate" style="font-weight: bold;"/>               
                         </p:column>
                         <p:column>
-                            <p:datePicker id="releaseDate" value="#{companyProductManagedBean.newOtherSoftware.releaseDate}" 
-                                          showTime="true" 
+                            <p:datePicker id="releaseDate" value="#{companyProductManagedBean.newReleaseDate}" 
+                                                                                selectionMode="single"
+
                                           required="true" requiredMessage="release date is required">
                                 <p:ajax update="releaseDateValidation " process="@this"/>
                             </p:datePicker>
@@ -102,9 +103,9 @@
                             <p:messages id="releaseDateValidation" for ="releaseDate" />
                         </p:column>     
                     </p:row>
-                    
-                    
-                    
+
+
+
                     <p:row>
                         <p:column>
                             <p:outputLabel for="tag" value="tag" style="font-weight: bold;"/>               
@@ -127,7 +128,8 @@
                         <p:column>
                             <p:selectOneMenu id="category" style="width:125px" value="#{companyProductManagedBean.newOtherSoftware.category}" 
                                              converter="omnifaces.SelectItemsConverter" required="true" requiredMessage="Category selection is required">
-                                <f:selectItems  value="#{companyProductManagedBean.categories}" 
+                                <f:selectItem itemLabel="Select a Category" itemValue=""/>
+                                <f:selectItems  value="#{companyProductManagedBean.listOfAllCategories}" 
                                                 var="category" itemLabel="#{category.name}" 
                                                 itemValue="#{category}">
                                 </f:selectItems>
@@ -137,6 +139,25 @@
                             <p:messages for ="category" />
                         </p:column>     
                     </p:row>
+                    <p:row >
+                        <p:column>
+                            <h:outputText value="Promotions" />
+                        </p:column>
+                        <p:column >
+                            <p:selectCheckboxMenu id="Promotions"  value="#{companyProductManagedBean.newOtherSoftware.promotions}" 
+                                                  converter="omnifaces.SelectItemsConverter" label="Select Promotions" >
+                                <f:selectItems  value="#{companyProductManagedBean.listOfAllCompanyPromotions}" 
+                                                var="promotion" itemLabel="#{promotion.name}" 
+                                                itemValue="#{promotion}">
+                                </f:selectItems>
+                            </p:selectCheckboxMenu>                         
+                        </p:column>
+                        <p:column>
+                            <p:message for="Promotions"/>
+                        </p:column>
+                    </p:row> 
+                 
+
 
                     <p:row>
                         <p:column colspan="3">
