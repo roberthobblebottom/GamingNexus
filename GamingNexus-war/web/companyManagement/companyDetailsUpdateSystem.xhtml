@@ -125,9 +125,9 @@
                     <p:column>
                         <p:password id="newPassword" value="#{companyDetailsUpdateSystem.newPassword}"    
                                     feedback="true" inline="true" 
+                                    match="reenterNewPassword"
                                     >
                             <f:validateLength minimum="6" />
-                            <p:ajax event="keyup" update="reenterNewPasswordValidation" /> 
 
                         </p:password>
                     </p:column>
@@ -141,11 +141,10 @@
                         <p:outputLabel for="reenterNewPassword" value="Reenter New Password" style="font-weight: bold;"/>               
                     </p:column>
                     <p:column>
-                        <p:password id="reenterNewPassword" value="#{companyDetailsUpdateSystem.newPassword}" 
-                                     >
+                        <p:password id="reenterNewPassword" value="#{companyDetailsUpdateSystem.newPassword}"                                                          
+                                    validatorMessage="the reentered new password needs to be equal to the new Password"    >
                         </p:password>
-                        match="newPassword"
-                                    validatorMessage="the reentered new password needs to be equal to the new Password"
+
                     </p:column>
                     <p:column>
                         <p:messages id="reenterNewPasswordValidation" for ="reenterNewPassword" />
@@ -157,7 +156,7 @@
                 <p:row>
                     <p:column colspan="3">
                         <p:commandButton  id="UpdateCompanyDetailsButton" value="Update" 
-                                          update="@form formCompanyDetailsUpdate" process="@form formCompanyDetailsUpdate"
+                                          update="@form" process="@form"
                                           actionListener="#{companyDetailsUpdateSystem.updateCompany}"    
                                           />
                     </p:column>

@@ -35,7 +35,7 @@
                                 </f:validateLength>
                             </p:inputText>
                         </p:column>
-                     <p:column>
+                        <p:column>
                             <p:messages id="nameValidation" for ="name" />
                         </p:column>  
                     </p:row>
@@ -88,7 +88,7 @@
 
                         </p:column>
                     </p:row>
-                     <p:row>
+                    <p:row>
                         <p:column>
                             <p:outputLabel for="releaseDate" value="releaseDate" style="font-weight: bold;"/>               
                         </p:column>
@@ -103,8 +103,8 @@
                             <p:messages id="releaseDateValidation" for ="releaseDate" />
                         </p:column>     
                     </p:row>
-                    
-                    
+
+
 
                     <p:row>
                         <p:column>
@@ -121,19 +121,47 @@
                         </p:column>                                                   
 
                         <p:column>
-                            <p:selectOneMenu id="category" style="width:125px" 
+                            <p:selectOneMenu id="gameCategories" style="width:125px" 
                                              value="#{companyProductManagedBean.viewProductManagedBean.productToViewInDetails.category}" 
                                              converter="omnifaces.SelectItemsConverter" required="true" 
-                                             requiredMessage="Category selection is required">
-                                <f:selectItems  value="#{companyProductManagedBean.listOfAllCategories}" 
+                                             requiredMessage="Category selection is required"                                                
+                                             rendered="#{companyProductManagedBean.viewProductManagedBean.gameToViewInDetails != null}">
+                                <f:selectItems  value="#{companyProductManagedBean.listOfGameCategories}" 
                                                 var="category" 
                                                 itemLabel="#{category.name}" 
-                                                itemValue="#{category}">
-                                </f:selectItems>/>
+                                                itemValue="#{category}"/>
+                            </p:selectOneMenu>
+
+                            <p:selectOneMenu id="hardwareCategories" style="width:125px" 
+                                             value="#{companyProductManagedBean.viewProductManagedBean.productToViewInDetails.category}" 
+                                             converter="omnifaces.SelectItemsConverter" required="true"                                                
+                                             rendered="#{companyProductManagedBean.viewProductManagedBean.hardwareToViewInDetails != null}"
+                                             requiredMessage="Category selection is required">
+                                <f:selectItems  value="#{companyProductManagedBean.listOfHardwareCategories}" 
+                                                var="category" 
+                                                itemLabel="#{category.name}" 
+                                                itemValue="#{category}" />
+                            </p:selectOneMenu>
+
+
+
+                            <p:selectOneMenu id="otherSoftwareCategories" style="width:125px" 
+                                             value="#{companyProductManagedBean.viewProductManagedBean.productToViewInDetails.category}" 
+                                             converter="omnifaces.SelectItemsConverter" required="true" 
+                                             requiredMessage="Category selection is required"
+                                             rendered="#{companyProductManagedBean.viewProductManagedBean.otherSoftwareToViewInDetails != null}" >
+                                <f:selectItems  value="#{companyProductManagedBean.listOfOtherSoftwareCategories}" 
+                                                var="category" 
+                                                itemLabel="#{category.name}" 
+                                                itemValue="#{category}"/>
                             </p:selectOneMenu>
                         </p:column>
                         <p:column>
-                            <p:message for="category"/>
+                            <p:message for="gameCategories"/>
+                            <p:message for="otherSoftwareCategories"/>
+                            <p:message for="hardwareCategories"/>
+
+
                         </p:column>
                     </p:row>
                     <p:row>
@@ -154,9 +182,9 @@
                             <p:message for = "tag"/>
                         </p:column>
                     </p:row>
-               
 
-                 
+
+
                     <p:row rendered="#{companyProductManagedBean.viewProductManagedBean.gameToViewInDetails != null}">
                         <p:column>
                             <h:outputText value="Parent Advisory" />

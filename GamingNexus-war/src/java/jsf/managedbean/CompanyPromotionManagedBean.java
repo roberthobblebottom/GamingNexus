@@ -42,34 +42,6 @@ import util.exception.CompanyNotFoundException;
 @ViewScoped
 public class CompanyPromotionManagedBean implements Serializable {
 
-    /**
-     * @return the newStartDate
-     */
-    public Date getNewStartDate() {
-        return newStartDate;
-    }
-
-    /**
-     * @param newStartDate the newStartDate to set
-     */
-    public void setNewStartDate(Date newStartDate) {
-        this.newStartDate = newStartDate;
-    }
-
-    /**
-     * @return the newEndDate
-     */
-    public Date getNewEndDate() {
-        return newEndDate;
-    }
-
-    /**
-     * @param newEndDate the newEndDate to set
-     */
-    public void setNewEndDate(Date newEndDate) {
-        this.newEndDate = newEndDate;
-    }
-
     @EJB
     private OtherSoftwareSessionBeanLocal otherSoftwareSessionBean;
 
@@ -95,10 +67,13 @@ public class CompanyPromotionManagedBean implements Serializable {
     private List<Product> products, filteredProducts, productsToBeUpdated, promotionsProductsToBeViewed;
     private List<Long> listOfProductIds;
     private Company company;
+    private String toggleDiscountType;
+    private final String PERCENTAGE_DISCOUNT = "Percentage Discount";
+    private final String DOLLAR_DISCOUNT = "Dollar Discount";
 
     public CompanyPromotionManagedBean() {
         newPromotion = new Promotion();
-        
+
         startDateToBeUpdated = new Date();
         endDateToBeUpdated = new Date();
         newStartDate = new Date();
@@ -129,18 +104,14 @@ public class CompanyPromotionManagedBean implements Serializable {
     public void createNewPromotion(ActionEvent event) {
 //        newPromotion.setStartDate(newDateRange.get(0).toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime());
 //        newPromotion.setEndDate(newDateRange.get(newDateRange.size() - 1).toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime());
-        System.out.println("******newEndDate: " + newEndDate);
-        System.out.println("******newStartDate: " + newStartDate);
 
         newPromotion.setStartDate(new Timestamp(this.newStartDate.getTime()).toLocalDateTime());
         newPromotion.setEndDate(new Timestamp(this.newEndDate.getTime()).toLocalDateTime());
-    //    System.out.println("******newEndDate: " + newEndDate);
-
-        System.out.println("******endDate: " + newPromotion.getEndDate());
-        System.out.println("******name: " + newPromotion.getName());
-        System.out.println("******description: " + newPromotion.getDescription());
-        System.out.println("******listOfProductIds: " + listOfProductIds);
-
+        if (toggleDiscountType.equals(DOLLAR_DISCOUNT)) {
+            newPromotion.setPercentageDiscount(0);
+        } else if (toggleDiscountType.equals(PERCENTAGE_DISCOUNT)) {
+            newPromotion.setDollarDiscount(0);
+        }
         Promotion promotion = promotionSessionBean.createPromotion(newPromotion, listOfProductIds);
         promotions.add(promotion);
 
@@ -179,7 +150,11 @@ public class CompanyPromotionManagedBean implements Serializable {
 
     public void updatePromotion(ActionEvent event) {
         System.out.println("*****Entered updatePromotion method");
-
+        if (toggleDiscountType.equals(DOLLAR_DISCOUNT)) {
+            promotionToBeUpdated.setPercentageDiscount(0);
+        } else if (toggleDiscountType.equals(PERCENTAGE_DISCOUNT)) {
+            promotionToBeUpdated.setDollarDiscount(0);
+        }
         if (this.getStartDateToBeUpdated() != null) {
             System.out.println("*****Entered startDate update block");
             promotionToBeUpdated.setEndDate(new Timestamp(this.getStartDateToBeUpdated().getTime()).toLocalDateTime());
@@ -202,6 +177,10 @@ public class CompanyPromotionManagedBean implements Serializable {
         promotions.remove(promotionToBeDeleted);
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
                 "Promotion deleted successfully. ID: " + promotionToBeDeleted.getPromotionID(), null));
+    }
+
+    public void toggleDataType(ActionEvent event) {
+        //   String toggle =  event.getComponent().getAttributes().get("selectOneRadio");
     }
 
     /**
@@ -468,7 +447,69 @@ public class CompanyPromotionManagedBean implements Serializable {
      * @param listOfProductIds the listOfProductIds to set
      */
     public void setListOfProductIds(List<Long> listOfProductIds) {
+
         this.listOfProductIds = listOfProductIds;
     }
 
-};
+    /**
+     * @param toggleDiscountType the toggleDiscountType to set
+     */
+    public void setToggleDiscountType(String toggleDiscountType) {
+        System.out.println("setToggleDiscountType method: this.toggleDiscountType: " + toggleDiscountType);
+        this.toggleDiscountType = toggleDiscountType;        
+    }
+
+    /**
+     * @return the newStartDate
+     */
+    public Date getNewStartDate() {
+        return newStartDate;
+    }
+
+    /**
+     * @param newStartDate the newStartDate to set
+     */
+    public void setNewStartDate(Date newStartDate) {
+        this.newStartDate = newStartDate;
+    }
+
+    /**
+     * @return the newEndDate
+     */
+    public Date getNewEndDate() {
+        return newEndDate;
+    }
+
+    /**
+     * @param newEndDate the newEndDate to set
+     */
+    public void setNewEndDate(Date newEndDate) {
+        this.newEndDate = newEndDate;
+    }
+
+    /**
+     * @return the toggleDiscountType
+     */
+    public String getToggleDiscountType() {
+        System.out.println("getToggleDiscountType: " + toggleDiscountType);
+        return toggleDiscountType;
+    }
+
+    /**
+     * @return the PERCENTAGE_DISCOUNT
+     */
+    public String getPERCENTAGE_DISCOUNT() {
+        return PERCENTAGE_DISCOUNT;
+    }
+
+    /**
+     * @return the DOLLAR_DISCOUNT
+     */
+    public String getDOLLAR_DISCOUNT() {
+        return DOLLAR_DISCOUNT;
+    }
+
+    /**
+     * @param aDOLLAR_DISCOUNT the DOLLAR_DISCOUNT to set
+     */
+}

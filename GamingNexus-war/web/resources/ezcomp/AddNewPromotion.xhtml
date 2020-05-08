@@ -53,41 +53,61 @@
                         </p:column>     
                     </p:row>
 
+                    <h:form id="discountTypeForm">
 
+                        <p:row>
+                            <p:column>
+                                <p:outputLabel  value="Select discount Type:" style="font-weight: bold;"/>               
+                            </p:column>
+                            <p:column>
+                                <p:selectOneMenu value="#{companyPromotionManagedBean.toggleDiscountType}" 
+                                                  id="selectOneRadio" 
+                                                  >
+                                    <f:selectItem  itemLabel="Dollar Discount" itemValue="Dollar Discount" >
+                                    </f:selectItem>
+                                    <f:selectItem itemLabel="Percentage Discount" itemValue="Percentage Discount">
+                                    </f:selectItem>
+                                    <p:ajax update="discountTypeForm" process="@this" />
 
-                    <p:row>
-                        <p:column>
-                            <p:outputLabel for="percentageDiscount" value="percentageDiscount" style="font-weight: bold;"/>               
-                        </p:column>
-                        <p:column>
-                            <p:inputText id="percentageDiscount"  placeholder="percentageDiscount" required="true" requiredMessage="Percentage discount is required" 
-                                         value="#{companyPromotionManagedBean.newPromotion.percentageDiscount}" >
-                                <f:validateDoubleRange minimum="0.00" maximum="100.00">
-                                    <p:ajax event="keyup" update="percentageDiscountValidation" process="@this"/> 
-                                </f:validateDoubleRange>
-                            </p:inputText>
-                        </p:column>
-                        <p:column>
-                            <p:messages id="percentageDiscountValidation" for ="percentageDiscount" />
-                        </p:column>     
-                    </p:row>
-                    <p:row>
-                        <p:column>
-                            <p:outputLabel for="dollarDiscount" value="dollarDiscount" style="font-weight: bold;"/>               
-                        </p:column>
-                        <p:column>
-                            <p:inputText id="dollarDiscount"  placeholder="dollarDiscount" required="true" requiredMessage="dollar discount is required"
-                                         value="#{companyPromotionManagedBean.newPromotion.dollarDiscount}" >
-                                <f:validateDoubleRange minimum="0.00">
-                                    <p:ajax event="keyup" update="dollarDiscountValidation" process="@this"/> 
-                                </f:validateDoubleRange>
-                            </p:inputText>
-                        </p:column>
-                        <p:column>
-                            <p:messages id="dollarDiscountValidation" for ="dollarDiscount" />
-                        </p:column>     
-                    </p:row>
+                                </p:selectOneMenu>
+                            </p:column>
+                        </p:row>
 
+                        <p:row id="percentageDiscountRow" >
+                            <p:column>
+                                <p:outputLabel for="percentageDiscount" value="percentageDiscount" style="font-weight: bold;"/>               
+                            </p:column>
+                            <p:column>
+                                <p:inputText id="percentageDiscount"  placeholder="percentageDiscount" required="true" requiredMessage="Percentage discount is required" 
+                                             value="#{companyPromotionManagedBean.newPromotion.percentageDiscount}" >
+                                    <f:validateDoubleRange minimum="0.00" maximum="100.00">
+                                        <p:ajax event="keyup" update="percentageDiscountValidation" process="@this"/> 
+                                    </f:validateDoubleRange>
+                                </p:inputText>
+                            </p:column>
+                            <p:column>
+                                <p:messages id="percentageDiscountValidation" for ="percentageDiscount" />
+                            </p:column>     
+                        </p:row>
+
+                        <p:row id="dollarDiscountRow" >
+                            <p:column>
+                                <p:outputLabel for="dollarDiscount" value="dollarDiscount" style="font-weight: bold;"
+                                               />               
+                            </p:column>
+                            <p:column>
+                                <p:inputText id="dollarDiscount"  placeholder="dollarDiscount" required="true" requiredMessage="dollar discount is required"
+                                             value="#{companyPromotionManagedBean.newPromotion.dollarDiscount}" >
+                                    <f:validateDoubleRange minimum="0.00">
+                                        <p:ajax event="keyup" update="dollarDiscountValidation" process="@this"/> 
+                                    </f:validateDoubleRange>
+                                </p:inputText>
+                            </p:column>
+                            <p:column>
+                                <p:messages id="dollarDiscountValidation" for ="dollarDiscount" />
+                            </p:column>     
+                        </p:row>
+                    </h:form>
                     <p:row>
                         <p:column>
                             <p:outputLabel for="startDate" value="start Date" style="font-weight: bold;"/>               

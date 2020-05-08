@@ -89,7 +89,7 @@ public class CategorySessionBean implements CategorySessionBeanLocal {
 
         return rootCategoryEntities;
     }
-    
+
     @Override
     public List<Category> retrieveAllLeafCategories() {
         Query query = em.createQuery("SELECT c FROM Category c WHERE c.subCategories IS EMPTY ORDER BY c.name ASC");
@@ -98,6 +98,21 @@ public class CategorySessionBean implements CategorySessionBeanLocal {
         for (Category leafCategoryEntity : leafCategoryEntities) {
             leafCategoryEntity.getProducts().size();
         }
+
+        return leafCategoryEntities;
+    }
+
+    @Override
+    public List<Category> retrieveAllLeafCategoriesOfParent(Long parentCategoryId) {
+        Category parentCategory = em.find(Category.class, parentCategoryId);
+        Query query
+                = em.createQuery("SELECT c FROM Category c WHERE c.parentCategory = :inParentCategory ORDER BY c.name ASC");
+        query.setParameter("inParentCategory", parentCategory);
+        List<Category> leafCategoryEntities = query.getResultList();
+
+//        for (Category leafCategoryEntity : leafCategoryEntities) {
+//            leafCategoryEntity.getProducts().size();
+//        }
 
         return leafCategoryEntities;
     }
@@ -112,6 +127,14 @@ public class CategorySessionBean implements CategorySessionBeanLocal {
         }
 
         return rootCategoryEntities;
+    }
+
+    @Override
+    public Category retrieveCategoryByName(String categoryName) {
+        Query query 
+                = em.createQuery("SELECT c FROM Category c WHERE c.name = :inCategoryName ");
+        query.setParameter("inCategoryName", categoryName);
+        return (Category) query.getSingleResult();
     }
 
     @Override
@@ -131,7 +154,7 @@ public class CategorySessionBean implements CategorySessionBeanLocal {
         if (categoryEntity.getCategoryId() != null) {
             Category categoryEntityToUpdate = retrieveCategoryByCategoryId(categoryEntity.getCategoryId());
 
-            Query query = em.createQuery("SELECT c FROM Category c WHERE c.name = :inName AND c.categoryID <> :inCategoryID");
+            Query query = em.createQuery("SELECT c FROM Category c WHERE c.name = :inName AND c.categoryId   = :inCategoryID");
             query.setParameter("inName", categoryEntity.getName());
             query.setParameter("inCategoryID", categoryEntity.getCategoryId());
 
@@ -161,26 +184,20 @@ public class CategorySessionBean implements CategorySessionBeanLocal {
             throw new CategoryNotFoundException("Category ID not provided for category to be updated");
         }
     }
-    
+
     @Override
-    public void deleteCategory(Long categoryId) throws CategoryNotFoundException, DeleteCategoryException
-    {
+    public void deleteCategory(Long categoryId) throws CategoryNotFoundException, DeleteCategoryException {
         Category categoryEntityToRemove = retrieveCategoryByCategoryId(categoryId);
-        
-        if(!categoryEntityToRemove.getSubCategories().isEmpty())
-        {
+
+        if (!categoryEntityToRemove.getSubCategories().isEmpty()) {
             throw new DeleteCategoryException("Category ID " + categoryId + " is associated with existing sub-categories and cannot be deleted!");
-        }
-        else if(!categoryEntityToRemove.getProducts().isEmpty())
-        {
+        } else if (!categoryEntityToRemove.getProducts().isEmpty()) {
             throw new DeleteCategoryException("Category ID " + categoryId + " is associated with existing products and cannot be deleted!");
-        }
-        else
-        {
+        } else {
             categoryEntityToRemove.setParentCategory(null);
-            
+
             em.remove(categoryEntityToRemove);
-        }                
+        }
     }
 
     private void lazilyLoadSubCategories(Category categoryEntity) {

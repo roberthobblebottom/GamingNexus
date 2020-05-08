@@ -57,6 +57,7 @@ import util.exception.ProductSkuCodeExistException;
 import util.exception.SystemAdminUsernameExistException;
 import util.exception.TagNotFoundException;
 import util.exception.UnknownPersistenceException;
+import util.exception.UpdateCategoryException;
 import util.exception.UpdateProductException;
 
 /**
@@ -143,6 +144,13 @@ public class DataInitSessionBean {
                     .createNewCategoryEntity(new Category("Photo Editing", "Photo Editing"), categoryEntitySoftwareTool.getCategoryId());
             Category categoryEntityVideoProduction = categorySessionBeanLocal
                     .createNewCategoryEntity(new Category("Video Production", "Video Production"), categoryEntitySoftwareTool.getCategoryId());
+//            categoryEntitySoftwareTool.getSubCategories().add(categoryEntityAnimationModeling);
+//            categoryEntitySoftwareTool.getSubCategories().add(categoryEntityAudio);
+//            categoryEntitySoftwareTool.getSubCategories().add(categoryEntityDesign);
+//            categoryEntitySoftwareTool.getSubCategories().add(categoryEntityEducation);
+//            categoryEntitySoftwareTool.getSubCategories().add(categoryEntityGameDev);
+//            categoryEntitySoftwareTool.getSubCategories().add(categoryEntityPhotoEditing);
+//            categoryEntitySoftwareTool.getSubCategories().add(categoryEntityVideoProduction);
 
             Category categoryEntityHardware = categorySessionBeanLocal
                     .createNewCategoryEntity(new Category("Hardware", "Hardware"), null);
@@ -156,6 +164,19 @@ public class DataInitSessionBean {
                     .createNewCategoryEntity(new Category("Monitor", "Monitor"), categoryEntityHardware.getCategoryId());
             Category categoryEntityGraphicscard = categorySessionBeanLocal
                     .createNewCategoryEntity(new Category("Graphicscard", "Graphicscard"), categoryEntityHardware.getCategoryId());
+
+//            categoryEntityHardware.getSubCategories().add(categoryEntityLaptop);
+//            categoryEntityHardware.getSubCategories().add(categoryEntityMouse);
+//            categoryEntityHardware.getSubCategories().add(categoryEntityKeyboard);
+//            categoryEntityHardware.getSubCategories().add(categoryEntityMonitor);
+//            categoryEntityHardware.getSubCategories().add(categoryEntityGraphicscard);
+//            try {
+//                categorySessionBeanLocal.updateCategory(categoryEntitySoftwareTool, null);
+//                categorySessionBeanLocal.updateCategory(categoryEntityHardware, null);
+//
+//            } catch (CategoryNotFoundException | InputDataValidationException | UpdateCategoryException ex) {
+//                ex.printStackTrace();
+//            }
 
             Tag tagEntityPopular = tagSessionBeanLocal.createNewTagEntity(new Tag("Popular", false));
             System.out.println("*********tag tagEntityPopular id:" + tagEntityPopular.getTagId());
@@ -222,10 +243,7 @@ public class DataInitSessionBean {
             tags.add(tagEntityPopular.getTagId());
             tags.add(tagEntityFPS.getTagId());
             tags.add(tagEntitySingleplayer.getTagId());
-            tags.forEach(tag -> {
-
-                System.out.println("***************Tag long id:" + tag);
-            });
+          
             Game cs = gameSessionBeanLocal.createNewGame(new Game(parentAdvisory,
                     name, description, computerRequirements, averageRating, price,
                     releaseDate, pictureUrls, videoUrls), categoryid, tags, company1.getUserId());
@@ -1420,10 +1438,10 @@ public class DataInitSessionBean {
             OtherSoftware streamAvatars = otherSoftwareSessionBeanLocal.createNewOtherSoftware(new OtherSoftware(name, description, computerRequirements,
                     price, averageRating, releaseDate, pictureUrls, videoUrls), categoryid, tags, company1.getUserId()
             );
-            System.out.println("company 1 products");
-            company1.getProducts().forEach(product -> {
-                System.out.println("Product name: "+product.getName());
-            });
+//            System.out.println("company 1 products");
+//            company1.getProducts().forEach(product -> {
+//                System.out.println("Product name: " + product.getName());
+//            });
 
             SaleTransactionLineItem saleTransactionLineItem1 = new SaleTransactionLineItem(streamAvatars, 1, new BigDecimal("14.5"), new BigDecimal("14.5"));
             List<SaleTransactionLineItem> saleTransactionLineItems = new ArrayList<>();
@@ -1451,7 +1469,6 @@ public class DataInitSessionBean {
                 ex.printStackTrace();
             }
 
-            
             companySessionBeanLocal.updateCompany(company1);
 
         } catch (SystemAdminUsernameExistException | UnknownPersistenceException | InputDataValidationException

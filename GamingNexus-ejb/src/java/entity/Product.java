@@ -391,5 +391,9 @@ public abstract class Product implements Serializable {
     public void setVideoURLs(List<String> videoURLs) {
         this.videoURLs = videoURLs;
     }
-
+    
+    public String getClassName()
+    {
+        return this.getClass().getSimpleName();
+    }
 }

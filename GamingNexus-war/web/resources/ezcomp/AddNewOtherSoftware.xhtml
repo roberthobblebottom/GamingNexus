@@ -129,7 +129,7 @@
                             <p:selectOneMenu id="category" style="width:125px" value="#{companyProductManagedBean.newOtherSoftware.category}" 
                                              converter="omnifaces.SelectItemsConverter" required="true" requiredMessage="Category selection is required">
                                 <f:selectItem itemLabel="Select a Category" itemValue=""/>
-                                <f:selectItems  value="#{companyProductManagedBean.listOfAllCategories}" 
+                                <f:selectItems  value="#{companyProductManagedBean.listOfOtherSoftwareCategories}" 
                                                 var="category" itemLabel="#{category.name}" 
                                                 itemValue="#{category}">
                                 </f:selectItems>

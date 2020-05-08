@@ -94,9 +94,10 @@ public class CompanyProductManagedBean implements Serializable {
     private Hardware newHardware, hardwareToViewInDetails = null;
     private OtherSoftware newOtherSoftware, otherSoftwareToViewInDetails = null;
     private Date newReleaseDate = null;
+    private String dataType;
 
     private List<Product> listOfAllCompanysProducts, filteredProducts;
-    private List<Category> listOfAllCategories;
+    private List<Category> listOfAllCategories, listOfGameCategories, listOfHardwareCategories, listOfOtherSoftwareCategories;
     private List<Promotion> listOfAllCompanyPromotions;
     private List<Tag> tags;
 
@@ -114,6 +115,7 @@ public class CompanyProductManagedBean implements Serializable {
         allPossibleAdvisories = ParentAdvisory.values();
         newReleaseDate = new Date(System.currentTimeMillis());
         releaseDateToBeUpdated = new Date(System.currentTimeMillis());
+        listOfGameCategories = new ArrayList<>();
     }
 
     @PostConstruct
@@ -121,7 +123,7 @@ public class CompanyProductManagedBean implements Serializable {
         uploadedFile = null;
         Map<String, Object> sessionMap = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
         setCompany((Company) sessionMap.get("company"));
-        System.out.println("company username: "+this.company.getUsername());
+        System.out.println("company username: " + this.company.getUsername());
         try {
             listOfAllCompanyPromotions = promotionSessionBean.retrivePromotionsByCompanyID(getCompany().getUserId());
         } catch (CompanyNotFoundException ex) {
@@ -135,7 +137,21 @@ public class CompanyProductManagedBean implements Serializable {
         newOtherSoftware.setTags(new ArrayList<>());
         setNewHardware(new Hardware());
         getNewHardware().setTags(new ArrayList<>());
-        listOfAllCategories = categorySessionBean.retrieveAllCategories();
+//        listOfAllCategories = categorySessionBean.retrieveAllCategories();
+        Category hardwareCategory = categorySessionBean.retrieveCategoryByName("Hardware");
+//        System.out.println("hardwareCategoryName: "+hardwareCategory.getName());
+        setListOfHardwareCategories(categorySessionBean.retrieveAllLeafCategoriesOfParent(hardwareCategory.getCategoryId()));
+
+        Category otherSoftwareCategory = categorySessionBean.retrieveCategoryByName("SoftwareTool");
+        setListOfOtherSoftwareCategories(categorySessionBean.retrieveAllLeafCategoriesOfParent(otherSoftwareCategory.getCategoryId()));
+
+        this.listOfOtherSoftwareCategories.forEach(cat -> {
+            System.out.println("...........Cat name: " + cat.getName());
+        });
+
+        Category gameCategory = categorySessionBean.retrieveCategoryByName("SoftwareGame");
+        listOfGameCategories.add(gameCategory);
+
         tags = tagSessionBean.retrieveAllTags();
     }
 
@@ -228,8 +244,8 @@ public class CompanyProductManagedBean implements Serializable {
 
     public void doUpdateProduct(ActionEvent event) {
         Product productToBeUpdated = (Product) event.getComponent().getAttributes().get("productToBeUpdated");
-        
-        System.out.println("*********doUpdateProduct productToBeUpdated name: "+productToBeUpdated.getName());
+
+        System.out.println("*********doUpdateProduct productToBeUpdated name: " + productToBeUpdated.getName());
         this.viewProductManagedBean.setProductToViewInDetails(productToBeUpdated);
         this.releaseDateToBeUpdated = this.convertToDateViaInstant(this.viewProductManagedBean.getProductToViewInDetails().getReleaseDate());
     }
@@ -663,6 +679,63 @@ public class CompanyProductManagedBean implements Serializable {
      */
     public void setReleaseDateToBeUpdated(Date releaseDateToBeUpdated) {
         this.releaseDateToBeUpdated = releaseDateToBeUpdated;
+    }
+
+    /**
+     * @return the dataType
+     */
+    public String getDataType() {
+        return dataType;
+    }
+
+    /**
+     * @param dataType the dataType to set
+     */
+    public void setDataType(String dataType) {
+        this.dataType = dataType;
+    }
+
+    /**
+     * @return the listOfGameCategories
+     */
+    public List<Category> getListOfGameCategories() {
+        return listOfGameCategories;
+    }
+
+    /**
+     * @param listOfGameCategories the listOfGameCategories to set
+     */
+    public void setListOfGameCategories(List<Category> listOfGameCategories) {
+        this.listOfGameCategories = listOfGameCategories;
+    }
+
+    /**
+     * @return the listOfHardwareCategories
+     */
+    public List<Category> getListOfHardwareCategories() {
+        return listOfHardwareCategories;
+    }
+
+    /**
+     * @param listOfHardwareCategories the listOfHardwareCategories to set
+     */
+    public void setListOfHardwareCategories(List<Category> listOfHardwareCategories) {
+        this.listOfHardwareCategories = listOfHardwareCategories;
+    }
+
+    /**
+     * @return the listOfOtherSoftwareCategories
+     */
+    public List<Category> getListOfOtherSoftwareCategories() {
+        return listOfOtherSoftwareCategories;
+    }
+
+    /**
+     * @param listOfOtherSoftwareCategories the listOfOtherSoftwareCategories to
+     * set
+     */
+    public void setListOfOtherSoftwareCategories(List<Category> listOfOtherSoftwareCategories) {
+        this.listOfOtherSoftwareCategories = listOfOtherSoftwareCategories;
     }
 
 }

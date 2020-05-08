@@ -82,7 +82,7 @@ public class GameSessionBean implements GameSessionBeanLocal {
             if (tagIds != null && (!tagIds.isEmpty())) {
                 for (Long tagId : tagIds) {
                     Tag tag = tagSessionBeanLocal.retrieveTagByTagId(tagId);
-                    System.out.println("********createNewGame tags block, tag object name: "+tag.getTagName());
+//                    System.out.println("********createNewGame tags block, tag object name: "+tag.getTagName());
                     newGame.addTag(tag);
                     tag.getProducts().add(newGame);
                 }

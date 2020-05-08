@@ -29,7 +29,7 @@
                 <p:messages id="messages" redisplay="false" closable="true" />
 
                 <p:dataTable id="dataTableAllProducts" widgetVar="dataTableAllProducts" value="#{companyProductManagedBean.listOfAllCompanysProducts}" 
-                             var="product" rowKey="#{product.userId}" rowIndexVar="row"
+                             var="product" rowKey="#{product.userId}" rowIndexVar="row" 
                              rows="10" paginator="true" paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} 
                              {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowsPerPageTemplate="10,20,50">             
 
@@ -37,7 +37,13 @@
                               filterMatchMode="contains">
                         <h:outputText value="#{product.productId}" />
                     </p:column>
-                    
+
+                    <p:column headerText="Data Type" sortBy="#{product.productId}" filterBy="#{product.productId}" 
+                              filterMatchMode="contains" >
+                        
+                        <h:outputText value="#{product.className}"/>
+                    </p:column>
+
                     <p:column headerText="Name" sortBy="#{product.name}" filterBy="#{product.name}" filterMatchMode="contains">
                         <h:outputText value="#{product.name}" />
                     </p:column>
@@ -58,7 +64,7 @@
                             #{tag.tagName}  
                         </p:dataList>
                     </p:column>
-                  
+
 
                     <p:column headerText="Action" >
                         <p:commandButton icon="ui-icon-trash"  update="formAllProducts:dataTableAllProducts " 

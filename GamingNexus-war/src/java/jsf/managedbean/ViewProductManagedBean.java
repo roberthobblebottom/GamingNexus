@@ -49,7 +49,7 @@ public class ViewProductManagedBean implements Serializable {
      * @param productToViewInDetails the productToViewInDetails to set
      */
     public void setProductToViewInDetails(Product productToViewInDetails) {
-
+this.productToViewInDetails = productToViewInDetails;
         if (productToViewInDetails instanceof Game) {
             System.out.println("**********setProductToViewInDetails game if block");
 
@@ -71,18 +71,12 @@ public class ViewProductManagedBean implements Serializable {
             setGameToViewInDetails(null);
 
         }
+        assert false:"productToViewInDetails should be always an instance of a child class";
+        
 
-        System.out.println("Product Id " + productToViewInDetails.getProductId());
-        this.productToViewInDetails = productToViewInDetails;
     }
 
-    public void resetManageBean() {
-        this.gameToViewInDetails = null;
-        this.hardwareToViewInDetails = null;
-        this.otherSoftwareToViewInDetails = null;
-        this.productToViewInDetails = null;
-    }
-
+// 
     /**
      * @return the gameToViewInDetails
      */

@@ -127,6 +127,7 @@ public class CompanyDetailsUpdateSystem implements Serializable {
      * @param reenteredNewPassword the reenteredNewPassword to set
      */
     public void setReenteredNewPassword(String reenteredNewPassword) {
+        System.out.println("********** setReenteredNewPassword: " + reenteredNewPassword);
         this.reenteredNewPassword = reenteredNewPassword;
     }
 
@@ -141,6 +142,7 @@ public class CompanyDetailsUpdateSystem implements Serializable {
      * @param newPassword the newPassword to set
      */
     public void setNewPassword(String newPassword) {
+        System.out.println("********** setNewPassword: " + newPassword);
         this.newPassword = newPassword;
     }
 
