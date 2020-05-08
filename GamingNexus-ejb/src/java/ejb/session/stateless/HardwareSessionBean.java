@@ -83,6 +83,7 @@ public class HardwareSessionBean implements HardwareSessionBeanLocal {
             em.persist(newHardware);
             newHardware.setCategory(category);
             newHardware.setCompany(company);
+            company.getProducts().add(newHardware);
 
             if (tagIds != null && (!tagIds.isEmpty())) {
                 for (Long tagId : tagIds) {

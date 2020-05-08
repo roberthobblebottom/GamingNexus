@@ -121,6 +121,7 @@ public class CompanyProductManagedBean implements Serializable {
         uploadedFile = null;
         Map<String, Object> sessionMap = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
         setCompany((Company) sessionMap.get("company"));
+        System.out.println("company username: "+this.company.getUsername());
         try {
             listOfAllCompanyPromotions = promotionSessionBean.retrivePromotionsByCompanyID(getCompany().getUserId());
         } catch (CompanyNotFoundException ex) {

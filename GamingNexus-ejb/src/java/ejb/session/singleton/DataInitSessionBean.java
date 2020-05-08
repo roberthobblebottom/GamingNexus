@@ -124,7 +124,6 @@ public class DataInitSessionBean {
             systemAdminSessionBeanLocal.createNewSystemAdmin(systemAdmin);
             // systemAdminSessionBeanLocal.createNewSystemAdmin(new SystemAdmin("Default",
             // "System Admin2", "admin2", "password"));
-
             Category categoryEntitySoftwareGame = categorySessionBeanLocal
                     .createNewCategoryEntity(new Category("SoftwareGame", "Game"), null);
 
@@ -159,6 +158,7 @@ public class DataInitSessionBean {
                     .createNewCategoryEntity(new Category("Graphicscard", "Graphicscard"), categoryEntityHardware.getCategoryId());
 
             Tag tagEntityPopular = tagSessionBeanLocal.createNewTagEntity(new Tag("Popular", false));
+            System.out.println("*********tag tagEntityPopular id:" + tagEntityPopular.getTagId());
             Tag tagEntityDiscount = tagSessionBeanLocal.createNewTagEntity(new Tag("Discount", false));
             Tag tagEntityNew = tagSessionBeanLocal.createNewTagEntity(new Tag("New", false));
             Tag tagEntityUpcoming = tagSessionBeanLocal.createNewTagEntity(new Tag("Upcoming", false));
@@ -191,8 +191,15 @@ public class DataInitSessionBean {
                     "company4@gmail.com", "Singapore", "company4", "password"));
             Company company5 = companySessionBeanLocal.createNewCompany(new Company("123323", "Singapore",
                     "company5@gmail.com", "Singapore", "company5", "password"));
+            System.out.println("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&7");
+            System.out.println("system admin id: " + systemAdmin.getUserId());
+            System.out.println("company1 id:" + company1.getUserId());
+            System.out.println("company2 id:" + company2.getUserId());
+            System.out.println("company3 id:" + company3.getUserId());
+            System.out.println("company4 id:" + company4.getUserId());
+            System.out.println("company5 id:" + company5.getUserId());
 
-            List<Long> tags=null;
+            List<Long> tags = null;
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
             String name = "Counter-Strike";
@@ -203,21 +210,26 @@ public class DataInitSessionBean {
             double price = 10.00;
             String description = "Play the worlds number 1 online action game. Engage in an incredibly realistic brand of terrorist warfare in this wildly popular team-based game. Ally with teammates to complete strategic missions. Take out enemy sites. Rescue hostages. Your role affects your teams success. Your teams success affects your role.";
             String headerImage = "http://cdn.akamai.steamstatic.com/steam/apps/10/header.jpg?t=1447887426";
+            String videoLink = "";
             List<String> pictureUrls = new ArrayList<>();
             pictureUrls.add(headerImage);
             List<String> videoUrls = new ArrayList<>();
+            videoUrls.add(videoLink);
 
             String computerRequirements = "Minimum: 500 mhz processor 96mb ram 16mb video card Windows XP Mouse Keyboard Internet ConnectionRecommended: 800 mhz processor 128mb ram 32mb+ video card Windows XP Mouse Keyboard Internet Connection";
-            String videoLink = "";
             Long categoryid = categoryEntitySoftwareGame.getCategoryId();
             tags = new ArrayList<>();
-            tags.add(tagEntityPopular);
+            tags.add(tagEntityPopular.getTagId());
             tags.add(tagEntityFPS.getTagId());
             tags.add(tagEntitySingleplayer.getTagId());
-            Game cs = gameSessionBeanLocal.createNewGame(
-                    new Game(parentAdvisory, name, description, computerRequirements,
-                            price, averageRating, releaseDate, pictureUrls, videoUrls, company1,
-                            categoryEntitySoftwareGame, new ArrayList<>()),categoryid,tags,company1.getUserId());
+            tags.forEach(tag -> {
+
+                System.out.println("***************Tag long id:" + tag);
+            });
+            Game cs = gameSessionBeanLocal.createNewGame(new Game(parentAdvisory,
+                    name, description, computerRequirements, averageRating, price,
+                    releaseDate, pictureUrls, videoUrls), categoryid, tags, company1.getUserId());
+
             name = "Portal";
             releaseDate = LocalDate.parse("2007-10-10", formatter);
             parentAdvisory = ParentAdvisory.G;
@@ -230,14 +242,15 @@ public class DataInitSessionBean {
             videoLink = "";
             categoryid = categoryEntitySoftwareGame.getCategoryId();
             tags = new ArrayList<>();
-            tags.add(tagEntityPuzzle);
+            tags.add(tagEntityPuzzle.getTagId());
             tags.add(tagEntitySingleplayer.getTagId());
             pictureUrls = new ArrayList<>();
             pictureUrls.add(headerImage);
             videoUrls = new ArrayList<>();
+            videoUrls.add(videoLink);
             Game portal = gameSessionBeanLocal.createNewGame(
                     new Game(parentAdvisory, name, description, computerRequirements,
-                            price, averageRating, releaseDate, pictureUrls, videoUrls, company1, categoryEntitySoftwareGame, new ArrayList<>()),categoryid,tags,company1.getUserId()
+                            price, averageRating, releaseDate, pictureUrls, videoUrls), categoryid, tags, company1.getUserId()
             );
 
             name = "Dota 2";
@@ -252,15 +265,16 @@ public class DataInitSessionBean {
             videoLink = "https://steamcdn-a.akamaihd.net/steam/apps/256692017/movie480_vp9.webm?t=1586312838";
             categoryid = categoryEntitySoftwareGame.getCategoryId();
             tags = new ArrayList<>();
-            tags.add(tagEntityPopular);
-            tags.add(tagEntityMultiplayer);
-            tags.add(tagEntityMOBA);
+            tags.add(tagEntityPopular.getTagId());
+            tags.add(tagEntityMultiplayer.getTagId());
+            tags.add(tagEntityMOBA.getTagId());
             pictureUrls = new ArrayList<>();
             pictureUrls.add(headerImage);
             videoUrls = new ArrayList<>();
+            videoUrls.add(videoLink);
             Game dota2 = gameSessionBeanLocal.createNewGame(
                     new Game(parentAdvisory, name, description, computerRequirements,
-                            price, averageRating, releaseDate, pictureUrls, videoUrls, company1, categoryEntitySoftwareGame, new ArrayList<>()),categoryid,tags,company1.getUserId()
+                            price, averageRating, releaseDate, pictureUrls, videoUrls), categoryid, tags, company1.getUserId()
             );
 
             name = "Team Fortress 2";
@@ -276,13 +290,14 @@ public class DataInitSessionBean {
             categoryid = categoryEntitySoftwareGame.getCategoryId();
             tags = new ArrayList<>();
             tags.add(tagEntityFPS.getTagId());
-            tags.add(tagEntityMultiplayer);
+            tags.add(tagEntityMultiplayer.getTagId());
             pictureUrls = new ArrayList<>();
             pictureUrls.add(headerImage);
             videoUrls = new ArrayList<>();
+            videoUrls.add(videoLink);
             Game teamFortress2 = gameSessionBeanLocal.createNewGame(
                     new Game(parentAdvisory, name, description, computerRequirements,
-                            price, averageRating, releaseDate, pictureUrls, videoUrls, company1, categoryEntitySoftwareGame, new ArrayList<>()),categoryid,tags,company1.getUserId()
+                            price, averageRating, releaseDate, pictureUrls, videoUrls), categoryid, tags, company1.getUserId()
             );
 
             name = "Counter-Strike: Global Offensive";
@@ -297,15 +312,16 @@ public class DataInitSessionBean {
             videoLink = "https://steamcdn-a.akamaihd.net/steam/apps/81958/movie_max.webm?t=1554409259";
             categoryid = categoryEntitySoftwareGame.getCategoryId();
             tags = new ArrayList<>();
-            tags.add(tagEntityPopular);
+            tags.add(tagEntityPopular.getTagId());
             tags.add(tagEntityFPS.getTagId());
-            tags.add(tagEntityMultiplayer);
+            tags.add(tagEntityMultiplayer.getTagId());
             pictureUrls = new ArrayList<>();
             pictureUrls.add(headerImage);
             videoUrls = new ArrayList<>();
+            videoUrls.add(videoLink);
             Game csgo = gameSessionBeanLocal.createNewGame(
                     new Game(parentAdvisory, name, description, computerRequirements,
-                            price, averageRating, releaseDate, pictureUrls, videoUrls, company1, categoryEntitySoftwareGame, new ArrayList<>()),categoryid,tags,company1.getUserId()
+                            price, averageRating, releaseDate, pictureUrls, videoUrls), categoryid, tags, company1.getUserId()
             );
 
             name = "Portal 2";
@@ -320,14 +336,16 @@ public class DataInitSessionBean {
             categoryid = categoryEntitySoftwareGame.getCategoryId();
             videoLink = "https://steamcdn-a.akamaihd.net/steam/apps/5790/movie480.webm?t=1452903127";
             tags = new ArrayList<>();
-            tags.add(tagEntityPuzzle);
+            tags.add(tagEntityPuzzle.getTagId());
             tags.add(tagEntitySingleplayer.getTagId());
             pictureUrls = new ArrayList<>();
             pictureUrls.add(headerImage);
             videoUrls = new ArrayList<>();
+            videoUrls.add(videoLink);
             Game portal2 = gameSessionBeanLocal.createNewGame(
                     new Game(parentAdvisory, name, description, computerRequirements,
-                            price, averageRating, releaseDate, pictureUrls, videoUrls, company1, categoryEntitySoftwareGame, new ArrayList<>()),categoryid,tags,company1.getUserId()
+                            price, averageRating, releaseDate, pictureUrls, videoUrls),
+                    categoryid, tags, company1.getUserId()
             );
 
             name = "Day of Defeat";
@@ -343,14 +361,15 @@ public class DataInitSessionBean {
             videoLink = "";
             tags = new ArrayList<>();
             tags.add(tagEntityFPS.getTagId());
-            tags.add(tagEntityMultiplayer);
+            tags.add(tagEntityMultiplayer.getTagId());
             tags.add(tagEntityAction.getTagId());
             pictureUrls = new ArrayList<>();
             pictureUrls.add(headerImage);
             videoUrls = new ArrayList<>();
+            videoUrls.add(videoLink);
             Game dayofdefeat = gameSessionBeanLocal.createNewGame(
                     new Game(parentAdvisory, name, description, computerRequirements,
-                            price, averageRating, releaseDate, pictureUrls, videoUrls, company1, categoryEntitySoftwareGame, new ArrayList<>()),categoryid,tags,company1.getUserId()
+                            price, averageRating, releaseDate, pictureUrls, videoUrls), categoryid, tags, company1.getUserId()
             );
 
             name = "Left 4 Dead";
@@ -366,15 +385,16 @@ public class DataInitSessionBean {
             categoryid = categoryEntitySoftwareGame.getCategoryId();
             tags = new ArrayList<>();
             tags.add(tagEntityFPS.getTagId());
-            tags.add(tagEntityMultiplayer);
+            tags.add(tagEntityMultiplayer.getTagId());
             tags.add(tagEntityAction.getTagId());
             tags.add(tagEntityZombies.getTagId());
             pictureUrls = new ArrayList<>();
             pictureUrls.add(headerImage);
             videoUrls = new ArrayList<>();
+            videoUrls.add(videoLink);
             Game left4dead = gameSessionBeanLocal.createNewGame(
                     new Game(parentAdvisory, name, description, computerRequirements,
-                            price, averageRating, releaseDate, pictureUrls, videoUrls, company1, categoryEntitySoftwareGame, new ArrayList<>()),categoryid,tags,company1.getUserId()
+                            price, averageRating, releaseDate, pictureUrls, videoUrls), categoryid, tags, company1.getUserId()
             );
 
             name = "Left 4 Dead 2";
@@ -390,15 +410,16 @@ public class DataInitSessionBean {
             categoryid = categoryEntitySoftwareGame.getCategoryId();
             tags = new ArrayList<>();
             tags.add(tagEntityFPS.getTagId());
-            tags.add(tagEntityMultiplayer);
+            tags.add(tagEntityMultiplayer.getTagId());
             tags.add(tagEntityAction.getTagId());
             tags.add(tagEntityZombies.getTagId());
             pictureUrls = new ArrayList<>();
             pictureUrls.add(headerImage);
             videoUrls = new ArrayList<>();
+            videoUrls.add(videoLink);
             Game left4dead2 = gameSessionBeanLocal.createNewGame(
                     new Game(parentAdvisory, name, description, computerRequirements,
-                            price, averageRating, releaseDate, pictureUrls, videoUrls, company1, categoryEntitySoftwareGame, new ArrayList<>()),categoryid,tags,company1.getUserId()
+                            price, averageRating, releaseDate, pictureUrls, videoUrls), categoryid, tags, company1.getUserId()
             );
 
             name = "DOOM II: Hell on Earth";
@@ -418,9 +439,10 @@ public class DataInitSessionBean {
             pictureUrls = new ArrayList<>();
             pictureUrls.add(headerImage);
             videoUrls = new ArrayList<>();
+            videoUrls.add(videoLink);
             Game doom2 = gameSessionBeanLocal.createNewGame(
                     new Game(parentAdvisory, name, description, computerRequirements,
-                            price, averageRating, releaseDate, pictureUrls, videoUrls, company1, categoryEntitySoftwareGame, new ArrayList<>()),categoryid,tags,company1.getUserId()
+                            price, averageRating, releaseDate, pictureUrls, videoUrls), categoryid, tags, company1.getUserId()
             );
 
             name = "Prototype";
@@ -436,15 +458,16 @@ public class DataInitSessionBean {
             categoryid = categoryEntitySoftwareGame.getCategoryId();
             tags = new ArrayList<>();
             tags.add(tagEntityAction.getTagId());
-            tags.add(tagEntityAdventure);
-            tags.add(tagEntityOpenworld);
+            tags.add(tagEntityAdventure.getTagId());
+            tags.add(tagEntityOpenworld.getTagId());
             tags.add(tagEntitySingleplayer.getTagId());
             pictureUrls = new ArrayList<>();
             pictureUrls.add(headerImage);
             videoUrls = new ArrayList<>();
+            videoUrls.add(videoLink);
             Game prototype = gameSessionBeanLocal.createNewGame(
                     new Game(parentAdvisory, name, description, computerRequirements,
-                            price, averageRating, releaseDate, pictureUrls, videoUrls, company1, categoryEntitySoftwareGame, new ArrayList<>()),categoryid,tags,company1.getUserId()
+                            price, averageRating, releaseDate, pictureUrls, videoUrls), categoryid, tags, company1.getUserId()
             );
 
             name = "Sid Meier's Civilization VI";
@@ -460,14 +483,15 @@ public class DataInitSessionBean {
             videoLink = "https://steamcdn-a.akamaihd.net/steam/apps/256672695/movie480.webm?t=1476737061";
             tags = new ArrayList<>();
             tags.add(tagEntityStrategy.getTagId());
-            tags.add(tagEntityMultiplayer);
+            tags.add(tagEntityMultiplayer.getTagId());
             tags.add(tagEntitySingleplayer.getTagId());
             pictureUrls = new ArrayList<>();
             pictureUrls.add(headerImage);
             videoUrls = new ArrayList<>();
+            videoUrls.add(videoLink);
             Game civVI = gameSessionBeanLocal.createNewGame(
                     new Game(parentAdvisory, name, description, computerRequirements,
-                            price, averageRating, releaseDate, pictureUrls, videoUrls, company1, categoryEntitySoftwareGame, new ArrayList<>()),categoryid,tags,company1.getUserId()
+                            price, averageRating, releaseDate, pictureUrls, videoUrls), categoryid, tags, company1.getUserId()
             );
 
             name = "Sid Meier's Civilization V";
@@ -483,14 +507,15 @@ public class DataInitSessionBean {
             categoryid = categoryEntitySoftwareGame.getCategoryId();
             tags = new ArrayList<>();
             tags.add(tagEntityStrategy.getTagId());
-            tags.add(tagEntityMultiplayer);
+            tags.add(tagEntityMultiplayer.getTagId());
             tags.add(tagEntitySingleplayer.getTagId());
             pictureUrls = new ArrayList<>();
             pictureUrls.add(headerImage);
             videoUrls = new ArrayList<>();
+            videoUrls.add(videoLink);
             Game civV = gameSessionBeanLocal.createNewGame(
                     new Game(parentAdvisory, name, description, computerRequirements,
-                            price, averageRating, releaseDate, pictureUrls, videoUrls, company1, categoryEntitySoftwareGame, new ArrayList<>()),categoryid,tags,company1.getUserId()
+                            price, averageRating, releaseDate, pictureUrls, videoUrls), categoryid, tags, company1.getUserId()
             );
 
             name = "Sid Meier's Civilization IV";
@@ -506,14 +531,16 @@ public class DataInitSessionBean {
             categoryid = categoryEntitySoftwareGame.getCategoryId();
             tags = new ArrayList<>();
             tags.add(tagEntityStrategy.getTagId());
-            tags.add(tagEntityMultiplayer);
+            tags.add(tagEntityMultiplayer.getTagId());
             tags.add(tagEntitySingleplayer.getTagId());
             pictureUrls = new ArrayList<>();
             pictureUrls.add(headerImage);
             videoUrls = new ArrayList<>();
+            videoUrls.add(videoLink);
             Game civIV = gameSessionBeanLocal.createNewGame(
                     new Game(parentAdvisory, name, description, computerRequirements,
-                            price, averageRating, releaseDate, pictureUrls, videoUrls, company1, categoryEntitySoftwareGame, new ArrayList<>()),categoryid,tags,company1.getUserId()
+                            price, averageRating, releaseDate, pictureUrls, videoUrls), categoryid,
+                    tags, company1.getUserId()
             );
 
             name = "Grand Theft Auto: Vice City";
@@ -528,15 +555,16 @@ public class DataInitSessionBean {
             videoLink = "";
             categoryid = categoryEntitySoftwareGame.getCategoryId();
             tags = new ArrayList<>();
-            tags.add(tagEntityOpenworld);
+            tags.add(tagEntityOpenworld.getTagId());
             tags.add(tagEntityAction.getTagId());
             tags.add(tagEntitySingleplayer.getTagId());
             pictureUrls = new ArrayList<>();
             pictureUrls.add(headerImage);
             videoUrls = new ArrayList<>();
+            videoUrls.add(videoLink);
             Game gtavicecity = gameSessionBeanLocal.createNewGame(
                     new Game(parentAdvisory, name, description, computerRequirements,
-                            price, averageRating, releaseDate, pictureUrls, videoUrls, company1, categoryEntitySoftwareGame, new ArrayList<>()),categoryid,tags,company1.getUserId()
+                            price, averageRating, releaseDate, pictureUrls, videoUrls), categoryid, tags, company1.getUserId()
             );
 
             name = "Grand Theft Auto V";
@@ -551,14 +579,15 @@ public class DataInitSessionBean {
             videoLink = "https://steamcdn-a.akamaihd.net/steam/apps/256703142/movie_max.mp4?t=1513275242";
             categoryid = categoryEntitySoftwareGame.getCategoryId();
             tags = new ArrayList<>();
-            tags.add(tagEntityOpenworld);
+            tags.add(tagEntityOpenworld.getTagId());
             tags.add(tagEntityAction.getTagId());
             pictureUrls = new ArrayList<>();
             pictureUrls.add(headerImage);
             videoUrls = new ArrayList<>();
+            videoUrls.add(videoLink);
             Game gtaV = gameSessionBeanLocal.createNewGame(
                     new Game(parentAdvisory, name, description, computerRequirements,
-                            price, averageRating, releaseDate, pictureUrls, videoUrls, company1, categoryEntitySoftwareGame, new ArrayList<>()),categoryid,tags,company1.getUserId()
+                            price, averageRating, releaseDate, pictureUrls, videoUrls), categoryid, tags, company1.getUserId()
             );
 
             name = "Call of Duty: Black Ops III";
@@ -573,15 +602,16 @@ public class DataInitSessionBean {
             videoLink = "";
             categoryid = categoryEntitySoftwareGame.getCategoryId();
             tags = new ArrayList<>();
-            tags.add(tagEntityMultiplayer);
+            tags.add(tagEntityMultiplayer.getTagId());
             tags.add(tagEntityAction.getTagId());
             tags.add(tagEntityFPS.getTagId());
             pictureUrls = new ArrayList<>();
             pictureUrls.add(headerImage);
             videoUrls = new ArrayList<>();
+            videoUrls.add(videoLink);
             Game callofdutyblackops3 = gameSessionBeanLocal.createNewGame(
                     new Game(parentAdvisory, name, description, computerRequirements,
-                            price, averageRating, releaseDate, pictureUrls, videoUrls, company1, categoryEntitySoftwareGame, new ArrayList<>()),categoryid,tags,company1.getUserId()
+                            price, averageRating, releaseDate, pictureUrls, videoUrls), categoryid, tags, company1.getUserId()
             );
 
             name = "Half-Life";
@@ -602,9 +632,10 @@ public class DataInitSessionBean {
             pictureUrls = new ArrayList<>();
             pictureUrls.add(headerImage);
             videoUrls = new ArrayList<>();
+            videoUrls.add(videoLink);
             Game halflife = gameSessionBeanLocal.createNewGame(
                     new Game(parentAdvisory, name, description, computerRequirements,
-                            price, averageRating, releaseDate, pictureUrls, videoUrls, company1, categoryEntitySoftwareGame, new ArrayList<>()),categoryid,tags,company1.getUserId()
+                            price, averageRating, releaseDate, pictureUrls, videoUrls), categoryid, tags, company1.getUserId()
             );
 
             name = "Half-Life 2";
@@ -625,9 +656,10 @@ public class DataInitSessionBean {
             pictureUrls = new ArrayList<>();
             pictureUrls.add(headerImage);
             videoUrls = new ArrayList<>();
+            videoUrls.add(videoLink);
             Game halflife2 = gameSessionBeanLocal.createNewGame(
                     new Game(parentAdvisory, name, description, computerRequirements,
-                            price, averageRating, releaseDate, pictureUrls, videoUrls, company1, categoryEntitySoftwareGame, new ArrayList<>()),categoryid,tags,company1.getUserId()
+                            price, averageRating, releaseDate, pictureUrls, videoUrls), categoryid, tags, company1.getUserId()
             );
 
             name = "Plants vs. Zombies: Game of the Year";
@@ -648,9 +680,10 @@ public class DataInitSessionBean {
             pictureUrls = new ArrayList<>();
             pictureUrls.add(headerImage);
             videoUrls = new ArrayList<>();
+            videoUrls.add(videoLink);
             Game plantsvszombies = gameSessionBeanLocal.createNewGame(
                     new Game(parentAdvisory, name, description, computerRequirements,
-                            price, averageRating, releaseDate, pictureUrls, videoUrls, company1, categoryEntitySoftwareGame, new ArrayList<>()),categoryid,tags,company1.getUserId()
+                            price, averageRating, releaseDate, pictureUrls, videoUrls), categoryid, tags, company1.getUserId()
             );
 
             name = "Darksiders Warmastered Edition";
@@ -666,14 +699,15 @@ public class DataInitSessionBean {
             categoryid = categoryEntitySoftwareGame.getCategoryId();
             tags = new ArrayList<>();
             tags.add(tagEntityAction.getTagId());
-            tags.add(tagEntityAdventure);
-            tags.add(tagEntityRPG);
+            tags.add(tagEntityAdventure.getTagId());
+            tags.add(tagEntityRPG.getTagId());
             tags.add(tagEntitySingleplayer.getTagId());
             pictureUrls = new ArrayList<>();
             pictureUrls.add(headerImage);
             videoUrls = new ArrayList<>();
+            videoUrls.add(videoLink);
             Game darksidersWarmasteredEdition = gameSessionBeanLocal.createNewGame(
-                    new Game(parentAdvisory, name, description, computerRequirements, price, averageRating, releaseDate, pictureUrls, videoUrls, company1, categoryEntitySoftwareGame, new ArrayList<>()),categoryid,tags,company1.getUserId()
+                    new Game(parentAdvisory, name, description, computerRequirements, price, averageRating, releaseDate, pictureUrls, videoUrls), categoryid, tags, company1.getUserId()
             );
 
             name = "Killing Floor";
@@ -690,13 +724,14 @@ public class DataInitSessionBean {
             tags = new ArrayList<>();
             tags.add(tagEntityZombies.getTagId());
             tags.add(tagEntityFPS.getTagId());
-            tags.add(tagEntityHorror);
+            tags.add(tagEntityHorror.getTagId());
             tags.add(tagEntitySingleplayer.getTagId());
-            tags.add(tagEntityMultiplayer);
+            tags.add(tagEntityMultiplayer.getTagId());
             pictureUrls = new ArrayList<>();
             pictureUrls.add(headerImage);
             videoUrls = new ArrayList<>();
-            Game killingfloor = gameSessionBeanLocal.createNewGame(new Game(parentAdvisory, name, description, computerRequirements, price, averageRating, releaseDate, pictureUrls, videoUrls, company1, categoryEntitySoftwareGame, new ArrayList<>()),categoryid,tags,company1.getUserId()
+            videoUrls.add(videoLink);
+            Game killingfloor = gameSessionBeanLocal.createNewGame(new Game(parentAdvisory, name, description, computerRequirements, price, averageRating, releaseDate, pictureUrls, videoUrls), categoryid, tags, company1.getUserId()
             );
 
             name = "RollerCoaster Tycoon 3: Platinum!";
@@ -711,12 +746,13 @@ public class DataInitSessionBean {
             videoLink = "";
             categoryid = categoryEntitySoftwareGame.getCategoryId();
             tags = new ArrayList<>();
-            tags.add(tagEntitySimulation);
+            tags.add(tagEntitySimulation.getTagId());
             tags.add(tagEntitySingleplayer.getTagId());
             pictureUrls = new ArrayList<>();
             pictureUrls.add(headerImage);
             videoUrls = new ArrayList<>();
-            Game rollercoaster = gameSessionBeanLocal.createNewGame(new Game(parentAdvisory, name, description, computerRequirements, price, averageRating, releaseDate, pictureUrls, videoUrls, company1, categoryEntitySoftwareGame, new ArrayList<>()),categoryid,tags,company1.getUserId()
+            videoUrls.add(videoLink);
+            Game rollercoaster = gameSessionBeanLocal.createNewGame(new Game(parentAdvisory, name, description, computerRequirements, price, averageRating, releaseDate, pictureUrls, videoUrls), categoryid, tags, company1.getUserId()
             );
 
             name = "Garry's Mod";
@@ -731,14 +767,17 @@ public class DataInitSessionBean {
             videoLink = "";
             categoryid = categoryEntitySoftwareGame.getCategoryId();
             tags = new ArrayList<>();
-            tags.add(tagEntitySimulation);
+            tags.add(tagEntitySimulation.getTagId());
             tags.add(tagEntitySingleplayer.getTagId());
-            tags.add(tagEntityMultiplayer);
+            tags.add(tagEntityMultiplayer.getTagId());
             pictureUrls = new ArrayList<>();
             pictureUrls.add(headerImage);
             videoUrls = new ArrayList<>();
-            Game garysmod = gameSessionBeanLocal.createNewGame(new Game(parentAdvisory, name, description, computerRequirements, price, averageRating, releaseDate, pictureUrls, videoUrls, company1, categoryEntitySoftwareGame, new ArrayList<>()),categoryid,tags,company1.getUserId(),categoryid,tags,company1.getUserId()
-            );
+            videoUrls.add(videoLink);
+            Game garysmod = gameSessionBeanLocal.createNewGame(
+                    new Game(parentAdvisory, name, description, computerRequirements, price, averageRating, releaseDate,
+                            pictureUrls, videoUrls),
+                    categoryid, tags, company1.getUserId());
 
             name = "Watch Dogs 2";
             releaseDate = LocalDate.parse("2016-11-29", formatter);
@@ -754,11 +793,12 @@ public class DataInitSessionBean {
             tags = new ArrayList<>();
             tags.add(tagEntityAction.getTagId());
             tags.add(tagEntitySingleplayer.getTagId());
-            tags.add(tagEntityOpenworld);
+            tags.add(tagEntityOpenworld.getTagId());
             pictureUrls = new ArrayList<>();
             pictureUrls.add(headerImage);
             videoUrls = new ArrayList<>();
-            Game watchdogs2 = gameSessionBeanLocal.createNewGame(new Game(parentAdvisory, name, description, computerRequirements, price, averageRating, releaseDate, pictureUrls, videoUrls, company1, categoryEntitySoftwareGame, new ArrayList<>()),categoryid,tags,company1.getUserId(),categoryid,tags,company1.getUserId()
+            videoUrls.add(videoLink);
+            Game watchdogs2 = gameSessionBeanLocal.createNewGame(new Game(parentAdvisory, name, description, computerRequirements, price, averageRating, releaseDate, pictureUrls, videoUrls), categoryid, tags, company1.getUserId()
             );
 
             name = "Call of Duty: Infinite Warfare";
@@ -775,11 +815,15 @@ public class DataInitSessionBean {
             tags = new ArrayList<>();
             tags.add(tagEntityAction.getTagId());
             tags.add(tagEntitySingleplayer.getTagId());
-            tags.add(tagEntityOpenworld);
+            tags.add(tagEntityOpenworld.getTagId());
             pictureUrls = new ArrayList<>();
             pictureUrls.add(headerImage);
             videoUrls = new ArrayList<>();
-            Game callofdutyinfinitewarfare = gameSessionBeanLocal.createNewGame(new Game(parentAdvisory, name, description, computerRequirements, price, averageRating, releaseDate, pictureUrls, videoUrls, company1, categoryEntitySoftwareGame, new ArrayList<>()),categoryid,tags,company1.getUserId(),categoryid,tags,company1.getUserId()
+            videoUrls.add(videoLink);
+            Game callofdutyinfinitewarfare = gameSessionBeanLocal.createNewGame(
+                    new Game(parentAdvisory, name, description, computerRequirements, price, averageRating,
+                            releaseDate, pictureUrls, videoUrls),
+                    categoryid, tags, company1.getUserId()
             );
 
             name = "Project CARS - Pagani Edition";
@@ -793,13 +837,14 @@ public class DataInitSessionBean {
             computerRequirements = "Minimum:OS: Windows Vista Windows 7 with latest Service Packs or laterProcessor: 2.66 GHz Intel Core 2 Quad Q8400 3.0 GHz AMD Phenom II X4 940Memory: 4 GB RAMGraphics: nVidia GTX 260 ATI Radeon HD 5770DirectX: Version 9.0Network: Broadband Internet connectionStorage: 25 GB available spaceSound Card: DirectX compatible sound card";
             categoryid = categoryEntitySoftwareGame.getCategoryId();
             tags = new ArrayList<>();
-            tags.add(tagEntityRacing);
+            tags.add(tagEntityRacing.getTagId());
             tags.add(tagEntitySingleplayer.getTagId());
-            tags.add(tagEntitySimulation);
+            tags.add(tagEntitySimulation.getTagId());
             pictureUrls = new ArrayList<>();
             pictureUrls.add(headerImage);
             videoUrls = new ArrayList<>();
-            Game projectcars = gameSessionBeanLocal.createNewGame(new Game(parentAdvisory, name, description, computerRequirements, price, averageRating, releaseDate, pictureUrls, videoUrls, company1, categoryEntitySoftwareGame, new ArrayList<>()),categoryid,tags,company1.getUserId(),categoryid,tags,company1.getUserId()
+            videoUrls.add(videoLink);
+            Game projectcars = gameSessionBeanLocal.createNewGame(new Game(parentAdvisory, name, description, computerRequirements, price, averageRating, releaseDate, pictureUrls, videoUrls), categoryid, tags, company1.getUserId()
             );
 
             name = "Soccer Manager 2017";
@@ -813,18 +858,18 @@ public class DataInitSessionBean {
             computerRequirements = "Minimum:OS: Windows XP or LaterProcessor: 1 GHz or higherMemory: 1 GB RAMNetwork: Broadband Internet connectionStorage: 80 MB available space";
             categoryid = categoryEntitySoftwareGame.getCategoryId();
             tags = new ArrayList<>();
-            tags.add(tagEntitySports);
+            tags.add(tagEntitySports.getTagId());
             tags.add(tagEntityStrategy.getTagId());
-            tags.add(tagEntitySimulation);
+            tags.add(tagEntitySimulation.getTagId());
             tags.add(tagEntitySingleplayer.getTagId());
-            tags.add(tagEntityCasual);
+            tags.add(tagEntityCasual.getTagId());
             pictureUrls = new ArrayList<>();
             pictureUrls.add(headerImage);
             videoUrls = new ArrayList<>();
+            videoUrls.add(videoLink);
             Game soccermanager2017 = gameSessionBeanLocal.createNewGame(
-                    new Game(parentAdvisory, name, description, computerRequirements, price, 
-                            averageRating, releaseDate, pictureUrls, videoUrls, company1, 
-                            categoryEntitySoftwareGame, new ArrayList<>())
+                    new Game(parentAdvisory, name, description, computerRequirements, price,
+                            averageRating, releaseDate, pictureUrls, videoUrls), categoryid, tags, company1.getUserId()
             );
 
             name = "Paladins";
@@ -838,14 +883,16 @@ public class DataInitSessionBean {
             computerRequirements = "Minimum:OS: Windows XP SP2 Windows Vista or Windows 7Processor: Core 2 Duo 2.4 GHz or Althon X2 2.7 GHzMemory: 2 GB RAMGraphics: ATI or Nvidia graphics card with 512MB video ram or better and Shader Model 3.0+ support. (ATI Radeon 3870 or higher Nvidia GeForce 8800 GT or higher)Storage: 10 GB available spaceSound Card: DirectX compatible sound card";
             categoryid = categoryEntitySoftwareGame.getCategoryId();
             tags = new ArrayList<>();
-            tags.add(tagEntityMultiplayer);
+            tags.add(tagEntityMultiplayer.getTagId());
             tags.add(tagEntityFPS.getTagId());
             tags.add(tagEntityAction.getTagId());
-            tags.add(tagEntityMOBA);
+            tags.add(tagEntityMOBA.getTagId());
             pictureUrls = new ArrayList<>();
             pictureUrls.add(headerImage);
             videoUrls = new ArrayList<>();
-            Game paladins = gameSessionBeanLocal.createNewGame(new Game(parentAdvisory, name, description, computerRequirements, price, averageRating, releaseDate, pictureUrls, videoUrls, company1, categoryEntitySoftwareGame, new ArrayList<>()),categoryid,tags,company1.getUserId(),categoryid,tags,company1.getUserId()
+            videoUrls.add(videoLink);
+            Game paladins = gameSessionBeanLocal.createNewGame(new Game(parentAdvisory, name, description,
+                    computerRequirements, price, averageRating, releaseDate, pictureUrls, videoUrls), categoryid, tags, company1.getUserId()
             );
 
             name = "BioShock 2 Remastered";
@@ -862,12 +909,13 @@ public class DataInitSessionBean {
             tags.add(tagEntitySingleplayer.getTagId());
             tags.add(tagEntityFPS.getTagId());
             tags.add(tagEntityAction.getTagId());
-            tags.add(tagEntityRPG);
-            tags.add(tagEntityAdventure);
+            tags.add(tagEntityRPG.getTagId());
+            tags.add(tagEntityAdventure.getTagId());
             pictureUrls = new ArrayList<>();
             pictureUrls.add(headerImage);
             videoUrls = new ArrayList<>();
-            Game bioshock2 = gameSessionBeanLocal.createNewGame(new Game(parentAdvisory, name, description, computerRequirements, price, averageRating, releaseDate, pictureUrls, videoUrls, company1, categoryEntitySoftwareGame, new ArrayList<>()),categoryid,tags,company1.getUserId(),categoryid,tags,company1.getUserId()
+            videoUrls.add(videoLink);
+            Game bioshock2 = gameSessionBeanLocal.createNewGame(new Game(parentAdvisory, name, description, computerRequirements, price, averageRating, releaseDate, pictureUrls, videoUrls), categoryid, tags, company1.getUserId()
             );
 
             name = "NBA 2K17";
@@ -882,13 +930,14 @@ public class DataInitSessionBean {
             categoryid = categoryEntitySoftwareGame.getCategoryId();
             tags = new ArrayList<>();
             tags.add(tagEntitySingleplayer.getTagId());
-            tags.add(tagEntitySports);
-            tags.add(tagEntityMultiplayer);
-            tags.add(tagEntitySimulation);
+            tags.add(tagEntitySports.getTagId());
+            tags.add(tagEntityMultiplayer.getTagId());
+            tags.add(tagEntitySimulation.getTagId());
             pictureUrls = new ArrayList<>();
             pictureUrls.add(headerImage);
             videoUrls = new ArrayList<>();
-            Game nba2k17 = gameSessionBeanLocal.createNewGame(new Game(parentAdvisory, name, description, computerRequirements, price, averageRating, releaseDate, pictureUrls, videoUrls, company1, categoryEntitySoftwareGame, new ArrayList<>()),categoryid,tags,company1.getUserId(),categoryid,tags,company1.getUserId()
+            videoUrls.add(videoLink);
+            Game nba2k17 = gameSessionBeanLocal.createNewGame(new Game(parentAdvisory, name, description, computerRequirements, price, averageRating, releaseDate, pictureUrls, videoUrls), categoryid, tags, company1.getUserId()
             );
 
             name = "The Elder Scrolls V: Skyrim Special Edition";
@@ -903,13 +952,14 @@ public class DataInitSessionBean {
             categoryid = categoryEntitySoftwareGame.getCategoryId();
             tags = new ArrayList<>();
             tags.add(tagEntitySingleplayer.getTagId());
-            tags.add(tagEntityOpenworld);
-            tags.add(tagEntityAdventure);
-            tags.add(tagEntityRPG);
+            tags.add(tagEntityOpenworld.getTagId());
+            tags.add(tagEntityAdventure.getTagId());
+            tags.add(tagEntityRPG.getTagId());
             pictureUrls = new ArrayList<>();
             pictureUrls.add(headerImage);
             videoUrls = new ArrayList<>();
-            Game elderscrollsV = gameSessionBeanLocal.createNewGame(new Game(parentAdvisory, name, description, computerRequirements, price, averageRating, releaseDate, pictureUrls, videoUrls, company1, categoryEntitySoftwareGame, new ArrayList<>()),categoryid,tags,company1.getUserId(),categoryid,tags,company1.getUserId()
+            videoUrls.add(videoLink);
+            Game elderscrollsV = gameSessionBeanLocal.createNewGame(new Game(parentAdvisory, name, description, computerRequirements, price, averageRating, releaseDate, pictureUrls, videoUrls), categoryid, tags, company1.getUserId()
             );
 
             name = "Football Manager 2017";
@@ -924,12 +974,13 @@ public class DataInitSessionBean {
             categoryid = categoryEntitySoftwareGame.getCategoryId();
             tags = new ArrayList<>();
             tags.add(tagEntitySingleplayer.getTagId());
-            tags.add(tagEntitySports);
-            tags.add(tagEntitySimulation);
+            tags.add(tagEntitySports.getTagId());
+            tags.add(tagEntitySimulation.getTagId());
             pictureUrls = new ArrayList<>();
             pictureUrls.add(headerImage);
             videoUrls = new ArrayList<>();
-            Game footballmanager2017 = gameSessionBeanLocal.createNewGame(new Game(parentAdvisory, name, description, computerRequirements, price, averageRating, releaseDate, pictureUrls, videoUrls, company1, categoryEntitySoftwareGame, new ArrayList<>()),categoryid,tags,company1.getUserId(),categoryid,tags,company1.getUserId()
+            videoUrls.add(videoLink);
+            Game footballmanager2017 = gameSessionBeanLocal.createNewGame(new Game(parentAdvisory, name, description, computerRequirements, price, averageRating, releaseDate, pictureUrls, videoUrls), categoryid, tags, company1.getUserId()
             );
 
             name = "Titan Quest Anniversary Edition";
@@ -945,12 +996,13 @@ public class DataInitSessionBean {
             tags = new ArrayList<>();
             tags.add(tagEntitySingleplayer.getTagId());
             tags.add(tagEntityAction.getTagId());
-            tags.add(tagEntityMultiplayer);
-            tags.add(tagEntityRPG);
+            tags.add(tagEntityMultiplayer.getTagId());
+            tags.add(tagEntityRPG.getTagId());
             pictureUrls = new ArrayList<>();
             pictureUrls.add(headerImage);
             videoUrls = new ArrayList<>();
-            Game titanquest = gameSessionBeanLocal.createNewGame(new Game(parentAdvisory, name, description, computerRequirements, price, averageRating, releaseDate, pictureUrls, videoUrls, company1, categoryEntitySoftwareGame, new ArrayList<>()),categoryid,tags,company1.getUserId(),categoryid,tags,company1.getUserId()
+            videoUrls.add(videoLink);
+            Game titanquest = gameSessionBeanLocal.createNewGame(new Game(parentAdvisory, name, description, computerRequirements, price, averageRating, releaseDate, pictureUrls, videoUrls), categoryid, tags, company1.getUserId()
             );
 
             name = "H1Z1: King of the Kill";
@@ -964,12 +1016,13 @@ public class DataInitSessionBean {
             computerRequirements = "Minimum:OS: Windows 7 SP1 64 bitProcessor: Intel i3 Dual-Core with Hyper-Threading (required)Memory: 4 GB RAMGraphics: nVidia GeForce GTX 275 series or higherDirectX: Version 10Network: Broadband Internet connectionStorage: 20 GB available spaceSound Card: DirectX Compatible Sound Card";
             categoryid = categoryEntitySoftwareGame.getCategoryId();
             tags = new ArrayList<>();
-            tags.add(tagEntityMultiplayer);
+            tags.add(tagEntityMultiplayer.getTagId());
             tags.add(tagEntityAction.getTagId());
             pictureUrls = new ArrayList<>();
             pictureUrls.add(headerImage);
             videoUrls = new ArrayList<>();
-            Game h1z1 = gameSessionBeanLocal.createNewGame(new Game(parentAdvisory, name, description, computerRequirements, price, averageRating, releaseDate, pictureUrls, videoUrls, company1, categoryEntitySoftwareGame, new ArrayList<>()),categoryid,tags,company1.getUserId(),categoryid,tags,company1.getUserId()
+            videoUrls.add(videoLink);
+            Game h1z1 = gameSessionBeanLocal.createNewGame(new Game(parentAdvisory, name, description, computerRequirements, price, averageRating, releaseDate, pictureUrls, videoUrls), categoryid, tags, company1.getUserId()
             );
 
             name = "BlackShot: Mercenary Warfare FPS";
@@ -983,12 +1036,13 @@ public class DataInitSessionBean {
             computerRequirements = "Minimum:OS: Windows XP / 2000 / Vista / 7/ 8 /10Processor: Pentium 4 2.0GhzMemory: 1 GB RAMGraphics: GeForce 6800 GT / RADEON X800 GTDirectX: Version 9.0cNetwork: Broadband Internet connectionStorage: 2 GB available space";
             categoryid = categoryEntitySoftwareGame.getCategoryId();
             tags = new ArrayList<>();
-            tags.add(tagEntityMultiplayer);
+            tags.add(tagEntityMultiplayer.getTagId());
             tags.add(tagEntityFPS.getTagId());
             pictureUrls = new ArrayList<>();
             pictureUrls.add(headerImage);
             videoUrls = new ArrayList<>();
-            Game blackshot = gameSessionBeanLocal.createNewGame(new Game(parentAdvisory, name, description, computerRequirements, price, averageRating, releaseDate, pictureUrls, videoUrls, company1, categoryEntitySoftwareGame, new ArrayList<>()),categoryid,tags,company1.getUserId(),categoryid,tags,company1.getUserId()
+            videoUrls.add(videoLink);
+            Game blackshot = gameSessionBeanLocal.createNewGame(new Game(parentAdvisory, name, description, computerRequirements, price, averageRating, releaseDate, pictureUrls, videoUrls), categoryid, tags, company1.getUserId()
             );
 
             name = "ARK: Survival Of The Fittest";
@@ -1002,14 +1056,15 @@ public class DataInitSessionBean {
             computerRequirements = "Minimum:OS: 64-Bit Windows 7 Service Pack 1 or Windows 8/10Processor: 2 GHz Dual-Core 64-bit CPUMemory: 4000 MB RAMGraphics: GTX 500 or Above DirectX10 Compatible GPU with 2 GB or More Video RAMDirectX: Version 10Storage: 37000 MB available space";
             categoryid = categoryEntitySoftwareGame.getCategoryId();
             tags = new ArrayList<>();
-            tags.add(tagEntityMultiplayer);
-            tags.add(tagEntityOpenworld);
+            tags.add(tagEntityMultiplayer.getTagId());
+            tags.add(tagEntityOpenworld.getTagId());
             tags.add(tagEntityAction.getTagId());
-            tags.add(tagEntityAdventure);
+            tags.add(tagEntityAdventure.getTagId());
             pictureUrls = new ArrayList<>();
             pictureUrls.add(headerImage);
             videoUrls = new ArrayList<>();
-            Game arksurvivalofthefittest = gameSessionBeanLocal.createNewGame(new Game(parentAdvisory, name, description, computerRequirements, price, averageRating, releaseDate, pictureUrls, videoUrls, company1, categoryEntitySoftwareGame, new ArrayList<>()),categoryid,tags,company1.getUserId(),categoryid,tags,company1.getUserId()
+            videoUrls.add(videoLink);
+            Game arksurvivalofthefittest = gameSessionBeanLocal.createNewGame(new Game(parentAdvisory, name, description, computerRequirements, price, averageRating, releaseDate, pictureUrls, videoUrls), categoryid, tags, company1.getUserId()
             );
 
             name = "Undertale";
@@ -1023,13 +1078,14 @@ public class DataInitSessionBean {
             computerRequirements = "Minimum:OS: Windows XP Vista 7 8 or 10Memory: 2 GB RAMGraphics: 128MBStorage: 200 MB available space";
             categoryid = categoryEntitySoftwareGame.getCategoryId();
             tags = new ArrayList<>();
-            tags.add(tagEntityFunny);
-            tags.add(tagEntityRPG);
+            tags.add(tagEntityFunny.getTagId());
+            tags.add(tagEntityRPG.getTagId());
             tags.add(tagEntitySingleplayer.getTagId());
             pictureUrls = new ArrayList<>();
             pictureUrls.add(headerImage);
             videoUrls = new ArrayList<>();
-            Game undertale = gameSessionBeanLocal.createNewGame(new Game(parentAdvisory, name, description, computerRequirements, price, averageRating, releaseDate, pictureUrls, videoUrls, company1, categoryEntitySoftwareGame, new ArrayList<>()),categoryid,tags,company1.getUserId(),categoryid,tags,company1.getUserId()
+            videoUrls.add(videoLink);
+            Game undertale = gameSessionBeanLocal.createNewGame(new Game(parentAdvisory, name, description, computerRequirements, price, averageRating, releaseDate, pictureUrls, videoUrls), categoryid, tags, company1.getUserId()
             );
 
             name = "Rise of the Tomb Raider";
@@ -1043,13 +1099,14 @@ public class DataInitSessionBean {
             computerRequirements = "Minimum:OS: Windows 7 64bitProcessor: Intel Core i3-2100 or AMD equivalentMemory: 6 GB RAMGraphics: NVIDIA GTX 650 2GB or AMD HD7770 2GBDirectX: Version 11Storage: 25 GB available space";
             categoryid = categoryEntitySoftwareGame.getCategoryId();
             tags = new ArrayList<>();
-            tags.add(tagEntityAdventure);
+            tags.add(tagEntityAdventure.getTagId());
             tags.add(tagEntityAction.getTagId());
             tags.add(tagEntitySingleplayer.getTagId());
             pictureUrls = new ArrayList<>();
             pictureUrls.add(headerImage);
             videoUrls = new ArrayList<>();
-            Game riseofthetombraider = gameSessionBeanLocal.createNewGame(new Game(parentAdvisory, name, description, computerRequirements, price, averageRating, releaseDate, pictureUrls, videoUrls, company1, categoryEntitySoftwareGame, new ArrayList<>()),categoryid,tags,company1.getUserId(),categoryid,tags,company1.getUserId()
+            videoUrls.add(videoLink);
+            Game riseofthetombraider = gameSessionBeanLocal.createNewGame(new Game(parentAdvisory, name, description, computerRequirements, price, averageRating, releaseDate, pictureUrls, videoUrls), categoryid, tags, company1.getUserId()
             );
 
             List<Tag> tagIdsPopular = new ArrayList<>();
@@ -1090,8 +1147,9 @@ public class DataInitSessionBean {
             pictureUrls = new ArrayList<>();
             pictureUrls.add(headerImage);
             videoUrls = new ArrayList<>();
+            videoUrls.add(videoLink);
             Hardware alienware15 = hardwareSessionBeanLocal.createNewHardware(new Hardware(warrantyDescription, technicalSpecification, manufacturingCountry,
-                    name, description, null, price, averageRating, releaseDate, pictureUrls, videoUrls, company1, categoryEntityLaptop, new ArrayList<>()),categoryid,tags,company1.getUserId()
+                    name, description, null, price, averageRating, releaseDate, pictureUrls, videoUrls), categoryid, tags, company1.getUserId()
             );
 
             name = "Alienware 17";
@@ -1110,8 +1168,9 @@ public class DataInitSessionBean {
             pictureUrls = new ArrayList<>();
             pictureUrls.add(headerImage);
             videoUrls = new ArrayList<>();
+            videoUrls.add(videoLink);
             Hardware alienware17 = hardwareSessionBeanLocal.createNewHardware(new Hardware(warrantyDescription, technicalSpecification, manufacturingCountry,
-                    name, description, null, price, averageRating, releaseDate, pictureUrls, videoUrls, company1, categoryEntityLaptop, new ArrayList<>()),categoryid,tags,company1.getUserId()
+                    name, description, null, price, averageRating, releaseDate, pictureUrls, videoUrls), categoryid, tags, company1.getUserId()
             );
 
             name = "Razer Viper Ultimate Mouse";
@@ -1130,8 +1189,9 @@ public class DataInitSessionBean {
             pictureUrls = new ArrayList<>();
             pictureUrls.add(headerImage);
             videoUrls = new ArrayList<>();
+            videoUrls.add(videoLink);
             Hardware viperultimate = hardwareSessionBeanLocal.createNewHardware(new Hardware(warrantyDescription, technicalSpecification, manufacturingCountry,
-                    name, description, null, price, averageRating, releaseDate, pictureUrls, videoUrls, company1, categoryEntityMouse, new ArrayList<>()),categoryid,tags,company1.getUserId()
+                    name, description, null, price, averageRating, releaseDate, pictureUrls, videoUrls), categoryid, tags, company1.getUserId()
             );
 
             Customer customer1 = customerSessionBeanlocal.createCustomer(new Customer("7654321",
@@ -1155,12 +1215,13 @@ public class DataInitSessionBean {
             computerRequirements = "Minimum:OS: Windows 10 / 8 / 7. Additional Notes: Administrator privileges are required for initial install. Windows 10 Creator's Update Multi-monitor DPI settings are not supported in this build. This feature will be supported when Creator's Update officially launches.";
             categoryid = categoryEntityDesign.getCategoryId();
             tags = new ArrayList<>();
-            tags.add(tagEntityPopular);
+            tags.add(tagEntityPopular.getTagId());
             pictureUrls = new ArrayList<>();
             pictureUrls.add(headerImage);
             videoUrls = new ArrayList<>();
+            videoUrls.add(videoLink);
             OtherSoftware fences = otherSoftwareSessionBeanLocal.createNewOtherSoftware(new OtherSoftware(name, description,
-                    computerRequirements, price, averageRating, releaseDate, pictureUrls, videoUrls, company1, categoryEntityDesign, new ArrayList<>()),categoryid,tags,company1.getUserId()
+                    computerRequirements, price, averageRating, releaseDate, pictureUrls, videoUrls), categoryid, tags, company1.getUserId()
             );
 
             name = "Wallpaper Engine";
@@ -1173,12 +1234,13 @@ public class DataInitSessionBean {
             computerRequirements = "Minimum:OS: Windows 7 (with Aero), 8.1, 10. Processor: 1.66 GHz Intel i5 or equivalent.";
             categoryid = categoryEntityDesign.getCategoryId();
             tags = new ArrayList<>();
-            tags.add(tagEntityPopular);
+            tags.add(tagEntityPopular.getTagId());
             pictureUrls = new ArrayList<>();
             pictureUrls.add(headerImage);
             videoUrls = new ArrayList<>();
+            videoUrls.add(videoLink);
             OtherSoftware wallpaperengine = otherSoftwareSessionBeanLocal.createNewOtherSoftware(new OtherSoftware(name, description,
-                    computerRequirements, price, averageRating, releaseDate, pictureUrls, videoUrls, company1, categoryEntityDesign, new ArrayList<>()),categoryid,tags,company1.getUserId()
+                    computerRequirements, price, averageRating, releaseDate, pictureUrls, videoUrls), categoryid, tags, company1.getUserId()
             );
 
             name = "Plan V";
@@ -1191,13 +1253,14 @@ public class DataInitSessionBean {
             computerRequirements = "Minimum:OS: Windows 10 64 bit. Processor: i5. Memory: 8 GB RAM. Graphics: Nvidia 970";
             categoryid = categoryEntityVideoProduction.getCategoryId();
             tags = new ArrayList<>();
-            tags.add(tagEntityUpcoming);
+            tags.add(tagEntityUpcoming.getTagId());
             pictureUrls = new ArrayList<>();
             pictureUrls.add(headerImage);
             videoUrls = new ArrayList<>();
+            videoUrls.add(videoLink);
 
             OtherSoftware planV = otherSoftwareSessionBeanLocal.createNewOtherSoftware(new OtherSoftware(name, description,
-                    computerRequirements, price, averageRating, releaseDate, pictureUrls, videoUrls, company1, categoryEntityVideoProduction, new ArrayList<>()),categoryid,tags,company1.getUserId()
+                    computerRequirements, price, averageRating, releaseDate, pictureUrls, videoUrls), categoryid, tags, company1.getUserId()
             );
 
             name = "FaceRig";
@@ -1211,12 +1274,13 @@ public class DataInitSessionBean {
             videoLink = "https://steamcdn-a.akamaihd.net/steam/apps/2040621/movie480.webm?t=1447376992";
             categoryid = categoryEntityAnimationModeling.getCategoryId();
             tags = new ArrayList<>();
-            tags.add(tagEntityPopular);
+            tags.add(tagEntityPopular.getTagId());
             pictureUrls = new ArrayList<>();
             pictureUrls.add(headerImage);
             videoUrls = new ArrayList<>();
+            videoUrls.add(videoLink);
             OtherSoftware facerig = otherSoftwareSessionBeanLocal.createNewOtherSoftware(new OtherSoftware(name, description, computerRequirements,
-                    price, averageRating, releaseDate, pictureUrls, videoUrls, company1, categoryEntityAnimationModeling, new ArrayList<>()),categoryid,tags,company1.getUserId()
+                    price, averageRating, releaseDate, pictureUrls, videoUrls), categoryid, tags, company1.getUserId()
             );
 
             name = "Aseprite";
@@ -1229,12 +1293,13 @@ public class DataInitSessionBean {
             computerRequirements = "Windows Vista, 7, 8, or 10. Memory: 128 MB RAM. Storage: 40 MB available space";
             categoryid = categoryEntityDesign.getCategoryId();
             tags = new ArrayList<>();
-            tags.add(tagEntityPopular);
+            tags.add(tagEntityPopular.getTagId());
             pictureUrls = new ArrayList<>();
             pictureUrls.add(headerImage);
             videoUrls = new ArrayList<>();
+            videoUrls.add(videoLink);
             OtherSoftware aseprite = otherSoftwareSessionBeanLocal.createNewOtherSoftware(new OtherSoftware(name, description,
-                    computerRequirements, price, averageRating, releaseDate, pictureUrls, videoUrls, company1, categoryEntityDesign, new ArrayList<>()),categoryid,tags,company1.getUserId()
+                    computerRequirements, price, averageRating, releaseDate, pictureUrls, videoUrls), categoryid, tags, company1.getUserId()
             );
 
             name = "PC building simulator";
@@ -1248,12 +1313,13 @@ public class DataInitSessionBean {
             videoLink = "https://steamcdn-a.akamaihd.net/steam/apps/256741664/movie480.webm?t=1559904538";
             categoryid = categoryEntityEducation.getCategoryId();
             tags = new ArrayList<>();
-            tags.add(tagEntityPopular);
+            tags.add(tagEntityPopular.getTagId());
             pictureUrls = new ArrayList<>();
             pictureUrls.add(headerImage);
             videoUrls = new ArrayList<>();
+            videoUrls.add(videoLink);
             OtherSoftware pcbuilding = otherSoftwareSessionBeanLocal.createNewOtherSoftware(new OtherSoftware(name, description, computerRequirements,
-                    price, averageRating, releaseDate, pictureUrls, videoUrls, company1, categoryEntityEducation, new ArrayList<>()),categoryid,tags,company1.getUserId()
+                    price, averageRating, releaseDate, pictureUrls, videoUrls), categoryid, tags, company1.getUserId()
             );
 
             name = "GameGuru";
@@ -1267,12 +1333,13 @@ public class DataInitSessionBean {
             videoLink = "https://steamcdn-a.akamaihd.net/steam/apps/2036980/movie480.webm?t=1523977582";
             categoryid = categoryEntityGameDev.getCategoryId();
             tags = new ArrayList<>();
-            tags.add(tagEntityPopular);
+            tags.add(tagEntityPopular.getTagId());
             pictureUrls = new ArrayList<>();
             pictureUrls.add(headerImage);
             videoUrls = new ArrayList<>();
+            videoUrls.add(videoLink);
             OtherSoftware gameguru = otherSoftwareSessionBeanLocal.createNewOtherSoftware(new OtherSoftware(name, description, computerRequirements,
-                    price, averageRating, releaseDate, pictureUrls, videoUrls, company1, categoryEntityGameDev, new ArrayList<>()),categoryid,tags,company1.getUserId()
+                    price, averageRating, releaseDate, pictureUrls, videoUrls), categoryid, tags, company1.getUserId()
             );
 
             name = "GameMaker Studio 2";
@@ -1286,12 +1353,13 @@ public class DataInitSessionBean {
             videoLink = "https://steamcdn-a.akamaihd.net/steam/apps/256678566/movie480.webm?t=1488983374";
             categoryid = categoryEntityGameDev.getCategoryId();
             tags = new ArrayList<>();
-            tags.add(tagEntityPopular);
+            tags.add(tagEntityPopular.getTagId());
             pictureUrls = new ArrayList<>();
             pictureUrls.add(headerImage);
             videoUrls = new ArrayList<>();
+            videoUrls.add(videoLink);
             OtherSoftware gamemakerstudio = otherSoftwareSessionBeanLocal.createNewOtherSoftware(new OtherSoftware(name, description, computerRequirements,
-                    price, averageRating, releaseDate, pictureUrls, videoUrls, company1, categoryEntityGameDev, new ArrayList<>()),categoryid,tags,company1.getUserId()
+                    price, averageRating, releaseDate, pictureUrls, videoUrls), categoryid, tags, company1.getUserId()
             );
 
             name = "Soundpad";
@@ -1305,12 +1373,13 @@ public class DataInitSessionBean {
             videoLink = "https://steamcdn-a.akamaihd.net/steam/apps/256695572/movie480.webm?t=1506794128";
             categoryid = categoryEntityAudio.getCategoryId();
             tags = new ArrayList<>();
-            tags.add(tagEntityPopular);
+            tags.add(tagEntityPopular.getTagId());
             pictureUrls = new ArrayList<>();
             pictureUrls.add(headerImage);
             videoUrls = new ArrayList<>();
+            videoUrls.add(videoLink);
             OtherSoftware soundpad = otherSoftwareSessionBeanLocal.createNewOtherSoftware(new OtherSoftware(name, description, computerRequirements,
-                    price, averageRating, releaseDate, pictureUrls, videoUrls, company1, categoryEntityAudio, new ArrayList<>()),categoryid,tags,company1.getUserId()
+                    price, averageRating, releaseDate, pictureUrls, videoUrls), categoryid, tags, company1.getUserId()
             );
 
             name = "openCanvas 7";
@@ -1324,12 +1393,13 @@ public class DataInitSessionBean {
             videoLink = "https://steamcdn-a.akamaihd.net/steam/apps/256733576/movie480.webm?t=1540800060";
             categoryid = categoryEntityPhotoEditing.getCategoryId();
             tags = new ArrayList<>();
-            tags.add(tagEntityPopular);
+            tags.add(tagEntityPopular.getTagId());
             pictureUrls = new ArrayList<>();
             pictureUrls.add(headerImage);
             videoUrls = new ArrayList<>();
+            videoUrls.add(videoLink);
             OtherSoftware opencanvas7 = otherSoftwareSessionBeanLocal.createNewOtherSoftware(new OtherSoftware(name, description, computerRequirements,
-                    price, averageRating, releaseDate, pictureUrls, videoUrls, company1, categoryEntityPhotoEditing, new ArrayList<>()),categoryid,tags,company1.getUserId()
+                    price, averageRating, releaseDate, pictureUrls, videoUrls), categoryid, tags, company1.getUserId()
             );
 
             name = "Stream Avatars";
@@ -1342,13 +1412,18 @@ public class DataInitSessionBean {
             computerRequirements = "OS: Windows 7 or higher. Processor: x86 compatible processor supporting SSE2. Memory: 500 MB RAM. Graphics: NVIDIA GeForce GT220 or equivalent.";
             categoryid = categoryEntityPhotoEditing.getCategoryId();
             tags = new ArrayList<>();
-            tags.add(tagEntityPopular);
+            tags.add(tagEntityPopular.getTagId());
             pictureUrls = new ArrayList<>();
             pictureUrls.add(headerImage);
             videoUrls = new ArrayList<>();
+            videoUrls.add(videoLink);
             OtherSoftware streamAvatars = otherSoftwareSessionBeanLocal.createNewOtherSoftware(new OtherSoftware(name, description, computerRequirements,
-                    price, averageRating, releaseDate, pictureUrls, videoUrls, company1, categoryEntityPhotoEditing, new ArrayList<>()),categoryid,tags,company1.getUserId()
+                    price, averageRating, releaseDate, pictureUrls, videoUrls), categoryid, tags, company1.getUserId()
             );
+            System.out.println("company 1 products");
+            company1.getProducts().forEach(product -> {
+                System.out.println("Product name: "+product.getName());
+            });
 
             SaleTransactionLineItem saleTransactionLineItem1 = new SaleTransactionLineItem(streamAvatars, 1, new BigDecimal("14.5"), new BigDecimal("14.5"));
             List<SaleTransactionLineItem> saleTransactionLineItems = new ArrayList<>();
@@ -1368,21 +1443,15 @@ public class DataInitSessionBean {
             tagIdsPopularDiscount.forEach(tag -> {
                 temp.add(tag.getTagId());
             });
-            
+
             try {
                 gameSessionBeanLocal.updateGame(csgo, csgo.getCategory().getCategoryId(),
                         temp);
-            } catch (CategoryNotFoundException | ProductNotFoundException | TagNotFoundException |UpdateProductException ex) {
+            } catch (CategoryNotFoundException | ProductNotFoundException | TagNotFoundException | UpdateProductException ex) {
                 ex.printStackTrace();
             }
 
-            List<Product> company1Products = company1.getProducts();
-            company1Products.add(csgo);
-            company1Products.add(portal);
-            company1Products.add(alienware15);
-            company1Products.add(fences);
-
-            company1.setProducts(company1Products);
+            
             companySessionBeanLocal.updateCompany(company1);
 
         } catch (SystemAdminUsernameExistException | UnknownPersistenceException | InputDataValidationException

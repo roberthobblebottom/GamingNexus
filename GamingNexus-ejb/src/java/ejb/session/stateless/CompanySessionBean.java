@@ -106,9 +106,13 @@ public class CompanySessionBean implements CompanySessionBeanLocal {
 
             Company companyToUpdate = retrieveCompanyById(company.getUserId());
 
+            companyToUpdate.setChats(company.getChats());
+            companyToUpdate.setCountry(company.getCountry());
             companyToUpdate.setAddress(company.getAddress());
             companyToUpdate.setPhoneNumber(company.getPhoneNumber());
             companyToUpdate.setEmail(company.getEmail());
+            companyToUpdate.setUsername(company.getUsername());
+            companyToUpdate.setPasswordWithoutSalting(company.getPassword());
         } else {
             throw new CompanyNotFoundException("Company ID not provided for SystemAdmin to be updated");
         }

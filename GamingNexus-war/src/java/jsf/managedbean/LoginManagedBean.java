@@ -42,6 +42,7 @@ public class LoginManagedBean {
         User user;
         
         try{
+        System.out.println("********** DEBUG: " + username + "; " + password);
         user = userSessionBean.userLogin(username, password);
         if (user == null) {
             System.out.println("**********************************did you catch error???");

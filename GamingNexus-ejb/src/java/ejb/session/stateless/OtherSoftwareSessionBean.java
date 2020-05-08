@@ -83,7 +83,7 @@ public class OtherSoftwareSessionBean implements OtherSoftwareSessionBeanLocal {
             em.persist(newOtherSoftware);
             newOtherSoftware.setCategory(category);
             newOtherSoftware.setCompany(company);
-            
+            company.getProducts().add(newOtherSoftware);
             if (tagIds != null && (!tagIds.isEmpty())) {
                 for (Long tagId : tagIds) {
                     Tag tag = tagSessionBeanLocal.retrieveTagByTagId(tagId);

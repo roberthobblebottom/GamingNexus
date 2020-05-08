@@ -98,7 +98,8 @@ public abstract class Product implements Serializable {
     }
 
     public Product(String name, String description, String computerRequirements, double price, double averageRating,
-            LocalDate releaseDate, List<String> pictureURLs, List<String> videoURLs, Company company, Category category, List<Tag> tags) {
+            LocalDate releaseDate, List<String> pictureURLs, List<String> videoURLs) {
+  this();
         this.name = name;
         this.description = description;
         this.computerRequirements = computerRequirements;
@@ -107,20 +108,13 @@ public abstract class Product implements Serializable {
         this.releaseDate = releaseDate;
         this.pictureURLs = pictureURLs;
         this.videoURLs = videoURLs;
-        this.company = company;
-        this.category = category;
-        tags.forEach(tag -> {
-            if (!tag.getProducts().contains(this)) {
-                tag.getProducts().add(this);
-            }
-        }
-        );
-        this.tags = tags;
+  
 
     }
 
     public void addTag(Tag tagEntity) {
         if (tagEntity != null) {
+            
             if (!this.tags.contains(tagEntity)) {
                 this.tags.add(tagEntity);
 

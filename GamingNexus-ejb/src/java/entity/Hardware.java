@@ -41,8 +41,8 @@ public class Hardware extends Product implements Serializable {
             String manufacturingCountry, String name, String description, 
             String computerRequirements, double price, double averageRating,
             LocalDate releaseDate,  List<String> pictureURLs, 
-            List<String> videoURLs, Company company, Category category, List<Tag> tags) {
-        super(name, description, computerRequirements, price, averageRating, releaseDate, pictureURLs, videoURLs, company, category, tags);
+            List<String> videoURLs) {
+        super(name, description, computerRequirements, price, averageRating, releaseDate, pictureURLs, videoURLs);
         this.warrantyDescription = warrantyDescription;
         this.technicalspecification = technicalspecification;
         this.manufacturingCountry = manufacturingCountry;
