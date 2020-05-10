@@ -140,6 +140,18 @@
                             #{companyProductManagedBean.viewProductManagedBean.hardwareToViewInDetails.warrantyDescription}
                         </p:column>
                     </p:row> 
+                        
+                             <p:row>
+                        <p:column>
+                            <h:outputText value="Promotions" />
+                        </p:column>
+                        <p:column>
+                            <p:dataList value="#{companyProductManagedBean.viewProductManagedBean.
+                                                 productToViewInDetails.promotions}" var="promotion" type="ordered" >
+                                        #{promotion.name}  
+                            </p:dataList>
+                        </p:column>
+                    </p:row>
                 </p:panelGrid>
             </p:dialog>
 

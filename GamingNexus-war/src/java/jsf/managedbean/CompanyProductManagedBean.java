@@ -99,10 +99,11 @@ public class CompanyProductManagedBean implements Serializable {
     private List<Product> listOfAllCompanysProducts, filteredProducts;
     private List<Category> listOfAllCategories, listOfGameCategories, listOfHardwareCategories, listOfOtherSoftwareCategories;
     private List<Promotion> listOfAllCompanyPromotions;
-    private List<Tag> tags;
+    private List<Tag> listOfAllTags;
 
     private Long categoryIdUpdate;
     private List<Long> tagIdsUpdate;
+    private List<Long> promotionsIdsUpdate;
     private Date releaseDateToBeUpdated;
 
     private ParentAdvisory[] allPossibleAdvisories;
@@ -125,7 +126,7 @@ public class CompanyProductManagedBean implements Serializable {
         setCompany((Company) sessionMap.get("company"));
         System.out.println("company username: " + this.company.getUsername());
         try {
-            listOfAllCompanyPromotions = promotionSessionBean.retrivePromotionsByCompanyID(getCompany().getUserId());
+            listOfAllCompanyPromotions = getPromotionSessionBean().retrivePromotionsByCompanyID(getCompany().getUserId());
         } catch (CompanyNotFoundException ex) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
                     "An error has occurred while fetching company's promotions: " + ex.getMessage(), null));
@@ -137,7 +138,7 @@ public class CompanyProductManagedBean implements Serializable {
         newOtherSoftware.setTags(new ArrayList<>());
         setNewHardware(new Hardware());
         getNewHardware().setTags(new ArrayList<>());
-//        listOfAllCategories = categorySessionBean.retrieveAllCategories();
+       listOfAllCategories = categorySessionBean.retrieveAllCategories();
         Category hardwareCategory = categorySessionBean.retrieveCategoryByName("Hardware");
 //        System.out.println("hardwareCategoryName: "+hardwareCategory.getName());
         setListOfHardwareCategories(categorySessionBean.retrieveAllLeafCategoriesOfParent(hardwareCategory.getCategoryId()));
@@ -145,14 +146,12 @@ public class CompanyProductManagedBean implements Serializable {
         Category otherSoftwareCategory = categorySessionBean.retrieveCategoryByName("SoftwareTool");
         setListOfOtherSoftwareCategories(categorySessionBean.retrieveAllLeafCategoriesOfParent(otherSoftwareCategory.getCategoryId()));
 
-        this.listOfOtherSoftwareCategories.forEach(cat -> {
-            System.out.println("...........Cat name: " + cat.getName());
-        });
+     
 
         Category gameCategory = categorySessionBean.retrieveCategoryByName("SoftwareGame");
         listOfGameCategories.add(gameCategory);
 
-        tags = tagSessionBean.retrieveAllTags();
+        listOfAllTags = tagSessionBean.retrieveAllTags();
     }
 
     public void viewProductDetailsMethod(ActionEvent event) throws IOException {
@@ -291,15 +290,27 @@ public class CompanyProductManagedBean implements Serializable {
                 }
             }
 
-            productToBeUpdated.getTags().clear();
             if (!tagIdsUpdate.isEmpty()) {
-                System.out.println("!tagidsupdate.isempty block entered.");
-                tags.forEach(tag -> {
+                            productToBeUpdated.getTags().clear();
+                listOfAllTags.forEach(tag -> {
                     if (getTagIdsUpdate().contains(tag.getTagId())) {
                         viewProductManagedBean.getProductToViewInDetails().getTags().add(tag);
                     }
                 });
+            } else{
+            viewProductManagedBean.getProductToViewInDetails().setTags(new ArrayList<>());
             }
+            
+              if (!promotionsIdsUpdate.isEmpty()) {
+                            productToBeUpdated.getPromotions().clear();
+                listOfAllCompanyPromotions.forEach(promotion -> {
+                    if (promotionsIdsUpdate.contains(promotion.getPromotionID())) {
+                        viewProductManagedBean.getProductToViewInDetails().getPromotions().add(promotion);
+                    }
+                });
+            }
+            
+            
 
         } catch (ProductNotFoundException | CategoryNotFoundException | TagNotFoundException
                 | UpdateProductException | InputDataValidationException ex) {
@@ -387,17 +398,17 @@ public class CompanyProductManagedBean implements Serializable {
     }
 
     /**
-     * @return the tags
+     * @return the listOfAllTags
      */
-    public List<Tag> getTags() {
-        return tags;
+    public List<Tag> getListOfAllTags() {
+        return listOfAllTags;
     }
 
     /**
-     * @param tags the tags to set
+     * @param listOfAllTags the listOfAllTags to set
      */
-    public void setTags(List<Tag> tags) {
-        this.tags = tags;
+    public void setListOfAllTags(List<Tag> listOfAllTags) {
+        this.listOfAllTags = listOfAllTags;
     }
 
     /**
@@ -736,6 +747,34 @@ public class CompanyProductManagedBean implements Serializable {
      */
     public void setListOfOtherSoftwareCategories(List<Category> listOfOtherSoftwareCategories) {
         this.listOfOtherSoftwareCategories = listOfOtherSoftwareCategories;
+    }
+
+    /**
+     * @return the promotionSessionBean
+     */
+    public PromotionSessionBeanLocal getPromotionSessionBean() {
+        return promotionSessionBean;
+    }
+
+    /**
+     * @param promotionSessionBean the promotionSessionBean to set
+     */
+    public void setPromotionSessionBean(PromotionSessionBeanLocal promotionSessionBean) {
+        this.promotionSessionBean = promotionSessionBean;
+    }
+
+    /**
+     * @return the promotionsIdsUpdate
+     */
+    public List<Long> getPromotionsIdsUpdate() {
+        return promotionsIdsUpdate;
+    }
+
+    /**
+     * @param promotionsIdsUpdate the promotionsIdsUpdate to set
+     */
+    public void setPromotionsIdsUpdate(List<Long> promotionsIdsUpdate) {
+        this.promotionsIdsUpdate = promotionsIdsUpdate;
     }
 
 }

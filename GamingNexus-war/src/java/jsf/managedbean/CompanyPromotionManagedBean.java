@@ -65,15 +65,15 @@ public class CompanyPromotionManagedBean implements Serializable {
     private Date startDateToBeUpdated = null, endDateToBeUpdated = null, newStartDate = null, newEndDate = null;
     private List<Promotion> promotions, filteredPromotions;
     private List<Product> products, filteredProducts, productsToBeUpdated, promotionsProductsToBeViewed;
-    private List<Long> listOfProductIds;
+    private List<Long> listOfProductIds, listOfProductIdsToBeUpdated;
     private Company company;
-    private String toggleDiscountType;
+    private String toggleDiscountType, toggleDiscountTypeForUpdate;
     private final String PERCENTAGE_DISCOUNT = "Percentage Discount";
     private final String DOLLAR_DISCOUNT = "Dollar Discount";
 
     public CompanyPromotionManagedBean() {
         newPromotion = new Promotion();
-
+        promotionToBeUpdated = new Promotion();
         startDateToBeUpdated = new Date();
         endDateToBeUpdated = new Date();
         newStartDate = new Date();
@@ -99,26 +99,43 @@ public class CompanyPromotionManagedBean implements Serializable {
         if (promotions.isEmpty()) {
             System.out.println("**********promotions is empty");
         }
+
+        promotions.forEach(promotion -> {
+            System.out.println("promoiton id:" + promotion.getPromotionID());
+            promotion.getProducts().forEach(product -> {
+                System.out.println("producd name: " + product.getName());
+            });
+        });
+
     }
 
     public void createNewPromotion(ActionEvent event) {
 //        newPromotion.setStartDate(newDateRange.get(0).toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime());
 //        newPromotion.setEndDate(newDateRange.get(newDateRange.size() - 1).toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime());
-
         newPromotion.setStartDate(new Timestamp(this.newStartDate.getTime()).toLocalDateTime());
         newPromotion.setEndDate(new Timestamp(this.newEndDate.getTime()).toLocalDateTime());
-        if (toggleDiscountType.equals(DOLLAR_DISCOUNT)) {
-            newPromotion.setPercentageDiscount(0);
-        } else if (toggleDiscountType.equals(PERCENTAGE_DISCOUNT)) {
-            newPromotion.setDollarDiscount(0);
+        if (toggleDiscountType != null && !toggleDiscountType.isEmpty()) {
+            if (toggleDiscountType.equals(DOLLAR_DISCOUNT)) {
+                newPromotion.setPercentageDiscount(0);
+            } else if (toggleDiscountType.equals(PERCENTAGE_DISCOUNT)) {
+                newPromotion.setDollarDiscount(0);
+            }
         }
         Promotion promotion = promotionSessionBean.createPromotion(newPromotion, listOfProductIds);
         promotions.add(promotion);
 
         FacesContext.getCurrentInstance().addMessage(null,
-                new FacesMessage(FacesMessage.SEVERITY_INFO, "New Game " + newPromotion.getName() + " added successfully "
+                new FacesMessage(FacesMessage.SEVERITY_INFO, "New Promotion " + newPromotion.getName() + " added successfully "
                         + "(ID: " + newPromotion.getPromotionID() + ")", null));
         newPromotion = new Promotion();
+
+        try {
+            promotions = promotionSessionBean.retrivePromotionsByCompanyID(company.getUserId());
+            System.out.println("********** promotions: " + promotions.size());
+        } catch (CompanyNotFoundException ex) {
+
+        }
+        toggleDiscountType = "";
 
     }
 
@@ -150,24 +167,30 @@ public class CompanyPromotionManagedBean implements Serializable {
 
     public void updatePromotion(ActionEvent event) {
         System.out.println("*****Entered updatePromotion method");
-        if (toggleDiscountType.equals(DOLLAR_DISCOUNT)) {
-            promotionToBeUpdated.setPercentageDiscount(0);
-        } else if (toggleDiscountType.equals(PERCENTAGE_DISCOUNT)) {
-            promotionToBeUpdated.setDollarDiscount(0);
+        if (toggleDiscountTypeForUpdate != null && !toggleDiscountTypeForUpdate.isEmpty()) {
+            if (toggleDiscountTypeForUpdate.equals(DOLLAR_DISCOUNT)) {
+                promotionToBeUpdated.setPercentageDiscount(0);
+            } else if (toggleDiscountTypeForUpdate.equals(PERCENTAGE_DISCOUNT)) {
+                promotionToBeUpdated.setDollarDiscount(0);
+            }
         }
         if (this.getStartDateToBeUpdated() != null) {
-            System.out.println("*****Entered startDate update block");
             promotionToBeUpdated.setEndDate(new Timestamp(this.getStartDateToBeUpdated().getTime()).toLocalDateTime());
         }
         if (this.getEndDateToBeUpdated() != null) {
-            System.out.println("*****Entered endDate update block");
             promotionToBeUpdated.setEndDate(new Timestamp(this.getEndDateToBeUpdated().getTime()).toLocalDateTime());
         }
-        promotionSessionBean.updatePromotion(promotionToBeUpdated, productsToBeUpdated);
+
+        promotionSessionBean.updatePromotion(promotionToBeUpdated, listOfProductIdsToBeUpdated);
+        FacesContext.getCurrentInstance().addMessage(null,
+                new FacesMessage(FacesMessage.SEVERITY_INFO, " Promotion " + promotionToBeUpdated.getName() + " was updated successfully "
+                        + "(ID: " + promotionToBeUpdated.getPromotionID() + ")", null));
 
         setProductsToBeUpdated(null);
         setStartDateToBeUpdated(null);
         setEndDateToBeUpdated(null);
+        toggleDiscountType = "";
+
     }
 
     public void deletePromotion(ActionEvent event) {
@@ -456,7 +479,7 @@ public class CompanyPromotionManagedBean implements Serializable {
      */
     public void setToggleDiscountType(String toggleDiscountType) {
         System.out.println("setToggleDiscountType method: this.toggleDiscountType: " + toggleDiscountType);
-        this.toggleDiscountType = toggleDiscountType;        
+        this.toggleDiscountType = toggleDiscountType;
     }
 
     /**
@@ -507,6 +530,34 @@ public class CompanyPromotionManagedBean implements Serializable {
      */
     public String getDOLLAR_DISCOUNT() {
         return DOLLAR_DISCOUNT;
+    }
+
+    /**
+     * @return the listOfProductIdsToBeUpdated
+     */
+    public List<Long> getListOfProductIdsToBeUpdated() {
+        return listOfProductIdsToBeUpdated;
+    }
+
+    /**
+     * @param listOfProductIdsToBeUpdated the listOfProductIdsToBeUpdated to set
+     */
+    public void setListOfProductIdsToBeUpdated(List<Long> listOfProductIdsToBeUpdated) {
+        this.listOfProductIdsToBeUpdated = listOfProductIdsToBeUpdated;
+    }
+
+    /**
+     * @return the toggleDiscountTypeForUpdate
+     */
+    public String getToggleDiscountTypeForUpdate() {
+        return toggleDiscountTypeForUpdate;
+    }
+
+    /**
+     * @param toggleDiscountTypeForUpdate the toggleDiscountTypeForUpdate to set
+     */
+    public void setToggleDiscountTypeForUpdate(String toggleDiscountTypeForUpdate) {
+        this.toggleDiscountTypeForUpdate = toggleDiscountTypeForUpdate;
     }
 
     /**

@@ -57,7 +57,7 @@
                     <p:column headerText="End Date" sortBy="#{promotion.endDate}" filterBy="#{promotion.endDate}" 
                               filterMatchMode="contains">
                         <h:outputText value="#{promotion.endDate}" >
-                        </h:outputText>/
+                        </h:outputText>
                     </p:column>
 
                     <p:column headerText="Action" >
@@ -75,6 +75,7 @@
                                          update="ccUpdatePromotion:formUpdatePromotion" 
                                          oncomplete="PF('dialogUpdatePromotion').show()"
                                          actionListener="#{companyPromotionManagedBean.doUpdatePromotion}">
+                            
                             <f:attribute name="promotionToBeUpdatedFaceletAtribute" value="#{promotion}"/>
                         </p:commandButton>
                     </p:column>

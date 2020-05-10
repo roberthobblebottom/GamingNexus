@@ -113,7 +113,7 @@
                         <p:column>
                             <p:selectCheckboxMenu id="tag"  label="tag" value="#{companyProductManagedBean.newOtherSoftware.tags}" 
                                                   filter="true" filterMatchMode="startsWith" panelStyle="width:250px">
-                                <f:selectItems  value="#{companyProductManagedBean.tags}" var="tag" itemLabel="#{tag.tagName}" itemValue="#{tag}">
+                                <f:selectItems  value="#{companyProductManagedBean.listOfAllTags}" var="tag" itemLabel="#{tag.tagName}" itemValue="#{tag}">
                                 </f:selectItems>
                             </p:selectCheckboxMenu>
                         </p:column>

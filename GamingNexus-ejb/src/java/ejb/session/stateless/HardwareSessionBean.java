@@ -245,6 +245,11 @@ public class HardwareSessionBean implements HardwareSessionBeanLocal {
                     hardwareToUpdate.addTag(tagEntity);
                 }
             }
+            
+             if(tagIds.isEmpty() || tagIds==null){
+                hardwareToUpdate.setTags(new ArrayList<>());
+            }
+            
             hardwareToUpdate.setName(hardware.getName());
             hardwareToUpdate.setDescription(hardware.getDescription());
             hardwareToUpdate.setComputerRequirements(hardware.getComputerRequirements());
@@ -257,7 +262,6 @@ public class HardwareSessionBean implements HardwareSessionBeanLocal {
             hardwareToUpdate.setOwnedItems(hardware.getOwnedItems());
             hardwareToUpdate.setPromotions(hardware.getPromotions());
             hardwareToUpdate.setRatings(hardware.getRatings());
-            hardwareToUpdate.setTags(hardware.getTags());
             hardwareToUpdate.setTechnicalspecification(hardware.getTechnicalspecification());
             hardwareToUpdate.setWarrantyDescription(hardware.getWarrantyDescription());
             hardwareToUpdate.setPictureURLs(hardware.getPictureURLs());

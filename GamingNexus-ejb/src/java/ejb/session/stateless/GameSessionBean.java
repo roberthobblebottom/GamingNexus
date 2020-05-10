@@ -30,33 +30,33 @@ import util.exception.UpdateProductException;
  */
 @Stateless
 public class GameSessionBean implements GameSessionBeanLocal {
-
+    
     @EJB
     private SaleTransactionSessionBeanLocal saleTransactionSessionBeanLocal;
-
+    
     @EJB
     private CompanySessionBeanLocal companySessionBeanLocal;
-
+    
     @EJB(name = "TagSessionBeanLocal")
     private TagSessionBeanLocal tagSessionBeanLocal;
-
+    
     @EJB(name = "CategorySessionBeanLocal")
     private CategorySessionBeanLocal categorySessionBeanLocal;
-
+    
     @PersistenceContext(unitName = "GamingNexus-ejbPU")
     private EntityManager em;
-
+    
     public GameSessionBean() {
-
+        
     }
-
+    
     @Override
     public Game createNewGame(Game newGame) {
         em.persist(newGame);
         em.flush();
         return newGame;
     }
-
+    
     @Override
     public Game createNewGame(Game newGame, Long categoryId, List<Long> tagIds, Long CompanyId) throws ProductSkuCodeExistException, UnknownPersistenceException, InputDataValidationException, CreateNewProductException, CompanyNotFoundException {
         try {
@@ -64,11 +64,11 @@ public class GameSessionBean implements GameSessionBeanLocal {
                 throw new CreateNewProductException("The new product must be associated a leaf category");
             }
             Category category = categorySessionBeanLocal.retrieveCategoryByCategoryId(categoryId);
-
+            
             if (!category.getSubCategories().isEmpty()) {
                 throw new CreateNewProductException("Selected category for the new product is not a leaf category");
             }
-
+            
             if (CompanyId == null) {
                 throw new CreateNewProductException("The new product must be associated a company");
             }
@@ -78,7 +78,7 @@ public class GameSessionBean implements GameSessionBeanLocal {
             newGame.setCategory(category);
             category.getProducts().add(newGame);
             newGame.setCompany(company);
-
+            
             if (tagIds != null && (!tagIds.isEmpty())) {
                 for (Long tagId : tagIds) {
                     Tag tag = tagSessionBeanLocal.retrieveTagByTagId(tagId);
@@ -103,36 +103,36 @@ public class GameSessionBean implements GameSessionBeanLocal {
             throw new CreateNewProductException("An error has occurred while creating the new product: " + ex.getMessage());
         }
     }
-
+    
     @Override
     public List<Game> retrieveAllGames() {
         Query query = em.createQuery("SELECT g FROM Game g ORDER BY g.averageRating ASC");
         List<Game> games = query.getResultList();
-
+        
         for (Game game : games) {
             lazyLoadGame(game);
         }
-
+        
         return games;
     }
-
+    
     @Override
     public List<Game> searchGamesByName(String searchString) {
         Query query = em.createQuery("SELECT g FROM Game g WHERE g.name LIKE :inSearchString");
         query.setParameter("inSearchString", "%" + searchString + "%");
         List<Game> games = query.getResultList();
-
+        
         for (Game game : games) {
             lazyLoadGame(game);
         }
-
+        
         return games;
     }
-
+    
     @Override
     public List<Game> filterGamesByTags(List<Long> tagIds, String condition) {
         List<Game> games = new ArrayList<>();
-
+        
         if (tagIds == null || tagIds.isEmpty() || (!condition.equals("AND") && !condition.equals("OR"))) {
             return games;
         } else {
@@ -146,10 +146,10 @@ public class GameSessionBean implements GameSessionBeanLocal {
                 String whereClause = "";
                 Boolean firstTag = true;
                 Integer tagCount = 1;
-
+                
                 for (Long tagId : tagIds) {
                     selectClause += ", IN (ge.tags) te" + tagCount;
-
+                    
                     if (firstTag) {
                         whereClause = "WHERE te1.tagId = " + tagId;
                         firstTag = false;
@@ -158,58 +158,56 @@ public class GameSessionBean implements GameSessionBeanLocal {
                     }
                     tagCount++;
                 }
-
+                
                 String jpql = selectClause + " " + whereClause + " ORDER BY ge.productId";
                 Query query = em.createQuery(jpql);
                 games = query.getResultList();
             }
-
+            
             for (Game game : games) {
                 game.getCategory();
                 game.getTags().size();
             }
-
+            
             Collections.sort(games, new Comparator<Game>() {
                 public int compare(Game ge1, Game ge2) {
                     return ge1.getProductId().compareTo(ge2.getProductId());
                 }
             });
-
+            
             return games;
         }
     }
-
+    
     @Override
     public Game retrieveGamebyId(Long gameId) throws ProductNotFoundException {
         Game game = em.find(Game.class, gameId);
-
+        
         if (game != null) {
             lazyLoadGame(game);
-
+            
             return game;
         } else {
             throw new ProductNotFoundException("Game ID " + game + " does not exist!");
         }
     }
-
+    
     @Override
     public void updateGame(Game game, Long categoryId, List<Long> tagIds) throws ProductNotFoundException, CategoryNotFoundException, TagNotFoundException, UpdateProductException, InputDataValidationException {
         if (game != null && game.getProductId() != null) {
             Game gameToBeUpdated = retrieveGamebyId(game.getProductId());
-
             if (categoryId != null && (!gameToBeUpdated.getCategory().getCategoryId().equals(categoryId))) {
-                System.out.println("GameSessionBean: Entered category update block");
                 Category categoryEntityToUpdate = categorySessionBeanLocal.retrieveCategoryByCategoryId(categoryId);
-
                 if (!categoryEntityToUpdate.getSubCategories().isEmpty()) {
                     throw new UpdateProductException("Selected category for the new product is not a leaf category");
                 }
-
                 gameToBeUpdated.setCategory(categoryEntityToUpdate);
             }
+            tagIds.forEach(tagId ->{
+                System.out.println("tag id: "+tagId);
+            });
+            
             if (tagIds != null && !tagIds.isEmpty()) {
-                System.out.println("GameSessionBean: Entered tag update block");
-
                 for (Tag tagEntity : gameToBeUpdated.getTags()) {
                     tagEntity.getProducts().remove(gameToBeUpdated);
                 }
@@ -218,14 +216,17 @@ public class GameSessionBean implements GameSessionBeanLocal {
                     Tag tagEntity = tagSessionBeanLocal.retrieveTagByTagId(tagId);
                     gameToBeUpdated.addTag(tagEntity);
                 }
+            } 
+            if(tagIds.isEmpty() || tagIds==null){
+                gameToBeUpdated.setTags(new ArrayList<>());
             }
+            
             gameToBeUpdated.setName(game.getName());
             gameToBeUpdated.setDescription(game.getDescription());
             gameToBeUpdated.setComputerRequirements(game.getComputerRequirements());
             gameToBeUpdated.setPrice(game.getPrice());
             gameToBeUpdated.setCompany(game.getCompany());
             gameToBeUpdated.setAverageRating((game.getAverageRating()));
-            //  gameToBeUpdated.setCategory(game.getCategory());
             gameToBeUpdated.setForums(game.getForums());
             gameToBeUpdated.setGameAccounts(game.getGameAccounts());
             gameToBeUpdated.setPictureURLs(game.getPictureURLs());
@@ -234,8 +235,7 @@ public class GameSessionBean implements GameSessionBeanLocal {
             gameToBeUpdated.setParentAdvisory(game.getParentAdvisory());
             gameToBeUpdated.setPromotions(game.getPromotions());
             gameToBeUpdated.setRatings(game.getRatings());
-            // gameToBeUpdated.setTags(game.getTags());
-
+            
         } else {
             throw new ProductNotFoundException("Game ID not provided for product to be updated");
         }
@@ -264,5 +264,5 @@ public class GameSessionBean implements GameSessionBeanLocal {
         game.getForums().size();
         game.getGameAccounts().size();
     }
-
+    
 }

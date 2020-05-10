@@ -54,22 +54,23 @@
                         </p:column>     
                     </p:row>
 
-                     <p:row>
-                            <p:column>
-                                <p:outputLabel  value="Select discount Type:" style="font-weight: bold;"/>               
-                            </p:column>
-                            <p:column>
-                                <p:selectOneRadio unselectable="true" value="#{companyPromotionManagedBean.toggleDiscountType}"
-                                                  id="selectOneRadio" 
-                                                  >
-                                    <f:selectItem  itemLabel="Dollar Discount" itemValue="#{companyPromotionManagedBean.DOLLAR_DISCOUNT}" >
-                                    </f:selectItem>
-                                    <f:selectItem itemLabel="Percentage Discount" itemValue="#{companyPromotionManagedBean.PERCENTAGE_DISCOUNT}">
-                                    </f:selectItem>
+                    <p:row>
+                        <p:column>
+                            <p:outputLabel  value="Select discount Type:" style="font-weight: bold;"/>               
+                        </p:column>
+                        <p:column>
+                            <p:selectOneMenu value="#{companyPromotionManagedBean.toggleDiscountTypeForUpdate}" id="discountTypeForm"
+                                             >
+                                <f:selectItem itemLabel="Select a Type" itemValue=""/>
+                                <f:selectItem  itemLabel="Dollar Discount" itemValue="#{companyPromotionManagedBean.DOLLAR_DISCOUNT}" >
+                                </f:selectItem>
+                                <f:selectItem itemLabel="Percentage Discount" itemValue="#{companyPromotionManagedBean.PERCENTAGE_DISCOUNT}">
+                                </f:selectItem>
+                                <p:ajax event="change" update="discountTypeForm" process="@this" />
 
-                                </p:selectOneRadio>
-                            </p:column>
-                        </p:row>
+                            </p:selectOneMenu>
+                        </p:column>
+                    </p:row>
 
                     <p:row>
                         <p:column>
@@ -112,7 +113,7 @@
                         <p:column>
                             <br/>
                             <p:datePicker id="startDate" value="#{companyPromotionManagedBean.startDateToBeUpdated}" 
-                                          
+
                                           required="true" requiredMessage="start date is required" 
                                           maxdate="#{companyPromotionManagedBean.endDateToBeUpdated}">
                                 <p:ajax update="startDateValidation " process="@this"/>
@@ -147,10 +148,10 @@
                         </p:column>
                         <p:column>
                             <p:selectCheckboxMenu id="products"  label="products" 
-                                                  value="#{companyPromotionManagedBean.productsToBeUpdated}" 
+                                                  value="#{companyPromotionManagedBean.listOfProductIdsToBeUpdated}" 
                                                   filter="true" filterMatchMode="startsWith" panelStyle="width:250px">
                                 <f:selectItems  value="#{companyPromotionManagedBean.company.products}"
-                                                var="product" itemLabel="#{product.name}" itemValue="#{product}">
+                                                var="product" itemLabel="#{product.name}" itemValue="#{product.productId}">
                                 </f:selectItems>
                             </p:selectCheckboxMenu>
                         </p:column>
@@ -161,10 +162,12 @@
 
                     <p:row>
                         <p:column colspan="3">
-                            <p:commandButton  id="UpdatePromotionButton" value="Update" 
-                                              update="@form formAllPromotions:dataTableAllPromotions" 
+                            <p:commandButton  id="UpdatePromotionButton" value="Update" immediate="true" process="@form"
+                                              update="@form formAllPromotions:dataTableAllPromotions"
                                               actionListener="#{companyPromotionManagedBean.updatePromotion}"    
-                                              />
+                                              >
+
+                            </p:commandButton>
                         </p:column>
                     </p:row>
 

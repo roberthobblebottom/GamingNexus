@@ -173,7 +173,7 @@
                                                   value="#{companyProductManagedBean.tagIdsUpdate}"
                                                   filter="true" filterMatchMode="startsWith" panelStyle="width:250px" 
                                                   >
-                                <f:selectItems  value="#{companyProductManagedBean.tags}" var="tag" 
+                                <f:selectItems  value="#{companyProductManagedBean.listOfAllTags}" var="tag" 
                                                 itemLabel="#{tag.tagName}" itemValue="#{tag.tagId}">
                                 </f:selectItems>
                             </p:selectCheckboxMenu>                         
@@ -259,6 +259,27 @@
                             <p:message for="warrantyDescription"/>
                         </p:column>
                     </p:row> 
+
+                    <p:row>
+                        <p:column>
+                            <h:outputText value="Promotions" />
+                        </p:column>
+                        <p:column>
+                            <p:selectCheckboxMenu id="promotion"  label="promotion" 
+                                                  value="#{companyProductManagedBean.promotionsIdsUpdate}"
+                                                  filter="true" filterMatchMode="startsWith" panelStyle="width:250px" 
+                                                  >
+                                <f:selectItems  value="#{companyProductManagedBean.listOfAllCompanyPromotions}" var="promotion" 
+                                                itemLabel="#{promotion.name}" itemValue="#{promotion.promotionID}">
+                                </f:selectItems>
+                            </p:selectCheckboxMenu>                         
+                        </p:column>
+                        <p:column>
+                            <p:message for = "tag"/>
+                        </p:column>
+                    </p:row>
+                    
+                    
                     <p:row>
                         <p:column colspan="3">
                             <p:commandButton  id="updateProductButton" value="Update" 

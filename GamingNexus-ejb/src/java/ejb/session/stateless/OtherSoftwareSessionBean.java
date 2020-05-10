@@ -246,6 +246,11 @@ public class OtherSoftwareSessionBean implements OtherSoftwareSessionBeanLocal {
                     otherSoftwareEntityToUpdate.addTag(tagEntity);
                 }
             }
+            
+             if(tagIds.isEmpty() || tagIds==null){
+                otherSoftwareEntityToUpdate.setTags(new ArrayList<>());
+            }
+            
             otherSoftwareEntityToUpdate.setName(otherSoftware.getName());
             otherSoftwareEntityToUpdate.setDescription(otherSoftware.getDescription());
             otherSoftwareEntityToUpdate.setComputerRequirements(otherSoftware.getComputerRequirements());
@@ -255,7 +260,6 @@ public class OtherSoftwareSessionBean implements OtherSoftwareSessionBeanLocal {
             otherSoftwareEntityToUpdate.setOwnedItems(otherSoftware.getOwnedItems());
             otherSoftwareEntityToUpdate.setPromotions(otherSoftware.getPromotions());
             otherSoftwareEntityToUpdate.setRatings(otherSoftware.getRatings());
-            otherSoftwareEntityToUpdate.setTags(otherSoftware.getTags());
             otherSoftwareEntityToUpdate.setPictureURLs(otherSoftware.getPictureURLs());
             otherSoftwareEntityToUpdate.setVideoURLs(otherSoftware.getVideoURLs());
         } else {

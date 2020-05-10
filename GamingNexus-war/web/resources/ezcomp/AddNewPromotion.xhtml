@@ -29,7 +29,9 @@
                         <p:column>
                             <p:inputText id="name" value="#{companyPromotionManagedBean.newPromotion.name}"
                                          required="true" requiredMessage="Name is required" >
-
+                                <f:validateLength minimum="1" maximum="100">
+                                    <p:ajax event="keyup" update="nameValidation" process="@this"/>
+                                </f:validateLength>
                             </p:inputText>
                         </p:column>
                         <p:column>
@@ -61,14 +63,15 @@
                             </p:column>
                             <p:column>
                                 <p:selectOneMenu value="#{companyPromotionManagedBean.toggleDiscountType}" 
-                                                  id="selectOneRadio" 
-                                                  >
+                                                 id="selectOneRadio" required="true" requiredMessage="Selection of discount type required"
+                                                 >
+                                    <f:selectItem itemLabel="Select a Type" itemValue="" />
+
                                     <f:selectItem  itemLabel="Dollar Discount" itemValue="Dollar Discount" >
                                     </f:selectItem>
                                     <f:selectItem itemLabel="Percentage Discount" itemValue="Percentage Discount">
                                     </f:selectItem>
-                                    <p:ajax update="discountTypeForm" process="@this" />
-
+                                    <p:ajax event="change" update="discountTypeForm" process="@this" />
                                 </p:selectOneMenu>
                             </p:column>
                         </p:row>
