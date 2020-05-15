@@ -37,8 +37,6 @@
             class="old_price"> ${{list.price}}</span>
         </div>
         <br>
-        <ion-label>From: </ion-label>
-        <br><br>
         <ion-label>Average Rating: {{list.averageRating}}</ion-label>
         <br><br>
         <ion-label>Release Date: {{list.releaseDate}}</ion-label>
@@ -65,7 +63,15 @@
     <!-- Display the detailed description of the product -->
     <div *ngSwitchCase="'content'" class="con_2">
 
-      {{list.description}}
+      <ion-text color="primary">
+        <h2>Product Description</h2>
+      </ion-text>
+      <ion-text color="dark">
+        <p>
+          {{list.description}}
+        </p>
+      </ion-text>
+
 
     </div>
 
